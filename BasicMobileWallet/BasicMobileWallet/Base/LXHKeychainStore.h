@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "UICKeyChainStore.h"
 
+
+#define kLXHKeychainStorePIN @"PIN"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHKeychainStore : NSObject
