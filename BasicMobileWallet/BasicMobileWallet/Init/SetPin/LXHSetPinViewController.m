@@ -7,6 +7,7 @@
 #import "LXHSetPinViewController.h"
 #import "Masonry.h"
 #import "LXHSetPinView.h"
+#import "UIViewController+LXHAlert.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -14,7 +15,7 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
-@interface LXHSetPinViewController()
+@interface LXHSetPinViewController() <UITextFieldDelegate>
 
 @property (nonatomic) LXHSetPinView *contentView;
 
@@ -54,11 +55,23 @@
 }
 
 - (void)setDelegates {
+    self.contentView.inputPinTextFieldWithPlaceHolder.delegate = self;
+    self.contentView.inputPinAgainTextFieldWithPlaceHolder.delegate = self;
 }
 
 //Actions
 - (void)textButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    if (self.contentView.inputPinTextFieldWithPlaceHolder.text.length != 6 || self.contentView.inputPinAgainTextFieldWithPlaceHolder.text.length != 6) {
+        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请确保输入六位数字", nil) handler:nil];
+        return;
+    } 
+    if (![self.contentView.inputPinAgainTextFieldWithPlaceHolder.text isEqualToString:self.contentView.inputPinTextFieldWithPlaceHolder.text]) {
+        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请确保L两次输入的数字一致", nil) handler:nil];
+        return;
+    }
+    //记录到keychain中
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -82,5 +95,16 @@
 - (void)leftImageButtonTouchUpOutside:(UIButton *)sender {
     sender.alpha = 1;
 }
+
+//Delegate methods
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    // Prevent crashing undo bug
+    if (range.length + range.location > textField.text.length) {
+        return NO;
+    }
+    NSUInteger newLength = [textField.text length] + [string length] - range.length;
+    return newLength <= 6;
+}
+
 
 @end

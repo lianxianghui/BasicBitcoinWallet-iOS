@@ -29,6 +29,15 @@
 		8CA31F9822D98BAC00CEA828 /* LXHWalletMnemonicPassphraseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F8422D98BAB00CEA828 /* LXHWalletMnemonicPassphraseView.m */; };
 		8CA31F9922D98BAC00CEA828 /* LXHWelcomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F8722D98BAC00CEA828 /* LXHWelcomeView.m */; };
 		8CA31F9A22D98BAC00CEA828 /* LXHWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F8822D98BAC00CEA828 /* LXHWelcomeViewController.m */; };
+		8CA31FCB22D9A37600CEA828 /* NSDictionary+Enumerate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31FBA22D9A37600CEA828 /* NSDictionary+Enumerate.m */; };
+		8CA31FCC22D9A37600CEA828 /* NSMutableArray+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31FBB22D9A37600CEA828 /* NSMutableArray+Base.m */; };
+		8CA31FCD22D9A37600CEA828 /* NSString+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31FBC22D9A37600CEA828 /* NSString+Base.m */; };
+		8CA31FCE22D9A37600CEA828 /* NSJSONSerialization+VLBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31FBE22D9A37600CEA828 /* NSJSONSerialization+VLBase.m */; };
+		8CA31FCF22D9A37600CEA828 /* NSMutableDictionary+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31FC022D9A37600CEA828 /* NSMutableDictionary+Base.m */; };
+		8CA31FD022D9A37600CEA828 /* NSArray+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31FC422D9A37600CEA828 /* NSArray+Base.m */; };
+		8CA31FD122D9A37600CEA828 /* NSArray+FunStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31FC722D9A37600CEA828 /* NSArray+FunStyle.m */; };
+		8CA31FD222D9A37600CEA828 /* UIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31FCA22D9A37600CEA828 /* UIUtils.m */; };
+		8CA31FD622D9A41300CEA828 /* UIViewController+LXHAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31FD522D9A41300CEA828 /* UIViewController+LXHAlert.m */; };
 		8CA7019E22D8713600F42814 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA7019D22D8713600F42814 /* AppDelegate.m */; };
 		8CA701A122D8713600F42814 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA701A022D8713600F42814 /* ViewController.m */; };
 		8CA701A422D8713600F42814 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CA701A222D8713600F42814 /* Main.storyboard */; };
@@ -94,6 +103,24 @@
 		8CA31F8722D98BAC00CEA828 /* LXHWelcomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWelcomeView.m; sourceTree = "<group>"; };
 		8CA31F8822D98BAC00CEA828 /* LXHWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWelcomeViewController.m; sourceTree = "<group>"; };
 		8CA31F8922D98BAC00CEA828 /* LXHWelcomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWelcomeView.h; sourceTree = "<group>"; };
+		8CA31FBA22D9A37600CEA828 /* NSDictionary+Enumerate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Enumerate.m"; sourceTree = "<group>"; };
+		8CA31FBB22D9A37600CEA828 /* NSMutableArray+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Base.m"; sourceTree = "<group>"; };
+		8CA31FBC22D9A37600CEA828 /* NSString+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base.m"; sourceTree = "<group>"; };
+		8CA31FBD22D9A37600CEA828 /* NSArray+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Base.h"; sourceTree = "<group>"; };
+		8CA31FBE22D9A37600CEA828 /* NSJSONSerialization+VLBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+VLBase.m"; sourceTree = "<group>"; };
+		8CA31FBF22D9A37600CEA828 /* NSArray+FunStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+FunStyle.h"; sourceTree = "<group>"; };
+		8CA31FC022D9A37600CEA828 /* NSMutableDictionary+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Base.m"; sourceTree = "<group>"; };
+		8CA31FC122D9A37600CEA828 /* NSString+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base.h"; sourceTree = "<group>"; };
+		8CA31FC222D9A37600CEA828 /* NSMutableArray+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Base.h"; sourceTree = "<group>"; };
+		8CA31FC322D9A37600CEA828 /* NSDictionary+Enumerate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Enumerate.h"; sourceTree = "<group>"; };
+		8CA31FC422D9A37600CEA828 /* NSArray+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Base.m"; sourceTree = "<group>"; };
+		8CA31FC522D9A37600CEA828 /* NSJSONSerialization+VLBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+VLBase.h"; sourceTree = "<group>"; };
+		8CA31FC622D9A37600CEA828 /* NSMutableDictionary+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Base.h"; sourceTree = "<group>"; };
+		8CA31FC722D9A37600CEA828 /* NSArray+FunStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+FunStyle.m"; sourceTree = "<group>"; };
+		8CA31FC922D9A37600CEA828 /* UIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIUtils.h; sourceTree = "<group>"; };
+		8CA31FCA22D9A37600CEA828 /* UIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIUtils.m; sourceTree = "<group>"; };
+		8CA31FD422D9A41300CEA828 /* UIViewController+LXHAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+LXHAlert.h"; sourceTree = "<group>"; };
+		8CA31FD522D9A41300CEA828 /* UIViewController+LXHAlert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+LXHAlert.m"; sourceTree = "<group>"; };
 		8CA7019922D8713500F42814 /* BasicMobileWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicMobileWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA7019C22D8713600F42814 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8CA7019D22D8713600F42814 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -240,6 +267,55 @@
 			path = Welcome;
 			sourceTree = "<group>";
 		};
+		8CA31F9B22D9A21600CEA828 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31FB922D9A37600CEA828 /* Category */,
+				8CA31FC822D9A37600CEA828 /* UI */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		8CA31FB922D9A37600CEA828 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31FBA22D9A37600CEA828 /* NSDictionary+Enumerate.m */,
+				8CA31FBB22D9A37600CEA828 /* NSMutableArray+Base.m */,
+				8CA31FBC22D9A37600CEA828 /* NSString+Base.m */,
+				8CA31FBD22D9A37600CEA828 /* NSArray+Base.h */,
+				8CA31FBE22D9A37600CEA828 /* NSJSONSerialization+VLBase.m */,
+				8CA31FBF22D9A37600CEA828 /* NSArray+FunStyle.h */,
+				8CA31FC022D9A37600CEA828 /* NSMutableDictionary+Base.m */,
+				8CA31FC122D9A37600CEA828 /* NSString+Base.h */,
+				8CA31FC222D9A37600CEA828 /* NSMutableArray+Base.h */,
+				8CA31FC322D9A37600CEA828 /* NSDictionary+Enumerate.h */,
+				8CA31FC422D9A37600CEA828 /* NSArray+Base.m */,
+				8CA31FC522D9A37600CEA828 /* NSJSONSerialization+VLBase.h */,
+				8CA31FC622D9A37600CEA828 /* NSMutableDictionary+Base.h */,
+				8CA31FC722D9A37600CEA828 /* NSArray+FunStyle.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		8CA31FC822D9A37600CEA828 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31FC922D9A37600CEA828 /* UIUtils.h */,
+				8CA31FCA22D9A37600CEA828 /* UIUtils.m */,
+				8CA31FD322D9A3B000CEA828 /* Category */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		8CA31FD322D9A3B000CEA828 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31FD422D9A41300CEA828 /* UIViewController+LXHAlert.h */,
+				8CA31FD522D9A41300CEA828 /* UIViewController+LXHAlert.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		8CA7019022D8713500F42814 = {
 			isa = PBXGroup;
 			children = (
@@ -273,6 +349,7 @@
 				8CA701AA22D8713E00F42814 /* Info.plist */,
 				8CA701AB22D8713E00F42814 /* main.m */,
 				8CA701C822D8747F00F42814 /* Init */,
+				8CA31F9B22D9A21600CEA828 /* Base */,
 			);
 			path = BasicMobileWallet;
 			sourceTree = "<group>";
@@ -472,25 +549,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CA31FD122D9A37600CEA828 /* NSArray+FunStyle.m in Sources */,
 				8CA31F8F22D98BAC00CEA828 /* LXHSetPinView.m in Sources */,
+				8CA31FD622D9A41300CEA828 /* UIViewController+LXHAlert.m in Sources */,
 				8CA31F5D22D9872A00CEA828 /* LXHInputMnemonicWordsView.m in Sources */,
+				8CA31FD222D9A37600CEA828 /* UIUtils.m in Sources */,
 				8CA31F9922D98BAC00CEA828 /* LXHWelcomeView.m in Sources */,
 				8CA31F9722D98BAC00CEA828 /* LXHWalletMnemonicPassphraseViewController.m in Sources */,
 				8CA31F9122D98BAC00CEA828 /* LXHInitWalletViewController.m in Sources */,
+				8CA31FCE22D9A37600CEA828 /* NSJSONSerialization+VLBase.m in Sources */,
 				8CA31F8B22D98BAC00CEA828 /* LXHInitSetupView.m in Sources */,
 				8CA31F8D22D98BAC00CEA828 /* LXHSetPassphraseViewController.m in Sources */,
 				8CA31F9422D98BAC00CEA828 /* LXHWalletMnemonicWordsViewController.m in Sources */,
 				8CA31F8E22D98BAC00CEA828 /* LXHSetPinViewController.m in Sources */,
 				8CA31F9222D98BAC00CEA828 /* LXHTabBarPageViewController.m in Sources */,
 				8CA31F9022D98BAC00CEA828 /* LXHInitWalletView.m in Sources */,
+				8CA31FCF22D9A37600CEA828 /* NSMutableDictionary+Base.m in Sources */,
 				8CA31F5C22D9872A00CEA828 /* LXHInputMnemonicWordsViewController.m in Sources */,
 				8CA701A122D8713600F42814 /* ViewController.m in Sources */,
 				8CA31F9622D98BAC00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.m in Sources */,
 				8CA31F8C22D98BAC00CEA828 /* LXHSetPassphraseView.m in Sources */,
 				8CA701AC22D8713E00F42814 /* main.m in Sources */,
+				8CA31FCD22D9A37600CEA828 /* NSString+Base.m in Sources */,
 				8CA31F9322D98BAC00CEA828 /* LXHWalletMnemonicWordsView.m in Sources */,
 				8CA7019E22D8713600F42814 /* AppDelegate.m in Sources */,
 				8CA31F9A22D98BAC00CEA828 /* LXHWelcomeViewController.m in Sources */,
+				8CA31FCB22D9A37600CEA828 /* NSDictionary+Enumerate.m in Sources */,
+				8CA31FCC22D9A37600CEA828 /* NSMutableArray+Base.m in Sources */,
+				8CA31FD022D9A37600CEA828 /* NSArray+Base.m in Sources */,
 				8CA31F9522D98BAC00CEA828 /* LXHWalletMnemonicWordsOneByOneView.m in Sources */,
 				8CA31F5E22D9872A00CEA828 /* LXHWordCell.m in Sources */,
 				8CA31F8A22D98BAC00CEA828 /* LXHInitSetupViewController.m in Sources */,
