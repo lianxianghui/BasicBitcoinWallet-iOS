@@ -8,6 +8,7 @@
 #import "Masonry.h"
 #import "LXHInputMnemonicWordsView.h"
 #import "LXHWordCell.h"
+#import "LXHWalletMnemonicWordsViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -15,7 +16,7 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
-@interface LXHInputMnemonicWordsViewController()
+@interface LXHInputMnemonicWordsViewController()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic) LXHInputMnemonicWordsView *contentView;
 
@@ -59,6 +60,7 @@
 //Actions
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)leftImageButtonTouchDown:(UIButton *)sender {
@@ -186,6 +188,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 
