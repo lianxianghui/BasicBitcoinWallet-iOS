@@ -58,7 +58,6 @@
     [self.desc mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(19);
         make.right.equalTo(self.mas_right).offset(-19);
-        make.bottom.equalTo(self.bottomButtons.mas_top);
         make.top.equalTo(self.customNavigationBar.mas_bottom).offset(19);
     }];
     [self.customNavigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -91,7 +90,7 @@
         make.left.equalTo(self.leftImageButton.mas_left).offset(5);
         make.centerY.equalTo(self.leftImageButton.mas_centerY);
         make.width.mas_equalTo(12.5);
-        make.height.mas_equalTo(25);
+        make.height.mas_equalTo(21);
     }];
 }
 
