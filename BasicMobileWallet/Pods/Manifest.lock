@@ -15,20 +15,24 @@ PODS:
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
   - Masonry (1.1.0)
+  - UICKeyChainStore (2.1.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
   - Masonry
+  - UICKeyChainStore
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
     - Masonry
+    - UICKeyChainStore
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  UICKeyChainStore: 85db518bb1d294366d15ec9b92a416c4e670518f
 
-PODFILE CHECKSUM: 4c919aaf705f510f2acd719905815601248d6edf
+PODFILE CHECKSUM: 0663876a95f17999ba76d35a57f43d51dd5360af
 
 COCOAPODS: 1.5.3
