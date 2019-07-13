@@ -9,6 +9,7 @@ target 'BasicMobileWallet' do
   pod 'AFNetworking', '~> 3.0'
   pod 'Masonry'
   pod 'UICKeyChainStore'
+  pod 'CoreBitcoin', :podspec => 'https://raw.github.com/oleganza/CoreBitcoin/master/CoreBitcoin.podspec'
   target 'BasicMobileWalletTests' do
     inherit! :search_paths
     # Pods for testing
