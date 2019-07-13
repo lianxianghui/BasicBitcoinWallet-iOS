@@ -1,4 +1,4 @@
-// LXHWelcomeViewController.h
+// LXHSetPinViewController.h
 // BasicWallet
 //
 //  Created by lianxianghui on 19-07-13
@@ -6,6 +6,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LXHWelcomeViewController : UIViewController
+@interface LXHSetPinViewController : UIViewController
 
 @end

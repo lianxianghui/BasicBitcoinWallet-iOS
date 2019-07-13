@@ -1,7 +1,7 @@
 // LXHWelcomeView.m
-// BasicMobileWallet
+// BasicWallet
 //
-//  Created by lianxianghui on 19-07-12
+//  Created by lianxianghui on 19-07-13
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -70,7 +70,6 @@
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"初始设置", nil) attributes:textAttributes];
         [_button setAttributedTitle:text forState:UIControlStateNormal];
         _button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        [_button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _button;
 }
@@ -96,10 +95,5 @@
     }
     return _text;
 }
-
-//Actions
-- (void)buttonClicked:(UIButton *)sender {
-}
-
 
 @end

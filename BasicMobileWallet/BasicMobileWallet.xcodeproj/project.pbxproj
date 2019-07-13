@@ -9,6 +9,26 @@
 /* Begin PBXBuildFile section */
 		72047250692A4DEA5C81383B /* libPods-BasicMobileWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64EE509F744E6EADA3F0D670 /* libPods-BasicMobileWallet.a */; };
 		80E87B4E45D787A190F7EAFA /* libPods-BasicMobileWalletTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B77382AEF87012364511655 /* libPods-BasicMobileWalletTests.a */; };
+		8CA31F5C22D9872A00CEA828 /* LXHInputMnemonicWordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */; };
+		8CA31F5D22D9872A00CEA828 /* LXHInputMnemonicWordsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5A22D9872900CEA828 /* LXHInputMnemonicWordsView.m */; };
+		8CA31F5E22D9872A00CEA828 /* LXHWordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5B22D9872900CEA828 /* LXHWordCell.m */; };
+		8CA31F8A22D98BAC00CEA828 /* LXHInitSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F6022D98BAA00CEA828 /* LXHInitSetupViewController.m */; };
+		8CA31F8B22D98BAC00CEA828 /* LXHInitSetupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F6122D98BAA00CEA828 /* LXHInitSetupView.m */; };
+		8CA31F8C22D98BAC00CEA828 /* LXHSetPassphraseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F6522D98BAA00CEA828 /* LXHSetPassphraseView.m */; };
+		8CA31F8D22D98BAC00CEA828 /* LXHSetPassphraseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F6822D98BAA00CEA828 /* LXHSetPassphraseViewController.m */; };
+		8CA31F8E22D98BAC00CEA828 /* LXHSetPinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F6A22D98BAA00CEA828 /* LXHSetPinViewController.m */; };
+		8CA31F8F22D98BAC00CEA828 /* LXHSetPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F6D22D98BAA00CEA828 /* LXHSetPinView.m */; };
+		8CA31F9022D98BAC00CEA828 /* LXHInitWalletView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F7122D98BAA00CEA828 /* LXHInitWalletView.m */; };
+		8CA31F9122D98BAC00CEA828 /* LXHInitWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F7222D98BAA00CEA828 /* LXHInitWalletViewController.m */; };
+		8CA31F9222D98BAC00CEA828 /* LXHTabBarPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F7422D98BAB00CEA828 /* LXHTabBarPageViewController.m */; };
+		8CA31F9322D98BAC00CEA828 /* LXHWalletMnemonicWordsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F7722D98BAB00CEA828 /* LXHWalletMnemonicWordsView.m */; };
+		8CA31F9422D98BAC00CEA828 /* LXHWalletMnemonicWordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F7822D98BAB00CEA828 /* LXHWalletMnemonicWordsViewController.m */; };
+		8CA31F9522D98BAC00CEA828 /* LXHWalletMnemonicWordsOneByOneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F7C22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneView.m */; };
+		8CA31F9622D98BAC00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F7F22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.m */; };
+		8CA31F9722D98BAC00CEA828 /* LXHWalletMnemonicPassphraseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F8322D98BAB00CEA828 /* LXHWalletMnemonicPassphraseViewController.m */; };
+		8CA31F9822D98BAC00CEA828 /* LXHWalletMnemonicPassphraseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F8422D98BAB00CEA828 /* LXHWalletMnemonicPassphraseView.m */; };
+		8CA31F9922D98BAC00CEA828 /* LXHWelcomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F8722D98BAC00CEA828 /* LXHWelcomeView.m */; };
+		8CA31F9A22D98BAC00CEA828 /* LXHWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F8822D98BAC00CEA828 /* LXHWelcomeViewController.m */; };
 		8CA7019E22D8713600F42814 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA7019D22D8713600F42814 /* AppDelegate.m */; };
 		8CA701A122D8713600F42814 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA701A022D8713600F42814 /* ViewController.m */; };
 		8CA701A422D8713600F42814 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CA701A222D8713600F42814 /* Main.storyboard */; };
@@ -16,8 +36,6 @@
 		8CA701A922D8713E00F42814 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CA701A722D8713E00F42814 /* LaunchScreen.storyboard */; };
 		8CA701AC22D8713E00F42814 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA701AB22D8713E00F42814 /* main.m */; };
 		8CA701B622D8713F00F42814 /* BasicMobileWalletTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA701B522D8713F00F42814 /* BasicMobileWalletTests.m */; };
-		8CA701CE22D8747F00F42814 /* LXHWelcomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA701CB22D8747F00F42814 /* LXHWelcomeView.m */; };
-		8CA701CF22D8747F00F42814 /* LXHWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA701CC22D8747F00F42814 /* LXHWelcomeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +54,46 @@
 		3DCB1758B9104D15E1B757A9 /* Pods-BasicMobileWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasicMobileWallet.release.xcconfig"; path = "Pods/Target Support Files/Pods-BasicMobileWallet/Pods-BasicMobileWallet.release.xcconfig"; sourceTree = "<group>"; };
 		64EE509F744E6EADA3F0D670 /* libPods-BasicMobileWallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BasicMobileWallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B77382AEF87012364511655 /* libPods-BasicMobileWalletTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BasicMobileWalletTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputMnemonicWordsViewController.m; sourceTree = "<group>"; };
+		8CA31F5722D9872900CEA828 /* LXHInputMnemonicWordsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputMnemonicWordsView.h; sourceTree = "<group>"; };
+		8CA31F5822D9872900CEA828 /* LXHWordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWordCell.h; sourceTree = "<group>"; };
+		8CA31F5922D9872900CEA828 /* LXHInputMnemonicWordsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputMnemonicWordsViewController.h; sourceTree = "<group>"; };
+		8CA31F5A22D9872900CEA828 /* LXHInputMnemonicWordsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputMnemonicWordsView.m; sourceTree = "<group>"; };
+		8CA31F5B22D9872900CEA828 /* LXHWordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWordCell.m; sourceTree = "<group>"; };
+		8CA31F6022D98BAA00CEA828 /* LXHInitSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInitSetupViewController.m; sourceTree = "<group>"; };
+		8CA31F6122D98BAA00CEA828 /* LXHInitSetupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInitSetupView.m; sourceTree = "<group>"; };
+		8CA31F6222D98BAA00CEA828 /* LXHInitSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInitSetupViewController.h; sourceTree = "<group>"; };
+		8CA31F6322D98BAA00CEA828 /* LXHInitSetupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInitSetupView.h; sourceTree = "<group>"; };
+		8CA31F6522D98BAA00CEA828 /* LXHSetPassphraseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSetPassphraseView.m; sourceTree = "<group>"; };
+		8CA31F6622D98BAA00CEA828 /* LXHSetPassphraseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSetPassphraseViewController.h; sourceTree = "<group>"; };
+		8CA31F6722D98BAA00CEA828 /* LXHSetPassphraseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSetPassphraseView.h; sourceTree = "<group>"; };
+		8CA31F6822D98BAA00CEA828 /* LXHSetPassphraseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSetPassphraseViewController.m; sourceTree = "<group>"; };
+		8CA31F6A22D98BAA00CEA828 /* LXHSetPinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSetPinViewController.m; sourceTree = "<group>"; };
+		8CA31F6B22D98BAA00CEA828 /* LXHSetPinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSetPinView.h; sourceTree = "<group>"; };
+		8CA31F6C22D98BAA00CEA828 /* LXHSetPinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSetPinViewController.h; sourceTree = "<group>"; };
+		8CA31F6D22D98BAA00CEA828 /* LXHSetPinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSetPinView.m; sourceTree = "<group>"; };
+		8CA31F6F22D98BAA00CEA828 /* LXHInitWalletViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInitWalletViewController.h; sourceTree = "<group>"; };
+		8CA31F7022D98BAA00CEA828 /* LXHInitWalletView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInitWalletView.h; sourceTree = "<group>"; };
+		8CA31F7122D98BAA00CEA828 /* LXHInitWalletView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInitWalletView.m; sourceTree = "<group>"; };
+		8CA31F7222D98BAA00CEA828 /* LXHInitWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInitWalletViewController.m; sourceTree = "<group>"; };
+		8CA31F7422D98BAB00CEA828 /* LXHTabBarPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHTabBarPageViewController.m; sourceTree = "<group>"; };
+		8CA31F7522D98BAB00CEA828 /* LXHTabBarPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHTabBarPageViewController.h; sourceTree = "<group>"; };
+		8CA31F7722D98BAB00CEA828 /* LXHWalletMnemonicWordsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicWordsView.m; sourceTree = "<group>"; };
+		8CA31F7822D98BAB00CEA828 /* LXHWalletMnemonicWordsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicWordsViewController.m; sourceTree = "<group>"; };
+		8CA31F7922D98BAB00CEA828 /* LXHWalletMnemonicWordsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicWordsView.h; sourceTree = "<group>"; };
+		8CA31F7A22D98BAB00CEA828 /* LXHWalletMnemonicWordsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicWordsViewController.h; sourceTree = "<group>"; };
+		8CA31F7C22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicWordsOneByOneView.m; sourceTree = "<group>"; };
+		8CA31F7D22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicWordsOneByOneViewController.h; sourceTree = "<group>"; };
+		8CA31F7E22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicWordsOneByOneView.h; sourceTree = "<group>"; };
+		8CA31F7F22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicWordsOneByOneViewController.m; sourceTree = "<group>"; };
+		8CA31F8122D98BAB00CEA828 /* LXHWalletMnemonicPassphraseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicPassphraseViewController.h; sourceTree = "<group>"; };
+		8CA31F8222D98BAB00CEA828 /* LXHWalletMnemonicPassphraseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicPassphraseView.h; sourceTree = "<group>"; };
+		8CA31F8322D98BAB00CEA828 /* LXHWalletMnemonicPassphraseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicPassphraseViewController.m; sourceTree = "<group>"; };
+		8CA31F8422D98BAB00CEA828 /* LXHWalletMnemonicPassphraseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicPassphraseView.m; sourceTree = "<group>"; };
+		8CA31F8622D98BAC00CEA828 /* LXHWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWelcomeViewController.h; sourceTree = "<group>"; };
+		8CA31F8722D98BAC00CEA828 /* LXHWelcomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWelcomeView.m; sourceTree = "<group>"; };
+		8CA31F8822D98BAC00CEA828 /* LXHWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWelcomeViewController.m; sourceTree = "<group>"; };
+		8CA31F8922D98BAC00CEA828 /* LXHWelcomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWelcomeView.h; sourceTree = "<group>"; };
 		8CA7019922D8713500F42814 /* BasicMobileWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicMobileWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA7019C22D8713600F42814 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8CA7019D22D8713600F42814 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -49,10 +107,6 @@
 		8CA701B122D8713F00F42814 /* BasicMobileWalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BasicMobileWalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA701B522D8713F00F42814 /* BasicMobileWalletTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasicMobileWalletTests.m; sourceTree = "<group>"; };
 		8CA701B722D8713F00F42814 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8CA701CA22D8747F00F42814 /* LXHWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWelcomeViewController.h; sourceTree = "<group>"; };
-		8CA701CB22D8747F00F42814 /* LXHWelcomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWelcomeView.m; sourceTree = "<group>"; };
-		8CA701CC22D8747F00F42814 /* LXHWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWelcomeViewController.m; sourceTree = "<group>"; };
-		8CA701CD22D8747F00F42814 /* LXHWelcomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWelcomeView.h; sourceTree = "<group>"; };
 		DCEBAA8D2A3967C43AB112E0 /* Pods-BasicMobileWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasicMobileWalletTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BasicMobileWalletTests/Pods-BasicMobileWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,6 +130,116 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8CA31F5522D9872900CEA828 /* InputMnemonicWords */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */,
+				8CA31F5722D9872900CEA828 /* LXHInputMnemonicWordsView.h */,
+				8CA31F5822D9872900CEA828 /* LXHWordCell.h */,
+				8CA31F5922D9872900CEA828 /* LXHInputMnemonicWordsViewController.h */,
+				8CA31F5A22D9872900CEA828 /* LXHInputMnemonicWordsView.m */,
+				8CA31F5B22D9872900CEA828 /* LXHWordCell.m */,
+			);
+			path = InputMnemonicWords;
+			sourceTree = "<group>";
+		};
+		8CA31F5F22D98BAA00CEA828 /* InitSetup */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31F6022D98BAA00CEA828 /* LXHInitSetupViewController.m */,
+				8CA31F6122D98BAA00CEA828 /* LXHInitSetupView.m */,
+				8CA31F6222D98BAA00CEA828 /* LXHInitSetupViewController.h */,
+				8CA31F6322D98BAA00CEA828 /* LXHInitSetupView.h */,
+			);
+			path = InitSetup;
+			sourceTree = "<group>";
+		};
+		8CA31F6422D98BAA00CEA828 /* SetPassphrase */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31F6522D98BAA00CEA828 /* LXHSetPassphraseView.m */,
+				8CA31F6622D98BAA00CEA828 /* LXHSetPassphraseViewController.h */,
+				8CA31F6722D98BAA00CEA828 /* LXHSetPassphraseView.h */,
+				8CA31F6822D98BAA00CEA828 /* LXHSetPassphraseViewController.m */,
+			);
+			path = SetPassphrase;
+			sourceTree = "<group>";
+		};
+		8CA31F6922D98BAA00CEA828 /* SetPin */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31F6A22D98BAA00CEA828 /* LXHSetPinViewController.m */,
+				8CA31F6B22D98BAA00CEA828 /* LXHSetPinView.h */,
+				8CA31F6C22D98BAA00CEA828 /* LXHSetPinViewController.h */,
+				8CA31F6D22D98BAA00CEA828 /* LXHSetPinView.m */,
+			);
+			path = SetPin;
+			sourceTree = "<group>";
+		};
+		8CA31F6E22D98BAA00CEA828 /* InitWallet */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31F6F22D98BAA00CEA828 /* LXHInitWalletViewController.h */,
+				8CA31F7022D98BAA00CEA828 /* LXHInitWalletView.h */,
+				8CA31F7122D98BAA00CEA828 /* LXHInitWalletView.m */,
+				8CA31F7222D98BAA00CEA828 /* LXHInitWalletViewController.m */,
+			);
+			path = InitWallet;
+			sourceTree = "<group>";
+		};
+		8CA31F7322D98BAB00CEA828 /* TabBarPage */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31F7422D98BAB00CEA828 /* LXHTabBarPageViewController.m */,
+				8CA31F7522D98BAB00CEA828 /* LXHTabBarPageViewController.h */,
+			);
+			path = TabBarPage;
+			sourceTree = "<group>";
+		};
+		8CA31F7622D98BAB00CEA828 /* WalletMnemonicWords */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31F7722D98BAB00CEA828 /* LXHWalletMnemonicWordsView.m */,
+				8CA31F7822D98BAB00CEA828 /* LXHWalletMnemonicWordsViewController.m */,
+				8CA31F7922D98BAB00CEA828 /* LXHWalletMnemonicWordsView.h */,
+				8CA31F7A22D98BAB00CEA828 /* LXHWalletMnemonicWordsViewController.h */,
+			);
+			path = WalletMnemonicWords;
+			sourceTree = "<group>";
+		};
+		8CA31F7B22D98BAB00CEA828 /* WalletMnemonicWordsOneByOne */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31F7C22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneView.m */,
+				8CA31F7D22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.h */,
+				8CA31F7E22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneView.h */,
+				8CA31F7F22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.m */,
+			);
+			path = WalletMnemonicWordsOneByOne;
+			sourceTree = "<group>";
+		};
+		8CA31F8022D98BAB00CEA828 /* WalletMnemonicPassphrase */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31F8122D98BAB00CEA828 /* LXHWalletMnemonicPassphraseViewController.h */,
+				8CA31F8222D98BAB00CEA828 /* LXHWalletMnemonicPassphraseView.h */,
+				8CA31F8322D98BAB00CEA828 /* LXHWalletMnemonicPassphraseViewController.m */,
+				8CA31F8422D98BAB00CEA828 /* LXHWalletMnemonicPassphraseView.m */,
+			);
+			path = WalletMnemonicPassphrase;
+			sourceTree = "<group>";
+		};
+		8CA31F8522D98BAC00CEA828 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				8CA31F8622D98BAC00CEA828 /* LXHWelcomeViewController.h */,
+				8CA31F8722D98BAC00CEA828 /* LXHWelcomeView.m */,
+				8CA31F8822D98BAC00CEA828 /* LXHWelcomeViewController.m */,
+				8CA31F8922D98BAC00CEA828 /* LXHWelcomeView.h */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
 		8CA7019022D8713500F42814 = {
 			isa = PBXGroup;
 			children = (
@@ -125,20 +289,18 @@
 		8CA701C822D8747F00F42814 /* Init */ = {
 			isa = PBXGroup;
 			children = (
-				8CA701C922D8747F00F42814 /* Welcome */,
+				8CA31F5F22D98BAA00CEA828 /* InitSetup */,
+				8CA31F6E22D98BAA00CEA828 /* InitWallet */,
+				8CA31F6422D98BAA00CEA828 /* SetPassphrase */,
+				8CA31F6922D98BAA00CEA828 /* SetPin */,
+				8CA31F7322D98BAB00CEA828 /* TabBarPage */,
+				8CA31F8022D98BAB00CEA828 /* WalletMnemonicPassphrase */,
+				8CA31F7622D98BAB00CEA828 /* WalletMnemonicWords */,
+				8CA31F7B22D98BAB00CEA828 /* WalletMnemonicWordsOneByOne */,
+				8CA31F8522D98BAC00CEA828 /* Welcome */,
+				8CA31F5522D9872900CEA828 /* InputMnemonicWords */,
 			);
 			path = Init;
-			sourceTree = "<group>";
-		};
-		8CA701C922D8747F00F42814 /* Welcome */ = {
-			isa = PBXGroup;
-			children = (
-				8CA701CA22D8747F00F42814 /* LXHWelcomeViewController.h */,
-				8CA701CB22D8747F00F42814 /* LXHWelcomeView.m */,
-				8CA701CC22D8747F00F42814 /* LXHWelcomeViewController.m */,
-				8CA701CD22D8747F00F42814 /* LXHWelcomeView.h */,
-			);
-			path = Welcome;
 			sourceTree = "<group>";
 		};
 		AB84CFFB5BCDBF404E043B57 /* Pods */ = {
@@ -310,11 +472,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CA31F8F22D98BAC00CEA828 /* LXHSetPinView.m in Sources */,
+				8CA31F5D22D9872A00CEA828 /* LXHInputMnemonicWordsView.m in Sources */,
+				8CA31F9922D98BAC00CEA828 /* LXHWelcomeView.m in Sources */,
+				8CA31F9722D98BAC00CEA828 /* LXHWalletMnemonicPassphraseViewController.m in Sources */,
+				8CA31F9122D98BAC00CEA828 /* LXHInitWalletViewController.m in Sources */,
+				8CA31F8B22D98BAC00CEA828 /* LXHInitSetupView.m in Sources */,
+				8CA31F8D22D98BAC00CEA828 /* LXHSetPassphraseViewController.m in Sources */,
+				8CA31F9422D98BAC00CEA828 /* LXHWalletMnemonicWordsViewController.m in Sources */,
+				8CA31F8E22D98BAC00CEA828 /* LXHSetPinViewController.m in Sources */,
+				8CA31F9222D98BAC00CEA828 /* LXHTabBarPageViewController.m in Sources */,
+				8CA31F9022D98BAC00CEA828 /* LXHInitWalletView.m in Sources */,
+				8CA31F5C22D9872A00CEA828 /* LXHInputMnemonicWordsViewController.m in Sources */,
 				8CA701A122D8713600F42814 /* ViewController.m in Sources */,
-				8CA701CF22D8747F00F42814 /* LXHWelcomeViewController.m in Sources */,
+				8CA31F9622D98BAC00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.m in Sources */,
+				8CA31F8C22D98BAC00CEA828 /* LXHSetPassphraseView.m in Sources */,
 				8CA701AC22D8713E00F42814 /* main.m in Sources */,
-				8CA701CE22D8747F00F42814 /* LXHWelcomeView.m in Sources */,
+				8CA31F9322D98BAC00CEA828 /* LXHWalletMnemonicWordsView.m in Sources */,
 				8CA7019E22D8713600F42814 /* AppDelegate.m in Sources */,
+				8CA31F9A22D98BAC00CEA828 /* LXHWelcomeViewController.m in Sources */,
+				8CA31F9522D98BAC00CEA828 /* LXHWalletMnemonicWordsOneByOneView.m in Sources */,
+				8CA31F5E22D9872A00CEA828 /* LXHWordCell.m in Sources */,
+				8CA31F8A22D98BAC00CEA828 /* LXHInitSetupViewController.m in Sources */,
+				8CA31F9822D98BAC00CEA828 /* LXHWalletMnemonicPassphraseView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,7 +656,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W269QP82T8;
 				INFOPLIST_FILE = BasicMobileWallet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -495,7 +675,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W269QP82T8;
 				INFOPLIST_FILE = BasicMobileWallet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
