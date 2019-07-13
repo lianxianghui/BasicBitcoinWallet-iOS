@@ -67,7 +67,7 @@
         return;
     } 
     if (![self.contentView.inputPinAgainTextFieldWithPlaceHolder.text isEqualToString:self.contentView.inputPinTextFieldWithPlaceHolder.text]) {
-        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请确保L两次输入的数字一致", nil) handler:nil];
+        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请确保两次输入的数字一致", nil) handler:nil];
         return;
     }
     //记录到keychain中
