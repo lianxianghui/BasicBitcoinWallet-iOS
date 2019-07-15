@@ -14,40 +14,25 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
-  - CoreBitcoin (0.6.8.1):
-    - ISO8601DateFormatter
-    - OpenSSL-Universal (= 1.0.1.16)
-  - ISO8601DateFormatter (0.8)
   - Masonry (1.1.0)
-  - OpenSSL-Universal (1.0.1.16)
   - UICKeyChainStore (2.1.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
-  - CoreBitcoin (from `https://raw.github.com/oleganza/CoreBitcoin/master/CoreBitcoin.podspec`)
   - Masonry
   - UICKeyChainStore
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
-    - ISO8601DateFormatter
     - Masonry
-    - OpenSSL-Universal
     - UICKeyChainStore
-
-EXTERNAL SOURCES:
-  CoreBitcoin:
-    :podspec: https://raw.github.com/oleganza/CoreBitcoin/master/CoreBitcoin.podspec
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  CoreBitcoin: 4ac6f6a61e543f08399c2fe57496d4fdcbaf74f9
-  ISO8601DateFormatter: 4551b6ce4f83185425f583b0b3feb3c7b59b942c
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  OpenSSL-Universal: 85ef63bf81d0741b03c8719cd29685c37c59518d
   UICKeyChainStore: 85db518bb1d294366d15ec9b92a416c4e670518f
 
-PODFILE CHECKSUM: 54ce22f4c555b91ddbfc61b8584cebaee6714c0b
+PODFILE CHECKSUM: 0663876a95f17999ba76d35a57f43d51dd5360af
 
 COCOAPODS: 1.5.3

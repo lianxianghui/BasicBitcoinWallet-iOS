@@ -66,6 +66,7 @@
 
 - (void)createWalletButtonClicked:(UIButton *)sender {
     UIViewController *controller = [[LXHWalletMnemonicWordsOneByOneViewController alloc] init];
+    //todo 生成助记词，传入controller
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
