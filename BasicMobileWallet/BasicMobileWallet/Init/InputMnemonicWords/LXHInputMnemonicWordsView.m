@@ -123,7 +123,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.3376471) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请输入第一个助记词", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请输入第1个助记词", nil) attributes:textAttributes];
         _inputTextFieldWithPlaceHolder.attributedPlaceholder = text;
     }
     return _inputTextFieldWithPlaceHolder;

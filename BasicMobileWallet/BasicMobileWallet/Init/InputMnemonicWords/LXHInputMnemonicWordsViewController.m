@@ -9,6 +9,9 @@
 #import "LXHInputMnemonicWordsView.h"
 #import "LXHWordCell.h"
 #import "LXHWalletMnemonicWordsViewController.h"
+#import "BTCMnemonic.h"
+#import "NSString+Base.h"
+#import "UITextField+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -16,10 +19,12 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
-@interface LXHInputMnemonicWordsViewController()<UITableViewDelegate, UITableViewDataSource>
+@interface LXHInputMnemonicWordsViewController()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (nonatomic) LXHInputMnemonicWordsView *contentView;
-
+@property (nonatomic) NSArray *currentPromptWords;
+@property (nonatomic) NSMutableArray *dataForCells;
+@property (nonatomic) NSMutableArray *inputWords;
 @end
 
 @implementation LXHInputMnemonicWordsViewController
@@ -38,6 +43,7 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setSubviewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -46,15 +52,21 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)setSubviewProperties {
+    self.contentView.inputTextFieldWithPlaceHolder.autocapitalizationType = UITextAutocapitalizationTypeNone;
+}
+
 - (void)addActions {
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+    [self.contentView.inputTextFieldWithPlaceHolder addTarget:self action:@selector(inputTextFieldWithPlaceHolderChanged:) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)setDelegates {
     self.contentView.listView.dataSource = self;
     self.contentView.listView.delegate = self;
+    self.contentView.inputTextFieldWithPlaceHolder.delegate = self;
 }
 
 //Actions
@@ -71,21 +83,50 @@
     sender.alpha = 1;
 }
 
+- (void)inputTextFieldWithPlaceHolderChanged:(UITextField *)sender {
+    NSString *text = sender.text;
+    NSString *currentInputText = [text stringByTrimmingWhiteSpace];
+    if (currentInputText.length > 0) {
+        NSMutableArray *currentPromptWords = [NSMutableArray array];
+        for (NSString *word in [BTCMnemonic englishWordList]) {
+            if ([word hasPrefix:currentInputText])
+                [currentPromptWords addObject:word];
+        }
+        self.currentPromptWords = currentPromptWords;
+        [self reloadTableview];
+    }
+}
+
+- (void)clearTextFieldAndPromptWordList {
+    self.contentView.inputTextFieldWithPlaceHolder.text = @"";
+    self.currentPromptWords = nil;
+    [self reloadTableview];
+}
+
+- (void)reloadTableview {
+    self.dataForCells = nil;
+    [self.contentView.listView reloadData];
+}
+
+- (void)refreshTextFieldPlaceholder {
+    NSString *format = NSLocalizedString(@"请输入第%@个助记词", nil);
+    NSString *currentInputPlaceHolder = [NSString stringWithFormat:format, @(self.inputWords.count+1)];
+    [self.contentView.inputTextFieldWithPlaceHolder updateAttributedPlaceholderString:currentInputPlaceHolder];
+}
+
 //Delegate Methods
+
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        //To modify to your data and logic
-        dataForCells = [NSMutableArray array];
+    if (!_dataForCells) {
+        _dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            dic = @{@"text":@"very ", @"isSelectable":@"1", @"cellType":@"LXHWordCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"verb", @"isSelectable":@"1", @"cellType":@"LXHWordCell"};
-            [dataForCells addObject:dic];
+            for (NSString *word in self.currentPromptWords) {
+                NSDictionary *dic = @{@"text":word, @"isSelectable":@"1", @"cellType":@"LXHWordCell"};  
+                [_dataForCells addObject:dic];                
+            }
         }
     }
-    return dataForCells;
+    return _dataForCells;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -99,7 +140,6 @@
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
-        //To modify to your data and logic
         NSArray *data = [self dataForTableView:tableView];
         if (indexPath.row < data.count) {
             NSDictionary *cellData = data[indexPath.row];
@@ -118,7 +158,6 @@
 
 - (NSString *)tableView:(UITableView *)tableView cellContentViewClassStingAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
-    //To modify to your data and logic
     NSString *classString = cellType;
     return classString;
 }
@@ -146,13 +185,10 @@
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(cell.contentView);
         }];
-        //TODO modify to your code
         NSString *isSelectable = [dataForRow valueForKey:@"isSelectable"];
         if ([isSelectable isEqualToString:@"0"])
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    
-    //TODO 
     UIView *view = [cell.contentView viewWithTag:tag];
     if ([cellType isEqualToString:@"LXHWordCell"]) {
         LXHWordCell *cellView = (LXHWordCell *)view;
@@ -167,7 +203,6 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //TODO modify code below if needed
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
     if (tableView == self.contentView.listView) {
         if ([cellType isEqualToString:@"LXHWordCell"])
@@ -188,8 +223,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
+    if (!self.inputWords)
+        self.inputWords = [NSMutableArray array];
+    NSString *selectedWord = self.currentPromptWords[indexPath.row];
+    [self.inputWords addObject:selectedWord];
+    if (self.inputWords.count < 12) {
+        [self clearTextFieldAndPromptWordList];
+        [self refreshTextFieldPlaceholder];
+    } else {
+        LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] init];
+        controller.words = self.inputWords;
+        [self.navigationController pushViewController:controller animated:YES];
+        self.inputWords = nil;
+        [self clearTextFieldAndPromptWordList];
+        [self refreshTextFieldPlaceholder];
+    }
 }
 
 
