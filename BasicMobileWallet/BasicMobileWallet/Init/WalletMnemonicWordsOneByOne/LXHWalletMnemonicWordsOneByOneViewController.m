@@ -9,6 +9,7 @@
 #import "LXHWalletMnemonicWordsOneByOneView.h"
 #import "LXHWalletMnemonicWordsViewController.h"
 #import "UILabel+LXHText.h"
+#import "UIButton+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -71,13 +72,18 @@
     }
 }
 
-- (void)setPreAndNextButtonsEnabled {
+- (void)setPreAndNextButtonsProperties {
+    //pre button enabled
     self.contentView.textButton1.enabled = (self.currentWordIndex != 0);
+    self.contentView.textButton1.alpha = self.contentView.textButton1.enabled ? 1 : 0.5;
+    //button2 text
+    NSString *text = self.currentWordIndex == self.words.count-1 ? NSLocalizedString(@"完成", nil) : NSLocalizedString(@"后一个", nil);
+    [self.contentView.textButton2 updateAttributedTitleString:text forState:UIControlStateNormal];
 }
 
 - (void)refreshContentView {
     [self showCurrentWord];
-    [self setPreAndNextButtonsEnabled];
+    [self setPreAndNextButtonsProperties];
 }
 
 //Actions

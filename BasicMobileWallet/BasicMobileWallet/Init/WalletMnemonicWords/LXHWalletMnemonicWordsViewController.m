@@ -8,6 +8,7 @@
 #import "Masonry.h"
 #import "LXHWalletMnemonicWordsView.h"
 #import "LXHWalletMnemonicPassphraseViewController.h"
+#import "UILabel+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -38,7 +39,7 @@
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
-    [self setDelegates];
+    [self setMnemonicWordsText];
 }
 
 - (void)swipeView:(id)sender {
@@ -54,7 +55,9 @@
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
-- (void)setDelegates {
+- (void)setMnemonicWordsText {
+    NSString *text = [self.words componentsJoinedByString:@" "];
+    [self.contentView.text1 updateAttributedTextString:text];
 }
 
 //Actions
