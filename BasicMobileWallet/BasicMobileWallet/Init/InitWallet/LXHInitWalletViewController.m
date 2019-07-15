@@ -9,6 +9,8 @@
 #import "LXHInitWalletView.h"
 #import "LXHInputMnemonicWordsViewController.h"
 #import "LXHWalletMnemonicWordsOneByOneViewController.h"
+#import "BTCMnemonic.h"
+#import "BTCData.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -65,8 +67,10 @@
 
 
 - (void)createWalletButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHWalletMnemonicWordsOneByOneViewController alloc] init];
-    //todo 生成助记词，传入controller
+    //todo 助记词Entropy用BTCRandomDataWithLength生成是否具有足够的随机性
+    BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithEntropy:BTCRandomDataWithLength(16) password:nil wordListType:BTCMnemonicWordListTypeEnglish];
+    LXHWalletMnemonicWordsOneByOneViewController *controller = [[LXHWalletMnemonicWordsOneByOneViewController alloc] init];
+    controller.words = mnemonic.words;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 

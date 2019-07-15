@@ -8,6 +8,7 @@
 #import "Masonry.h"
 #import "LXHWalletMnemonicWordsOneByOneView.h"
 #import "LXHWalletMnemonicWordsViewController.h"
+#import "UILabel+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -18,7 +19,7 @@
 @interface LXHWalletMnemonicWordsOneByOneViewController()
 
 @property (nonatomic) LXHWalletMnemonicWordsOneByOneView *contentView;
-
+@property (nonatomic) NSUInteger currentWordIndex;
 @end
 
 @implementation LXHWalletMnemonicWordsOneByOneViewController
@@ -39,6 +40,9 @@
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
     [self setDelegates];
+    
+    self.currentWordIndex = 0;
+    [self refreshContentView];
 }
 
 - (void)swipeView:(id)sender {
@@ -56,14 +60,42 @@
 - (void)setDelegates {
 }
 
+- (void)showCurrentWord {
+    if (self.currentWordIndex < self.words.count) {
+        NSString *word = self.words[self.currentWordIndex];
+        [self.contentView.word updateAttributedTextString:word];
+        
+        NSString *currentNumberFormat = NSLocalizedString(@"%@个单词中的第%@个", nil);
+        NSString *currentNumber = [NSString stringWithFormat:currentNumberFormat, @(self.words.count), @(self.currentWordIndex+1)];
+        [self.contentView.number updateAttributedTextString:currentNumber];
+    }
+}
+
+- (void)setPreAndNextButtonsEnabled {
+    self.contentView.textButton1.enabled = (self.currentWordIndex != 0);
+}
+
+- (void)refreshContentView {
+    [self showCurrentWord];
+    [self setPreAndNextButtonsEnabled];
+}
+
 //Actions
 - (void)textButton2Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES]; 
+    if (self.currentWordIndex == self.words.count-1) {
+        LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] init];
+        controller.words = self.words;
+        [self.navigationController pushViewController:controller animated:YES];
+    } else {
+        self.currentWordIndex++;
+        [self refreshContentView];
+    }
 }
 
 
 - (void)textButton1Clicked:(UIButton *)sender {
+    self.currentWordIndex--;
+    [self refreshContentView];
 }
 
 

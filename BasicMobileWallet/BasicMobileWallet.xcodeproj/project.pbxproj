@@ -110,6 +110,7 @@
 		8CA320FF22DC2C4D00CEA828 /* BTCErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA3206922DC2C4C00CEA828 /* BTCErrors.m */; };
 		8CA3210722DC48D000CEA828 /* libcrypto-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA3210522DC48CF00CEA828 /* libcrypto-ios.a */; };
 		8CA3210822DC48D000CEA828 /* libssl-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA3210622DC48CF00CEA828 /* libssl-ios.a */; };
+		8CA3210B22DC731400CEA828 /* UILabel+LXHText.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA3210A22DC731400CEA828 /* UILabel+LXHText.m */; };
 		8CA7019E22D8713600F42814 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA7019D22D8713600F42814 /* AppDelegate.m */; };
 		8CA701A122D8713600F42814 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA701A022D8713600F42814 /* ViewController.m */; };
 		8CA701A422D8713600F42814 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CA701A222D8713600F42814 /* Main.storyboard */; };
@@ -417,6 +418,8 @@
 		8CA320BA22DC2C4D00CEA828 /* lhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lhash.h; sourceTree = "<group>"; };
 		8CA3210522DC48CF00CEA828 /* libcrypto-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libcrypto-ios.a"; sourceTree = "<group>"; };
 		8CA3210622DC48CF00CEA828 /* libssl-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libssl-ios.a"; sourceTree = "<group>"; };
+		8CA3210922DC731400CEA828 /* UILabel+LXHText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+LXHText.h"; sourceTree = "<group>"; };
+		8CA3210A22DC731400CEA828 /* UILabel+LXHText.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+LXHText.m"; sourceTree = "<group>"; };
 		8CA7019922D8713500F42814 /* BasicMobileWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicMobileWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA7019C22D8713600F42814 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8CA7019D22D8713600F42814 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -612,6 +615,8 @@
 			children = (
 				8CA31FD422D9A41300CEA828 /* UIViewController+LXHAlert.h */,
 				8CA31FD522D9A41300CEA828 /* UIViewController+LXHAlert.m */,
+				8CA3210922DC731400CEA828 /* UILabel+LXHText.h */,
+				8CA3210A22DC731400CEA828 /* UILabel+LXHText.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1202,6 +1207,7 @@
 				8CA320EB22DC2C4D00CEA828 /* BTCCurvePoint.m in Sources */,
 				8CA320D122DC2C4D00CEA828 /* BTCProtocolSerialization.m in Sources */,
 				8CA320EC22DC2C4D00CEA828 /* BTCPaymentMethodDetails.m in Sources */,
+				8CA3210B22DC731400CEA828 /* UILabel+LXHText.m in Sources */,
 				8CA31FCB22D9A37600CEA828 /* NSDictionary+Enumerate.m in Sources */,
 				8CA320D622DC2C4D00CEA828 /* BTCSecretSharing.m in Sources */,
 				8CA31FCC22D9A37600CEA828 /* NSMutableArray+Base.m in Sources */,

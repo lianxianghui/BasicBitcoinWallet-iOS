@@ -7,5 +7,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LXHWalletMnemonicWordsViewController : UIViewController
-
+@property NSArray *words;
 @end
