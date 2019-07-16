@@ -233,6 +233,7 @@
     } else {
         LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] init];
         controller.words = self.inputWords;
+        controller.type = LXHWalletMnemonicWordsViewControllerTypeForRestoringExistingWallet;
         [self.navigationController pushViewController:controller animated:YES];
         self.inputWords = nil;
         [self clearTextFieldAndPromptWordList];

@@ -64,6 +64,7 @@
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
     sender.alpha = 1;
+    //TODO 生成钱包并跳转到TabBarController
     UIViewController *controller = [[LXHTabBarPageViewController alloc] init];
     [self.navigationController pushViewController:controller animated:NO]; 
 }

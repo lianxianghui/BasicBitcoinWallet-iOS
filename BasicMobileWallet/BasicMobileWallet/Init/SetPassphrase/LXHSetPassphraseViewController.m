@@ -9,6 +9,7 @@
 #import "LXHSetPassphraseView.h"
 #import "LXHTabBarPageViewController.h"
 #import "UILabel+LXHText.h"
+#import "UIViewController+LXHAlert.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -16,7 +17,7 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
-@interface LXHSetPassphraseViewController()
+@interface LXHSetPassphraseViewController()<UITextFieldDelegate>
 
 @property (nonatomic) LXHSetPassphraseView *contentView;
 
@@ -39,8 +40,7 @@
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
-    if (self.type == LXHSetPassphraseViewControllerForRestoring)
-        [self setViewPropertiesForRestoring];
+    [self setViewProperties];
 }
 
 - (void)swipeView:(id)sender {
@@ -56,18 +56,33 @@
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
+- (void)setViewProperties {
+    self.contentView.inputTextFieldWithPlaceHolder.secureTextEntry = YES;
+    self.contentView.inputAgainTextFieldWithPlaceHolder.secureTextEntry = YES;
+    if (self.type == LXHSetPassphraseViewControllerForRestoring)
+        [self setViewPropertiesForRestoring];
+}
+
 - (void)setViewPropertiesForRestoring {
     [self.contentView.title updateAttributedTextString:NSLocalizedString(@"输入助记词密码", nil)];
     [self.contentView.promot updateAttributedTextString:NSLocalizedString(@"请输入助记词密码", nil)];
 }
 
+- (void)setDelegates {
+    self.contentView.inputTextFieldWithPlaceHolder.delegate = self;
+    self.contentView.inputAgainTextFieldWithPlaceHolder.delegate = self;
+}
+
 //Actions
 - (void)textButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
-    UIViewController *controller = [[LXHTabBarPageViewController alloc] init];
-    [self.navigationController pushViewController:controller animated:NO]; 
+    if (![self.contentView.inputAgainTextFieldWithPlaceHolder.text isEqualToString:self.contentView.inputTextFieldWithPlaceHolder.text]) {
+        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请确保两次输入的密码一致", nil) handler:nil];
+        return;
+    }
+    //TODO store it into keychain or not
+    //TODO 生成钱包并跳转到TabBarController
 }
-
 - (void)textButtonTouchDown:(UIButton *)sender {
     sender.alpha = 0.5;
 }
