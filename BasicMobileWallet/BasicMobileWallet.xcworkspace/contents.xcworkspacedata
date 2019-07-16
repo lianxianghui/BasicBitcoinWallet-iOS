@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <Group
+      location = "group:BasicMobileWallet/Init/SetPin"
+      name = "SetPin">
+      <FileRef
+         location = "group:LXHSetPinViewController.m">
+      </FileRef>
+      <FileRef
+         location = "group:LXHSetPinView.h">
+      </FileRef>
+      <FileRef
+         location = "group:LXHSetPinViewController.h">
+      </FileRef>
+      <FileRef
+         location = "group:LXHSetPinView.m">
+      </FileRef>
+   </Group>
    <FileRef
       location = "group:BasicMobileWallet.xcodeproj">
    </FileRef>
