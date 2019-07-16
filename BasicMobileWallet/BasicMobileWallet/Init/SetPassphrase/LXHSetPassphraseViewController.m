@@ -8,6 +8,7 @@
 #import "Masonry.h"
 #import "LXHSetPassphraseView.h"
 #import "LXHTabBarPageViewController.h"
+#import "UILabel+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -38,7 +39,8 @@
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
-    [self setDelegates];
+    if (self.type == LXHSetPassphraseViewControllerForRestoring)
+        [self setViewPropertiesForRestoring];
 }
 
 - (void)swipeView:(id)sender {
@@ -54,7 +56,9 @@
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
-- (void)setDelegates {
+- (void)setViewPropertiesForRestoring {
+    [self.contentView.title updateAttributedTextString:NSLocalizedString(@"输入助记词密码", nil)];
+    [self.contentView.promot updateAttributedTextString:NSLocalizedString(@"请输入助记词密码", nil)];
 }
 
 //Actions

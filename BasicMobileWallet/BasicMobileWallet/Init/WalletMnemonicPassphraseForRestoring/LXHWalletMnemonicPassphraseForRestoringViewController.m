@@ -1,12 +1,12 @@
-// LXHWalletMnemonicPassphraseViewController.m
+// LXHWalletMnemonicPassphraseForRestoringViewController.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-07-13
+//  Created by lianxianghui on 19-07-16
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
-#import "LXHWalletMnemonicPassphraseViewController.h"
+#import "LXHWalletMnemonicPassphraseForRestoringViewController.h"
 #import "Masonry.h"
-#import "LXHWalletMnemonicPassphraseView.h"
+#import "LXHWalletMnemonicPassphraseForRestoringView.h"
 #import "LXHSetPassphraseViewController.h"
 #import "LXHTabBarPageViewController.h"
 
@@ -16,20 +16,20 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
-@interface LXHWalletMnemonicPassphraseViewController()
+@interface LXHWalletMnemonicPassphraseForRestoringViewController()
 
-@property (nonatomic) LXHWalletMnemonicPassphraseView *contentView;
+@property (nonatomic) LXHWalletMnemonicPassphraseForRestoringView *contentView;
 
 @end
 
-@implementation LXHWalletMnemonicPassphraseViewController
+@implementation LXHWalletMnemonicPassphraseForRestoringViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColorFromRGBA(0xFFFFFF00);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.contentView = [[LXHWalletMnemonicPassphraseView alloc] init];
+    self.contentView = [[LXHWalletMnemonicPassphraseForRestoringView alloc] init];
     [self.view addSubview:self.contentView];
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_topLayoutGuideBottom);
@@ -80,7 +80,7 @@
     sender.alpha = 1;
     LXHSetPassphraseViewController *controller = [[LXHSetPassphraseViewController alloc] init];
     controller.words = self.words;
-    controller.type = LXHSetPassphraseViewControllerForCreating;
+    controller.type = LXHSetPassphraseViewControllerForRestoring;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 

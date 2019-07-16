@@ -8,6 +8,7 @@
 #import "Masonry.h"
 #import "LXHWalletMnemonicWordsView.h"
 #import "LXHWalletMnemonicPassphraseViewController.h"
+#import "LXHWalletMnemonicPassphraseForRestoringViewController.h"
 #import "UILabel+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -63,8 +64,15 @@
 //Actions
 - (void)button1Clicked:(UIButton *)sender {
     sender.alpha = 1;
-    UIViewController *controller = [[LXHWalletMnemonicPassphraseViewController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES]; 
+    if (self.type == LXHWalletMnemonicWordsViewControllerTypeForCreatingNewWallet) {
+        LXHWalletMnemonicPassphraseViewController *controller = [[LXHWalletMnemonicPassphraseViewController alloc] init];
+        controller.words = self.words;
+        [self.navigationController pushViewController:controller animated:YES];
+    } else {
+        LXHWalletMnemonicPassphraseForRestoringViewController *controller = [[LXHWalletMnemonicPassphraseForRestoringViewController alloc] init];
+        controller.words = self.words;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 - (void)button1TouchDown:(UIButton *)sender {

@@ -6,6 +6,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LXHSetPassphraseViewController : UIViewController
+typedef NS_ENUM(NSUInteger, LXHSetPassphraseViewControllerType) {
+    LXHSetPassphraseViewControllerForCreating,
+    LXHSetPassphraseViewControllerForRestoring,
+};
 
+@interface LXHSetPassphraseViewController : UIViewController
+@property (nonatomic) LXHSetPassphraseViewControllerType type;
+@property (nonatomic) NSArray *words;
 @end

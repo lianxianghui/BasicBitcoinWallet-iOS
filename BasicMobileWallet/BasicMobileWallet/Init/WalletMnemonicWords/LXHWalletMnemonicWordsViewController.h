@@ -6,6 +6,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, LXHWalletMnemonicWordsViewControllerType) {
+    LXHWalletMnemonicWordsViewControllerTypeForCreatingNewWallet,
+    LXHWalletMnemonicWordsViewControllerTypeForRestoringExistingWallet,
+};
+
 @interface LXHWalletMnemonicWordsViewController : UIViewController
+@property (nonatomic) LXHWalletMnemonicWordsViewControllerType type;
 @property NSArray *words;
 @end

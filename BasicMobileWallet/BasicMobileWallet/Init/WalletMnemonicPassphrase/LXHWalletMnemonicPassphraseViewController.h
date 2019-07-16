@@ -7,5 +7,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LXHWalletMnemonicPassphraseViewController : UIViewController
-
+@property (nonatomic) NSArray *words;
 @end
