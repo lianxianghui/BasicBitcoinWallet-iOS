@@ -7,10 +7,7 @@
 #import "LXHInitWalletViewController.h"
 #import "Masonry.h"
 #import "LXHInitWalletView.h"
-#import "LXHInputMnemonicWordsViewController.h"
-#import "LXHWalletMnemonicWordsOneByOneViewController.h"
-#import "BTCMnemonic.h"
-#import "BTCData.h"
+#import "LXHSelectMnemonicWordLengthViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -41,7 +38,6 @@
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
-    [self setDelegates];
 }
 
 - (void)swipeView:(id)sender {
@@ -56,22 +52,18 @@
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
-- (void)setDelegates {
-}
-
 //Actions
 - (void)restoreWalletButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHInputMnemonicWordsViewController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES]; 
+    LXHSelectMnemonicWordLengthViewController *controller = [LXHSelectMnemonicWordLengthViewController new];
+    controller.type = LXHSelectMnemonicWordLengthViewControllerTypeForRestoringExistingWallet;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 
 - (void)createWalletButtonClicked:(UIButton *)sender {
-    //todo 助记词Entropy用BTCRandomDataWithLength生成是否具有足够的随机性
-    BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithEntropy:BTCRandomDataWithLength(16) password:nil wordListType:BTCMnemonicWordListTypeEnglish];
-    LXHWalletMnemonicWordsOneByOneViewController *controller = [[LXHWalletMnemonicWordsOneByOneViewController alloc] init];
-    controller.words = mnemonic.words;
-    [self.navigationController pushViewController:controller animated:YES]; 
+    LXHSelectMnemonicWordLengthViewController *controller = [LXHSelectMnemonicWordLengthViewController new];
+    controller.type = LXHSelectMnemonicWordLengthViewControllerTypeForCreatingNewWallet;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 

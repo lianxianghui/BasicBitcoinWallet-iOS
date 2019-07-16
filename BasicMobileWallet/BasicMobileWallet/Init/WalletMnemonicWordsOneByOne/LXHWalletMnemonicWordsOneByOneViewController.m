@@ -10,6 +10,8 @@
 #import "LXHWalletMnemonicWordsViewController.h"
 #import "UILabel+LXHText.h"
 #import "UIButton+LXHText.h"
+#import "BTCMnemonic.h"
+#import "BTCData.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -18,7 +20,7 @@
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
 @interface LXHWalletMnemonicWordsOneByOneViewController()
-
+@property NSArray *words;
 @property (nonatomic) LXHWalletMnemonicWordsOneByOneView *contentView;
 @property (nonatomic) NSUInteger currentWordIndex;
 @end
@@ -40,8 +42,8 @@
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
-    [self setDelegates];
     
+    [self generateRandomMnemonicWords];
     self.currentWordIndex = 0;
     [self refreshContentView];
 }
@@ -58,8 +60,14 @@
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
-- (void)setDelegates {
+- (void)generateRandomMnemonicWords {
+    //todo 助记词Entropy用BTCRandomDataWithLength生成是否具有足够的随机性
+    NSUInteger entropyBitCount = self.wordLength * 32/3;
+    NSUInteger entropyByteCount = entropyBitCount / 8;
+    BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithEntropy:BTCRandomDataWithLength(entropyByteCount) password:nil wordListType:BTCMnemonicWordListTypeEnglish];
+    self.words = mnemonic.words;
 }
+
 
 - (void)showCurrentWord {
     if (self.currentWordIndex < self.words.count) {

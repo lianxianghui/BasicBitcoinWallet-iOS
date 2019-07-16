@@ -7,5 +7,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LXHInputMnemonicWordsViewController : UIViewController
-
+@property (nonatomic) NSUInteger wordLength;
 @end

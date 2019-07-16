@@ -11,6 +11,7 @@
 
 
 #define kLXHKeychainStorePIN @"PIN"
+#define kLXHKeychainStoreMnemonicCodeWords @"MnemonicCodeWords"
 
 NS_ASSUME_NONNULL_BEGIN
 

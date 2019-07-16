@@ -7,5 +7,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LXHWalletMnemonicWordsOneByOneViewController : UIViewController
-@property NSArray *words;
+@property (nonatomic) NSUInteger wordLength;
 @end
