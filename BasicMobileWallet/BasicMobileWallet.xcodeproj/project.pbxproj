@@ -117,6 +117,7 @@
 		8CA3211F22DDD99400CEA828 /* LXHSelectMnemonicWordLengthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA3211D22DDD99300CEA828 /* LXHSelectMnemonicWordLengthView.m */; };
 		8CA3212522DDE61900CEA828 /* LXHSetPinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA3212122DDE61900CEA828 /* LXHSetPinViewController.m */; };
 		8CA3212622DDE61900CEA828 /* LXHSetPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA3212422DDE61900CEA828 /* LXHSetPinView.m */; };
+		8CA3212922DEB85900CEA828 /* LXHPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA3212722DEB85900CEA828 /* LXHPreference.m */; };
 		8CA7019E22D8713600F42814 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA7019D22D8713600F42814 /* AppDelegate.m */; };
 		8CA701A122D8713600F42814 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA701A022D8713600F42814 /* ViewController.m */; };
 		8CA701A422D8713600F42814 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CA701A222D8713600F42814 /* Main.storyboard */; };
@@ -438,6 +439,8 @@
 		8CA3212222DDE61900CEA828 /* LXHSetPinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSetPinView.h; sourceTree = "<group>"; };
 		8CA3212322DDE61900CEA828 /* LXHSetPinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSetPinViewController.h; sourceTree = "<group>"; };
 		8CA3212422DDE61900CEA828 /* LXHSetPinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSetPinView.m; sourceTree = "<group>"; };
+		8CA3212722DEB85900CEA828 /* LXHPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHPreference.m; sourceTree = "<group>"; };
+		8CA3212822DEB85900CEA828 /* LXHPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHPreference.h; sourceTree = "<group>"; };
 		8CA7019922D8713500F42814 /* BasicMobileWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicMobileWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA7019C22D8713600F42814 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8CA7019D22D8713600F42814 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -582,6 +585,8 @@
 				8CA31FC822D9A37600CEA828 /* UI */,
 				8CA31FD722D9AC5600CEA828 /* LXHKeychainStore.h */,
 				8CA31FD822D9AC5600CEA828 /* LXHKeychainStore.m */,
+				8CA3212822DEB85900CEA828 /* LXHPreference.h */,
+				8CA3212722DEB85900CEA828 /* LXHPreference.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1188,6 +1193,7 @@
 				8CA31F5D22D9872A00CEA828 /* LXHInputMnemonicWordsView.m in Sources */,
 				8CA320E122DC2C4D00CEA828 /* BTCCurrencyConverter+Tests.m in Sources */,
 				8CA320D822DC2C4D00CEA828 /* BTCFancyEncryptedMessage.m in Sources */,
+				8CA3212922DEB85900CEA828 /* LXHPreference.m in Sources */,
 				8CA31FD222D9A37600CEA828 /* UIUtils.m in Sources */,
 				8CA3211822DD69E800CEA828 /* LXHWalletMnemonicPassphraseForRestoringViewController.m in Sources */,
 				8CA320BC22DC2C4D00CEA828 /* BTCBlockHeader.m in Sources */,
