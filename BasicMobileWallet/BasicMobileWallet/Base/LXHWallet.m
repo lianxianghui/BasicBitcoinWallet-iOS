@@ -8,9 +8,14 @@
 
 #import "LXHWallet.h"
 #import "CoreBitcoin.h"
+#import "LXHPreference.h"
 
 @interface LXHWallet ()
 @property (nonatomic) BTCKeychain *masterKeychain;
+@property (nonatomic) NSNumber *currentReceivingAddressIndex;
+@property (nonatomic) NSNumber *currentChangeAddressIndex;
+@property (nonatomic) BTCKeychain *currentReceivingAddressKeychain;
+@property (nonatomic) BTCKeychain *currentChangeAddressKeychain;
 @end
 
 @implementation LXHWallet
@@ -26,10 +31,22 @@
 
 - (BTCKeychain *)masterKeychain {
     if (!_masterKeychain) {
-        NSData* seed = BTCDataWithHexCString("000102030405060708090a0b0c0d0e0f");//TODO 
+        NSData* seed = BTCDataWithHexCString("000102030405060708090a0b0c0d0e0f");//TODO temp
         _masterKeychain = [[BTCKeychain alloc] initWithSeed:seed];
     }
     return _masterKeychain;
 }
+
+- (NSNumber *)currentChangeAddressIndex {
+    return [[LXHPreference sharedInstance].mainPreference valueForKey:@"currentChangeAddressIndex"];
+}
+
+- (NSNumber *)currentReceivingAddressIndex {
+    return [[LXHPreference sharedInstance].mainPreference valueForKey:@"currentReceivingAddressIndex"];
+}
+
+//- (BTCKeychain *)currentReceivingAddressKeychain {
+//    NSString *
+//}
 
 @end

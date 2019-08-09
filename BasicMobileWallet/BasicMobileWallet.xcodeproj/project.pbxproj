@@ -523,6 +523,7 @@
 		8CA3225D22DEBE9800CEA828 /* libssl-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libssl-ios.a"; sourceTree = "<group>"; };
 		8CA322A722DEBEBA00CEA828 /* LXHWallet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHWallet.h; sourceTree = "<group>"; };
 		8CA322A822DEBEBA00CEA828 /* LXHWallet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHWallet.m; sourceTree = "<group>"; };
+		8CA322AA22E1D26600CEA828 /* BasicMobileWallet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BasicMobileWallet.entitlements; sourceTree = "<group>"; };
 		8CA7019922D8713500F42814 /* BasicMobileWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicMobileWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA7019C22D8713600F42814 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8CA7019D22D8713600F42814 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -1148,6 +1149,7 @@
 		8CA7019B22D8713500F42814 /* BasicMobileWallet */ = {
 			isa = PBXGroup;
 			children = (
+				8CA322AA22E1D26600CEA828 /* BasicMobileWallet.entitlements */,
 				8CA7019C22D8713600F42814 /* AppDelegate.h */,
 				8CA7019D22D8713600F42814 /* AppDelegate.m */,
 				8CA7019F22D8713600F42814 /* ViewController.h */,
@@ -1262,6 +1264,11 @@
 				TargetAttributes = {
 					8CA7019822D8713500F42814 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+						};
 					};
 					8CA701B022D8713F00F42814 = {
 						CreatedOnToolsVersion = 10.1;
@@ -1631,6 +1638,7 @@
 			baseConfigurationReference = 2F2F2AC54DC6ADCEB9F40B7E /* Pods-BasicMobileWallet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BasicMobileWallet/BasicMobileWallet.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W269QP82T8;
 				HEADER_SEARCH_PATHS = (
@@ -1663,6 +1671,7 @@
 			baseConfigurationReference = 3DCB1758B9104D15E1B757A9 /* Pods-BasicMobileWallet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BasicMobileWallet/BasicMobileWallet.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W269QP82T8;
 				HEADER_SEARCH_PATHS = (

@@ -54,6 +54,7 @@
 
 - (void)setSubviewProperties {
     self.contentView.inputTextFieldWithPlaceHolder.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    self.contentView.inputTextFieldWithPlaceHolder.autocorrectionType = UITextAutocorrectionTypeNo;//For Security Consideration
 }
 
 - (void)addActions {

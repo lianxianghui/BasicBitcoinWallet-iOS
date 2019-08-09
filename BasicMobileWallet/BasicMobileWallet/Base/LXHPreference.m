@@ -26,8 +26,11 @@
 {
     self = [super init];
     if (self) {
+        //TODO keychain or userDefaults ?
         _mainPreference = [NSUserDefaults standardUserDefaults];
-        [_mainPreference registerDefaults:@{kLXHPreferenceBitcoinNetworkType:@(LXHBitcoinNetworkTypeTestnet)}];
+        [_mainPreference registerDefaults:@{kLXHPreferenceBitcoinNetworkType:@(LXHBitcoinNetworkTypeTestnet), 
+                                            @"currentChangeAddressIndex":@(0), 
+                                            @"currentReceivingAddressIndex":@(0)}];
     }
     return self;
 }
