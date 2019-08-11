@@ -121,6 +121,10 @@
 		8CA322A522DEBE9900CEA828 /* libcrypto-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA3225C22DEBE9800CEA828 /* libcrypto-ios.a */; };
 		8CA322A622DEBE9900CEA828 /* libssl-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA3225D22DEBE9800CEA828 /* libssl-ios.a */; };
 		8CA322A922DEBEBA00CEA828 /* LXHWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA322A822DEBEBA00CEA828 /* LXHWallet.m */; };
+		8CA322B6230049A000CEA828 /* RNCryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA322AD230049A000CEA828 /* RNCryptor.m */; };
+		8CA322B7230049A000CEA828 /* RNDecryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA322B3230049A000CEA828 /* RNDecryptor.m */; };
+		8CA322B8230049A000CEA828 /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA322B4230049A000CEA828 /* RNEncryptor.m */; };
+		8CA322B9230049A000CEA828 /* RNCryptorEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA322B5230049A000CEA828 /* RNCryptorEngine.m */; };
 		8CA7019E22D8713600F42814 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA7019D22D8713600F42814 /* AppDelegate.m */; };
 		8CA701A122D8713600F42814 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA701A022D8713600F42814 /* ViewController.m */; };
 		8CA701A422D8713600F42814 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CA701A222D8713600F42814 /* Main.storyboard */; };
@@ -524,6 +528,16 @@
 		8CA322A722DEBEBA00CEA828 /* LXHWallet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHWallet.h; sourceTree = "<group>"; };
 		8CA322A822DEBEBA00CEA828 /* LXHWallet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHWallet.m; sourceTree = "<group>"; };
 		8CA322AA22E1D26600CEA828 /* BasicMobileWallet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BasicMobileWallet.entitlements; sourceTree = "<group>"; };
+		8CA322AC230049A000CEA828 /* RNDecryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNDecryptor.h; sourceTree = "<group>"; };
+		8CA322AD230049A000CEA828 /* RNCryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCryptor.m; sourceTree = "<group>"; };
+		8CA322AE230049A000CEA828 /* RNCryptor+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNCryptor+Private.h"; sourceTree = "<group>"; };
+		8CA322AF230049A000CEA828 /* RNCryptor-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNCryptor-Prefix.pch"; sourceTree = "<group>"; };
+		8CA322B0230049A000CEA828 /* RNCryptorEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCryptorEngine.h; sourceTree = "<group>"; };
+		8CA322B1230049A000CEA828 /* RNEncryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNEncryptor.h; sourceTree = "<group>"; };
+		8CA322B2230049A000CEA828 /* RNCryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCryptor.h; sourceTree = "<group>"; };
+		8CA322B3230049A000CEA828 /* RNDecryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNDecryptor.m; sourceTree = "<group>"; };
+		8CA322B4230049A000CEA828 /* RNEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNEncryptor.m; sourceTree = "<group>"; };
+		8CA322B5230049A000CEA828 /* RNCryptorEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCryptorEngine.m; sourceTree = "<group>"; };
 		8CA7019922D8713500F42814 /* BasicMobileWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicMobileWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA7019C22D8713600F42814 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8CA7019D22D8713600F42814 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -759,6 +773,7 @@
 		8CA3212A22DEBE9800CEA828 /* ThirdPartyCode */ = {
 			isa = PBXGroup;
 			children = (
+				8CA322AB230049A000CEA828 /* RNCryptor */,
 				8CA3212B22DEBE9800CEA828 /* CoreBitcoin */,
 				8CA321BD22DEBE9800CEA828 /* openssl-1.0.1e.tar.gz */,
 				8CA321BE22DEBE9800CEA828 /* update_openssl.sh */,
@@ -1126,6 +1141,23 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
+		8CA322AB230049A000CEA828 /* RNCryptor */ = {
+			isa = PBXGroup;
+			children = (
+				8CA322AC230049A000CEA828 /* RNDecryptor.h */,
+				8CA322AD230049A000CEA828 /* RNCryptor.m */,
+				8CA322AE230049A000CEA828 /* RNCryptor+Private.h */,
+				8CA322AF230049A000CEA828 /* RNCryptor-Prefix.pch */,
+				8CA322B0230049A000CEA828 /* RNCryptorEngine.h */,
+				8CA322B1230049A000CEA828 /* RNEncryptor.h */,
+				8CA322B2230049A000CEA828 /* RNCryptor.h */,
+				8CA322B3230049A000CEA828 /* RNDecryptor.m */,
+				8CA322B4230049A000CEA828 /* RNEncryptor.m */,
+				8CA322B5230049A000CEA828 /* RNCryptorEngine.m */,
+			);
+			path = RNCryptor;
+			sourceTree = "<group>";
+		};
 		8CA7019022D8713500F42814 = {
 			isa = PBXGroup;
 			children = (
@@ -1369,12 +1401,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CA322B8230049A000CEA828 /* RNEncryptor.m in Sources */,
 				8CA31FD122D9A37600CEA828 /* NSArray+FunStyle.m in Sources */,
 				8CA3226C22DEBE9900CEA828 /* BTCBigNumber+Tests.m in Sources */,
 				8CA3228722DEBE9900CEA828 /* BTCProtocolBuffers.m in Sources */,
 				8CA3228822DEBE9900CEA828 /* BTCOutpoint.m in Sources */,
 				8CA3226F22DEBE9900CEA828 /* BTCScript+Tests.m in Sources */,
 				8CA3229122DEBE9900CEA828 /* BTCTransactionOutput.m in Sources */,
+				8CA322B7230049A000CEA828 /* RNDecryptor.m in Sources */,
 				8CA3210E22DC7C9C00CEA828 /* UIButton+LXHText.m in Sources */,
 				8CA31FD622D9A41300CEA828 /* UIViewController+LXHAlert.m in Sources */,
 				8CA3227F22DEBE9900CEA828 /* BTCChainCom.m in Sources */,
@@ -1395,6 +1429,7 @@
 				8CA3226822DEBE9900CEA828 /* BTCQRCode.m in Sources */,
 				8CA3228422DEBE9900CEA828 /* BTCCurrencyConverter+Tests.m in Sources */,
 				8CA3226E22DEBE9900CEA828 /* BTCBigNumber.m in Sources */,
+				8CA322B9230049A000CEA828 /* RNCryptorEngine.m in Sources */,
 				8CA31F9722D98BAC00CEA828 /* LXHWalletMnemonicPassphraseViewController.m in Sources */,
 				8CA31F9122D98BAC00CEA828 /* LXHInitWalletViewController.m in Sources */,
 				8CA31FCE22D9A37600CEA828 /* NSJSONSerialization+VLBase.m in Sources */,
@@ -1442,6 +1477,7 @@
 				8CA3228B22DEBE9900CEA828 /* BTCEncryptedBackup+Tests.m in Sources */,
 				8CA3229022DEBE9900CEA828 /* BTCMerkleTree+Tests.m in Sources */,
 				8CA31F8C22D98BAC00CEA828 /* LXHSetPassphraseView.m in Sources */,
+				8CA322B6230049A000CEA828 /* RNCryptor.m in Sources */,
 				8CA3228222DEBE9900CEA828 /* NS+BTCBase58.m in Sources */,
 				8CA3226B22DEBE9900CEA828 /* BTCTransaction.m in Sources */,
 				8CA701AC22D8713E00F42814 /* main.m in Sources */,
