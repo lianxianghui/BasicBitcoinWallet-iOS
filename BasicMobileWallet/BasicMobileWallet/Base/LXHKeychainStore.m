@@ -7,6 +7,7 @@
 //
 
 #import "LXHKeychainStore.h"
+#import "BTCData.h"
 
 
 @interface LXHKeychainStore ()
@@ -32,6 +33,17 @@ static NSString *const kKeychainStoreServiceKey = @"org.lianxianghui.keychain.st
         _store = [UICKeyChainStore keyChainStoreWithService:kKeychainStoreServiceKey];
     }
     return self;
+}
+
+- (void)savePin:(NSString *)pin {
+    //为了防止keychain中的pin被读取（比如有人越狱了设备)，存储hmac过的pin
+    NSString *key = @"serefddetggg"; //TODO 随便写的，用你自己的代替
+    NSMutableData* hmac = BTCHMACSHA512([key dataUsingEncoding:NSASCIIStringEncoding], [pin dataUsingEncoding:NSASCIIStringEncoding]);
+    [LXHKeychainStore.sharedInstence.store setData:hmac forKey:kLXHKeychainStorePIN];
+}
+
+- (void)saveMnemonic:(NSArray *)mnemonic {
+    
 }
 
 @end

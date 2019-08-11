@@ -72,7 +72,7 @@
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请确保两次输入的数字一致", nil) handler:nil];
         return;
     }
-    [LXHKeychainStore.sharedInstence.store setString:pin forKey:kLXHKeychainStorePIN];//store pin into keychain
+    [LXHKeychainStore.sharedInstence savePin:pin];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) UICKeyChainStore *store;
 
 + (instancetype)sharedInstence;
+
+- (void)savePin:(NSString *)pin;
 @end
 
 NS_ASSUME_NONNULL_END
