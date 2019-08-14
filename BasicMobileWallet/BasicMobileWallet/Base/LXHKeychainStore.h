@@ -18,9 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LXHKeychainStore : NSObject
 @property (nonatomic) UICKeyChainStore *store;
 
-+ (instancetype)sharedInstence;
++ (instancetype)sharedInstance;
 
-- (void)savePin:(NSString *)pin;
+- (BOOL)saveString:(NSString *)string forKey:(NSString *)key;
+- (NSString *)stringForKey:(NSString *)key error:(NSError **)error;
 @end
 
 NS_ASSUME_NONNULL_END

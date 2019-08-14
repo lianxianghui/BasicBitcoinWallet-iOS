@@ -9,6 +9,7 @@
 #import "LXHSetPinView.h"
 #import "UIViewController+LXHAlert.h"
 #import "LXHKeychainStore.h"
+#import "UIUtils.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -63,7 +64,6 @@
 //Actions
 - (void)textButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
-    NSString *pin = self.contentView.inputPinTextFieldWithPlaceHolder.text;
     if (self.contentView.inputPinTextFieldWithPlaceHolder.text.length != 6 || self.contentView.inputPinAgainTextFieldWithPlaceHolder.text.length != 6) {
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请确保输入六位数字", nil) handler:nil];
         return;
@@ -72,8 +72,12 @@
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请确保两次输入的数字一致", nil) handler:nil];
         return;
     }
-    [LXHKeychainStore.sharedInstence savePin:pin];
-    [self.navigationController popViewControllerAnimated:YES];
+    NSString *pin = self.contentView.inputPinTextFieldWithPlaceHolder.text;
+    if (![LXHKeychainStore.sharedInstance saveString:pin forKey:kLXHKeychainStorePIN]) {
+        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"保存PIN码失败", nil) handler:nil];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)textButtonTouchDown:(UIButton *)sender {
