@@ -16,4 +16,10 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+- (void)showOkCancelAlertViewWithTitle:(NSString *)title message:(NSString *)message okHandler:(void (^ __nullable)(UIAlertAction *action))okHandler cancelHandler:(void (^ __nullable)(UIAlertAction *action))cancelHandler {
+    UIAlertController *alert = [UIUtils okCancelAlertViewWithTitle:title message:message okHandler:okHandler cancelHandler:cancelHandler];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
 @end

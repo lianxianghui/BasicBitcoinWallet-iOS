@@ -12,6 +12,7 @@
 
 #define kLXHKeychainStorePIN @"PIN"
 #define kLXHKeychainStoreMnemonicCodeWords @"MnemonicCodeWords"
+#define kLXHKeychainStoreRootSeed @"RootSeed"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,8 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 
-- (BOOL)saveString:(NSString *)string forKey:(NSString *)key;
+- (BOOL)saveData:(nullable NSData *)data forKey:(NSString *)key;
+- (NSData *)dataForKey:(NSString *)key error:(NSError **)error;
+- (BOOL)saveString:(nullable NSString *)string forKey:(NSString *)key;
 - (NSString *)stringForKey:(NSString *)key error:(NSError **)error;
+
+
+- (BOOL)saveMnemonicCodeWords:(nullable NSArray *)mnemonicCodeWords;
+- (NSArray *)mnemonicCodeWordsWithErrorPointer:(NSError **)error;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -15,8 +15,8 @@
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
-- (NSString *)stringByEliminateWhiteSpace {
-    NSArray* parts = [self componentsSeparatedByCharactersInSet :[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+- (NSString *)stringByEliminatingWhiteSpace { //TODO 测试一下
+    NSArray* parts = [self componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString* ret = [parts componentsJoinedByString:@""];
     return ret;
 }

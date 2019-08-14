@@ -10,6 +10,8 @@
 #import "LXHTabBarPageViewController.h"
 #import "UILabel+LXHText.h"
 #import "UIViewController+LXHAlert.h"
+#import "UIViewController+LXHSaveMnemonicAndSeed.h"
+#import "NSString+Base.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -80,8 +82,15 @@
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请确保两次输入的密码一致", nil) handler:nil];
         return;
     }
-    //TODO store it into keychain or not
-    //TODO 生成钱包并跳转到TabBarController
+    NSString *passphrase = self.contentView.inputAgainTextFieldWithPlaceHolder.text;
+    if (![passphrase isEqualToString:[passphrase stringByEliminatingWhiteSpace]]) {
+        [self showOkCancelAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"密码含有空白字符，这是您的本意吗，您确定要使用包含空白字符的密码吗？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
+            [self saveToKeychainWithMnemonicCodeWords:self.words mnemonicPassphrase:passphrase];
+        } cancelHandler:nil];
+    } else {
+        [self saveToKeychainWithMnemonicCodeWords:self.words mnemonicPassphrase:passphrase];     
+    }
+    
 }
 - (void)textButtonTouchDown:(UIButton *)sender {
     sender.alpha = 0.5;

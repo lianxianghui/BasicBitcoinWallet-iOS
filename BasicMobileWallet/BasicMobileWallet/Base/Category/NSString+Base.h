@@ -8,11 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-#define VLStringADD(A, B) [NSString stringWithFormat:@"%@.%@", (A), (B)]
-
 @interface NSString (Base)
 - (NSString *)stringByTrimmingWhiteSpace;
-- (NSString *)stringByEliminateWhiteSpace;
+- (NSString *)stringByEliminatingWhiteSpace;
 - (NSString *)firstLetterCapitalized;
 - (NSString *)firstLetterLowercase;
 - (NSString *)md5;

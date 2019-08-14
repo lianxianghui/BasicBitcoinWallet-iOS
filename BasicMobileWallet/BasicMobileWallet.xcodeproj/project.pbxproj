@@ -132,6 +132,7 @@
 		8CA701A922D8713E00F42814 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CA701A722D8713E00F42814 /* LaunchScreen.storyboard */; };
 		8CA701AC22D8713E00F42814 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA701AB22D8713E00F42814 /* main.m */; };
 		8CA701B622D8713F00F42814 /* BasicMobileWalletTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA701B522D8713F00F42814 /* BasicMobileWalletTests.m */; };
+		8CD269142303B3CD001B9300 /* UIViewController+LXHSaveMnemonicAndSeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD269132303B3CD001B9300 /* UIViewController+LXHSaveMnemonicAndSeed.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -551,6 +552,8 @@
 		8CA701B122D8713F00F42814 /* BasicMobileWalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BasicMobileWalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA701B522D8713F00F42814 /* BasicMobileWalletTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasicMobileWalletTests.m; sourceTree = "<group>"; };
 		8CA701B722D8713F00F42814 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8CD269122303B3CC001B9300 /* UIViewController+LXHSaveMnemonicAndSeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+LXHSaveMnemonicAndSeed.h"; sourceTree = "<group>"; };
+		8CD269132303B3CD001B9300 /* UIViewController+LXHSaveMnemonicAndSeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+LXHSaveMnemonicAndSeed.m"; sourceTree = "<group>"; };
 		DCEBAA8D2A3967C43AB112E0 /* Pods-BasicMobileWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasicMobileWalletTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BasicMobileWalletTests/Pods-BasicMobileWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -660,6 +663,8 @@
 				8CA31F8222D98BAB00CEA828 /* LXHWalletMnemonicPassphraseView.h */,
 				8CA31F8322D98BAB00CEA828 /* LXHWalletMnemonicPassphraseViewController.m */,
 				8CA31F8422D98BAB00CEA828 /* LXHWalletMnemonicPassphraseView.m */,
+				8CD269122303B3CC001B9300 /* UIViewController+LXHSaveMnemonicAndSeed.h */,
+				8CD269132303B3CD001B9300 /* UIViewController+LXHSaveMnemonicAndSeed.m */,
 			);
 			path = WalletMnemonicPassphrase;
 			sourceTree = "<group>";
@@ -1450,6 +1455,7 @@
 				8CA3227E22DEBE9900CEA828 /* BTCEncryptedMessage+Tests.m in Sources */,
 				8CA31F9422D98BAC00CEA828 /* LXHWalletMnemonicWordsViewController.m in Sources */,
 				8CA3212522DDE61900CEA828 /* LXHSetPinViewController.m in Sources */,
+				8CD269142303B3CD001B9300 /* UIViewController+LXHSaveMnemonicAndSeed.m in Sources */,
 				8CA3227D22DEBE9900CEA828 /* BTCPriceSource+Tests.m in Sources */,
 				8CA322A022DEBE9900CEA828 /* BTCData+Tests.m in Sources */,
 				8CA31F9222D98BAC00CEA828 /* LXHTabBarPageViewController.m in Sources */,

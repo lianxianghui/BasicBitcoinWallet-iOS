@@ -9,6 +9,7 @@
 #import "LXHWalletMnemonicPassphraseForRestoringView.h"
 #import "LXHSetPassphraseViewController.h"
 #import "LXHTabBarPageViewController.h"
+#import "UIViewController+LXHSaveMnemonicAndSeed.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -64,9 +65,7 @@
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
     sender.alpha = 1;
-    //TODO 生成钱包并跳转到TabBarController
-    UIViewController *controller = [[LXHTabBarPageViewController alloc] init];
-    [self.navigationController pushViewController:controller animated:NO]; 
+    [self saveToKeychainWithMnemonicCodeWords:self.words mnemonicPassphrase:nil];
 }
 
 - (void)button2TouchDown:(UIButton *)sender {
