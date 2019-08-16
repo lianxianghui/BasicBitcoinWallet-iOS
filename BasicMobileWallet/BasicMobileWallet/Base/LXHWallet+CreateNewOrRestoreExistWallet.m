@@ -8,13 +8,35 @@
 
 #import "LXHWallet+CreateNewOrRestoreExistWallet.h"
 #import "LXHKeychainStore.h"
+#import "LXHWallet+NetworkRequest.h"
 
 @implementation LXHWallet (CreateNewOrRestoreExistWallet)
 
 - (void)createNewWalletInit {
-    //[[LXHKeychainStore sharedInstance].store setString:@(0)]
+    [[LXHKeychainStore sharedInstance].store setString:@"0" forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
+    [[LXHKeychainStore sharedInstance].store setString:@"0" forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
 }
-- (void)restoreExistWalletInit {
+
+- (void)restoreExistWalletInitWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock 
+                                  failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+    [self findLastUsedReceivingAddressIndexWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+        NSNumber *lastUsedReceivingAddressIndex = resultDic[@"lastUsedReceivingAddressIndex"];
+        NSString *currentReceivingAddressIndex = [NSString stringWithFormat:@"%ld", lastUsedReceivingAddressIndex.integerValue+1];
+        [[LXHKeychainStore sharedInstance].store setString:currentReceivingAddressIndex forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
+        
+        [self requestAllTransactionsWithLastUsedReceivingAddressIndex:lastUsedReceivingAddressIndex.integerValue successBlock:^(NSDictionary * _Nonnull resultDic) {
+            NSArray *transactions = resultDic[@"transactions"];
+            NSInteger lastUsedChangeIndex = [self lastUsedChangeAddressIndexWithAllTransactions:transactions];
+            NSString *currentChangeAddressIndex = [NSString stringWithFormat:@"%ld", lastUsedChangeIndex+1];
+            [[LXHKeychainStore sharedInstance].store setString:currentChangeAddressIndex forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
+            successBlock(resultDic);//带上所有事务数据
+        } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+            failureBlock(nil);
+        }];
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        failureBlock(nil);
+    }];
+    
     
 }
 @end

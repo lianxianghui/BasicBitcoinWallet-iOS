@@ -14,6 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)findLastUsedReceivingAddressIndexWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock 
                                              failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
+- (NSInteger)lastUsedChangeAddressIndexWithAllTransactions:(NSArray *)transactions;
+
+- (void)requestAllTransactionsWithLastUsedReceivingAddressIndex:(NSInteger)lastUsedReceivingAddressIndex
+                                                   successBlock:(void (^)(NSDictionary *resultDic))successBlock 
+                                                   failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 @end
 
 NS_ASSUME_NONNULL_END

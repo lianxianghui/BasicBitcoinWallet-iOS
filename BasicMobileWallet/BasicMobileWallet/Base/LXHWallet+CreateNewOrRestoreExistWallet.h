@@ -12,7 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHWallet (CreateNewOrRestoreExistWallet)
 - (void)createNewWalletInit;
-- (void)restoreExistWalletInit;
+- (void)restoreExistWalletInitWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock 
+                                  failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 @end
 
 NS_ASSUME_NONNULL_END

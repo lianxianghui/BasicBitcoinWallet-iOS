@@ -18,7 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHWallet : NSObject
 
-- (NSString *)receivingAddressWithIndex:(uint32_t)index;
+- (NSString *)receivingAddressWithIndex:(NSUInteger)index;
+- (NSString *)changeAddressWithIndex:(NSUInteger)index;
 - (LXHBitcoinNetworkType)currentNetworkType;
 @end
 

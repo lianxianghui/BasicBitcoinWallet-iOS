@@ -65,8 +65,13 @@
     return _changeKeychain;
 }
 
-- (NSString *)receivingAddressWithIndex:(uint32_t)index {
-    BTCKeychain *keychain = [[self receivingKeychain] derivedKeychainAtIndex:index];
+- (NSString *)receivingAddressWithIndex:(NSUInteger)index {
+    BTCKeychain *keychain = [[self receivingKeychain] derivedKeychainAtIndex:(uint32_t)index];
+    return keychain.key.address.string;
+}
+
+- (NSString *)changeAddressWithIndex:(NSUInteger)index {
+    BTCKeychain *keychain = [[self changeKeychain] derivedKeychainAtIndex:(uint32_t)index];
     return keychain.key.address.string;
 }
 

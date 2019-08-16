@@ -39,7 +39,7 @@
 - (void)findLastUsedReceivingAddressIndexFromIndex:(NSUInteger)fromIndex count:(NSUInteger)count
                                                     successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                                                     failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    NSArray *addresses = [self addressesFromIndex:fromIndex count:count];
+    NSArray *addresses = [self receivingAddressesFromIndex:fromIndex count:count];
     [self requestTransactionsWithAddresses:addresses successBlock:^(NSDictionary *resultDic) {
         NSArray *transactions = resultDic[@"items"];
         NSSet *inAddresses = [self inAddressesWithTransactions:transactions];
@@ -55,13 +55,20 @@
     } failureBlock:^(NSDictionary *resultDic) {
         failureBlock(nil);
     }];
-
 }
 
-- (NSMutableArray *)addressesFromIndex:(NSUInteger)fromIndex count:(NSUInteger)count {
+- (NSMutableArray *)receivingAddressesFromIndex:(NSUInteger)fromIndex count:(NSUInteger)count {
     NSMutableArray *addresses = [NSMutableArray array];
     for (NSUInteger i = fromIndex; i < fromIndex+count; i++) {
-        [addresses addObject:[self receivingAddressWithIndex:(uint32_t)i]];
+        [addresses addObject:[self receivingAddressWithIndex:i]];
+    }
+    return addresses;
+}
+
+- (NSArray *)receivingAddressesFromZeroToIndex:(NSUInteger)toIndex {
+    NSMutableArray *addresses = [NSMutableArray array];
+    for (NSUInteger i = 0; i <= toIndex; i++) {
+        [addresses addObject:[self receivingAddressWithIndex:i]];
     }
     return addresses;
 }
@@ -70,9 +77,22 @@
     NSMutableSet *ret = [NSMutableSet set];
     for (NSDictionary *dic in transactions) {
         NSArray *vins = dic[@"vin"];
-        for (NSString *vin in vins) {
-            if (vin)
-                [ret addObject:vin];
+        for (NSDictionary *vin in vins) {
+            if (vin[@"addr"])
+                [ret addObject:vin[@"addr"]];
+        }
+    }
+    return ret;
+}
+
+- (NSSet *)outAddressesWithTransactions:(NSArray *)transactions {
+    NSMutableSet *ret = [NSMutableSet set];
+    for (NSDictionary *dic in transactions) {
+        NSArray *vouts = dic[@"vout"];
+        for (NSDictionary *vout in vouts) {
+            NSString *address = vout[@"scriptPubKey"][@"addresses"][0];//TODO check
+            if (address)
+                [ret addObject:address];
         }
     }
     return ret;
@@ -99,6 +119,31 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         failureBlock(nil);
     }];
+}
+
+- (void)requestAllTransactionsWithLastUsedReceivingAddressIndex:(NSInteger)lastUsedReceivingAddressIndex
+                                                    successBlock:(void (^)(NSDictionary *resultDic))successBlock 
+                                                    failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+    NSArray *allReceivingAddress = [self receivingAddressesFromZeroToIndex:lastUsedReceivingAddressIndex];
+    [self requestTransactionsWithAddresses:allReceivingAddress successBlock:^(NSDictionary *resultDic) {
+        NSArray *transactions = resultDic[@"items"];
+        if (transactions)
+            successBlock(@{@"transactions":transactions});
+        else
+            successBlock(@{@"transactions":@[]});
+    } failureBlock:^(NSDictionary *resultDic) {
+        failureBlock(nil);
+    }];
+} 
+
+- (NSInteger)lastUsedChangeAddressIndexWithAllTransactions:(NSArray *)transactions {
+    NSSet *outAddress = [self outAddressesWithTransactions:transactions];//找零地址肯定在里面
+    for (NSInteger i = outAddress.count; i >= 0; i--) { //从后往前
+        NSString *changeAddress = [self changeAddressWithIndex:i];
+        if ([outAddress containsObject:changeAddress])
+            return i;
+    }
+    return NSNotFound;
 }
 
 
