@@ -7,11 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CoreBitcoin.h"
+
+typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) {
+    LXHBitcoinNetworkTypeMainnet,
+    LXHBitcoinNetworkTypeTestnet3,
+};
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHWallet : NSObject
 
+- (NSString *)receivingAddressWithIndex:(uint32_t)index;
+- (LXHBitcoinNetworkType)currentNetworkType;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -7,15 +7,14 @@
 //
 
 #import "LXHWallet.h"
-#import "CoreBitcoin.h"
-#import "LXHPreference.h"
+#import "LXHKeychainStore.h"
 
 @interface LXHWallet ()
 @property (nonatomic) BTCKeychain *masterKeychain;
-@property (nonatomic) NSNumber *currentReceivingAddressIndex;
-@property (nonatomic) NSNumber *currentChangeAddressIndex;
-@property (nonatomic) BTCKeychain *currentReceivingAddressKeychain;
-@property (nonatomic) BTCKeychain *currentChangeAddressKeychain;
+@property (nonatomic) BTCKeychain *firstAccountKeychain;
+@property (nonatomic) BTCKeychain *receivingKeychain;
+@property (nonatomic) BTCKeychain *changeKeychain;
+
 @end
 
 @implementation LXHWallet
@@ -31,22 +30,73 @@
 
 - (BTCKeychain *)masterKeychain {
     if (!_masterKeychain) {
-        NSData* seed = BTCDataWithHexCString("000102030405060708090a0b0c0d0e0f");//TODO temp
+        NSError *error = nil;
+        NSData* seed = [LXHKeychainStore.sharedInstance dataForKey:kLXHKeychainStoreRootSeed error:&error];
+        if (!seed) 
+            return nil;
         _masterKeychain = [[BTCKeychain alloc] initWithSeed:seed];
     }
     return _masterKeychain;
 }
 
-- (NSNumber *)currentChangeAddressIndex {
-    return [[LXHPreference sharedInstance].mainPreference valueForKey:@"currentChangeAddressIndex"];
+- (BTCKeychain *)firstAccountKeychain {
+    if (!_firstAccountKeychain) {
+        NSString *path;
+        if ([self currentNetworkType] == LXHBitcoinNetworkTypeTestnet3)
+            path = @"m/44'/1'/0'";
+        else
+            path = @"m/44'/0'/0'";
+        _firstAccountKeychain = [self.masterKeychain derivedKeychainWithPath:path];
+    }
+    return _firstAccountKeychain;
 }
 
-- (NSNumber *)currentReceivingAddressIndex {
-    return [[LXHPreference sharedInstance].mainPreference valueForKey:@"currentReceivingAddressIndex"];
+- (BTCKeychain *)receivingKeychain {
+    if (!_receivingKeychain) {
+        _receivingKeychain = [self.firstAccountKeychain derivedKeychainAtIndex:0 hardened:NO];
+    }
+    return _receivingKeychain;
+}
+  
+- (BTCKeychain *)changeKeychain {
+    if (!_changeKeychain) {
+        _changeKeychain = [self.firstAccountKeychain derivedKeychainAtIndex:1 hardened:NO];
+    }
+    return _changeKeychain;
 }
 
-//- (BTCKeychain *)currentReceivingAddressKeychain {
-//    NSString *
-//}
+- (NSString *)receivingAddressWithIndex:(uint32_t)index {
+    BTCKeychain *keychain = [[self receivingKeychain] derivedKeychainAtIndex:index];
+    return keychain.key.address.string;
+}
+
+- (NSInteger)currentAddressIndexWithKey:(NSString *)key {
+    NSError *error = nil;
+    NSString *indexString = [[LXHKeychainStore sharedInstance] stringForKey:key error:&error];
+    if (error)
+        return -1;
+    else {
+        if (indexString)
+            return indexString.integerValue;
+        else
+            return 0;
+    }
+}
+
+- (NSInteger)currentChangeAddressIndex {
+    return [self currentAddressIndexWithKey:kLXHKeychainStoreCurrentChangeAddressIndex];
+}
+
+- (NSInteger)currentReceivingAddressIndex {
+    return [self currentAddressIndexWithKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
+}
+
+- (LXHBitcoinNetworkType)currentNetworkType {
+    NSString *typeString = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHPreferenceBitcoinNetworkType];
+    if (!typeString)
+        return LXHBitcoinNetworkTypeTestnet3;
+    else
+        return typeString.integerValue;
+}
 
 @end

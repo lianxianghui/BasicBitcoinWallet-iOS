@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "UICKeyChainStore.h"
 
-
 #define kLXHKeychainStorePIN @"PIN"
 #define kLXHKeychainStoreMnemonicCodeWords @"MnemonicCodeWords"
 #define kLXHKeychainStoreRootSeed @"RootSeed"
+#define kLXHKeychainStoreCurrentChangeAddressIndex @"CurrentChangeAddressIndex"
+#define kLXHKeychainStoreCurrentReceivingAddressIndex @"CurrentReceivingAddressIndex"
+#define kLXHPreferenceBitcoinNetworkType @"kLXHPreferenceBitcoinNetworkType"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
