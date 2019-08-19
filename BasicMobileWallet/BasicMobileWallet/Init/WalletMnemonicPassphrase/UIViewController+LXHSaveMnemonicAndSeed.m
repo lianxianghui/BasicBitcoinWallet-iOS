@@ -16,7 +16,7 @@
 
 @implementation UIViewController (LXHSaveMnemonicAndSeed)
 
-- (void)saveToKeychainWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords mnemonicPassphrase:(NSString *)mnemonicPassphrase {
+- (void)saveToKeychainWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords mnemonicPassphrase:(nullable NSString *)mnemonicPassphrase {
     BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:mnemonicCodeWords password:mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
     NSData *rootSeed = [mnemonic seed];
     BOOL saveMnemonicResult = [LXHKeychainStore.sharedInstance saveMnemonicCodeWords:mnemonicCodeWords];

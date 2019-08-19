@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (LXHSaveMnemonicAndSeed)
-- (void)saveToKeychainWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords mnemonicPassphrase:(NSString *)mnemonicPassphrase;
+- (void)saveToKeychainWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords mnemonicPassphrase:(nullable NSString *)mnemonicPassphrase;
 @end
 
 NS_ASSUME_NONNULL_END

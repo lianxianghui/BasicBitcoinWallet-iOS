@@ -14,11 +14,6 @@ typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) {
     LXHBitcoinNetworkTypeTestnet3,
 };
 
-typedef NS_ENUM(NSUInteger, LXHWalletCreationType) {
-    LXHWalletCreationTypeCreatingNew,
-    LXHWalletCreationTypeRestoreExist,
-};
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHWallet : NSObject

@@ -10,7 +10,7 @@
 #import "LXHTabBarPageViewController.h"
 #import "UILabel+LXHText.h"
 #import "UIViewController+LXHAlert.h"
-#import "UIViewController+LXHSaveMnemonicAndSeed.h"
+#import "LXHGenerateWalletViewController.h"
 #import "NSString+Base.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -61,7 +61,7 @@
 - (void)setViewProperties {
     self.contentView.inputTextFieldWithPlaceHolder.secureTextEntry = YES;
     self.contentView.inputAgainTextFieldWithPlaceHolder.secureTextEntry = YES;
-    if (self.type == LXHSetPassphraseViewControllerForRestoring)
+    if (self.type == LXHWalletCreationTypeRestoreExist)
         [self setViewPropertiesForRestoring];
 }
 
@@ -85,13 +85,15 @@
     NSString *passphrase = self.contentView.inputAgainTextFieldWithPlaceHolder.text;
     if (![passphrase isEqualToString:[passphrase stringByEliminatingWhiteSpace]]) {
         [self showOkCancelAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"密码含有空白字符，这是您的本意吗，您确定要使用包含空白字符的密码吗？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
-            [self saveToKeychainWithMnemonicCodeWords:self.words mnemonicPassphrase:passphrase];
+            UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithCreationType:self.type mnemonicCodeWords:self.words mnemonicPassphrase:passphrase];
+            [self.navigationController pushViewController:controller animated:YES];
         } cancelHandler:nil];
     } else {
-        [self saveToKeychainWithMnemonicCodeWords:self.words mnemonicPassphrase:passphrase];     
+        UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithCreationType:self.type mnemonicCodeWords:self.words mnemonicPassphrase:passphrase];
+        [self.navigationController pushViewController:controller animated:YES];
     }
-    
 }
+
 - (void)textButtonTouchDown:(UIButton *)sender {
     sender.alpha = 0.5;
 }

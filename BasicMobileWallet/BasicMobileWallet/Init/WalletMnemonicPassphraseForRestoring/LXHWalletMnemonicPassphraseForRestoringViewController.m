@@ -9,7 +9,7 @@
 #import "LXHWalletMnemonicPassphraseForRestoringView.h"
 #import "LXHSetPassphraseViewController.h"
 #import "LXHTabBarPageViewController.h"
-#import "UIViewController+LXHSaveMnemonicAndSeed.h"
+#import "LXHGenerateWalletViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -65,7 +65,8 @@
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
     sender.alpha = 1;
-    [self saveToKeychainWithMnemonicCodeWords:self.words mnemonicPassphrase:nil];
+    UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithCreationType:LXHWalletCreationTypeRestoreExist  mnemonicCodeWords:self.words mnemonicPassphrase:nil];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)button2TouchDown:(UIButton *)sender {
@@ -80,7 +81,7 @@
     sender.alpha = 1;
     LXHSetPassphraseViewController *controller = [[LXHSetPassphraseViewController alloc] init];
     controller.words = self.words;
-    controller.type = LXHSetPassphraseViewControllerForRestoring;
+    controller.type = LXHWalletCreationTypeRestoreExist;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 

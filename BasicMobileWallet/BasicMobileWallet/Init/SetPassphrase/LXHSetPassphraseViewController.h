@@ -5,13 +5,10 @@
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import <UIKit/UIKit.h>
+#import "LXHWallet+CreateNewOrRestoreExistWallet.h"
 
-typedef NS_ENUM(NSUInteger, LXHSetPassphraseViewControllerType) {
-    LXHSetPassphraseViewControllerForCreating,
-    LXHSetPassphraseViewControllerForRestoring,
-};
 
 @interface LXHSetPassphraseViewController : UIViewController
-@property (nonatomic) LXHSetPassphraseViewControllerType type;
+@property (nonatomic) LXHWalletCreationType type;
 @property (nonatomic) NSArray *words;
 @end

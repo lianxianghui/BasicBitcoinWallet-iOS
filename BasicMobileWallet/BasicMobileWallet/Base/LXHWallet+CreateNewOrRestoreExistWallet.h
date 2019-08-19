@@ -10,6 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, LXHWalletCreationType) {
+    LXHWalletCreationTypeCreatingNew,
+    LXHWalletCreationTypeRestoreExist,
+};
+
 @interface LXHWallet (CreateNewOrRestoreExistWallet)
 - (void)createNewWalletInit;
 - (void)restoreExistWalletInitWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock 
