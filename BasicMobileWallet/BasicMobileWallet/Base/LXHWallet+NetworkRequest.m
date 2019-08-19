@@ -143,7 +143,7 @@
         if ([outAddress containsObject:changeAddress])
             return i;
     }
-    return NSNotFound;
+    return -1;//没有使用过找零地址
 }
 
 
