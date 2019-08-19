@@ -65,7 +65,7 @@
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
     sender.alpha = 1;
-    UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithCreationType:LXHWalletCreationTypeRestoreExist  mnemonicCodeWords:self.words mnemonicPassphrase:nil];
+    UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithCreationType:LXHWalletGenerationTypeRestoringExist mnemonicCodeWords:self.words mnemonicPassphrase:nil];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -81,7 +81,7 @@
     sender.alpha = 1;
     LXHSetPassphraseViewController *controller = [[LXHSetPassphraseViewController alloc] init];
     controller.words = self.words;
-    controller.type = LXHWalletCreationTypeRestoreExist;
+    controller.type = LXHWalletGenerationTypeRestoringExist;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 

@@ -8,7 +8,7 @@
 
 @interface LXHGenerateWalletView : UIView
 
-@property (nonatomic) UIButton *createWalletButton;
+@property (nonatomic) UIButton *generateMainnetWalletButton;
 @property (nonatomic) UILabel *desc1;
 @property (nonatomic) UIView *customNavigationBar;
 @property (nonatomic) UIView *bottomLine;
@@ -16,5 +16,6 @@
 @property (nonatomic) UIButton *leftImageButton;
 @property (nonatomic) UILabel *leftText;
 @property (nonatomic) UIImageView *leftBarItemImage;
+@property (nonatomic) UIButton *generateTestnet3WalletButton;
 
 @end

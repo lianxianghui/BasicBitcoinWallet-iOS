@@ -15,7 +15,7 @@
 @property (nonatomic) BTCKeychain *changeKeychain;
 @property (nonatomic) NSInteger currentChangeAddressIndex;
 @property (nonatomic) NSInteger currentReceivingAddressIndex;
-@property (nonatomic) LXHBitcoinNetworkType currentNetworkType;
+@property (nonatomic, readwrite) LXHBitcoinNetworkType currentNetworkType;
 @end
 
 @implementation LXHWallet

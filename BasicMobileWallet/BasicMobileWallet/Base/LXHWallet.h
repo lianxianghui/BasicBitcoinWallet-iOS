@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHWallet : NSObject
 
+@property (nonatomic, readonly) LXHBitcoinNetworkType currentNetworkType;
+
 - (instancetype)initWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                        mnemonicPassphrase:(NSString *)mnemonicPassphrase;
 

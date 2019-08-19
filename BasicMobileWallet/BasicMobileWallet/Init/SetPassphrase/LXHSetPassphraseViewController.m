@@ -61,7 +61,7 @@
 - (void)setViewProperties {
     self.contentView.inputTextFieldWithPlaceHolder.secureTextEntry = YES;
     self.contentView.inputAgainTextFieldWithPlaceHolder.secureTextEntry = YES;
-    if (self.type == LXHWalletCreationTypeRestoreExist)
+    if (self.type == LXHWalletGenerationTypeRestoringExist)
         [self setViewPropertiesForRestoring];
 }
 

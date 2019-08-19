@@ -11,6 +11,7 @@
 #import "LXHKeychainStore.h"
 #import "UIViewController+LXHAlert.h"
 #import "CoreBitcoin.h"
+#import "LXHWalletDataManager.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -63,40 +64,19 @@
 }
 
 - (void)addActions {
-    [self.contentView.createWalletButton addTarget:self action:@selector(createWalletButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView.generateMainnetWalletButton addTarget:self action:@selector(generateMainnetWalletButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+    [self.contentView.generateTestnet3WalletButton addTarget:self action:@selector(generateTestnet3WalletButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setDelegates {
 }
 
 //Actions
-- (void)createWalletButtonClicked:(UIButton *)sender {
-    if (self.creationType == LXHWalletCreationTypeCreatingNew) {
-        BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:self.mnemonicCodeWords password:self.mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
-        NSData *rootSeed = [mnemonic seed];
-        BOOL saveResult = [LXHKeychainStore.sharedInstance saveMnemonicCodeWords:self.mnemonicCodeWords];
-        saveResult = saveResult && [LXHKeychainStore.sharedInstance saveData:rootSeed forKey:kLXHKeychainStoreRootSeed];
-        saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@"0" forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
-        saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@"0" forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
-        if (saveResult) {
-            [self pushTabBarViewController];
-        } else {
-            //show alert
-        }
-    } else {
-        
-    }
-
-}
-
-
-
-- (void)pushTabBarViewController {
-    UIViewController *controller = [[LXHTabBarPageViewController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES]; 
+- (void)generateMainnetWalletButtonClicked:(UIButton *)sender {
+    [self generateWalletWithNetType:LXHBitcoinNetworkTypeMainnet];
 }
 
 - (void)leftImageButtonClicked:(UIButton *)sender {
@@ -111,5 +91,34 @@
 - (void)leftImageButtonTouchUpOutside:(UIButton *)sender {
     sender.alpha = 1;
 }
+
+- (void)generateTestnet3WalletButtonClicked:(UIButton *)sender {
+    [self generateWalletWithNetType:LXHBitcoinNetworkTypeTestnet3];
+}
+
+- (void)generateWalletWithNetType:(LXHBitcoinNetworkType)netType {
+    if (self.creationType == LXHWalletGenerationTypeGeneratingNew) {
+        if ([[LXHWalletDataManager sharedInstance] generateNewWalletAndSaveDataWithMnemonicCodeWords:_mnemonicCodeWords mnemonicPassphrase:_mnemonicPassphrase netType:netType]) {
+             [self pushTabBarViewController];
+        } else {
+            [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"发生了无法处理的错误，如果方便请联系并告知开发人员", nil) handler:nil];
+        }
+    } else {
+        //todo show indicator
+        [[LXHWalletDataManager sharedInstance] restoreExistWalletAndSaveDataWithMnemonicCodeWords:_mnemonicCodeWords mnemonicPassphrase:_mnemonicPassphrase netType:netType successBlock:^(NSDictionary * _Nonnull resultDic) {
+            //stop indicator
+            
+        } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+            //stop indicator
+        }];
+    }
+    
+}
+
+- (void)pushTabBarViewController {
+    UIViewController *controller = [[LXHTabBarPageViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES]; 
+}
+
 
 @end

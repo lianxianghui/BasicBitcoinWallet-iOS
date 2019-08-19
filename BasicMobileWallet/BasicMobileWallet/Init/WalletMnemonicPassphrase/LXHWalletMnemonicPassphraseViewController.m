@@ -8,8 +8,6 @@
 #import "Masonry.h"
 #import "LXHWalletMnemonicPassphraseView.h"
 #import "LXHSetPassphraseViewController.h"
-#import "UIViewController+LXHSaveMnemonicAndSeed.h"
-#import "LXHWallet+CreateNewOrRestoreExistWallet.h"
 #import "LXHGenerateWalletViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -66,7 +64,7 @@
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
     sender.alpha = 1;
-    UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithCreationType:LXHWalletCreationTypeCreatingNew  mnemonicCodeWords:self.words mnemonicPassphrase:nil];
+    UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithCreationType:LXHWalletGenerationTypeGeneratingNew  mnemonicCodeWords:self.words mnemonicPassphrase:nil];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -82,7 +80,7 @@
     sender.alpha = 1;
     LXHSetPassphraseViewController *controller = [[LXHSetPassphraseViewController alloc] init];
     controller.words = self.words;
-    controller.type = LXHWalletCreationTypeCreatingNew;
+    controller.type = LXHWalletGenerationTypeGeneratingNew;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 

@@ -11,6 +11,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
+    LXHWalletGenerationTypeGeneratingNew,
+    LXHWalletGenerationTypeRestoringExist,
+};
+
 @interface LXHWalletDataManager : NSObject
 
 + (LXHWalletDataManager *)sharedInstance;
@@ -18,12 +23,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) LXHWallet *wallet;
 
 - (BOOL)generateNewWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
-                            mnemonicPassphrase:(NSString *)mnemonicPassphrase;
+                                       mnemonicPassphrase:(NSString *)mnemonicPassphrase
+                                                  netType:(LXHBitcoinNetworkType)netType;
 
 - (void)restoreExistWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
-                        mnemonicPassphrase:(NSString *)mnemonicPassphrase
-                              successBlock:(void (^)(NSDictionary *resultDic))successBlock 
-                              failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
+                                        mnemonicPassphrase:(NSString *)mnemonicPassphrase
+                                                   netType:(LXHBitcoinNetworkType)netType
+                                              successBlock:(void (^)(NSDictionary *resultDic))successBlock 
+                                              failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 @end
 
 NS_ASSUME_NONNULL_END
