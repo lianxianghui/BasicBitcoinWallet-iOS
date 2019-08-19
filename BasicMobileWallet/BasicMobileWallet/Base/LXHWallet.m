@@ -21,18 +21,19 @@
 @implementation LXHWallet
 
 - (instancetype)initWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
-                       mnemonicPassphrase:(NSString *)mnemonicPassphrase {
+                       mnemonicPassphrase:(NSString *)mnemonicPassphrase
+                       currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType {
     self = [super init];
     if (self) {
-        return [self initWithMnemonicCodeWords:mnemonicCodeWords mnemonicPassphrase:mnemonicPassphrase currentChangeAddressIndex:0 currentReceivingAddressIndex:0 currentNetworkType:LXHBitcoinNetworkTypeTestnet3];
+        return [self initWithMnemonicCodeWords:mnemonicCodeWords mnemonicPassphrase:mnemonicPassphrase currentChangeAddressIndex:0 currentReceivingAddressIndex:0 currentNetworkType:currentNetworkType];
     }
     return self;
 }
 
 - (instancetype)initWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                        mnemonicPassphrase:(NSString *)mnemonicPassphrase
-                currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
              currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
+                currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
                        currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType {
     self = [super init];
     if (self) {
@@ -46,13 +47,13 @@
     return self;
 }
 
-- (instancetype)initWithRootSeed:(NSData *)rootSeed {
-    return [self initWithRootSeed:rootSeed currentChangeAddressIndex:0 currentReceivingAddressIndex:0 currentNetworkType:LXHBitcoinNetworkTypeTestnet3];
+- (instancetype)initWithRootSeed:(NSData *)rootSeed currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType {
+    return [self initWithRootSeed:rootSeed currentReceivingAddressIndex:0 currentChangeAddressIndex:0 currentNetworkType:currentNetworkType];
 }
 
 - (instancetype)initWithRootSeed:(NSData *)rootSeed
-                currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
-             currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
+    currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
+       currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
               currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType {
     self = [super init];
     if (self) {

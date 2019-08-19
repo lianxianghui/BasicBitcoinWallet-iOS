@@ -10,8 +10,8 @@
 #import "CoreBitcoin.h"
 
 typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) {
-    LXHBitcoinNetworkTypeMainnet,
-    LXHBitcoinNetworkTypeTestnet3,
+    LXHBitcoinNetworkTypeMainnet = 0, 
+    LXHBitcoinNetworkTypeTestnet3 = 1,
 };
 
 NS_ASSUME_NONNULL_BEGIN
@@ -21,18 +21,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) LXHBitcoinNetworkType currentNetworkType;
 
 - (instancetype)initWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
-                       mnemonicPassphrase:(NSString *)mnemonicPassphrase;
+                       mnemonicPassphrase:(NSString *)mnemonicPassphrase
+                       currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType;
 
 - (instancetype)initWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                        mnemonicPassphrase:(NSString *)mnemonicPassphrase
-                currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
              currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
+                currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
                        currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType;
 
-- (instancetype)initWithRootSeed:(NSData *)rootSeed;
+- (instancetype)initWithRootSeed:(NSData *)rootSeed currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType;;
 - (instancetype)initWithRootSeed:(NSData *)rootSeed
-       currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
     currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
+       currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
               currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType;
 
 - (NSString *)receivingAddressWithIndex:(NSUInteger)index;

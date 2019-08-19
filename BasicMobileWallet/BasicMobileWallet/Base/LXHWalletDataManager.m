@@ -22,14 +22,32 @@
     return sharedInstance;
 }
 
+- (LXHWallet *)wallet {
+    if (!_wallet) {
+        NSData *rootSeed = [[LXHKeychainStore sharedInstance] decryptedDataForKey:kLXHKeychainStoreRootSeed error:nil];
+        NSString *receivingAddressIndex = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
+        NSString *changeAddressIndex = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreCurrentChangeAddressIndex];
+        NSString *netType = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreBitcoinNetType];
+        if (rootSeed && receivingAddressIndex && changeAddressIndex && netType) {
+            _wallet = [[LXHWallet alloc] initWithRootSeed:rootSeed 
+                             currentReceivingAddressIndex:receivingAddressIndex.integerValue 
+                                currentChangeAddressIndex:changeAddressIndex.integerValue
+                                       currentNetworkType:netType.integerValue];
+        }
+    }
+    return _wallet;
+}
+
 - (BOOL)generateNewWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
-                                       mnemonicPassphrase:(NSString *)mnemonicPassphrase {
+                                       mnemonicPassphrase:(NSString *)mnemonicPassphrase
+                                                    netType:(LXHBitcoinNetworkType)netType{
     BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:mnemonicCodeWords password:mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
     NSData *rootSeed = [mnemonic seed];
     BOOL saveResult = [LXHKeychainStore.sharedInstance encryptAndSetMnemonicCodeWords:mnemonicCodeWords];
     saveResult = saveResult && [LXHKeychainStore.sharedInstance encryptAndSetData:rootSeed forKey:kLXHKeychainStoreRootSeed];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@"0" forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@"0" forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
+    saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@(netType).stringValue forKey:kLXHKeychainStoreBitcoinNetType];
     if (!saveResult) {
         [self clearData];
     }
@@ -38,11 +56,12 @@
 
 -(void)restoreExistWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                         mnemonicPassphrase:(NSString *)mnemonicPassphrase
+                                            netType:(LXHBitcoinNetworkType)netType
                                               successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                                               failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:mnemonicCodeWords password:mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
     NSData *rootSeed = [mnemonic seed];
-    LXHWallet *wallet = [[LXHWallet alloc] initWithRootSeed:rootSeed];
+    LXHWallet *wallet = [[LXHWallet alloc] initWithRootSeed:rootSeed currentNetworkType:netType];
     LXHWalletAddressSearcher *searcher = [[LXHWalletAddressSearcher alloc] initWithWallet:wallet];
     [searcher searchWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
         NSNumber *lastUsedReceivingAddressIndex = resultDic[@"lastUsedReceivingAddressIndex"];
@@ -54,6 +73,7 @@
         saveResult = saveResult && [LXHKeychainStore.sharedInstance encryptAndSetData:rootSeed forKey:kLXHKeychainStoreRootSeed];
         saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:currentReceivingAddressIndex forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
         saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:currentChangeAddressIndex forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
+        saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@(netType).stringValue forKey:kLXHKeychainStoreBitcoinNetType];
         if (!saveResult) {
             [self clearData];
             failureBlock(nil);
@@ -65,12 +85,12 @@
     }];
 }
 
-
 - (BOOL)clearData {
     BOOL saveResult = [LXHKeychainStore.sharedInstance encryptAndSetMnemonicCodeWords:nil];
     saveResult = saveResult && [LXHKeychainStore.sharedInstance encryptAndSetData:nil forKey:kLXHKeychainStoreRootSeed];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
+    saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreBitcoinNetType];
     return saveResult;
 }
 
