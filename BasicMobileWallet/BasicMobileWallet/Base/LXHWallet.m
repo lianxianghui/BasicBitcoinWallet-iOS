@@ -67,7 +67,7 @@
 - (BTCKeychain *)firstAccountKeychain {
     if (!_firstAccountKeychain) {
         NSString *path;
-        if ([self currentNetworkType] == LXHBitcoinNetworkTypeTestnet3)
+        if (_currentNetworkType == LXHBitcoinNetworkTypeTestnet3)
             path = @"m/44'/1'/0'";
         else
             path = @"m/44'/0'/0'";

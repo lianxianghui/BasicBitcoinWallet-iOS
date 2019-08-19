@@ -35,7 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)receivingAddressWithIndex:(NSUInteger)index;
 - (NSString *)changeAddressWithIndex:(NSUInteger)index;
-- (LXHBitcoinNetworkType)currentNetworkType;
 
 @end
 
