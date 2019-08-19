@@ -24,14 +24,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 
-- (BOOL)encryptAndSaveData:(nullable NSData *)data forKey:(NSString *)key;
+- (BOOL)encryptAndSetData:(nullable NSData *)data forKey:(NSString *)key;
 - (NSData *)decryptedDataForKey:(NSString *)key error:(NSError **)error;
-- (BOOL)encryptAndSaveString:(nullable NSString *)string forKey:(NSString *)key;
+- (BOOL)encryptAndSetString:(nullable NSString *)string forKey:(NSString *)key;
 - (NSString *)decryptedStringForKey:(NSString *)key error:(NSError **)error;
 
 
-- (BOOL)saveMnemonicCodeWords:(nullable NSArray *)mnemonicCodeWords;
-- (NSArray *)mnemonicCodeWordsWithErrorPointer:(NSError **)error;
+- (BOOL)encryptAndSetMnemonicCodeWords:(nullable NSArray *)mnemonicCodeWords;
+- (NSArray *)decryptedMnemonicCodeWordsWithErrorPointer:(NSError **)error;
 @end
 
 NS_ASSUME_NONNULL_END

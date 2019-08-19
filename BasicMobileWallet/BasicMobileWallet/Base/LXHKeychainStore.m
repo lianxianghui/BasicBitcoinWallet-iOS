@@ -43,7 +43,7 @@ static NSString *const aesPassword = @"serefddetggg"; //TODO 随便写的，用�
 }
 
 //备注：为了简化逻辑，没有加入对用AES加密后的数据进行验证的逻辑
-- (BOOL)encryptAndSaveData:(NSData *)data forKey:(NSString *)key {
+- (BOOL)encryptAndSetData:(NSData *)data forKey:(NSString *)key {
     if (!data)
         return [self.store setData:nil forKey:key];
     
@@ -68,9 +68,9 @@ static NSString *const aesPassword = @"serefddetggg"; //TODO 随便写的，用�
     return decryptedData;
 }
 
-- (BOOL)encryptAndSaveString:(NSString *)string forKey:(NSString *)key {
+- (BOOL)encryptAndSetString:(NSString *)string forKey:(NSString *)key {
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    return [self encryptAndSaveData:data forKey:key];
+    return [self encryptAndSetData:data forKey:key];
 }
 
 - (NSString *)decryptedStringForKey:(NSString *)key error:(NSError **)error {
@@ -83,8 +83,8 @@ static NSString *const aesPassword = @"serefddetggg"; //TODO 随便写的，用�
     }
 }
 
-- (BOOL)saveMnemonicCodeWords:(NSArray *)mnemonicCodeWords {
-    return [self encryptAndSaveString:[mnemonicCodeWords componentsJoinedByString:@" "]  forKey:kLXHKeychainStoreMnemonicCodeWords];
+- (BOOL)encryptAndSetMnemonicCodeWords:(NSArray *)mnemonicCodeWords {
+    return [self encryptAndSetString:[mnemonicCodeWords componentsJoinedByString:@" "]  forKey:kLXHKeychainStoreMnemonicCodeWords];
 }
 
 - (NSArray *)mnemonicCodeWordsWithErrorPointer:(NSError **)error {
