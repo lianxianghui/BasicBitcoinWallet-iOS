@@ -78,6 +78,10 @@
 //Actions
 - (void)textButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    if (self.contentView.inputTextFieldWithPlaceHolder.text.length == 0 || self.contentView.inputAgainTextFieldWithPlaceHolder.text.length == 0) {
+        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请输入密码", nil) handler:nil];
+        return;
+    }
     if (![self.contentView.inputAgainTextFieldWithPlaceHolder.text isEqualToString:self.contentView.inputTextFieldWithPlaceHolder.text]) {
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请确保两次输入的密码一致", nil) handler:nil];
         return;
