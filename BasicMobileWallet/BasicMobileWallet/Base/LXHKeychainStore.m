@@ -43,7 +43,7 @@ static NSString *const aesPassword = @"serefddetggg"; //TODO 随便写的，用�
 }
 
 //备注：为了简化逻辑，没有加入对用AES加密后的数据进行验证的逻辑
-- (BOOL)saveData:(NSData *)data forKey:(NSString *)key {
+- (BOOL)encryptAndSaveData:(NSData *)data forKey:(NSString *)key {
     if (!data)
         return [self.store setData:nil forKey:key];
     
@@ -59,7 +59,7 @@ static NSString *const aesPassword = @"serefddetggg"; //TODO 随便写的，用�
     }
 }
 
-- (NSData *)dataForKey:(NSString *)key error:(NSError **)error {
+- (NSData *)decryptedDataForKey:(NSString *)key error:(NSError **)error {
     NSData *encryptedData = [self.store dataForKey:key];
     if (!encryptedData) {
         return nil;
@@ -68,13 +68,13 @@ static NSString *const aesPassword = @"serefddetggg"; //TODO 随便写的，用�
     return decryptedData;
 }
 
-- (BOOL)saveString:(NSString *)string forKey:(NSString *)key {
+- (BOOL)encryptAndSaveString:(NSString *)string forKey:(NSString *)key {
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    return [self saveData:data forKey:key];
+    return [self encryptAndSaveData:data forKey:key];
 }
 
-- (NSString *)stringForKey:(NSString *)key error:(NSError **)error {
-    NSData *data = [self dataForKey:key error:error];
+- (NSString *)decryptedStringForKey:(NSString *)key error:(NSError **)error {
+    NSData *data = [self decryptedDataForKey:key error:error];
     if (data) {
         NSString *pin = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         return pin;
@@ -84,11 +84,11 @@ static NSString *const aesPassword = @"serefddetggg"; //TODO 随便写的，用�
 }
 
 - (BOOL)saveMnemonicCodeWords:(NSArray *)mnemonicCodeWords {
-    return [self saveString:[mnemonicCodeWords componentsJoinedByString:@" "]  forKey:kLXHKeychainStoreMnemonicCodeWords];
+    return [self encryptAndSaveString:[mnemonicCodeWords componentsJoinedByString:@" "]  forKey:kLXHKeychainStoreMnemonicCodeWords];
 }
 
 - (NSArray *)mnemonicCodeWordsWithErrorPointer:(NSError **)error {
-    NSString *string = [self stringForKey:kLXHKeychainStoreMnemonicCodeWords error:error];
+    NSString *string = [self decryptedStringForKey:kLXHKeychainStoreMnemonicCodeWords error:error];
     if (string)
         return [string componentsSeparatedByString:@" "];
     else 

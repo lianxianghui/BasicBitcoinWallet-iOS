@@ -14,7 +14,7 @@
 #define kLXHKeychainStoreRootSeed @"RootSeed"
 #define kLXHKeychainStoreCurrentChangeAddressIndex @"CurrentChangeAddressIndex"
 #define kLXHKeychainStoreCurrentReceivingAddressIndex @"CurrentReceivingAddressIndex"
-#define kLXHPreferenceBitcoinNetworkType @"kLXHPreferenceBitcoinNetworkType"
+#define kLXHKeychainStoreBitcoinNetType @"kLXHKeychainStoreBitcoinNetType"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -24,10 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 
-- (BOOL)saveData:(nullable NSData *)data forKey:(NSString *)key;
-- (NSData *)dataForKey:(NSString *)key error:(NSError **)error;
-- (BOOL)saveString:(nullable NSString *)string forKey:(NSString *)key;
-- (NSString *)stringForKey:(NSString *)key error:(NSError **)error;
+- (BOOL)encryptAndSaveData:(nullable NSData *)data forKey:(NSString *)key;
+- (NSData *)decryptedDataForKey:(NSString *)key error:(NSError **)error;
+- (BOOL)encryptAndSaveString:(nullable NSString *)string forKey:(NSString *)key;
+- (NSString *)decryptedStringForKey:(NSString *)key error:(NSError **)error;
 
 
 - (BOOL)saveMnemonicCodeWords:(nullable NSArray *)mnemonicCodeWords;
