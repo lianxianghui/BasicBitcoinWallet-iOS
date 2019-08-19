@@ -13,5 +13,8 @@
 @property (nonatomic) UIView *customNavigationBar;
 @property (nonatomic) UIView *bottomLine;
 @property (nonatomic) UILabel *title;
+@property (nonatomic) UIButton *leftImageButton;
+@property (nonatomic) UILabel *leftText;
+@property (nonatomic) UIImageView *leftBarItemImage;
 
 @end

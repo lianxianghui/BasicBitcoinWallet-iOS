@@ -25,9 +25,8 @@
 
 @implementation LXHGenerateWalletViewController
 
-
 - (instancetype)initWithCreationType:(LXHWalletCreationType)creationType
-                        mnemonicCodeWords:(NSArray *)mnemonicCodeWords
+                   mnemonicCodeWords:(NSArray *)mnemonicCodeWords
                   mnemonicPassphrase:(NSString *)mnemonicPassphrase {
     self = [super init];
     if (self) {
@@ -62,6 +61,9 @@
 
 - (void)addActions {
     [self.contentView.createWalletButton addTarget:self action:@selector(createWalletButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
 - (void)setDelegates {
@@ -73,5 +75,18 @@
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
+
+- (void)leftImageButtonClicked:(UIButton *)sender {
+    sender.alpha = 1;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)leftImageButtonTouchDown:(UIButton *)sender {
+    sender.alpha = 0.5;
+}
+
+- (void)leftImageButtonTouchUpOutside:(UIButton *)sender {
+    sender.alpha = 1;
+}
 
 @end
