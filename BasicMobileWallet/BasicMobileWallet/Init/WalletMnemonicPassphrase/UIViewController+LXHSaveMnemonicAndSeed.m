@@ -31,7 +31,7 @@
     }
 }
 
-- (void)makeWalletReadyWithWalletCreationType:(LXHWalletCreationType)creationType
+- (void)makeWalletReadyWithWalletCreationType:(LXHWalletGenerationType)creationType
                                   mnemonicCodeWords:(NSArray *)mnemonicCodeWords 
                                   mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                   successBlock:(void (^)(NSDictionary *resultDic))successBlock 
@@ -42,16 +42,16 @@
     BOOL saveRootSeedResult = [LXHKeychainStore.sharedInstance saveData:rootSeed forKey:kLXHKeychainStoreRootSeed];
     if (saveMnemonicResult && saveRootSeedResult) {
         if (creationType == LXHWalletCreationTypeCreatingNew) {
-            [[LXHWallet sharedInstance] createNewWalletInit];
+            //[[LXHWallet sharedInstance] createNewWalletInit];
             successBlock(nil);
         } else {
             //todo show indicatorview
-            [[LXHWallet sharedInstance] restoreExistWalletInitWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+            //[[LXHWallet sharedInstance] restoreExistWalletInitWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
                //hide indicatorview
                 
-            } failureBlock:^(NSDictionary * _Nonnull resultDic) {
-                
-            }];
+//            } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+//                
+//            }];
         }
     } else {
         

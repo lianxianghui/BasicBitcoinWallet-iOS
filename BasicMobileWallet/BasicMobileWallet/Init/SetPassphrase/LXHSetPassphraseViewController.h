@@ -9,6 +9,6 @@
 
 
 @interface LXHSetPassphraseViewController : UIViewController
-@property (nonatomic) LXHWalletCreationType type;
+@property (nonatomic) LXHWalletGenerationType type;
 @property (nonatomic) NSArray *words;
 @end

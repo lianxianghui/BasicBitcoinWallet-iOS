@@ -9,7 +9,7 @@
 
 @interface LXHGenerateWalletViewController : UIViewController
 
-- (instancetype)initWithCreationType:(LXHWalletCreationType)creationType
+- (instancetype)initWithCreationType:(LXHWalletGenerationType)creationType
                    mnemonicCodeWords:(NSArray *)mnemonicCodeWords
                   mnemonicPassphrase:(NSString *)mnemonicPassphrase;
 @end

@@ -8,6 +8,9 @@
 #import "Masonry.h"
 #import "LXHGenerateWalletView.h"
 #import "LXHTabBarPageViewController.h"
+#import "LXHKeychainStore.h"
+#import "UIViewController+LXHAlert.h"
+#import "CoreBitcoin.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -18,14 +21,14 @@
 @interface LXHGenerateWalletViewController()
 
 @property (nonatomic) LXHGenerateWalletView *contentView;
-@property (nonatomic) LXHWalletCreationType creationType;
+@property (nonatomic) LXHWalletGenerationType creationType;
 @property (nonatomic) NSArray * mnemonicCodeWords;
 @property (nonatomic) NSString *mnemonicPassphrase;
 @end
 
 @implementation LXHGenerateWalletViewController
 
-- (instancetype)initWithCreationType:(LXHWalletCreationType)creationType
+- (instancetype)initWithCreationType:(LXHWalletGenerationType)creationType
                    mnemonicCodeWords:(NSArray *)mnemonicCodeWords
                   mnemonicPassphrase:(NSString *)mnemonicPassphrase {
     self = [super init];
@@ -71,10 +74,30 @@
 
 //Actions
 - (void)createWalletButtonClicked:(UIButton *)sender {
+    if (self.creationType == LXHWalletCreationTypeCreatingNew) {
+        BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:self.mnemonicCodeWords password:self.mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
+        NSData *rootSeed = [mnemonic seed];
+        BOOL saveResult = [LXHKeychainStore.sharedInstance saveMnemonicCodeWords:self.mnemonicCodeWords];
+        saveResult = saveResult && [LXHKeychainStore.sharedInstance saveData:rootSeed forKey:kLXHKeychainStoreRootSeed];
+        saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@"0" forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
+        saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@"0" forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
+        if (saveResult) {
+            [self pushTabBarViewController];
+        } else {
+            //show alert
+        }
+    } else {
+        
+    }
+
+}
+
+
+
+- (void)pushTabBarViewController {
     UIViewController *controller = [[LXHTabBarPageViewController alloc] init];
     [self.navigationController pushViewController:controller animated:YES]; 
 }
-
 
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;

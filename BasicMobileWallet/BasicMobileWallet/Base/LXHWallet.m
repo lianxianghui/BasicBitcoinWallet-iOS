@@ -7,36 +7,43 @@
 //
 
 #import "LXHWallet.h"
-#import "LXHKeychainStore.h"
 
 @interface LXHWallet ()
 @property (nonatomic) BTCKeychain *masterKeychain;
 @property (nonatomic) BTCKeychain *firstAccountKeychain;
 @property (nonatomic) BTCKeychain *receivingKeychain;
 @property (nonatomic) BTCKeychain *changeKeychain;
-
+@property (nonatomic) NSInteger currentChangeAddressIndex;
+@property (nonatomic) NSInteger currentReceivingAddressIndex;
+@property (nonatomic) LXHBitcoinNetworkType currentNetworkType;
 @end
 
 @implementation LXHWallet
 
-+ (LXHWallet *)sharedInstance { 
-    static LXHWallet *sharedInstance = nil;  
-    static dispatch_once_t once;  
-    dispatch_once(&once, ^{ 
-        sharedInstance = [[self alloc] init];  
-    });  
-    return sharedInstance; 
+- (instancetype)initWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+                       mnemonicPassphrase:(NSString *)mnemonicPassphrase {
+    self = [super init];
+    if (self) {
+        return [self initWithMnemonicCodeWords:mnemonicCodeWords mnemonicPassphrase:mnemonicPassphrase currentChangeAddressIndex:0 currentReceivingAddressIndex:0 currentNetworkType:LXHBitcoinNetworkTypeTestnet3];
+    }
+    return self;
 }
 
-- (BTCKeychain *)masterKeychain {
-    if (!_masterKeychain) {
-        NSError *error = nil;
-        NSData* seed = [LXHKeychainStore.sharedInstance dataForKey:kLXHKeychainStoreRootSeed error:&error];
-        if (!seed) 
-            return nil;
-        _masterKeychain = [[BTCKeychain alloc] initWithSeed:seed];
+- (instancetype)initWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+                       mnemonicPassphrase:(NSString *)mnemonicPassphrase
+                currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
+             currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
+                       currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType {
+    self = [super init];
+    if (self) {
+        BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:mnemonicCodeWords password:mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
+        NSData *rootSeed = [mnemonic seed];
+        _masterKeychain = [[BTCKeychain alloc] initWithSeed:rootSeed];
+        _currentReceivingAddressIndex = currentReceivingAddressIndex;
+        _currentChangeAddressIndex = currentChangeAddressIndex;
+        _currentNetworkType = currentNetworkType;
     }
-    return _masterKeychain;
+    return self;
 }
 
 - (BTCKeychain *)firstAccountKeychain {
@@ -73,35 +80,6 @@
 - (NSString *)changeAddressWithIndex:(NSUInteger)index {
     BTCKeychain *keychain = [[self changeKeychain] derivedKeychainAtIndex:(uint32_t)index];
     return keychain.key.address.string;
-}
-
-- (NSInteger)currentAddressIndexWithKey:(NSString *)key {
-    NSError *error = nil;
-    NSString *indexString = [[LXHKeychainStore sharedInstance] stringForKey:key error:&error];
-    if (error)
-        return -1;
-    else {
-        if (indexString)
-            return indexString.integerValue;
-        else
-            return 0;
-    }
-}
-
-- (NSInteger)currentChangeAddressIndex {
-    return [self currentAddressIndexWithKey:kLXHKeychainStoreCurrentChangeAddressIndex];
-}
-
-- (NSInteger)currentReceivingAddressIndex {
-    return [self currentAddressIndexWithKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
-}
-
-- (LXHBitcoinNetworkType)currentNetworkType {
-    NSString *typeString = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHPreferenceBitcoinNetworkType];
-    if (!typeString)
-        return LXHBitcoinNetworkTypeTestnet3;
-    else
-        return typeString.integerValue;
 }
 
 @end

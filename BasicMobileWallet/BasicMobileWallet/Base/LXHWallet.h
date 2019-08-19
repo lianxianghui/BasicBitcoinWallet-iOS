@@ -18,10 +18,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHWallet : NSObject
 
-+ (LXHWallet *)sharedInstance;
+- (instancetype)initWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+                       mnemonicPassphrase:(NSString *)mnemonicPassphrase;
+
+- (instancetype)initWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+                       mnemonicPassphrase:(NSString *)mnemonicPassphrase
+                currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
+             currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
+                       currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType;
+
 - (NSString *)receivingAddressWithIndex:(NSUInteger)index;
 - (NSString *)changeAddressWithIndex:(NSUInteger)index;
 - (LXHBitcoinNetworkType)currentNetworkType;
+
 @end
 
 NS_ASSUME_NONNULL_END
