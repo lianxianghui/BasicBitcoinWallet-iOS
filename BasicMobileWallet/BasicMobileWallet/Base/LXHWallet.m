@@ -46,6 +46,24 @@
     return self;
 }
 
+- (instancetype)initWithRootSeed:(NSData *)rootSeed {
+    return [self initWithRootSeed:rootSeed currentChangeAddressIndex:0 currentReceivingAddressIndex:0 currentNetworkType:LXHBitcoinNetworkTypeTestnet3];
+}
+
+- (instancetype)initWithRootSeed:(NSData *)rootSeed
+                currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
+             currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
+              currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType {
+    self = [super init];
+    if (self) {
+        _masterKeychain = [[BTCKeychain alloc] initWithSeed:rootSeed];
+        _currentReceivingAddressIndex = currentReceivingAddressIndex;
+        _currentChangeAddressIndex = currentChangeAddressIndex;
+        _currentNetworkType = currentNetworkType;
+    }
+    return self;
+}
+
 - (BTCKeychain *)firstAccountKeychain {
     if (!_firstAccountKeychain) {
         NSString *path;

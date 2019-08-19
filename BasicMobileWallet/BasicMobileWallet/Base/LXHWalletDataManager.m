@@ -31,24 +31,42 @@
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@"0" forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@"0" forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
     if (!saveResult) {
-        [self reset];
+        [self clearData];
     }
     return saveResult;
 }
 
-- (void)restoreExistWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+-(void)restoreExistWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                         mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                               successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                                               failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:mnemonicCodeWords password:mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
     NSData *rootSeed = [mnemonic seed];
-    BOOL saveResult = [LXHKeychainStore.sharedInstance saveMnemonicCodeWords:mnemonicCodeWords];
-    saveResult = saveResult && [LXHKeychainStore.sharedInstance saveData:rootSeed forKey:kLXHKeychainStoreRootSeed];
-    //TODO
+    LXHWallet *wallet = [[LXHWallet alloc] initWithRootSeed:rootSeed];
+    LXHWalletAddressSearcher *searcher = [[LXHWalletAddressSearcher alloc] initWithWallet:wallet];
+    [searcher searchWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+        NSNumber *lastUsedReceivingAddressIndex = resultDic[@"lastUsedReceivingAddressIndex"];
+        NSNumber *lastUsedChangeAddressIndex = resultDic[@"lastUsedChangeAddressIndex"];
+        NSString *currentReceivingAddressIndex = [NSString stringWithFormat:@"%ld", lastUsedReceivingAddressIndex.integerValue+1];
+        NSString *currentChangeAddressIndex = [NSString stringWithFormat:@"%ld", lastUsedChangeAddressIndex.integerValue+1];
+        
+        BOOL saveResult = [LXHKeychainStore.sharedInstance saveMnemonicCodeWords:mnemonicCodeWords];
+        saveResult = saveResult && [LXHKeychainStore.sharedInstance saveData:rootSeed forKey:kLXHKeychainStoreRootSeed];
+        saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:currentReceivingAddressIndex forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
+        saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:currentChangeAddressIndex forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
+        if (!saveResult) {
+            [self clearData];
+            failureBlock(nil);
+        } else {
+            successBlock(resultDic);//has @"allTransactions":allTransaction
+        }
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        failureBlock(nil);
+    }];
 }
 
 
-- (BOOL)reset {
+- (BOOL)clearData {
     BOOL saveResult = [LXHKeychainStore.sharedInstance saveMnemonicCodeWords:nil];
     saveResult = saveResult && [LXHKeychainStore.sharedInstance saveData:nil forKey:kLXHKeychainStoreRootSeed];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];

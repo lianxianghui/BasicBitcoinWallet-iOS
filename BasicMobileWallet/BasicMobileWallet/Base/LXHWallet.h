@@ -27,6 +27,12 @@ NS_ASSUME_NONNULL_BEGIN
              currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
                        currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType;
 
+- (instancetype)initWithRootSeed:(NSData *)rootSeed;
+- (instancetype)initWithRootSeed:(NSData *)rootSeed
+       currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
+    currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
+              currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType;
+
 - (NSString *)receivingAddressWithIndex:(NSUInteger)index;
 - (NSString *)changeAddressWithIndex:(NSUInteger)index;
 - (LXHBitcoinNetworkType)currentNetworkType;

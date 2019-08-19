@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)generateNewWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                             mnemonicPassphrase:(NSString *)mnemonicPassphrase;
 
-- (BOOL)restoreExistWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+- (void)restoreExistWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                         mnemonicPassphrase:(NSString *)mnemonicPassphrase
                               successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                               failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
