@@ -68,7 +68,7 @@
 - (BTCKeychain *)firstAccountKeychain {
     if (!_firstAccountKeychain) {
         NSString *path;
-        if (_currentNetworkType == LXHBitcoinNetworkTypeTestnet3)
+        if (_currentNetworkType == LXHBitcoinNetworkTypeTestnet)
             path = @"m/44'/1'/0'";
         else
             path = @"m/44'/0'/0'";
@@ -93,12 +93,20 @@
 
 - (NSString *)receivingAddressWithIndex:(NSUInteger)index {
     BTCKeychain *keychain = [[self receivingKeychain] derivedKeychainAtIndex:(uint32_t)index];
-    return keychain.key.address.string;
+    return [self addressWithKey:keychain.key].string;
 }
 
 - (NSString *)changeAddressWithIndex:(NSUInteger)index {
     BTCKeychain *keychain = [[self changeKeychain] derivedKeychainAtIndex:(uint32_t)index];
-    return keychain.key.address.string;
+    return [self addressWithKey:keychain.key].string;
 }
+ 
+- (BTCPublicKeyAddress *)addressWithKey:(BTCKey *)key {
+    if (_currentNetworkType == LXHBitcoinNetworkTypeMainnet)
+        return key.address;
+    else
+        return key.addressTestnet;
+}
+
 
 @end

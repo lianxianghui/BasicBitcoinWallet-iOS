@@ -119,7 +119,7 @@
 - (LXHBitcoinNetworkType)currentNetworkType {
     NSString *typeString = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreBitcoinNetType];
     if (!typeString)
-        return LXHBitcoinNetworkTypeTestnet3;
+        return LXHBitcoinNetworkTypeTestnet;
     else
         return typeString.integerValue;
 }

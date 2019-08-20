@@ -10,8 +10,8 @@
 #import "CoreBitcoin.h"
 
 typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) {
-    LXHBitcoinNetworkTypeMainnet = 0, 
-    LXHBitcoinNetworkTypeTestnet3 = 1,
+    LXHBitcoinNetworkTypeTestnet = 0,
+    LXHBitcoinNetworkTypeMainnet = 1, 
 };
 
 NS_ASSUME_NONNULL_BEGIN

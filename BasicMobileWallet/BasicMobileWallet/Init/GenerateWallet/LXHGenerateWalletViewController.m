@@ -93,7 +93,7 @@
 }
 
 - (void)generateTestnet3WalletButtonClicked:(UIButton *)sender {
-    [self generateWalletWithNetType:LXHBitcoinNetworkTypeTestnet3];
+    [self generateWalletWithNetType:LXHBitcoinNetworkTypeTestnet];
 }
 
 - (void)generateWalletWithNetType:(LXHBitcoinNetworkType)netType {
