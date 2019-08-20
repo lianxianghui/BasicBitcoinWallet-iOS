@@ -65,7 +65,7 @@
 - (void)findLastUsedReceivingAddressIndexFromIndex:(NSUInteger)fromIndex count:(NSUInteger)count
                                       successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                                       failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    NSArray *addresses = [self receivingAddressesFromIndex:fromIndex count:count];
+    NSArray *addresses = [_wallet receivingAddressesFromIndex:fromIndex count:count];
     [self requestTransactionsWithAddresses:addresses successBlock:^(NSDictionary *resultDic) {
         NSArray *transactions = resultDic[@"items"];
         NSSet *inAddresses = [self inAddressesWithTransactions:transactions];
@@ -83,22 +83,6 @@
     } failureBlock:^(NSDictionary *resultDic) {
         failureBlock(nil);
     }];
-}
-
-- (NSMutableArray *)receivingAddressesFromIndex:(NSUInteger)fromIndex count:(NSUInteger)count {
-    NSMutableArray *addresses = [NSMutableArray array];
-    for (NSUInteger i = fromIndex; i < fromIndex+count; i++) {
-        [addresses addObject:[_wallet receivingAddressWithIndex:i]];
-    }
-    return addresses;
-}
-
-- (NSArray *)receivingAddressesFromZeroToIndex:(NSUInteger)toIndex {
-    NSMutableArray *addresses = [NSMutableArray array];
-    for (NSUInteger i = 0; i <= toIndex; i++) {
-        [addresses addObject:[_wallet receivingAddressWithIndex:i]];
-    }
-    return addresses;
 }
 
 - (NSSet *)inAddressesWithTransactions:(NSArray *)transactions {
@@ -152,7 +136,7 @@
 - (void)requestAllTransactionsWithLastUsedReceivingAddressIndex:(NSInteger)lastUsedReceivingAddressIndex
                                                    successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                                                    failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    NSArray *allReceivingAddress = [self receivingAddressesFromZeroToIndex:lastUsedReceivingAddressIndex];
+    NSArray *allReceivingAddress = [_wallet receivingAddressesFromZeroToIndex:lastUsedReceivingAddressIndex];
     [self requestTransactionsWithAddresses:allReceivingAddress successBlock:^(NSDictionary *resultDic) {
         NSArray *transactions = resultDic[@"items"];
         if (transactions)

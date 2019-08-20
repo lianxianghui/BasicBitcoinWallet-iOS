@@ -92,8 +92,25 @@
 }
 
 - (NSString *)receivingAddressWithIndex:(NSUInteger)index {
-    BTCKeychain *keychain = [[self receivingKeychain] derivedKeychainAtIndex:(uint32_t)index];
-    return [self addressWithKey:keychain.key].string;
+    BTCKey *key = [[self receivingKeychain] keyAtIndex:(uint32_t)index];
+    NSString *address =  [self addressWithKey:key].string;
+    return address;
+}
+
+- (NSArray *)receivingAddressesFromIndex:(NSUInteger)fromIndex count:(NSUInteger)count {
+    NSMutableArray *addresses = [NSMutableArray array];
+    for (NSUInteger i = fromIndex; i < fromIndex+count; i++) {
+        [addresses addObject:[self receivingAddressWithIndex:i]];
+    }
+    return addresses;
+}
+
+- (NSArray *)receivingAddressesFromZeroToIndex:(NSUInteger)toIndex {
+    NSMutableArray *addresses = [NSMutableArray array];
+    for (NSUInteger i = 0; i <= toIndex; i++) {
+        [addresses addObject:[self receivingAddressWithIndex:i]];
+    }
+    return addresses;
 }
 
 - (NSString *)changeAddressWithIndex:(NSUInteger)index {
