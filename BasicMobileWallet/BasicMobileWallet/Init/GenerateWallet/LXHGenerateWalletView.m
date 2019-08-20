@@ -1,7 +1,7 @@
 // LXHGenerateWalletView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-08-19
+//  Created by lianxianghui on 19-08-20
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -42,6 +42,7 @@
         make.left.equalTo(self.mas_left).offset(19);
         make.right.equalTo(self.mas_right).offset(-19);
         make.bottom.equalTo(self.mas_bottom).offset(-16);
+        make.height.mas_equalTo(46);
     }];
     [self.desc1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(19);
@@ -83,7 +84,8 @@
     [self.generateTestnet3WalletButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(19);
         make.right.equalTo(self.mas_right).offset(-19);
-        make.bottom.equalTo(self.mas_bottom).offset(-16);
+        make.height.mas_equalTo(46);
+        make.bottom.equalTo(self.generateMainnetWalletButton.mas_top).offset(-11);
     }];
 }
 
