@@ -25,7 +25,7 @@
                        currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType {
     self = [super init];
     if (self) {
-        return [self initWithMnemonicCodeWords:mnemonicCodeWords mnemonicPassphrase:mnemonicPassphrase currentChangeAddressIndex:0 currentReceivingAddressIndex:0 currentNetworkType:currentNetworkType];
+        return [self initWithMnemonicCodeWords:mnemonicCodeWords mnemonicPassphrase:mnemonicPassphrase currentReceivingAddressIndex:0 currentChangeAddressIndex:0  currentNetworkType:currentNetworkType];
     }
     return self;
 }
