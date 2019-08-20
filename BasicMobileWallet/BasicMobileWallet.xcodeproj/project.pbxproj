@@ -116,8 +116,6 @@
 		8CA322A022DEBE9900CEA828 /* BTCData+Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA321B122DEBE9800CEA828 /* BTCData+Tests.m */; };
 		8CA322A122DEBE9900CEA828 /* BTCFancyEncryptedMessage+Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA321B422DEBE9800CEA828 /* BTCFancyEncryptedMessage+Tests.m */; };
 		8CA322A222DEBE9900CEA828 /* BTCErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA321B922DEBE9800CEA828 /* BTCErrors.m */; };
-		8CA322A322DEBE9900CEA828 /* openssl-1.0.1e.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = 8CA321BD22DEBE9800CEA828 /* openssl-1.0.1e.tar.gz */; };
-		8CA322A422DEBE9900CEA828 /* update_openssl.sh in Resources */ = {isa = PBXBuildFile; fileRef = 8CA321BE22DEBE9800CEA828 /* update_openssl.sh */; };
 		8CA322A522DEBE9900CEA828 /* libcrypto-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA3225C22DEBE9800CEA828 /* libcrypto-ios.a */; };
 		8CA322A622DEBE9900CEA828 /* libssl-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA3225D22DEBE9800CEA828 /* libssl-ios.a */; };
 		8CA322A922DEBEBA00CEA828 /* LXHWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA322A822DEBEBA00CEA828 /* LXHWallet.m */; };
@@ -564,6 +562,7 @@
 		8CD2692B230A8AD1001B9300 /* LXHWalletAddressSearcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHWalletAddressSearcher.m; sourceTree = "<group>"; };
 		8CD2692D230A92D7001B9300 /* LXHWalletDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHWalletDataManager.h; sourceTree = "<group>"; };
 		8CD2692E230A92D7001B9300 /* LXHWalletDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHWalletDataManager.m; sourceTree = "<group>"; };
+		8CD26932230B9D6D001B9300 /* libPods-BasicMobileWallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-BasicMobileWallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCEBAA8D2A3967C43AB112E0 /* Pods-BasicMobileWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasicMobileWalletTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BasicMobileWalletTests/Pods-BasicMobileWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1269,6 +1268,7 @@
 		BB8DBA3A0B92A750A0E94C10 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8CD26932230B9D6D001B9300 /* libPods-BasicMobileWallet.a */,
 				64EE509F744E6EADA3F0D670 /* libPods-BasicMobileWallet.a */,
 				7B77382AEF87012364511655 /* libPods-BasicMobileWalletTests.a */,
 			);
@@ -1363,8 +1363,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CA701A922D8713E00F42814 /* LaunchScreen.storyboard in Resources */,
-				8CA322A322DEBE9900CEA828 /* openssl-1.0.1e.tar.gz in Resources */,
-				8CA322A422DEBE9900CEA828 /* update_openssl.sh in Resources */,
 				8CA701A622D8713E00F42814 /* Assets.xcassets in Resources */,
 				8CA701A422D8713600F42814 /* Main.storyboard in Resources */,
 			);
@@ -1776,11 +1774,23 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W269QP82T8;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/Masonry\"",
+					"\"${PODS_ROOT}/Headers/Public/UICKeyChainStore\"",
+					"$(PROJECT_DIR)/BasicMobileWallet/Base/ThirdPartyCode/**",
+				);
 				INFOPLIST_FILE = BasicMobileWalletTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BasicMobileWallet/Base/ThirdPartyCode/openssl/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.lianxianghui.BasicMobileWalletTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1796,11 +1806,23 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W269QP82T8;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/Masonry\"",
+					"\"${PODS_ROOT}/Headers/Public/UICKeyChainStore\"",
+					"$(PROJECT_DIR)/BasicMobileWallet/Base/ThirdPartyCode/**",
+				);
 				INFOPLIST_FILE = BasicMobileWalletTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BasicMobileWallet/Base/ThirdPartyCode/openssl/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.lianxianghui.BasicMobileWalletTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "LXHWalletDataManager.h"
 
 @interface BasicMobileWalletTests : XCTestCase
 
@@ -22,7 +23,15 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
-- (void)testExample {
+- (void)testWalletAddressSearcher {
+    NSArray *words = @[@"differ", @"dance", @"mad", @"bargain", 
+                       @"empower", @"mad", @"purity", @"engage",
+                       @"element", @"cattle", @"fuel", @"embrace"];
+    [[LXHWalletDataManager sharedInstance] restoreExistWalletAndSaveDataWithMnemonicCodeWords:words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
+        
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        
+    }];
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
