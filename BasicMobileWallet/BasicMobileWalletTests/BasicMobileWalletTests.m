@@ -46,7 +46,7 @@
 //                       @"later", @"above", @"reform", @"zoo",
 //                       @"device", @"train", @"achieve", @"omit"];//chance_btc
     XCTestExpectation *expectation = [self expectationWithDescription:@"测试成功"];
-    [[LXHWalletDataManager sharedInstance] restoreExistWalletAndSaveDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
+    [[LXHWalletDataManager sharedInstance] restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
         [expectation fulfill];
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         

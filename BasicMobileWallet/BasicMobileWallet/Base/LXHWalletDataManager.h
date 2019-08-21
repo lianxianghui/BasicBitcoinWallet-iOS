@@ -22,11 +22,11 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
 
 @property (nonatomic) LXHWallet *wallet;
 
-- (BOOL)generateNewWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+- (BOOL)generateNewWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                        mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                                   netType:(LXHBitcoinNetworkType)netType;
 
-- (void)restoreExistWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+- (void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                         mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                                    netType:(LXHBitcoinNetworkType)netType
                                               successBlock:(void (^)(NSDictionary *resultDic))successBlock 

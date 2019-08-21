@@ -38,7 +38,7 @@
     return _wallet;
 }
 
-- (BOOL)generateNewWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+- (BOOL)generateNewWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                        mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                                     netType:(LXHBitcoinNetworkType)netType{
     BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:mnemonicCodeWords password:mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
@@ -54,7 +54,7 @@
     return saveResult;
 }
 
--(void)restoreExistWalletAndSaveDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+-(void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                         mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                             netType:(LXHBitcoinNetworkType)netType
                                               successBlock:(void (^)(NSDictionary *resultDic))successBlock 

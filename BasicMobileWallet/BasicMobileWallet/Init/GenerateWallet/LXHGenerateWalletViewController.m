@@ -98,14 +98,14 @@
 
 - (void)generateWalletWithNetType:(LXHBitcoinNetworkType)netType {
     if (self.creationType == LXHWalletGenerationTypeGeneratingNew) {
-        if ([[LXHWalletDataManager sharedInstance] generateNewWalletAndSaveDataWithMnemonicCodeWords:_mnemonicCodeWords mnemonicPassphrase:_mnemonicPassphrase netType:netType]) {
+        if ([[LXHWalletDataManager sharedInstance] generateNewWalletDataWithMnemonicCodeWords:_mnemonicCodeWords mnemonicPassphrase:_mnemonicPassphrase netType:netType]) {
              [self pushTabBarViewController];
         } else {
             [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"发生了无法处理的错误，如果方便请联系并告知开发人员", nil) handler:nil];
         }
     } else {
         //todo show indicator
-        [[LXHWalletDataManager sharedInstance] restoreExistWalletAndSaveDataWithMnemonicCodeWords:_mnemonicCodeWords mnemonicPassphrase:_mnemonicPassphrase netType:netType successBlock:^(NSDictionary * _Nonnull resultDic) {
+        [[LXHWalletDataManager sharedInstance] restoreExistWalletDataWithMnemonicCodeWords:_mnemonicCodeWords mnemonicPassphrase:_mnemonicPassphrase netType:netType successBlock:^(NSDictionary * _Nonnull resultDic) {
             //stop indicator
             
         } failureBlock:^(NSDictionary * _Nonnull resultDic) {
