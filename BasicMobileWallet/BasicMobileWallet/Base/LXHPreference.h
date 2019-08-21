@@ -7,10 +7,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) {
-    LXHBitcoinNetworkTypeMainnet,
-    LXHBitcoinNetworkTypeTestnet,
-};
 
 #define kLXHPreferenceBitcoinNetworkType @"kLXHPreferenceBitcoinNetworkType"
 
