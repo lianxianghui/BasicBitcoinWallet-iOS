@@ -51,7 +51,7 @@
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         
     }];
-    [self waitForExpectationsWithTimeout:5 handler:nil];
+    [self waitForExpectationsWithTimeout:30 handler:nil];
 }
 
 - (void)testPerformanceExample {

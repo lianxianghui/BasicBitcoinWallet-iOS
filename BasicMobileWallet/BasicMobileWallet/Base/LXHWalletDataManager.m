@@ -52,7 +52,7 @@
                                               successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                                               failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:mnemonicCodeWords password:mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
-    NSData *rootSeed = [mnemonic seed];
+    NSData *rootSeed = [mnemonic seed].copy;
     LXHWallet *wallet = [[LXHWallet alloc] initWithRootSeed:rootSeed currentNetworkType:netType];
     LXHWalletAddressSearcher *searcher = [[LXHWalletAddressSearcher alloc] initWithWallet:wallet];
     [searcher searchWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
@@ -134,6 +134,7 @@
 
 - (LXHWallet *)createWallet {
     NSData *rootSeed = [[LXHKeychainStore sharedInstance] decryptedDataForKey:kLXHKeychainStoreRootSeed error:nil];
+    NSString *me = [[LXHKeychainStore sharedInstance] decryptedStringForKey:kLXHKeychainStoreMnemonicCodeWords error:nil];
     NSString *receivingAddressIndex = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
     NSString *changeAddressIndex = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreCurrentChangeAddressIndex];
     NSString *netType = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreBitcoinNetType];
