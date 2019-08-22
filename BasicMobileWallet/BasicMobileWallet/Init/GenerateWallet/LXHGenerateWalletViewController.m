@@ -104,12 +104,16 @@
             [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"发生了无法处理的错误，如果方便请联系并告知开发人员", nil) handler:nil];
         }
     } else {
-        //todo show indicator
+        [self.contentView.indicatorView startAnimating];
         [[LXHWalletDataManager sharedInstance] restoreExistWalletDataWithMnemonicCodeWords:_mnemonicCodeWords mnemonicPassphrase:_mnemonicPassphrase netType:netType successBlock:^(NSDictionary * _Nonnull resultDic) {
-            //stop indicator
-            
+            [self.contentView.indicatorView stopAnimating];
+            [self pushTabBarViewController];
         } failureBlock:^(NSDictionary * _Nonnull resultDic) {
-            //stop indicator
+            [self.contentView.indicatorView stopAnimating];
+            NSString *errorMsg = resultDic[@"error"];
+            if (!errorMsg)
+                errorMsg = @"发生错误";
+            [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(errorMsg, nil) handler:nil];
         }];
     }
     

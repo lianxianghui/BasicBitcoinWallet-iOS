@@ -77,7 +77,7 @@
             failureBlock(@{@"error":@"logic error"});
         }
     } failureBlock:^(NSDictionary *resultDic) {
-        failureBlock(nil);
+        failureBlock(resultDic);
     }];
 }
 
@@ -98,7 +98,7 @@
     [manager POST:@"api/addrs/txs" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         successBlock(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        failureBlock(nil);
+        failureBlock(@{@"error":error.localizedDescription});
     }];
 }
 

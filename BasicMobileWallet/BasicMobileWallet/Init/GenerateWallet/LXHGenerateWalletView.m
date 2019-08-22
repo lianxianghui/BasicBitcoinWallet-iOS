@@ -35,6 +35,7 @@
     [self addSubview:self.desc1];
     [self addSubview:self.customNavigationBar];
     [self addSubview:self.generateTestnet3WalletButton];
+    [self addSubview:self.indicatorView];
 }
 
 - (void)makeConstraints {
@@ -86,6 +87,12 @@
         make.right.equalTo(self.mas_right).offset(-19);
         make.height.mas_equalTo(46);
         make.bottom.equalTo(self.generateMainnetWalletButton.mas_top).offset(-11);
+    }];
+    [self.indicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.mas_centerX);
+        make.centerY.equalTo(self.mas_centerY);
+        make.width.equalTo(self);
+        make.height.equalTo(self);
     }];
 }
 
@@ -268,6 +275,13 @@
         _generateTestnet3WalletButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     }
     return _generateTestnet3WalletButton;
+}
+
+- (UIActivityIndicatorView *)indicatorView {
+    if (!_indicatorView) {
+        _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    }
+    return _indicatorView;
 }
 
 @end

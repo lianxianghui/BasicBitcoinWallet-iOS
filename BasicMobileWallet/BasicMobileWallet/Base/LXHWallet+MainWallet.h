@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHWallet (MainWallet)
 
+/**
+ * 主钱包实例
+ */
 + (LXHWallet *)mainWallet;
 @end
 

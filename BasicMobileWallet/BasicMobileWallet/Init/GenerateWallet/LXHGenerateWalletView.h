@@ -17,5 +17,6 @@
 @property (nonatomic) UILabel *leftText;
 @property (nonatomic) UIImageView *leftBarItemImage;
 @property (nonatomic) UIButton *generateTestnet3WalletButton;
+@property (nonatomic) UIActivityIndicatorView *indicatorView;
 
 @end
