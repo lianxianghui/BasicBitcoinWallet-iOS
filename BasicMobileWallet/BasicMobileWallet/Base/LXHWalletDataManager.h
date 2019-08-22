@@ -39,6 +39,7 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
                                               failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 
 - (BOOL)clearData;
+- (BOOL)walletDataGenerated;
 
 - (LXHWallet *)createWallet;
 @end

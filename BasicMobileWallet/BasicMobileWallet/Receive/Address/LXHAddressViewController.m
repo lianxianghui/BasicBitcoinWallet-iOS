@@ -45,9 +45,40 @@
 }
 
 - (void)addActions {
+    [self.contentView.shareButton addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView.shareButton addTarget:self action:@selector(shareButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [self.contentView.shareButton addTarget:self action:@selector(shareButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+    [self.contentView.Button addTarget:self action:@selector(ButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView.Button addTarget:self action:@selector(ButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [self.contentView.Button addTarget:self action:@selector(ButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
 - (void)setDelegates {
+}
+
+//Actions
+- (void)shareButtonClicked:(UIButton *)sender {
+    sender.alpha = 1;
+}
+
+- (void)shareButtonTouchDown:(UIButton *)sender {
+    sender.alpha = 0.5;
+}
+
+- (void)shareButtonTouchUpOutside:(UIButton *)sender {
+    sender.alpha = 1;
+}
+
+- (void)ButtonClicked:(UIButton *)sender {
+    sender.alpha = 1;
+}
+
+- (void)ButtonTouchDown:(UIButton *)sender {
+    sender.alpha = 0.5;
+}
+
+- (void)ButtonTouchUpOutside:(UIButton *)sender {
+    sender.alpha = 1;
 }
 
 @end

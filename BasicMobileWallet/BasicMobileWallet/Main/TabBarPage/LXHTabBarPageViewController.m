@@ -34,8 +34,8 @@
 
     viewController = [[LXHAddressViewController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    itemImage = [UIImage imageNamed:@""];
-    itemSelectedImage = [UIImage imageNamed:@""];
+    itemImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_icon"];
+    itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_active_icon"];
     item = [[UITabBarItem alloc] initWithTitle:@"发送" image:itemImage selectedImage:itemSelectedImage];
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];

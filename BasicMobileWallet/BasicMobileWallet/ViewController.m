@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import "LXHWelcomeViewController.h"
+#import "LXHWalletDataManager.h"
+#import "LXHTabBarPageViewController.h"
 
 @interface ViewController ()
 
@@ -17,7 +19,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    LXHWelcomeViewController *controller = [LXHWelcomeViewController new];
+    UIViewController *controller = nil;
+    if ([[LXHWalletDataManager sharedInstance] walletDataGenerated]) {
+        controller = [LXHTabBarPageViewController new];
+    } else {
+        controller = [LXHWelcomeViewController new];
+    }
     [self pushViewController:controller animated:NO];
 }
 
