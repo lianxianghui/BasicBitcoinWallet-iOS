@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "CoreBitcoin.h"
 
-typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) {
-    LXHBitcoinNetworkTypeTestnet = 0,
-    LXHBitcoinNetworkTypeMainnet = 1, 
+typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) { //do not modify
+    LXHBitcoinNetworkTypeTestnet = 1,
+    LXHBitcoinNetworkTypeMainnet = 0,
 };
 
 NS_ASSUME_NONNULL_BEGIN
@@ -41,10 +41,18 @@ NS_ASSUME_NONNULL_BEGIN
        currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
               currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType;
 
+- (NSString *)currentReceivingAddress;
+- (NSString *)currentReceivingAddressPath;
+- (NSString *)currentChangeAddress;
+- (NSString *)currentChangeAddressPath;
 - (NSString *)receivingAddressWithIndex:(NSUInteger)index;
-- (NSArray *)receivingAddressesFromIndex:(NSUInteger)fromIndex count:(NSUInteger)count;
-- (NSArray *)receivingAddressesFromZeroToIndex:(NSUInteger)toIndex;
 - (NSString *)changeAddressWithIndex:(NSUInteger)index;
+
+
+
+- (NSArray *)receivingAddressesFromIndex:(NSUInteger)fromIndex count:(NSUInteger)count;
+- (NSArray *)receivingAddressesFromZeroToIndex:(NSUInteger)toIndex;//not used
+
 
 @end
 

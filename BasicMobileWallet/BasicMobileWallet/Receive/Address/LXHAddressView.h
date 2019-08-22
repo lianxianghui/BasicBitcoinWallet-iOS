@@ -10,7 +10,7 @@
 
 @property (nonatomic) UIButton *shareButton;
 @property (nonatomic) UILabel *text;
-@property (nonatomic) UIButton *Button;
+@property (nonatomic) UIButton *copyButton;
 @property (nonatomic) UILabel *text1;
 @property (nonatomic) UILabel *addressPath;
 @property (nonatomic) UILabel *addressType;

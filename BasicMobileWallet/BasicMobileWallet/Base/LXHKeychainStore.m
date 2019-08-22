@@ -64,7 +64,7 @@ static NSString *const aesPassword = @"serefddetggg"; //TODO 随便写的，用�
     if (!encryptedData) {
         return nil;
     }
-    NSData *decryptedData = [RNDecryptor decryptData:encryptedData withPassword:aesPassword error:error];
+    NSData *decryptedData = [RNDecryptor decryptData:encryptedData withSettings:kRNCryptorAES256Settings password:aesPassword error:error];
     return decryptedData;
 }
 

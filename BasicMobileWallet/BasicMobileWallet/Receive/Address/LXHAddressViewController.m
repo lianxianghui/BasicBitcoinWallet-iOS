@@ -6,7 +6,7 @@
 
 #import "LXHAddressViewController.h"
 #import "Masonry.h"
-#import "LXHAddressView.h"
+#import "LXHWallet+MainWallet.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -15,9 +15,6 @@
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
 @interface LXHAddressViewController()
-
-@property (nonatomic) LXHAddressView *contentView;
-
 @end
 
 @implementation LXHAddressViewController
@@ -34,23 +31,26 @@
         make.left.right.equalTo(self.view);
         make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
     }];
-    UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
-    [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
     [self setDelegates];
 }
 
-- (void)swipeView:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self setViewData];
+}
+
+- (void)setViewData {
+    
 }
 
 - (void)addActions {
     [self.contentView.shareButton addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.shareButton addTarget:self action:@selector(shareButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
     [self.contentView.shareButton addTarget:self action:@selector(shareButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
-    [self.contentView.Button addTarget:self action:@selector(ButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView.Button addTarget:self action:@selector(ButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-    [self.contentView.Button addTarget:self action:@selector(ButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+    [self.contentView.copyButton addTarget:self action:@selector(copyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView.copyButton addTarget:self action:@selector(copyButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [self.contentView.copyButton addTarget:self action:@selector(copyButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
 - (void)setDelegates {
@@ -69,15 +69,15 @@
     sender.alpha = 1;
 }
 
-- (void)ButtonClicked:(UIButton *)sender {
+- (void)copyButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
 }
 
-- (void)ButtonTouchDown:(UIButton *)sender {
+- (void)copyButtonTouchDown:(UIButton *)sender {
     sender.alpha = 0.5;
 }
 
-- (void)ButtonTouchUpOutside:(UIButton *)sender {
+- (void)copyButtonTouchUpOutside:(UIButton *)sender {
     sender.alpha = 1;
 }
 

@@ -20,5 +20,4 @@
     return sharedInstance;
 }
 
-
 @end

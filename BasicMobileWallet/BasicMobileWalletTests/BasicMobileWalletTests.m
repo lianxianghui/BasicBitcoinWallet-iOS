@@ -24,6 +24,18 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
+- (void)testTmp {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"测试成功"];
+    [[LXHWalletDataManager sharedInstance] restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
+        [expectation fulfill];
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        
+    }];
+    [self waitForExpectationsWithTimeout:30 handler:nil];
+    
+    //[[LXHWalletDataManager sharedInstance] clearData];
+}
+
 - (void)testAddressGeneration {
 //    NSArray *words = @[@"tail", @"fatal", @"photo", @"same", 
 //                       @"later", @"above", @"reform", @"zoo",

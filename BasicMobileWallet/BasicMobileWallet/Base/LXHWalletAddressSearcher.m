@@ -59,7 +59,7 @@
     [self requestTransactionsWithAddresses:addressesForRequesting successBlock:^(NSDictionary *resultDic) {
         NSArray *transactions = resultDic[@"items"];
         if (transactions.count == 0) { //未找到新的交易，说明当前的20个地址都未用过，所以就是要找的Gap
-            successBlock(@{@"FirstUnusedAddressesGapStartIndex":@(fromIndex)});
+            successBlock(@{@"FirstUnusedReceivingAddressesGapStartIndex":@(fromIndex)});
         } else {
             [allTransactions addObjectsFromArray:transactions];
             //查找从哪里开始进行下一次搜索

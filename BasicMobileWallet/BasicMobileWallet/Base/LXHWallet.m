@@ -91,9 +91,25 @@
     return _changeKeychain;
 }
 
+- (NSString *)currentReceivingAddress {
+    return [self receivingAddressWithIndex:self.currentReceivingAddressIndex];
+}
+
+- (NSString *)currentReceivingAddressPath {
+    return [NSString stringWithFormat:@"m/44'/%ld'/0'/0/%ld", self.currentNetworkType, self.currentReceivingAddressIndex];
+}
+
+- (NSString *)currentChangeAddress {
+    return [self receivingAddressWithIndex:self.currentChangeAddressIndex];
+}
+
+- (NSString *)currentChangeAddressPath {
+    return [NSString stringWithFormat:@"m/44'/%ld'/0'/1/%ld", self.currentNetworkType, self.currentReceivingAddressIndex];
+}
+
 - (NSString *)receivingAddressWithIndex:(NSUInteger)index {
     BTCKey *key = [[self receivingKeychain] keyAtIndex:(uint32_t)index];
-    NSString *address =  [self addressWithKey:key].string;
+    NSString *address = [self addressWithKey:key].string;
     return address;
 }
 

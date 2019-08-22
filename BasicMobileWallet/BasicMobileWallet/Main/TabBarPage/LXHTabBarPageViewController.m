@@ -5,7 +5,7 @@
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import "LXHTabBarPageViewController.h"
-#import "LXHAddressViewController.h"
+#import "LXHCurrentReceivingAddressViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -32,7 +32,7 @@
     UIViewController *viewController = nil;
     UINavigationController *navigationController = nil;
 
-    viewController = [[LXHAddressViewController alloc] init];
+    viewController = [[LXHCurrentReceivingAddressViewController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_icon"];
     itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_active_icon"];

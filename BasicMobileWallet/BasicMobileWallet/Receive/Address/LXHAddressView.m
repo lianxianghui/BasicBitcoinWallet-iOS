@@ -32,7 +32,7 @@
 
 - (void)addSubviews {
     [self addSubview:self.shareButton];
-    [self addSubview:self.Button];
+    [self addSubview:self.copyButton];
     [self addSubview:self.addressPath];
     [self addSubview:self.addressType];
     [self addSubview:self.addressText];
@@ -45,21 +45,21 @@
         make.centerX.equalTo(self.mas_centerX);
         make.width.mas_equalTo(68);
         make.height.mas_equalTo(34);
-        make.top.equalTo(self.Button.mas_bottom).offset(18);
+        make.top.equalTo(self.copyButton.mas_bottom).offset(18);
     }];
     [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.shareButton.mas_centerX);
         make.centerY.equalTo(self.shareButton.mas_centerY);
     }];
-    [self.Button mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.copyButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.mas_centerX);
         make.top.equalTo(self.addressType.mas_bottom).offset(75);
         make.width.mas_equalTo(68);
         make.height.mas_equalTo(34);
     }];
     [self.text1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.Button.mas_centerX);
-        make.centerY.equalTo(self.Button.mas_centerY);
+        make.centerX.equalTo(self.copyButton.mas_centerX);
+        make.centerY.equalTo(self.copyButton.mas_centerY);
     }];
     [self.addressPath mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.mas_centerX);
@@ -131,15 +131,15 @@
     return _text;
 }
 
-- (UIButton *)Button {
-    if (!_Button) {
-        _Button = [UIButton buttonWithType:UIButtonTypeCustom];
-        _Button.backgroundColor = UIColorFromRGBA(0x009688FF);
-        _Button.layer.cornerRadius = 2;
-        _Button.alpha = 1;
-        [_Button addSubview:self.text1];
+- (UIButton *)copyButton {
+    if (!_copyButton) {
+        _copyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _copyButton.backgroundColor = UIColorFromRGBA(0x009688FF);
+        _copyButton.layer.cornerRadius = 2;
+        _copyButton.alpha = 1;
+        [_copyButton addSubview:self.text1];
     }
-    return _Button;
+    return _copyButton;
 }
 
 - (UILabel *)text1 {
