@@ -42,7 +42,7 @@ static NSString *const aesPassword = @"serefddetggg"; //TODO 随便写的，用�
     return self;
 }
 
-//备注：为了简化逻辑，没有加入对用AES加密后的数据进行验证的逻辑
+//备注：为了简化逻辑，没有加入对用AES加密后的数据进行数据完整性验证的逻辑
 - (BOOL)encryptAndSetData:(NSData *)data forKey:(NSString *)key {
     if (!data)
         return [self.store setData:nil forKey:key];
@@ -81,19 +81,6 @@ static NSString *const aesPassword = @"serefddetggg"; //TODO 随便写的，用�
     } else {
         return nil;
     }
-}
-
-- (BOOL)encryptAndSetMnemonicCodeWords:(NSArray *)mnemonicCodeWords {
-    return [self encryptAndSetString:[mnemonicCodeWords componentsJoinedByString:@" "]  forKey:kLXHKeychainStoreMnemonicCodeWords];
-}
-
-- (NSArray *)mnemonicCodeWordsWithErrorPointer:(NSError **)error {
-    NSString *string = [self decryptedStringForKey:kLXHKeychainStoreMnemonicCodeWords error:error];
-    if (string)
-        return [string componentsSeparatedByString:@" "];
-    else 
-        return nil;
-    
 }
 
 @end

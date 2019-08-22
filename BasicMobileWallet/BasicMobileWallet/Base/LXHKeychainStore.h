@@ -10,12 +10,6 @@
 #import "UICKeyChainStore.h"
 
 #define kLXHKeychainStorePIN @"PIN"
-#define kLXHKeychainStoreMnemonicCodeWords @"MnemonicCodeWords"
-#define kLXHKeychainStoreRootSeed @"RootSeed"
-#define kLXHKeychainStoreCurrentChangeAddressIndex @"CurrentChangeAddressIndex"
-#define kLXHKeychainStoreCurrentReceivingAddressIndex @"CurrentReceivingAddressIndex"
-#define kLXHKeychainStoreBitcoinNetType @"kLXHKeychainStoreBitcoinNetType"
-
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,10 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSData *)decryptedDataForKey:(NSString *)key error:(NSError **)error;
 - (BOOL)encryptAndSetString:(nullable NSString *)string forKey:(NSString *)key;
 - (NSString *)decryptedStringForKey:(NSString *)key error:(NSError **)error;
-
-
-- (BOOL)encryptAndSetMnemonicCodeWords:(nullable NSArray *)mnemonicCodeWords;
-- (NSArray *)decryptedMnemonicCodeWordsWithErrorPointer:(NSError **)error;
 @end
 
 NS_ASSUME_NONNULL_END
