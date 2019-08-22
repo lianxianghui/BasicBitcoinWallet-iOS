@@ -26,18 +26,6 @@
     return self;
 }
 
-//- (void)searchWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock 
-//            failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-//    [self findLastUsedReceivingAddressIndexWithSuccessBlock:^(NSDictionary *resultDic) {
-//        NSMutableDictionary *dic = [resultDic mutableCopy];
-//        NSArray *allTransactions = resultDic[@"allTransactions"];
-//        dic[@"lastUsedChangeAddressIndex"] = @([self lastUsedChangeAddressIndexWithAllTransactions:allTransactions]);
-//        successBlock(dic);
-//    } failureBlock:^(NSDictionary *resultDic) {
-//        failureBlock(nil);
-//    }];
-//}
-
 - (void)searchWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock 
                   failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     NSMutableArray *allTransactions = [NSMutableArray array];
@@ -138,21 +126,6 @@
     }
     return ret;
 }
-
-//- (void)requestAllTransactionsWithLastUsedReceivingAddressIndex:(NSInteger)lastUsedReceivingAddressIndex
-//                                                   successBlock:(void (^)(NSDictionary *resultDic))successBlock 
-//                                                   failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-//    NSArray *allReceivingAddress = [_wallet receivingAddressesFromZeroToIndex:lastUsedReceivingAddressIndex];
-//    [self requestTransactionsWithAddresses:allReceivingAddress successBlock:^(NSDictionary *resultDic) {
-//        NSArray *transactions = resultDic[@"items"];
-//        if (transactions)
-//            successBlock(@{@"transactions":transactions});
-//        else
-//            successBlock(@{@"transactions":@[]});
-//    } failureBlock:^(NSDictionary *resultDic) {
-//        failureBlock(nil);
-//    }];
-//} 
 
 - (NSInteger)currentUnusedChangeAddressIndexWithAllTransactions:(NSArray *)allTransactions {
     NSSet *allOutAddressSet = [self outAddressesWithTransactions:allTransactions];
