@@ -1,10 +1,11 @@
 // LXHTabBarPageViewController.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-07-13
+//  Created by lianxianghui on 19-08-22
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import "LXHTabBarPageViewController.h"
+#import "LXHAddressViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -31,6 +32,13 @@
     UIViewController *viewController = nil;
     UINavigationController *navigationController = nil;
 
+    viewController = [[LXHAddressViewController alloc] init];
+    navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    itemImage = [UIImage imageNamed:@""];
+    itemSelectedImage = [UIImage imageNamed:@""];
+    item = [[UITabBarItem alloc] initWithTitle:@"发送" image:itemImage selectedImage:itemSelectedImage];
+    navigationController.tabBarItem = item;
+    [self addChildViewController:navigationController];
 
 
 
