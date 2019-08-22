@@ -134,6 +134,12 @@
 		8CAA669C230E468200B17222 /* LXHTabBarPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA6698230E468200B17222 /* LXHTabBarPageViewController.m */; };
 		8CAA669F230E5DD500B17222 /* LXHCurrentReceivingAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA669E230E5DD500B17222 /* LXHCurrentReceivingAddressViewController.m */; };
 		8CAA66A1230E747600B17222 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CAA66A0230E747500B17222 /* Assets.xcassets */; };
+		8CAA66B0230E92E300B17222 /* LXHSendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66A6230E92E300B17222 /* LXHSendView.m */; };
+		8CAA66B1230E92E300B17222 /* LXHFeeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66A9230E92E300B17222 /* LXHFeeCell.m */; };
+		8CAA66B2230E92E300B17222 /* LXHEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66AA230E92E300B17222 /* LXHEmptyCell.m */; };
+		8CAA66B3230E92E300B17222 /* LXHSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66AB230E92E300B17222 /* LXHSelectionCell.m */; };
+		8CAA66B4230E92E300B17222 /* LXHInputOutputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66AC230E92E300B17222 /* LXHInputOutputCell.m */; };
+		8CAA66B5230E92E300B17222 /* LXHSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66AF230E92E300B17222 /* LXHSendViewController.m */; };
 		8CD26924230A452B001B9300 /* LXHGenerateWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD26920230A452A001B9300 /* LXHGenerateWalletViewController.m */; };
 		8CD26925230A452B001B9300 /* LXHGenerateWalletView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD26921230A452A001B9300 /* LXHGenerateWalletView.m */; };
 		8CD2692C230A8AD1001B9300 /* LXHWalletAddressSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2692B230A8AD1001B9300 /* LXHWalletAddressSearcher.m */; };
@@ -565,6 +571,18 @@
 		8CAA669D230E5DD500B17222 /* LXHCurrentReceivingAddressViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHCurrentReceivingAddressViewController.h; sourceTree = "<group>"; };
 		8CAA669E230E5DD500B17222 /* LXHCurrentReceivingAddressViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHCurrentReceivingAddressViewController.m; sourceTree = "<group>"; };
 		8CAA66A0230E747500B17222 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8CAA66A4230E92E300B17222 /* LXHSelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectionCell.h; sourceTree = "<group>"; };
+		8CAA66A5230E92E300B17222 /* LXHEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHEmptyCell.h; sourceTree = "<group>"; };
+		8CAA66A6230E92E300B17222 /* LXHSendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSendView.m; sourceTree = "<group>"; };
+		8CAA66A7230E92E300B17222 /* LXHInputOutputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputOutputCell.h; sourceTree = "<group>"; };
+		8CAA66A8230E92E300B17222 /* LXHSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSendViewController.h; sourceTree = "<group>"; };
+		8CAA66A9230E92E300B17222 /* LXHFeeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHFeeCell.m; sourceTree = "<group>"; };
+		8CAA66AA230E92E300B17222 /* LXHEmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHEmptyCell.m; sourceTree = "<group>"; };
+		8CAA66AB230E92E300B17222 /* LXHSelectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSelectionCell.m; sourceTree = "<group>"; };
+		8CAA66AC230E92E300B17222 /* LXHInputOutputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputOutputCell.m; sourceTree = "<group>"; };
+		8CAA66AD230E92E300B17222 /* LXHSendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSendView.h; sourceTree = "<group>"; };
+		8CAA66AE230E92E300B17222 /* LXHFeeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHFeeCell.h; sourceTree = "<group>"; };
+		8CAA66AF230E92E300B17222 /* LXHSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSendViewController.m; sourceTree = "<group>"; };
 		8CD2691B230680FF001B9300 /* LXHGlobalHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHGlobalHeader.h; sourceTree = "<group>"; };
 		8CD26920230A452A001B9300 /* LXHGenerateWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHGenerateWalletViewController.m; sourceTree = "<group>"; };
 		8CD26921230A452A001B9300 /* LXHGenerateWalletView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHGenerateWalletView.m; sourceTree = "<group>"; };
@@ -1215,6 +1233,7 @@
 				8CA701AB22D8713E00F42814 /* main.m */,
 				8CA701C822D8747F00F42814 /* Init */,
 				8CAA6696230E468200B17222 /* Main */,
+				8CAA66A2230E92E300B17222 /* Send */,
 				8CAA6690230E468200B17222 /* Receive */,
 				8CA31F9B22D9A21600CEA828 /* Base */,
 			);
@@ -1285,6 +1304,33 @@
 				8CAA6699230E468200B17222 /* LXHTabBarPageViewController.h */,
 			);
 			path = TabBarPage;
+			sourceTree = "<group>";
+		};
+		8CAA66A2230E92E300B17222 /* Send */ = {
+			isa = PBXGroup;
+			children = (
+				8CAA66A3230E92E300B17222 /* Send */,
+			);
+			path = Send;
+			sourceTree = "<group>";
+		};
+		8CAA66A3230E92E300B17222 /* Send */ = {
+			isa = PBXGroup;
+			children = (
+				8CAA66A4230E92E300B17222 /* LXHSelectionCell.h */,
+				8CAA66A5230E92E300B17222 /* LXHEmptyCell.h */,
+				8CAA66A6230E92E300B17222 /* LXHSendView.m */,
+				8CAA66A7230E92E300B17222 /* LXHInputOutputCell.h */,
+				8CAA66A8230E92E300B17222 /* LXHSendViewController.h */,
+				8CAA66A9230E92E300B17222 /* LXHFeeCell.m */,
+				8CAA66AA230E92E300B17222 /* LXHEmptyCell.m */,
+				8CAA66AB230E92E300B17222 /* LXHSelectionCell.m */,
+				8CAA66AC230E92E300B17222 /* LXHInputOutputCell.m */,
+				8CAA66AD230E92E300B17222 /* LXHSendView.h */,
+				8CAA66AE230E92E300B17222 /* LXHFeeCell.h */,
+				8CAA66AF230E92E300B17222 /* LXHSendViewController.m */,
+			);
+			path = Send;
 			sourceTree = "<group>";
 		};
 		8CD2691F230A452A001B9300 /* GenerateWallet */ = {
@@ -1494,9 +1540,11 @@
 				8CA3227C22DEBE9900CEA828 /* BTCCurvePoint+Tests.m in Sources */,
 				8CA3212922DEB85900CEA828 /* LXHPreference.m in Sources */,
 				8CA3229F22DEBE9900CEA828 /* BTCKey.m in Sources */,
+				8CAA66B5230E92E300B17222 /* LXHSendViewController.m in Sources */,
 				8CA31FD222D9A37600CEA828 /* UIUtils.m in Sources */,
 				8CD26924230A452B001B9300 /* LXHGenerateWalletViewController.m in Sources */,
 				8CA3211822DD69E800CEA828 /* LXHWalletMnemonicPassphraseForRestoringViewController.m in Sources */,
+				8CAA66B2230E92E300B17222 /* LXHEmptyCell.m in Sources */,
 				8CA3226722DEBE9900CEA828 /* BTCBlindSignature.m in Sources */,
 				8CA31F9922D98BAC00CEA828 /* LXHWelcomeView.m in Sources */,
 				8CA3228122DEBE9900CEA828 /* BTCBitcoinURL.m in Sources */,
@@ -1522,6 +1570,7 @@
 				8CA3229722DEBE9900CEA828 /* BTCCurrencyConverter.m in Sources */,
 				8CA3227022DEBE9900CEA828 /* BTCBlockchainInfo.m in Sources */,
 				8CA3225E22DEBE9900CEA828 /* BTCBlock.m in Sources */,
+				8CAA66B0230E92E300B17222 /* LXHSendView.m in Sources */,
 				8CA31FD922D9AC5600CEA828 /* LXHKeychainStore.m in Sources */,
 				8CA31F8D22D98BAC00CEA828 /* LXHSetPassphraseViewController.m in Sources */,
 				8CA3227E22DEBE9900CEA828 /* BTCEncryptedMessage+Tests.m in Sources */,
@@ -1531,6 +1580,7 @@
 				8CA322A022DEBE9900CEA828 /* BTCData+Tests.m in Sources */,
 				8CA322A122DEBE9900CEA828 /* BTCFancyEncryptedMessage+Tests.m in Sources */,
 				8CA3226322DEBE9900CEA828 /* BTCAssetType.m in Sources */,
+				8CAA66B4230E92E300B17222 /* LXHInputOutputCell.m in Sources */,
 				8CAA669B230E468200B17222 /* LXHAddressViewController.m in Sources */,
 				8CA3229A22DEBE9900CEA828 /* BTCBase58.m in Sources */,
 				8CA3227322DEBE9900CEA828 /* BTCMnemonic.m in Sources */,
@@ -1552,8 +1602,10 @@
 				8CA3226022DEBE9900CEA828 /* BTCEncryptedBackup.m in Sources */,
 				8CA31F9622D98BAC00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.m in Sources */,
 				8CA3228B22DEBE9900CEA828 /* BTCEncryptedBackup+Tests.m in Sources */,
+				8CAA66B1230E92E300B17222 /* LXHFeeCell.m in Sources */,
 				8CA3229022DEBE9900CEA828 /* BTCMerkleTree+Tests.m in Sources */,
 				8CA31F8C22D98BAC00CEA828 /* LXHSetPassphraseView.m in Sources */,
+				8CAA66B3230E92E300B17222 /* LXHSelectionCell.m in Sources */,
 				8CA322B6230049A000CEA828 /* RNCryptor.m in Sources */,
 				8CA3228222DEBE9900CEA828 /* NS+BTCBase58.m in Sources */,
 				8CA3226B22DEBE9900CEA828 /* BTCTransaction.m in Sources */,

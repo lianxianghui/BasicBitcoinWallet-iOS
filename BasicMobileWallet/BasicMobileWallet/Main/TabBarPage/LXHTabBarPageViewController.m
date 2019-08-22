@@ -6,6 +6,7 @@
 
 #import "LXHTabBarPageViewController.h"
 #import "LXHCurrentReceivingAddressViewController.h"
+#import "LXHSendViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -32,16 +33,21 @@
     UIViewController *viewController = nil;
     UINavigationController *navigationController = nil;
 
-    viewController = [[LXHCurrentReceivingAddressViewController alloc] init];
+    viewController = [[LXHSendViewController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    itemImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_icon"];
-    itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_active_icon"];
+    itemImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_icon"];
+    itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_active_icon"];
     item = [[UITabBarItem alloc] initWithTitle:@"发送" image:itemImage selectedImage:itemSelectedImage];
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
 
-
-
+    viewController = [[LXHCurrentReceivingAddressViewController alloc] init];
+    navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    itemImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_icon"];
+    itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_active_icon"];
+    item = [[UITabBarItem alloc] initWithTitle:@"接收" image:itemImage selectedImage:itemSelectedImage];
+    navigationController.tabBarItem = item;
+    [self addChildViewController:navigationController];
 
 }
 
