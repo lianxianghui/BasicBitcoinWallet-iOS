@@ -82,7 +82,6 @@
     return saveResult;
 }
 
-
 - (NSInteger)currentAddressIndexWithKey:(NSString *)key {
     NSError *error = nil;
     NSString *indexString = [[LXHKeychainStore sharedInstance] decryptedStringForKey:key error:&error];

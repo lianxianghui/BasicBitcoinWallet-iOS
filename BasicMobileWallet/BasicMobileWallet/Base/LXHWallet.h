@@ -16,6 +16,11 @@ typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) {
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * 按着BIP44标准管理地址钱包对象 
+ * 目前只支持一个账号，也就是按着”m/44'/coin_type'/account'/change/address_index“路径 account为0的账户
+ * BIP44标准请参考 https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki
+ */
 @interface LXHWallet : NSObject
 
 @property (nonatomic, readonly) LXHBitcoinNetworkType currentNetworkType;
