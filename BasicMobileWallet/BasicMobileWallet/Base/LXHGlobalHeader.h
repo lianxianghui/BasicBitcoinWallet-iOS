@@ -1,13 +1,17 @@
 //
-//  LXHGlobalMacro.h
+//  LXHGlobalHeader.h
 //  BasicMobileWallet
 //
 //  Created by lianxianghui on 2019/8/16.
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 //
 
-#ifndef LXHGlobalMacro_h
-#define LXHGlobalMacro_h
+#ifndef LXHGlobalHeader_h
+#define LXHGlobalHeader_h
 
+typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) { //do not modify
+    LXHBitcoinNetworkTypeTestnet = 1,
+    LXHBitcoinNetworkTypeMainnet = 0,
+};
 
-#endif /* LXHGlobalMacro_h */
+#endif /* LXHGlobalHeader_h */

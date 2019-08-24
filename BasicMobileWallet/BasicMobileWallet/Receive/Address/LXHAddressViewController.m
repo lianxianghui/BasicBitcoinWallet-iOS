@@ -6,7 +6,6 @@
 
 #import "LXHAddressViewController.h"
 #import "Masonry.h"
-#import "LXHWallet+MainWallet.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \

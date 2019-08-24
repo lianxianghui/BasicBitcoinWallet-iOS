@@ -1,27 +1,27 @@
 //
-//  LXHWalletAddressSearcher.m
+//  LXHAccountAddressSearcher.m
 //  BasicMobileWallet
 //
 //  Created by lianxianghui on 2019/8/19.
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 //
 
-#import "LXHWalletAddressSearcher.h"
+#import "LXHAccountAddressSearcher.h"
 #import "AFNetworking.h"
 #import "NSJSONSerialization+VLBase.h"
 #import "CoreBitcoin.h"
 
-@interface LXHWalletAddressSearcher ()
-@property (nonatomic) LXHWallet *wallet;
+@interface LXHAccountAddressSearcher ()
+@property (nonatomic) LXHAccount *account;
 @property (nonatomic) AFHTTPSessionManager *manager;
 @end
 
-@implementation LXHWalletAddressSearcher
+@implementation LXHAccountAddressSearcher
 
-- (instancetype)initWithWallet:(LXHWallet *)wallet {
+- (instancetype)initWithAccount:(LXHAccount *)account {
     self = [super init];
     if (self) {
-        _wallet = wallet;
+        _account = account;
     }
     return self;
 }
@@ -55,7 +55,7 @@
                             successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                             failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     NSUInteger gapLimit = 20;
-    NSArray *addressesForRequesting = [_wallet receivingAddressesFromIndex:fromIndex count:gapLimit];
+    NSArray *addressesForRequesting = [_account receivingAddressesFromIndex:fromIndex count:gapLimit];
     [self requestTransactionsWithAddresses:addressesForRequesting successBlock:^(NSDictionary *resultDic) {
         NSArray *transactions = resultDic[@"items"];
         if (transactions.count == 0) { //未找到新的交易，说明当前的20个地址都未用过，所以就是要找的Gap
@@ -86,7 +86,7 @@
                             successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                             failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     NSString *baseUrl;
-    if ([_wallet currentNetworkType] == LXHBitcoinNetworkTypeMainnet)
+    if ([_account currentNetworkType] == LXHBitcoinNetworkTypeMainnet)
         baseUrl = @"https://insight.bitpay.com/";
     else
         baseUrl = @"https://test-insight.bitpay.com/";
@@ -131,7 +131,7 @@
     NSSet *allOutAddressSet = [self outAddressesWithTransactions:allTransactions];
     NSInteger maxPossibleUsedChangeAddressCount = allOutAddressSet.count; //找零地址肯定在allOutAddressSet里面，所以最大不会超过allOutAddressSet的数量
     for (NSInteger i = maxPossibleUsedChangeAddressCount-1; i >= 0; i--) { //找到倒数第一个用过的，也就是最后一个用过的，加一就得到下一个准备使用的找零地址
-        NSString *changeAddress = [_wallet changeAddressWithIndex:i];
+        NSString *changeAddress = [_account changeAddressWithIndex:i];
         if ([allOutAddressSet containsObject:changeAddress])
             return i+1;
     }

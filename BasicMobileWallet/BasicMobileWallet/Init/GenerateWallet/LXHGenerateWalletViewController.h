@@ -5,7 +5,7 @@
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import <UIKit/UIKit.h>
-#import "LXHWalletDataManager.h"
+#import "LXHWallet.h"
 
 @interface LXHGenerateWalletViewController : UIViewController
 

@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "LXHWelcomeViewController.h"
-#import "LXHWalletDataManager.h"
+#import "LXHWallet.h"
 #import "LXHTabBarPageViewController.h"
 
 @interface ViewController ()
@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIViewController *controller = nil;
-    if ([[LXHWalletDataManager sharedInstance] walletDataGenerated]) {
+    if ([[LXHWallet sharedInstance] walletDataGenerated]) {
         controller = [LXHTabBarPageViewController new];
     } else {
         controller = [LXHWelcomeViewController new];

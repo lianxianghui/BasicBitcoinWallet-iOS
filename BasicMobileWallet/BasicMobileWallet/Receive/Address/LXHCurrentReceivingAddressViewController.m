@@ -8,7 +8,7 @@
 
 #import "LXHCurrentReceivingAddressViewController.h"
 #import "BTCQRCode.h"
-#import "LXHWallet+MainWallet.h"
+#import "LXHWallet.h"
 #import "UILabel+LXHText.h"
 
 @interface LXHCurrentReceivingAddressViewController ()
@@ -19,14 +19,14 @@
 
 
 - (void)setViewData {
-    NSString *address = [[LXHWallet mainWallet] currentReceivingAddress];
+    NSString *address = [[LXHWallet mainAccount] currentReceivingAddress];
     [self.contentView.addressText updateAttributedTextString:address];
     
     CGSize imageSize = self.contentView.qrImage.bounds.size;
     UIImage *qrImage = [BTCQRCode imageForString:address size:imageSize scale:1];
     self.contentView.qrImage.image = qrImage;
     
-    NSString *path = [[LXHWallet mainWallet] currentReceivingAddressPath];
+    NSString *path = [[LXHWallet mainAccount] currentReceivingAddressPath];
     [self.contentView.addressPath updateAttributedTextString:path];
     
 }

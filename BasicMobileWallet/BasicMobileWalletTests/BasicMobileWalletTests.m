@@ -7,8 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "LXHWalletDataManager.h"
-#import "LXHWalletAddressSearcher.h"
+#import "LXHWallet.h"
+#import "LXHAccountAddressSearcher.h"
 
 @interface BasicMobileWalletTests : XCTestCase
 @property (nonatomic) NSArray *words;
@@ -26,7 +26,7 @@
 
 - (void)testTmp {
     XCTestExpectation *expectation = [self expectationWithDescription:@"测试成功"];
-    [[LXHWalletDataManager sharedInstance] restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
+    [[LXHWallet sharedInstance] restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
         [expectation fulfill];
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         
@@ -58,7 +58,7 @@
 //                       @"later", @"above", @"reform", @"zoo",
 //                       @"device", @"train", @"achieve", @"omit"];//chance_btc
     XCTestExpectation *expectation = [self expectationWithDescription:@"测试成功"];
-    [[LXHWalletDataManager sharedInstance] restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
+    [[LXHWallet sharedInstance] restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
         [expectation fulfill];
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         
