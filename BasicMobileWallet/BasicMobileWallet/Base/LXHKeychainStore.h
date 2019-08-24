@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "UICKeyChainStore.h"
 
-#define kLXHKeychainStorePIN @"PIN"
+#define kLXHKeychainStorePIN @"PIN" //AES encrypt
 
 NS_ASSUME_NONNULL_BEGIN
 

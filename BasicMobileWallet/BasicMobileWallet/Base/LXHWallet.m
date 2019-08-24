@@ -13,12 +13,15 @@
 #import "CoreBitcoin.h"
 #import "LXHAccount.h"
 
-#define kLXHKeychainStoreMnemonicCodeWords @"MnemonicCodeWords"
-#define kLXHKeychainStoreRootSeed @"RootSeed"
-#define kLXHKeychainStoreCurrentChangeAddressIndex @"CurrentChangeAddressIndex" //for first Account
-#define kLXHKeychainStoreCurrentReceivingAddressIndex @"CurrentReceivingAddressIndex" //for first Account
+//for wallet
+#define kLXHKeychainStoreMnemonicCodeWords @"MnemonicCodeWords" //AES encrypt 
+#define kLXHKeychainStoreRootSeed @"RootSeed" //AES encrypt 
 #define kLXHKeychainStoreBitcoinNetType @"kLXHKeychainStoreBitcoinNetType"
 #define kLXHKeychainStoreWalletDataGenerated @"kLXHKeychainStoreWalletDataGenerated"
+
+//for first Account
+#define kLXHKeychainStoreCurrentChangeAddressIndex @"CurrentChangeAddressIndex" 
+#define kLXHKeychainStoreCurrentReceivingAddressIndex @"CurrentReceivingAddressIndex"
 
 @interface LXHWallet ()
 @property (nonatomic, readwrite) LXHAccount *mainAccount;
