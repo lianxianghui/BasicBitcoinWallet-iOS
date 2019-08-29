@@ -26,7 +26,7 @@
 
 - (void)testTmp {
     XCTestExpectation *expectation = [self expectationWithDescription:@"测试成功"];
-    [[LXHWallet sharedInstance] restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
+    [LXHWallet  restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
         [expectation fulfill];
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         
@@ -43,11 +43,11 @@
 //    NSArray *words = @[@"differ", @"dance", @"mad", @"bargain", 
 //                       @"empower", @"mad", @"purity", @"engage",
 //                       @"element", @"cattle", @"fuel", @"embrace"];//brd
-    BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:self.words password:nil wordListType:BTCMnemonicWordListTypeEnglish];
-    NSData *rootSeed = [mnemonic seed];
-    LXHWallet *wallet = [[LXHWallet alloc] initWithRootSeed:rootSeed currentNetworkType:LXHBitcoinNetworkTypeTestnet];
-    NSArray *address = [wallet receivingAddressesFromZeroToIndex:19];
-    NSLog(@"%@", address);
+//    BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:self.words password:nil wordListType:BTCMnemonicWordListTypeEnglish];
+//    NSData *rootSeed = [mnemonic seed];
+//    LXHWallet *wallet = [[LXHWallet alloc] initWithRootSeed:rootSeed currentNetworkType:LXHBitcoinNetworkTypeTestnet];
+//    NSArray *address = [wallet receivingAddressesFromZeroToIndex:19];
+//    NSLog(@"%@", address);
 }
 
 - (void)testWalletAddressSearcher {
@@ -57,8 +57,9 @@
 //    NSArray *words = @[@"tail", @"fatal", @"photo", @"same", 
 //                       @"later", @"above", @"reform", @"zoo",
 //                       @"device", @"train", @"achieve", @"omit"];//chance_btc
+    [LXHWallet clearData];
     XCTestExpectation *expectation = [self expectationWithDescription:@"测试成功"];
-    [[LXHWallet sharedInstance] restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
+    [LXHWallet restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
         [expectation fulfill];
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         

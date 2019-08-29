@@ -51,7 +51,7 @@
 }
 
 
-- (BOOL)generateNewWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
++ (BOOL)generateNewWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                 mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                            netType:(LXHBitcoinNetworkType)netType{
     BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:mnemonicCodeWords password:mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
@@ -68,7 +68,7 @@
     return saveResult;
 }
 
--(void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
++ (void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                 mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                            netType:(LXHBitcoinNetworkType)netType
                                       successBlock:(void (^)(NSDictionary *resultDic))successBlock 
@@ -98,7 +98,7 @@
     }];
 }
 
-- (BOOL)clearData {
++ (BOOL)clearData {
     BOOL saveResult = [self encryptAndSetMnemonicCodeWords:nil];
     saveResult = saveResult && [LXHKeychainStore.sharedInstance encryptAndSetData:nil forKey:kLXHKeychainStoreRootSeed];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
@@ -137,20 +137,19 @@
         return typeString.integerValue;
 }
 
-- (BOOL)encryptAndSetMnemonicCodeWords:(NSArray *)mnemonicCodeWords {
++ (BOOL)encryptAndSetMnemonicCodeWords:(NSArray *)mnemonicCodeWords {
     return [[LXHKeychainStore sharedInstance] encryptAndSetString:[mnemonicCodeWords componentsJoinedByString:@" "]  forKey:kLXHKeychainStoreMnemonicCodeWords];
 }
 
-- (NSArray *)mnemonicCodeWordsWithErrorPointer:(NSError **)error {
++ (NSArray *)mnemonicCodeWordsWithErrorPointer:(NSError **)error {
     NSString *string = [[LXHKeychainStore sharedInstance] decryptedStringForKey:kLXHKeychainStoreMnemonicCodeWords error:error];
     if (string)
         return [string componentsSeparatedByString:@" "];
     else 
         return nil;
-    
 }
 
-- (BOOL)walletDataGenerated {
++ (BOOL)walletDataGenerated {
     return [[[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreWalletDataGenerated] isEqualToString:@"1"];
 }
 

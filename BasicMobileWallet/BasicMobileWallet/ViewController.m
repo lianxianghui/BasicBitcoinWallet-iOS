@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIViewController *controller = nil;
-    if ([[LXHWallet sharedInstance] walletDataGenerated]) {
+    if ([LXHWallet walletDataGenerated]) {
         controller = [LXHTabBarPageViewController new];
     } else {
         controller = [LXHWelcomeViewController new];

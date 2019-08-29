@@ -32,22 +32,26 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
 @property (nonatomic, readonly) LXHAccount *mainAccount;
 - (instancetype)initWithMainAccount:(LXHAccount *)mainAccount;
 
-- (BOOL)generateNewWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+
+
+
++ (BOOL)generateNewWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                 mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                            netType:(LXHBitcoinNetworkType)netType;
 
-- (void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
++ (void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                  mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                             netType:(LXHBitcoinNetworkType)netType
                                        successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                                        failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 
-- (BOOL)clearData;
-- (BOOL)walletDataGenerated;
-
++ (BOOL)clearData;
++ (BOOL)walletDataGenerated;
 
 + (LXHWallet *)sharedInstance;
 + (LXHAccount *)mainAccount;
+
++ (NSArray *)mnemonicCodeWordsWithErrorPointer:(NSError **)error;
 @end
 
 NS_ASSUME_NONNULL_END

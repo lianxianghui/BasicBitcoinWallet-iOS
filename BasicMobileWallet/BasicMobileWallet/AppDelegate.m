@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LXHPreference.h"
+#import "LXHWallet.h"
 
 @interface AppDelegate ()
 
@@ -17,7 +18,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [LXHPreference sharedInstance];//init default preference 
+    [LXHPreference sharedInstance];//init default preference
     return YES;
 }
 

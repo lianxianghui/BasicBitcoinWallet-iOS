@@ -10,6 +10,7 @@
 #import "CoreBitcoin.h"
 
 @interface LXHAccount ()
+@property (nonatomic) BTCKeychain *masterKeychain;
 @property (nonatomic) BTCKeychain *accountKeychain;
 @property (nonatomic) BTCKeychain *receivingKeychain;
 @property (nonatomic) BTCKeychain *changeKeychain;
@@ -26,8 +27,7 @@
               currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType {
     self = [super init];
     if (self) {
-         BTCKeychain *masterKeychain = [[BTCKeychain alloc] initWithSeed:rootSeed];
-        _accountKeychain = [self accountKeychainWithMasterKeyChain:masterKeychain];
+        _masterKeychain = [[BTCKeychain alloc] initWithSeed:rootSeed];
         _currentReceivingAddressIndex = currentReceivingAddressIndex;
         _currentChangeAddressIndex = currentChangeAddressIndex;
         _currentNetworkType = currentNetworkType;
@@ -39,13 +39,13 @@
     return [self initWithRootSeed:rootSeed currentReceivingAddressIndex:0 currentChangeAddressIndex:0 currentNetworkType:currentNetworkType];
 }
 
-- (BTCKeychain *)accountKeychainWithMasterKeyChain:(BTCKeychain *)masterKeychain {
+- (BTCKeychain *)accountKeychain {
     NSString *path;
     if (_currentNetworkType == LXHBitcoinNetworkTypeTestnet)
         path = @"m/44'/1'/0'";
     else
         path = @"m/44'/0'/0'";
-    return [masterKeychain derivedKeychainWithPath:path];
+    return [_masterKeychain derivedKeychainWithPath:path];
 }
 
 
