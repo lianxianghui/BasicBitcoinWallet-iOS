@@ -60,7 +60,6 @@
 - (NSArray *)dataForTableView:(UITableView *)tableView {
     static NSMutableArray *dataForCells = nil;
     if (!dataForCells) {
-        //To modify to your data and logic
         dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
             NSDictionary *dic = nil;
@@ -100,7 +99,6 @@
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
-        //To modify to your data and logic
         NSArray *data = [self dataForTableView:tableView];
         if (indexPath.row < data.count) {
             NSDictionary *cellData = data[indexPath.row];
@@ -125,7 +123,6 @@
 
 - (NSString *)tableView:(UITableView *)tableView cellContentViewClassStingAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
-    //To modify to your data and logic
     NSString *classString = cellType;
     return classString;
 }
@@ -153,17 +150,12 @@
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(cell.contentView);
         }];
-        //TODO modify to your code
         NSString *isSelectable = [dataForRow valueForKey:@"isSelectable"];
         if ([isSelectable isEqualToString:@"0"])
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    //TODO 
     UIView *view = [cell.contentView viewWithTag:tag];
-    if ([cellType isEqualToString:@"LXHEmptyCell"]) {
-        LXHEmptyCell *cellView = (LXHEmptyCell *)view;
-    }
     if ([cellType isEqualToString:@"LXHSelectionCell"]) {
         LXHSelectionCell *cellView = (LXHSelectionCell *)view;
         NSString *text = [dataForRow valueForKey:@"text"];
@@ -222,7 +214,6 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //TODO modify code below if needed
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
     if (tableView == self.contentView.listView) {
         if ([cellType isEqualToString:@"LXHEmptyCell"])
@@ -232,7 +223,7 @@
         if ([cellType isEqualToString:@"LXHInputOutputCell"])
             return 44;
         if ([cellType isEqualToString:@"LXHFeeCell"])
-            return 44.00000000000003;
+            return 44;
     }
     return 0;
 }
