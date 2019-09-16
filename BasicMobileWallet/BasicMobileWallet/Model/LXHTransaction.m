@@ -17,7 +17,7 @@
 
 @implementation LXHTransaction
 
-- (instancetype)initWithDic:(NSDictionary *)dic;
+- (instancetype)initWithDic:(NSDictionary *)dic
 {
     self = [super init];
     if (self) {
@@ -26,16 +26,15 @@
     return self;
 }
 
-// send, receive or "send and receive"
-- (NSString *)sendOrReceiveString {
+- (LXHTransactionSendOrReceiveType)sendOrReceiveType {
     NSDecimalNumber *sentValueSumFromLocalAddress = [self sentValueSumFromLocalAddress];
     NSDecimalNumber *receivedValueSumFromLocalAddress = [self receivedValueSumFromLocalAddress];
     if ([sentValueSumFromLocalAddress compare:receivedValueSumFromLocalAddress] == NSOrderedDescending)  {//sent > received is send type
-        return @"send";
+        return LXHTransactionSendOrReceiveTypeSend;
     } else if ([sentValueSumFromLocalAddress compare:receivedValueSumFromLocalAddress] == NSOrderedSame) {
-        return @"send and receive"; //这个时候fee是0
+        return LXHTransactionSendOrReceiveTypeNotDefined; //这个时候fee是0 
     } else {
-        return @"receive";
+        return LXHTransactionSendOrReceiveTypeReceive;
     }
 }
 
@@ -63,7 +62,7 @@
     return sum;
 }
 
-//当前钱包收到d的总值
+//当前钱包收到的总值
 - (NSDecimalNumber *)receivedValueSumFromLocalAddress {
     if (_receivedValueSumFromLocalAddress)
         return _receivedValueSumFromLocalAddress;

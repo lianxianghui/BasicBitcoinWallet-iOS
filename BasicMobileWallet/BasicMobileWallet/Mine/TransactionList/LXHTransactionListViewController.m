@@ -10,6 +10,8 @@
 #import "LXHTransactionDetailViewController.h"
 #import "LXHTransactionInfoCell.h"
 #import "LXHTransactionDataManager.h"
+#import "LXhTransaction.h"
+#import "LXHGlobalHeader.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -79,9 +81,37 @@
         if (tableView == self.contentView.listView) {
             NSArray *transactionList = [LXHTransactionDataManager sharedInstance].transactionList;  
             for (NSDictionary *transactionDic in transactionList) {
+//                @{@"value":@"0.00000001BTC", @"isSelectable":@"1", @"comfirmation":@"确认数：2", @"InitializedTime":@"发起时间：2019-05-16  12：34", @"cellType":@"LXHTransactionInfoCell", @"type":@"交易类型：发送"}
                 NSMutableDictionary *dic = @{@"isSelectable":@"1", @"cellType":@"LXHTransactionInfoCell"}.mutableCopy;
-//                NSString *bctValue = [NSString stringWithFormat:@"%@ BTC", ];
-//                NSDictionary *dic = @{@"value":@"0.00000001BTC", @"isSelectable":@"1", @"comfirmation":@"确认数：2", @"InitializedTime":@"发起时间：2019-05-16  12：34", @"cellType":@"LXHTransactionInfoCell", @"type":@"交易类型：发送"};
+                LXHTransaction *transaction = [[LXHTransaction alloc] initWithDic:transactionDic];
+                id comfirmation = transactionDic[@"comfirmation"];
+                if (comfirmation)
+                    dic[@"comfirmation"] = [NSString stringWithFormat: @"%@:%@", NSLocalizedString(@"确认数", nil), comfirmation];
+                
+                NSInteger time = [transactionDic[@"time"] integerValue];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+                
+                NSString *dateString = [formatter stringFromDate:date];
+                dic[@"InitializedTime"] = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
+                
+                LXHTransactionSendOrReceiveType sendType = [transaction sendOrReceiveType];
+                NSString *typeString = nil;
+                NSDecimalNumber *btcValue = nil;
+                if (sendType == LXHTransactionSendOrReceiveTypeSend) {
+                    typeString = @"发送";
+                    btcValue = [transaction sentValueSumFromLocalAddress];
+                } else if (sendType == LXHTransactionSendOrReceiveTypeReceive) {
+                    typeString = @"接收";
+                    btcValue = [transaction receivedValueSumFromLocalAddress];
+                } else {
+                    typeString = @"";
+                    btcValue = [transaction sentValueSumFromLocalAddress];
+                }
+                typeString = NSLocalizedString(typeString, nil);
+                dic[@"type"] = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"交易类型", nil), typeString];
+                dic[@"value"] = [NSString stringWithFormat:@"%@ BTC", btcValue];
                 [_dataForCells addObject:dic];
             }
         }

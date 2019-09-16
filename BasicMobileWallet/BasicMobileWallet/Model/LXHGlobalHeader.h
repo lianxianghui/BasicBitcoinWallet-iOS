@@ -16,5 +16,5 @@ typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) { //do not modify
 
 #define LXHAESPassword @"serefddetggg" //TODO 随便写的，用你自己的代替
 #define LXCacheFileDir [NSSearchPathForDirectoriesInDomains(NSCachesDirectory ,NSUserDomainMask, YES) objectAtIndex:0]
-
+#define LXHTranactionTimeDateFormat @"yyyy-MM-dd HH:mm:ss"
 #endif /* LXHGlobalHeader_h */
