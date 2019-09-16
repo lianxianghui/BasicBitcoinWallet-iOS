@@ -169,6 +169,7 @@
 		8CAA66B5230E92E300B17222 /* LXHSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66AF230E92E300B17222 /* LXHSendViewController.m */; };
 		8CD26924230A452B001B9300 /* LXHGenerateWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD26920230A452A001B9300 /* LXHGenerateWalletViewController.m */; };
 		8CD26925230A452B001B9300 /* LXHGenerateWalletView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD26921230A452A001B9300 /* LXHGenerateWalletView.m */; };
+		D82C5A0F84FEC81976FC1809 /* libPods-BasicMobileWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD26932230B9D6D001B9300 /* libPods-BasicMobileWallet.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -679,6 +680,7 @@
 				8CA322A522DEBE9900CEA828 /* libcrypto-ios.a in Frameworks */,
 				72047250692A4DEA5C81383B /* libPods-BasicMobileWallet.a in Frameworks */,
 				8CA322A622DEBE9900CEA828 /* libssl-ios.a in Frameworks */,
+				D82C5A0F84FEC81976FC1809 /* libPods-BasicMobileWallet.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1565,6 +1567,7 @@
 				8CA7019522D8713500F42814 /* Sources */,
 				8CA7019622D8713500F42814 /* Frameworks */,
 				8CA7019722D8713500F42814 /* Resources */,
+				01DD639B048C6C8012F4DD54 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1657,6 +1660,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		01DD639B048C6C8012F4DD54 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-BasicMobileWallet/Pods-BasicMobileWallet-resources.sh",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BasicMobileWallet/Pods-BasicMobileWallet-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		775A75452916FB2BCCAD2461 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

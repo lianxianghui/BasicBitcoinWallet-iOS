@@ -12,6 +12,7 @@
 #import "LXHTransactionDataManager.h"
 #import "LXhTransaction.h"
 #import "LXHGlobalHeader.h"
+#import "MJRefresh.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
