@@ -7,13 +7,12 @@
 //
 
 #import "LXHAccountAddressSearcher.h"
-#import "AFNetworking.h"
+#import "NetworkRequest.h"
 #import "NSJSONSerialization+VLBase.h"
 #import "CoreBitcoin.h"
 
 @interface LXHAccountAddressSearcher ()
 @property (nonatomic) LXHAccount *account;
-@property (nonatomic) AFHTTPSessionManager *manager;
 @end
 
 @implementation LXHAccountAddressSearcher
@@ -90,14 +89,14 @@
         baseUrl = @"https://insight.bitpay.com/";
     else
         baseUrl = @"https://test-insight.bitpay.com/";
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
-    manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
-    self.manager = manager;
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    dic[@"addrs"] = [address componentsJoinedByString:@","];
-    [manager POST:@"api/addrs/txs" parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        successBlock(responseObject);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    NSString *url = [NSString stringWithFormat:@"%@%@", baseUrl, @"api/addrs/txs"];
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"addrs"] = [address componentsJoinedByString:@","];
+    [NetworkRequest postWithUrlString:url parameters:parameters
+                      successCallback:^(NSDictionary * _Nonnull resultDic) {
+        successBlock(resultDic);
+    } failureCallback:^(NSDictionary * _Nonnull resultDic) {
+        NSError *error = resultDic[@"error"];
         failureBlock(@{@"error":error.localizedDescription});
     }];
 }

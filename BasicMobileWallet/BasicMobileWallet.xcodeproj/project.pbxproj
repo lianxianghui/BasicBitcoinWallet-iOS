@@ -32,6 +32,7 @@
 		8C2CC6BE232F20E5005AA93C /* LXHTransactionInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC6A0232F20E4005AA93C /* LXHTransactionInfoCell.m */; };
 		8C2CC6BF232F20E5005AA93C /* LXHTransactionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC6A4232F20E4005AA93C /* LXHTransactionListViewController.m */; };
 		8C2CC6C0232F20E5005AA93C /* LXHTransactionListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC6A5232F20E4005AA93C /* LXHTransactionListView.m */; };
+		8C2CC6C3232F30D4005AA93C /* NetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC6C2232F30D4005AA93C /* NetworkRequest.m */; };
 		8CA31F5C22D9872A00CEA828 /* LXHInputMnemonicWordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */; };
 		8CA31F5D22D9872A00CEA828 /* LXHInputMnemonicWordsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5A22D9872900CEA828 /* LXHInputMnemonicWordsView.m */; };
 		8CA31F5E22D9872A00CEA828 /* LXHWordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5B22D9872900CEA828 /* LXHWordCell.m */; };
@@ -230,6 +231,8 @@
 		8C2CC6A3232F20E4005AA93C /* LXHTransactionInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHTransactionInfoCell.h; sourceTree = "<group>"; };
 		8C2CC6A4232F20E4005AA93C /* LXHTransactionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHTransactionListViewController.m; sourceTree = "<group>"; };
 		8C2CC6A5232F20E4005AA93C /* LXHTransactionListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHTransactionListView.m; sourceTree = "<group>"; };
+		8C2CC6C1232F30D4005AA93C /* NetworkRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkRequest.h; sourceTree = "<group>"; };
+		8C2CC6C2232F30D4005AA93C /* NetworkRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkRequest.m; sourceTree = "<group>"; };
 		8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputMnemonicWordsViewController.m; sourceTree = "<group>"; };
 		8CA31F5722D9872900CEA828 /* LXHInputMnemonicWordsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputMnemonicWordsView.h; sourceTree = "<group>"; };
 		8CA31F5822D9872900CEA828 /* LXHWordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWordCell.h; sourceTree = "<group>"; };
@@ -775,12 +778,12 @@
 		8C2CC69F232F20E4005AA93C /* TransactionList */ = {
 			isa = PBXGroup;
 			children = (
-				8C2CC6A0232F20E4005AA93C /* LXHTransactionInfoCell.m */,
-				8C2CC6A1232F20E4005AA93C /* LXHTransactionListViewController.h */,
-				8C2CC6A2232F20E4005AA93C /* LXHTransactionListView.h */,
 				8C2CC6A3232F20E4005AA93C /* LXHTransactionInfoCell.h */,
-				8C2CC6A4232F20E4005AA93C /* LXHTransactionListViewController.m */,
+				8C2CC6A0232F20E4005AA93C /* LXHTransactionInfoCell.m */,
+				8C2CC6A2232F20E4005AA93C /* LXHTransactionListView.h */,
 				8C2CC6A5232F20E4005AA93C /* LXHTransactionListView.m */,
+				8C2CC6A1232F20E4005AA93C /* LXHTransactionListViewController.h */,
+				8C2CC6A4232F20E4005AA93C /* LXHTransactionListViewController.m */,
 			);
 			path = TransactionList;
 			sourceTree = "<group>";
@@ -892,6 +895,8 @@
 				8CD2691B230680FF001B9300 /* LXHGlobalHeader.h */,
 				8CD2692A230A8AD1001B9300 /* LXHAccountAddressSearcher.h */,
 				8CD2692B230A8AD1001B9300 /* LXHAccountAddressSearcher.m */,
+				8C2CC6C1232F30D4005AA93C /* NetworkRequest.h */,
+				8C2CC6C2232F30D4005AA93C /* NetworkRequest.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1763,6 +1768,7 @@
 				8CAA66B4230E92E300B17222 /* LXHInputOutputCell.m in Sources */,
 				8CAA669B230E468200B17222 /* LXHAddressViewController.m in Sources */,
 				8CA3229A22DEBE9900CEA828 /* BTCBase58.m in Sources */,
+				8C2CC6C3232F30D4005AA93C /* NetworkRequest.m in Sources */,
 				8CA3227322DEBE9900CEA828 /* BTCMnemonic.m in Sources */,
 				8CA31F9022D98BAC00CEA828 /* LXHInitWalletView.m in Sources */,
 				8CA3229822DEBE9900CEA828 /* BTCPaymentMethod.m in Sources */,
