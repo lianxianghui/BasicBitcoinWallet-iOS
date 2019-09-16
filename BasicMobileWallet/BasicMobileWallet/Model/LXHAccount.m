@@ -104,13 +104,19 @@
     return ret;
 }
 
-- (NSArray *)usedAddresses {
+- (NSMutableArray *)usedAddresses {
     NSMutableArray *ret = [NSMutableArray array];
     [ret addObjectsIfNotNil:[self usedReceivingAddresses]];
     [ret addObjectsIfNotNil:[self usedChangeAddresses]];
     return ret;
 }
 
+- (NSArray *)usedAndCurrentAddresses {
+    NSMutableArray *ret = [self usedAddresses];
+    [ret addObjectIfNotNil:[self currentReceivingAddress]];
+    [ret addObjectIfNotNil:[self currentChangeAddress]];
+    return ret;
+}
 
 - (NSArray *)receivingAddressesFromZeroToIndex:(NSUInteger)toIndex {
     NSMutableArray *addresses = [NSMutableArray array];

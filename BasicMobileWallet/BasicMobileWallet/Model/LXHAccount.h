@@ -31,7 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)changeAddressWithIndex:(NSUInteger)index;
 - (NSArray *)receivingAddressesFromIndex:(NSUInteger)fromIndex count:(NSUInteger)count;
 
-- (NSArray *)usedAddresses;
+- (NSMutableArray *)usedAddresses;
+- (NSArray *)usedAndCurrentAddresses;
 @end
 
 NS_ASSUME_NONNULL_END
