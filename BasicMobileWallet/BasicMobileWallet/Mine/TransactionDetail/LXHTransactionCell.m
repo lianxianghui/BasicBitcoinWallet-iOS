@@ -53,6 +53,7 @@
         make.centerY.equalTo(self.mas_centerY);
         make.left.equalTo(self.mas_left).offset(8);
     }];
+    [self.title setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
 }
 
 //Getters
@@ -83,6 +84,7 @@
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"71e8a069e7ce8985c3e260cdb0bde4d50d0294c42704b102f3b1ac5db0f9d2b9 ", nil) attributes:textAttributes];
         _content.attributedText = text;
+        _content.numberOfLines = 0;
     }
     return _content;
 }
