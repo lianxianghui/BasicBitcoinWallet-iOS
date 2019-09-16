@@ -8,6 +8,7 @@
 
 #import "LXHKeychainStore.h"
 #import "BTCData.h"
+#import "LXHGlobalHeader.h"
 
 #import <RNCryptor/RNCryptor.h>
 #import <RNCryptor/RNDecryptor.h>
@@ -18,7 +19,7 @@
 @end
 
 static NSString *const kKeychainStoreServiceKey = @"org.lianxianghui.keychain.store.basic.wallet";
-static NSString *const aesPassword = @"serefddetggg"; //TODO 随便写的，用你自己的代替
+static NSString *const aesPassword = LXHAESPassword;
 
 
 @implementation LXHKeychainStore

@@ -14,4 +14,7 @@ typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) { //do not modify
     LXHBitcoinNetworkTypeMainnet = 0,
 };
 
+#define LXHAESPassword @"serefddetggg" //TODO 随便写的，用你自己的代替
+#define LXCacheFileDir [NSSearchPathForDirectoriesInDomains(NSCachesDirectory ,NSUserDomainMask, YES) objectAtIndex:0]
+
 #endif /* LXHGlobalHeader_h */

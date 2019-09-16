@@ -10,6 +10,7 @@
 #import "NetworkRequest.h"
 #import "NSJSONSerialization+VLBase.h"
 #import "CoreBitcoin.h"
+#import "LXHTransactionDataManager.h"
 
 @interface LXHAccountAddressSearcher ()
 @property (nonatomic) LXHAccount *account;
@@ -55,7 +56,8 @@
                             failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     NSUInteger gapLimit = 20;
     NSArray *addressesForRequesting = [_account receivingAddressesFromIndex:fromIndex count:gapLimit];
-    [self requestTransactionsWithAddresses:addressesForRequesting successBlock:^(NSDictionary *resultDic) {
+    //异步请求，通过successBlock传回事务数据
+    [LXHTransactionDataManager requestTransactionsWithAddresses:addressesForRequesting successBlock:^(NSDictionary *resultDic) {
         NSArray *transactions = resultDic[@"items"];
         if (transactions.count == 0) { //未找到新的交易，说明当前的20个地址都未用过，所以就是要找的Gap
             successBlock(@{@"FirstUnusedReceivingAddressesGapStartIndex":@(fromIndex)});
@@ -77,27 +79,6 @@
         }
     } failureBlock:^(NSDictionary *resultDic) {
         failureBlock(resultDic);
-    }];
-}
-
-//异步请求，通过successBlock传回事务数据
-- (void)requestTransactionsWithAddresses:(NSArray *)address 
-                            successBlock:(void (^)(NSDictionary *resultDic))successBlock 
-                            failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    NSString *baseUrl;
-    if ([_account currentNetworkType] == LXHBitcoinNetworkTypeMainnet)
-        baseUrl = @"https://insight.bitpay.com/";
-    else
-        baseUrl = @"https://test-insight.bitpay.com/";
-    NSString *url = [NSString stringWithFormat:@"%@%@", baseUrl, @"api/addrs/txs"];
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"addrs"] = [address componentsJoinedByString:@","];
-    [NetworkRequest postWithUrlString:url parameters:parameters
-                      successCallback:^(NSDictionary * _Nonnull resultDic) {
-        successBlock(resultDic);
-    } failureCallback:^(NSDictionary * _Nonnull resultDic) {
-        NSError *error = resultDic[@"error"];
-        failureBlock(@{@"error":error.localizedDescription});
     }];
 }
 

@@ -8,6 +8,7 @@
 
 #import "LXHAccount.h"
 #import "CoreBitcoin.h"
+#import "NSMutableArray+Base.h"
 
 @interface LXHAccount ()
 @property (nonatomic) BTCKeychain *masterKeychain;
@@ -93,11 +94,36 @@
     return addresses;
 }
 
-//not used
+- (NSArray *)usedReceivingAddresses {
+    NSArray *ret = [self receivingAddressesFromZeroToIndex:_currentReceivingAddressIndex-1];
+    return ret;
+}
+
+- (NSArray *)usedChangeAddresses {
+    NSArray *ret = [self changeAddressesFromZeroToIndex:_currentChangeAddressIndex-1];
+    return ret;
+}
+
+- (NSArray *)usedAddresses {
+    NSMutableArray *ret = [NSMutableArray array];
+    [ret addObjectsIfNotNil:[self usedReceivingAddresses]];
+    [ret addObjectsIfNotNil:[self usedChangeAddresses]];
+    return ret;
+}
+
+
 - (NSArray *)receivingAddressesFromZeroToIndex:(NSUInteger)toIndex {
     NSMutableArray *addresses = [NSMutableArray array];
     for (NSUInteger i = 0; i <= toIndex; i++) {
         [addresses addObject:[self receivingAddressWithIndex:i]];
+    }
+    return addresses;
+}
+
+- (NSArray *)changeAddressesFromZeroToIndex:(NSUInteger)toIndex {
+    NSMutableArray *addresses = [NSMutableArray array];
+    for (NSUInteger i = 0; i <= toIndex; i++) {
+        [addresses addObject:[self changeAddressWithIndex:i]];
     }
     return addresses;
 }
