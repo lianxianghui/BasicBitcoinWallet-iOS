@@ -1,4 +1,4 @@
-// LXHTabBarPageViewController.h
+// LXHTextCell.h
 // BasicWallet
 //
 //  Created by lianxianghui on 19-09-16
@@ -6,6 +6,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LXHTabBarPageViewController : UITabBarController
+@interface LXHTextCell : UIView
+
+@property (nonatomic) UIView *separator;
+@property (nonatomic) UILabel *text;
 
 @end

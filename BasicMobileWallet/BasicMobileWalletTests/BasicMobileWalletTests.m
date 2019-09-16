@@ -57,7 +57,7 @@
 //    NSArray *words = @[@"tail", @"fatal", @"photo", @"same", 
 //                       @"later", @"above", @"reform", @"zoo",
 //                       @"device", @"train", @"achieve", @"omit"];//chance_btc
-    [LXHWallet clearData];
+//    [LXHWallet clearData];
     XCTestExpectation *expectation = [self expectationWithDescription:@"测试成功"];
     [LXHWallet restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
         [expectation fulfill];

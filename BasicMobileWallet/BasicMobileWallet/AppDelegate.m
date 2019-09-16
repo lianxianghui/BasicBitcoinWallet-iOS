@@ -19,6 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [LXHPreference sharedInstance];//init default preference
+    //application.statusBarStyle = UIStatusBarStyleLightContent;
     return YES;
 }
 

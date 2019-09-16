@@ -1,12 +1,14 @@
 // LXHTabBarPageViewController.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-08-22
+//  Created by lianxianghui on 19-09-16
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import "LXHTabBarPageViewController.h"
-#import "LXHCurrentReceivingAddressViewController.h"
+//#import "LXHBalanceViewController.h"
 #import "LXHSendViewController.h"
+#import "LXHAddressViewController.h"
+#import "LXHMineViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -35,21 +37,41 @@
 
     viewController = [[LXHSendViewController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    itemImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_icon"];
-    itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_active_icon"];
-    item = [[UITabBarItem alloc] initWithTitle:@"发送" image:itemImage selectedImage:itemSelectedImage];
+    itemImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_unselected_icon"];
+    itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_selected_icon"];
+    item = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"发送", nil) image:itemImage selectedImage:itemSelectedImage];
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
 
-    viewController = [[LXHCurrentReceivingAddressViewController alloc] init];
+    viewController = [[LXHAddressViewController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    itemImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_icon"];
-    itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_active_icon"];
-    item = [[UITabBarItem alloc] initWithTitle:@"接收" image:itemImage selectedImage:itemSelectedImage];
+    itemImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_unselected_icon"];
+    itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_selected_icon"];
+    item = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"接收", nil) image:itemImage selectedImage:itemSelectedImage];
+    navigationController.tabBarItem = item;
+    [self addChildViewController:navigationController];
+
+//    viewController = [[LXHBalanceViewController alloc] init];
+//    navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+//    itemImage = [UIImage imageNamed:@"main_tabbarpage_item_3inner_unselected_icon"];
+//    itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_3inner_selected_icon"];
+//    item = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"余额", nil) image:itemImage selectedImage:itemSelectedImage];
+//    navigationController.tabBarItem = item;
+//    [self addChildViewController:navigationController];
+
+    viewController = [[LXHMineViewController alloc] init];
+    navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    itemImage = [UIImage imageNamed:@"main_tabbarpage_item_4inner_unselected_icon"];
+    itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_4inner_selected_icon"];
+    item = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"我的", nil) image:itemImage selectedImage:itemSelectedImage];
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
 
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = YES;
+}
 
 @end
