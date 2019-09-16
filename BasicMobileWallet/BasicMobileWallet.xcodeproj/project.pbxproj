@@ -711,18 +711,18 @@
 		8C2CC66B232F20E4005AA93C /* TransactionDetail */ = {
 			isa = PBXGroup;
 			children = (
-				8C2CC66C232F20E4005AA93C /* LXHTransactionDetailView.m */,
-				8C2CC66D232F20E4005AA93C /* LXHTransactionDetailViewController.m */,
-				8C2CC66E232F20E4005AA93C /* LXHTextCell.h */,
-				8C2CC66F232F20E4005AA93C /* LXHTransDetailLeftRightTextCell.m */,
-				8C2CC670232F20E4005AA93C /* LXHTitleCell.m */,
-				8C2CC671232F20E4005AA93C /* LXHTransactionCell.h */,
 				8C2CC672232F20E4005AA93C /* LXHTransactionDetailView.h */,
-				8C2CC673232F20E4005AA93C /* LXHTitleCell.h */,
+				8C2CC66C232F20E4005AA93C /* LXHTransactionDetailView.m */,
+				8C2CC66E232F20E4005AA93C /* LXHTextCell.h */,
+				8C2CC670232F20E4005AA93C /* LXHTitleCell.m */,
 				8C2CC674232F20E4005AA93C /* LXHTransDetailLeftRightTextCell.h */,
+				8C2CC66F232F20E4005AA93C /* LXHTransDetailLeftRightTextCell.m */,
+				8C2CC671232F20E4005AA93C /* LXHTransactionCell.h */,
+				8C2CC677232F20E4005AA93C /* LXHTransactionCell.m */,
+				8C2CC673232F20E4005AA93C /* LXHTitleCell.h */,
 				8C2CC675232F20E4005AA93C /* LXHTextCell.m */,
 				8C2CC676232F20E4005AA93C /* LXHTransactionDetailViewController.h */,
-				8C2CC677232F20E4005AA93C /* LXHTransactionCell.m */,
+				8C2CC66D232F20E4005AA93C /* LXHTransactionDetailViewController.m */,
 			);
 			path = TransactionDetail;
 			sourceTree = "<group>";

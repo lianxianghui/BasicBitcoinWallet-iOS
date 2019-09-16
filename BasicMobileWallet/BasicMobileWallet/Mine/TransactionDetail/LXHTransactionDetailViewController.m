@@ -11,6 +11,8 @@
 #import "LXHTextCell.h"
 #import "LXHTitleCell.h"
 #import "LXHTransDetailLeftRightTextCell.h"
+#import "LXHTransaction.h"
+#import "LXHGlobalHeader.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -20,10 +22,19 @@
     
 @interface LXHTransactionDetailViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHTransactionDetailView *contentView;
-
+@property (nonatomic) LXHTransaction *transaction;
 @end
 
 @implementation LXHTransactionDetailViewController
+
+- (instancetype)initWithModel:(id)model
+{
+    self = [super init];
+    if (self) {
+        _transaction = model;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -78,31 +89,82 @@
     if (!dataForCells) {
         dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            dic = @{@"content":@"71e8a069e7ce8985c3e260cdb0bde4d50d0294c42704b102f3b1ac5db0f9d2b9 ", @"isSelectable":@"1", @"title":@"交易ID: ", @"cellType":@"LXHTransactionCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"发起时间：2019-05-16  12：34", @"isSelectable":@"1", @"cellType":@"LXHTextCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"交易类型：发送", @"isSelectable":@"1", @"cellType":@"LXHTextCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"确认数：3", @"isSelectable":@"1", @"cellType":@"LXHTextCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"区块：1565555", @"isSelectable":@"1", @"cellType":@"LXHTextCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"输入数量：0.03BTC", @"isSelectable":@"1", @"cellType":@"LXHTextCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"输出数量：0.0297BTC", @"isSelectable":@"1", @"cellType":@"LXHTextCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"手续费：0.0003BTC", @"isSelectable":@"1", @"cellType":@"LXHTextCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"title":@"输入数：1", @"isSelectable":@"0", @"cellType":@"LXHTitleCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text1":@"1. mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"isSelectable":@"1", @"text2":@"0.00000001BTC", @"cellType":@"LXHTransDetailLeftRightTextCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"title":@"输出数：1", @"isSelectable":@"0", @"cellType":@"LXHTitleCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text1":@"1. mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"isSelectable":@"1", @"text2":@"0.00000001BTC", @"cellType":@"LXHTransDetailLeftRightTextCell"};
-            [dataForCells addObject:dic];
+            //txid
+            NSMutableDictionary *dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTransactionCell", @"title":@"交易ID: "}.mutableCopy;
+            NSDictionary *transactionDic = _transaction.dic;
+            dataForCell[@"content"] = transactionDic[@"txid"];
+            [dataForCells addObject:dataForCell];
+            //time
+            dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTextCell"}.mutableCopy;
+            static NSDateFormatter *formatter = nil;
+            if (!formatter) {
+                formatter = [[NSDateFormatter alloc] init];
+                formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+            }
+            NSInteger time = [transactionDic[@"time"] integerValue];
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
+            NSString *dateString = [formatter stringFromDate:date];
+            dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"发起时间", nil), dateString];
+            [dataForCells addObject:dataForCell];
+            //type
+            dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTextCell"}.mutableCopy;
+            LXHTransactionSendOrReceiveType sendType = [_transaction sendOrReceiveType];
+            NSString *typeString = nil;
+            if (sendType == LXHTransactionSendOrReceiveTypeSend) {
+                typeString = @"发送";
+            } else if (sendType == LXHTransactionSendOrReceiveTypeReceive) {
+                typeString = @"接收";
+            } else {
+                typeString = @"";
+            }
+            typeString = NSLocalizedString(typeString, nil);
+            dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"交易类型", nil), typeString];
+            [dataForCells addObject:dataForCell];
+            //confirmations
+            dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTextCell"}.mutableCopy;
+            id confirmation = transactionDic[@"confirmations"];
+            if (confirmation)
+                dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@", NSLocalizedString(@"确认数", nil), confirmation];
+            else 
+                dataForCell[@"text"] = @"";
+            [dataForCells addObject:dataForCell];
+            //block
+            dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTextCell"}.mutableCopy;
+            dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@", NSLocalizedString(@"区块", nil), transactionDic[@"blockheight"]];
+            [dataForCells addObject:dataForCell];
+            //valueIn
+            dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTextCell"}.mutableCopy;
+            dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@ BTC", NSLocalizedString(@"输入数量", nil), transactionDic[@"valueIn"]];
+            [dataForCells addObject:dataForCell];        
+            //valueOut
+            dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTextCell"}.mutableCopy;
+            dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@ BTC", NSLocalizedString(@"输出数量", nil), transactionDic[@"valueOut"]];
+            [dataForCells addObject:dataForCell];             
+
+            //fees
+            dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTextCell"}.mutableCopy;
+            dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@ BTC", NSLocalizedString(@"手续费", nil), transactionDic[@"fees"]];
+            [dataForCells addObject:dataForCell];  
+
+            //in count
+            dataForCell = @{@"isSelectable":@"0", @"cellType":@"LXHTitleCell"}.mutableCopy;
+            NSArray *vin = transactionDic[@"vin"];
+            dataForCell[@"title"] = [NSString stringWithFormat: @"%@: %ld", NSLocalizedString(@"输入数", nil), vin.count];
+            [dataForCells addObject:dataForCell]; 
+            
+            //TODO
+            dataForCell = @{@"text1":@"1. mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"isSelectable":@"1", @"text2":@"0.00000001BTC", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
+            [dataForCells addObject:dataForCell];
+            
+            //out count
+            dataForCell = @{@"isSelectable":@"0", @"cellType":@"LXHTitleCell"}.mutableCopy;
+            NSArray *vout = transactionDic[@"vout"];
+            dataForCell[@"title"] = [NSString stringWithFormat: @"%@: %ld", NSLocalizedString(@"输出数", nil), vout.count];
+            [dataForCells addObject:dataForCell]; 
+            
+            //TODO 
+            dataForCell = @{@"text1":@"1. mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"isSelectable":@"1", @"text2":@"0.00000001BTC", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
+            [dataForCells addObject:dataForCell];
         }
     }
     return dataForCells;

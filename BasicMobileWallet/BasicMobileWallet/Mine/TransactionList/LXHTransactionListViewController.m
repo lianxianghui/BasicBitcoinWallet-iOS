@@ -141,6 +141,7 @@
                 typeString = NSLocalizedString(typeString, nil);
                 dic[@"type"] = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"交易类型", nil), typeString];
                 dic[@"value"] = [NSString stringWithFormat:@"%@ BTC", btcValue];
+                dic[@"model"] = transaction; 
                 [_dataForCells addObject:dic];
             }
         }
@@ -258,16 +259,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch(indexPath.row) {
-        case 0:
-            {
-            UIViewController *controller = [[LXHTransactionDetailViewController alloc] init];
-            [self.navigationController pushViewController:controller animated:YES];
-            }
-            break;
-        default:
-            break;
-    }
+    NSDictionary *cellData = [self cellDataForTableView:tableView atIndexPath:indexPath];
+    id model = cellData[@"model"];
+    UIViewController *controller = [[LXHTransactionDetailViewController alloc] initWithModel:model];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 @end
