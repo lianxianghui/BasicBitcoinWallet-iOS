@@ -65,7 +65,7 @@
             NSDictionary *dic = nil;
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
             [dataForCells addObject:dic];
-            dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"send_send_disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输入"};
+            dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosureindicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输入"};
             [dataForCells addObject:dic];
             dic = @{@"addressText":@"mouvddfefefefdfdfd ", @"text":@"输入1: ", @"isSelectable":@"0", @"btcValue":@"0.000003023 BTC", @"cellType":@"LXHInputOutputCell"};
             [dataForCells addObject:dic];
@@ -77,7 +77,7 @@
             [dataForCells addObject:dic];
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
             [dataForCells addObject:dic];
-            dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"send_send_disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输出"};
+            dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosureindicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输出"};
             [dataForCells addObject:dic];
             dic = @{@"addressText":@"mouvddfefefefdfdfd ", @"text":@"输出1: ", @"isSelectable":@"0", @"btcValue":@"0.000003023 BTC", @"cellType":@"LXHInputOutputCell"};
             [dataForCells addObject:dic];

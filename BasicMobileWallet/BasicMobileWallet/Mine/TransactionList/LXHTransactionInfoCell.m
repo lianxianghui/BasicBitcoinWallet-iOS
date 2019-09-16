@@ -172,7 +172,7 @@
     if (!_disclosureIndicator) {
         _disclosureIndicator = [[UIImageView alloc] init];
         _disclosureIndicator.alpha = 1;
-        _disclosureIndicator.image = [UIImage imageNamed:@"mine_transactionlist_disclosure_indicator"];
+        _disclosureIndicator.image = [UIImage imageNamed:@"disclosureindicator"];
     }
     return _disclosureIndicator;
 }
