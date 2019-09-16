@@ -6,10 +6,10 @@
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 //
 
-#import "NetworkRequest.h"
+#import "LXHNetworkRequest.h"
 #import "AFNetworking.h"
 
-@implementation NetworkRequest
+@implementation LXHNetworkRequest
 
 + (id)postWithUrlString:(NSString *)url 
              parameters:(NSDictionary *)parameters 

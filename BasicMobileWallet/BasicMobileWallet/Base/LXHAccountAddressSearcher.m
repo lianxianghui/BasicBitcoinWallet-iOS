@@ -7,7 +7,7 @@
 //
 
 #import "LXHAccountAddressSearcher.h"
-#import "NetworkRequest.h"
+#import "LXHNetworkRequest.h"
 #import "NSJSONSerialization+VLBase.h"
 #import "CoreBitcoin.h"
 #import "LXHTransactionDataManager.h"

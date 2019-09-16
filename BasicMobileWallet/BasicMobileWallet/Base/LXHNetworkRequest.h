@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NetworkRequest : NSObject
+@interface LXHNetworkRequest : NSObject
 
 + (id)postWithUrlString:(NSString *)url 
              parameters:(NSDictionary *)parameters 
