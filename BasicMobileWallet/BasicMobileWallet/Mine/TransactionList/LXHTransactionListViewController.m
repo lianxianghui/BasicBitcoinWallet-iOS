@@ -84,15 +84,18 @@
 //                @{@"value":@"0.00000001BTC", @"isSelectable":@"1", @"comfirmation":@"确认数：2", @"InitializedTime":@"发起时间：2019-05-16  12：34", @"cellType":@"LXHTransactionInfoCell", @"type":@"交易类型：发送"}
                 NSMutableDictionary *dic = @{@"isSelectable":@"1", @"cellType":@"LXHTransactionInfoCell"}.mutableCopy;
                 LXHTransaction *transaction = [[LXHTransaction alloc] initWithDic:transactionDic];
+                
                 id comfirmation = transactionDic[@"comfirmation"];
                 if (comfirmation)
                     dic[@"comfirmation"] = [NSString stringWithFormat: @"%@:%@", NSLocalizedString(@"确认数", nil), comfirmation];
-                
+        
+                static NSDateFormatter *formatter = nil;
+                if (!formatter) {
+                    formatter = [[NSDateFormatter alloc] init];
+                    formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+                }
                 NSInteger time = [transactionDic[@"time"] integerValue];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
-                
                 NSString *dateString = [formatter stringFromDate:date];
                 dic[@"InitializedTime"] = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
                 
