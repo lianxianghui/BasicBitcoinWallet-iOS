@@ -15,13 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface LXHTransactionDataManager : NSObject
 @property (nonatomic) NSArray *transactionList;
-
 /**
  * 请求成功后会把事务数据保存到文件，同时放到transactionList里
  */
 - (void)requestDataWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock 
                        failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 
+
++ (instancetype)sharedInstance;
 
 + (void)requestTransactionsWithAddresses:(NSArray *)address
                             successBlock:(void (^)(NSDictionary *resultDic))successBlock 

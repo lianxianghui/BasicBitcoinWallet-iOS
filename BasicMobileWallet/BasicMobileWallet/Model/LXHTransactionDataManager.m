@@ -13,7 +13,7 @@
 #import <RNCryptor/RNDecryptor.h>
 #import <RNCryptor/RNEncryptor.h>
 
-#import "NetworkRequest.h"
+#import "LXHNetworkRequest.h"
 #import "LXHWallet.h"
 
 static NSString *const cacheFileName = @"LXHTransactionDataManagerCacheFile.aes";
@@ -90,7 +90,7 @@ static NSString *const aesPassword = LXHAESPassword;
     NSString *url = [NSString stringWithFormat:@"%@%@", baseUrl, @"api/addrs/txs"];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"addrs"] = [addresses componentsJoinedByString:@","];
-    [NetworkRequest postWithUrlString:url parameters:parameters
+    [LXHNetworkRequest postWithUrlString:url parameters:parameters
                       successCallback:^(NSDictionary * _Nonnull resultDic) {
                           successBlock(resultDic);
                       } failureCallback:^(NSDictionary * _Nonnull resultDic) {

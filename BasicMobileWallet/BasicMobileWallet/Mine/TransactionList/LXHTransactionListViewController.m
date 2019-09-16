@@ -9,6 +9,7 @@
 #import "LXHTransactionListView.h"
 #import "LXHTransactionDetailViewController.h"
 #import "LXHTransactionInfoCell.h"
+#import "LXHTransactionDataManager.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -18,6 +19,7 @@
     
 @interface LXHTransactionListViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHTransactionListView *contentView;
+@property (nonatomic) NSMutableArray *dataForCells;
 
 @end
 
@@ -72,16 +74,19 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
+    if (!_dataForCells) {
+        _dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            dic = @{@"value":@"0.00000001BTC", @"isSelectable":@"1", @"comfirmation":@"确认数：2", @"InitializedTime":@"发起时间：2019-05-16  12：34", @"cellType":@"LXHTransactionInfoCell", @"type":@"交易类型：发送"};
-            [dataForCells addObject:dic];
+            NSArray *transactionList = [LXHTransactionDataManager sharedInstance].transactionList;  
+            for (NSDictionary *transactionDic in transactionList) {
+                NSMutableDictionary *dic = @{@"isSelectable":@"1", @"cellType":@"LXHTransactionInfoCell"}.mutableCopy;
+//                NSString *bctValue = [NSString stringWithFormat:@"%@ BTC", ];
+//                NSDictionary *dic = @{@"value":@"0.00000001BTC", @"isSelectable":@"1", @"comfirmation":@"确认数：2", @"InitializedTime":@"发起时间：2019-05-16  12：34", @"cellType":@"LXHTransactionInfoCell", @"type":@"交易类型：发送"};
+                [_dataForCells addObject:dic];
+            }
         }
     }
-    return dataForCells;
+    return _dataForCells;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
