@@ -9,7 +9,7 @@
 @interface LXHTransactionInfoCell : UIView
 
 @property (nonatomic) UIView *separator;
-@property (nonatomic) UILabel *comfirmation;
+@property (nonatomic) UILabel *confirmation;
 @property (nonatomic) UILabel *type;
 @property (nonatomic) UILabel *value;
 @property (nonatomic) UILabel *InitializedTime;

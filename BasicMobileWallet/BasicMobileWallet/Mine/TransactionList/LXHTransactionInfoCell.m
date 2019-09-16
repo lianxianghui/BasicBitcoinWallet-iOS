@@ -32,7 +32,7 @@
 
 - (void)addSubviews {
     [self addSubview:self.separator];
-    [self addSubview:self.comfirmation];
+    [self addSubview:self.confirmation];
     [self addSubview:self.type];
     [self addSubview:self.value];
     [self addSubview:self.InitializedTime];
@@ -46,7 +46,7 @@
         make.left.equalTo(self.mas_left);
         make.height.mas_equalTo(0.5);
     }];
-    [self.comfirmation mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.confirmation mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.type.mas_right).offset(18);
         make.bottom.equalTo(self.type.mas_bottom);
     }];
@@ -80,9 +80,9 @@
     return _separator;
 }
 
-- (UILabel *)comfirmation {
-    if (!_comfirmation) {
-        _comfirmation = [[UILabel alloc] init];
+- (UILabel *)confirmation {
+    if (!_confirmation) {
+        _confirmation = [[UILabel alloc] init];
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -97,9 +97,9 @@
         [textAttributes setObject:@(-0.3376471) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"确认数：2", nil) attributes:textAttributes];
-        _comfirmation.attributedText = text;
+        _confirmation.attributedText = text;
     }
-    return _comfirmation;
+    return _confirmation;
 }
 
 - (UILabel *)type {

@@ -118,17 +118,17 @@
     return ret;
 }
 
-- (NSArray *)receivingAddressesFromZeroToIndex:(NSUInteger)toIndex {
+- (NSArray *)receivingAddressesFromZeroToIndex:(NSInteger)toIndex {
     NSMutableArray *addresses = [NSMutableArray array];
-    for (NSUInteger i = 0; i <= toIndex; i++) {
+    for (NSInteger i = 0; i <= toIndex; i++) {
         [addresses addObject:[self receivingAddressWithIndex:i]];
     }
     return addresses;
 }
 
-- (NSArray *)changeAddressesFromZeroToIndex:(NSUInteger)toIndex {
+- (NSArray *)changeAddressesFromZeroToIndex:(NSInteger)toIndex {
     NSMutableArray *addresses = [NSMutableArray array];
-    for (NSUInteger i = 0; i <= toIndex; i++) {
+    for (NSInteger i = 0; i <= toIndex; i++) {
         [addresses addObject:[self changeAddressWithIndex:i]];
     }
     return addresses;

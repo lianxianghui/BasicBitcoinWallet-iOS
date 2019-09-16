@@ -43,15 +43,16 @@
     if (_sentValueSumFromLocalAddress)
         return _sentValueSumFromLocalAddress;
     NSArray *inputs = _dic[@"vin"];
-    NSDecimalNumber *sum = nil;
+    NSDecimalNumber *sum = [NSDecimalNumber zero];
     NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
     for (NSDictionary *inputDic in inputs) {
         NSString *inputAddr = inputDic[@"addr"];
         if (![usedAndCurrentAddresses containsObject:inputAddr])
             continue;
-        NSString *value = inputDic[@"value"];
+        NSString *value = inputDic[@"value"]; 
         if (!value)
             continue;
+        value = [NSString stringWithFormat:@"%@", value];
         NSDecimalNumber *decimalValue = [NSDecimalNumber decimalNumberWithString:value];
         if (!sum) 
             sum = decimalValue;
@@ -67,15 +68,16 @@
     if (_receivedValueSumFromLocalAddress)
         return _receivedValueSumFromLocalAddress;
     NSArray *outputs = _dic[@"vout"];
-    NSDecimalNumber *sum = nil;
+    NSDecimalNumber *sum = [NSDecimalNumber zero];
     NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
     for (NSDictionary *outputDic in outputs) {
-        NSString *addr = [outputDic valueForKeyPath:@"scriptPubKey.addresses"];
+        NSString *addr = [outputDic valueForKeyPath:@"scriptPubKey.addresses"][0];
         if (![usedAndCurrentAddresses containsObject:addr])
             continue;
         NSString *value = outputDic[@"value"];
         if (!value)
             continue;
+        value = [NSString stringWithFormat:@"%@", value];
         NSDecimalNumber *decimalValue = [NSDecimalNumber decimalNumberWithString:value];
         if (!sum) 
             sum = decimalValue;

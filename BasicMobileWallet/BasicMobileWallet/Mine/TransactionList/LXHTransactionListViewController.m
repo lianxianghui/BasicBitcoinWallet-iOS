@@ -40,6 +40,15 @@
         make.left.right.equalTo(self.view);
         make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
     }];
+    
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(listViewRefresh)];
+    // 设置自动切换透明度(在导航栏下面自动隐藏)
+ //   header.automaticallyChangeAlpha = YES;
+//    // 隐藏时间
+//    header.lastUpdatedTimeLabel.hidden = YES;
+    // 设置header
+    self.contentView.listView.mj_header = header;
+    
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
@@ -48,6 +57,20 @@
 
 - (void)swipeView:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)listViewRefresh {
+    [[LXHTransactionDataManager sharedInstance] requestDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+        [self.contentView.listView.mj_header endRefreshing];
+        [self reloadListView];
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        //TODO 显示提示
+    }];
+}
+
+- (void)reloadListView {
+    self.dataForCells = nil;
+    [self.contentView.listView reloadData];
 }
 
 - (void)addActions {
@@ -82,14 +105,16 @@
         if (tableView == self.contentView.listView) {
             NSArray *transactionList = [LXHTransactionDataManager sharedInstance].transactionList;  
             for (NSDictionary *transactionDic in transactionList) {
-//                @{@"value":@"0.00000001BTC", @"isSelectable":@"1", @"comfirmation":@"确认数：2", @"InitializedTime":@"发起时间：2019-05-16  12：34", @"cellType":@"LXHTransactionInfoCell", @"type":@"交易类型：发送"}
+//                NSDictionary *dic = @{@"value":@"0.00000001BTC", @"isSelectable":@"1", @"confirmation":@"确认数：2", @"InitializedTime":@"发起时间：2019-05-16  12：34", @"cellType":@"LXHTransactionInfoCell", @"type":@"交易类型：发送"};
+                
                 NSMutableDictionary *dic = @{@"isSelectable":@"1", @"cellType":@"LXHTransactionInfoCell"}.mutableCopy;
                 LXHTransaction *transaction = [[LXHTransaction alloc] initWithDic:transactionDic];
                 
-                id comfirmation = transactionDic[@"comfirmation"];
-                if (comfirmation)
-                    dic[@"comfirmation"] = [NSString stringWithFormat: @"%@:%@", NSLocalizedString(@"确认数", nil), comfirmation];
-        
+                id confirmation = transactionDic[@"confirmations"];
+                if (confirmation)
+                    dic[@"confirmation"] = [NSString stringWithFormat: @"%@:%@", NSLocalizedString(@"确认数", nil), confirmation];
+                else 
+                    dic[@"confirmation"] = @"";
                 static NSDateFormatter *formatter = nil;
                 if (!formatter) {
                     formatter = [[NSDateFormatter alloc] init];
@@ -184,12 +209,12 @@
     UIView *view = [cell.contentView viewWithTag:tag];
     if ([cellType isEqualToString:@"LXHTransactionInfoCell"]) {
         LXHTransactionInfoCell *cellView = (LXHTransactionInfoCell *)view;
-        NSString *comfirmation = [dataForRow valueForKey:@"comfirmation"];
-        if (!comfirmation)
-            comfirmation = @"";
-        NSMutableAttributedString *comfirmationAttributedString = [cellView.comfirmation.attributedText mutableCopy];
-        [comfirmationAttributedString.mutableString setString:comfirmation];
-        cellView.comfirmation.attributedText = comfirmationAttributedString;
+        NSString *confirmation = [dataForRow valueForKey:@"confirmation"];
+        if (!confirmation)
+            confirmation = @"";
+        NSMutableAttributedString *confirmationAttributedString = [cellView.confirmation.attributedText mutableCopy];
+        [confirmationAttributedString.mutableString setString:confirmation];
+        cellView.confirmation.attributedText = confirmationAttributedString;
         NSString *type = [dataForRow valueForKey:@"type"];
         if (!type)
             type = @"";
