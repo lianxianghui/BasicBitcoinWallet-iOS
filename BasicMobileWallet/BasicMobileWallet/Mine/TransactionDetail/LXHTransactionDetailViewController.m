@@ -23,6 +23,7 @@
 @interface LXHTransactionDetailViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHTransactionDetailView *contentView;
 @property (nonatomic) LXHTransaction *transaction;
+@property (nonatomic) NSMutableArray *dataForCells;
 @end
 
 @implementation LXHTransactionDetailViewController
@@ -85,9 +86,8 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
+    if (!_dataForCells) {
+        NSMutableArray *dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
             //txid
             NSMutableDictionary *dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTransactionCell", @"title":@"交易ID: "}.mutableCopy;
@@ -166,8 +166,9 @@
             dataForCell = @{@"text1":@"1. mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"isSelectable":@"1", @"text2":@"0.00000001BTC", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
             [dataForCells addObject:dataForCell];
         }
+        _dataForCells = dataForCells;
     }
-    return dataForCells;
+    return _dataForCells;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
