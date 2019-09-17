@@ -93,4 +93,14 @@
     return ret;
 }
 
+- (NSString *)outAddressAtIndex:(NSInteger)index {
+    NSArray *outputs = _dic[@"vout"];
+    if (index < outputs.count) {
+        NSDictionary *outputDic = outputs[index];
+        NSString *addr = [outputDic valueForKeyPath:@"scriptPubKey.addresses"][0];
+        return addr;
+    }
+    return nil;
+}
+
 @end

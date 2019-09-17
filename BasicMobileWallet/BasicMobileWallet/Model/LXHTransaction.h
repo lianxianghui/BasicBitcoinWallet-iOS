@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSDecimalNumber *)fees;
 
+- (NSString *)outAddressAtIndex:(NSInteger)index;
+
 @property (nonatomic, readonly) NSDictionary *dic;
 //其它属性可以直接从dic里读
 //blockhash = 00000000020b45260487556b38924f222c36837d4f0f4b5556b35a0a1ca26583;

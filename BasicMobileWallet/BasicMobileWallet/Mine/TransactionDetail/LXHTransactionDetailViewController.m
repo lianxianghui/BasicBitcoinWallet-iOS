@@ -154,9 +154,13 @@
             dataForCell[@"title"] = [NSString stringWithFormat: @"%@: %ld", NSLocalizedString(@"输入数", nil), vin.count];
             [dataForCells addObject:dataForCell]; 
             
-            //TODO
-            dataForCell = @{@"text1":@"1. mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"isSelectable":@"1", @"text2":@"0.00000001BTC", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
-            [dataForCells addObject:dataForCell];
+            for (NSInteger i = 0; i < [_transaction.dic[@"vin"] count]; i++) {
+                NSDictionary *inDic = [_transaction.dic[@"vin"] objectAtIndex:i];
+                dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
+                dataForCell[@"text1"] = [NSString stringWithFormat:@"%ld.%@", i, inDic[@"addr"]];
+                dataForCell[@"text2"] = [NSString stringWithFormat:@"%@ BTC", inDic[@"value"]];
+                [dataForCells addObject:dataForCell];
+            }
             
             //out count
             dataForCell = @{@"isSelectable":@"0", @"cellType":@"LXHTitleCell"}.mutableCopy;
@@ -164,9 +168,13 @@
             dataForCell[@"title"] = [NSString stringWithFormat: @"%@: %ld", NSLocalizedString(@"输出数", nil), vout.count];
             [dataForCells addObject:dataForCell]; 
             
-            //TODO 
-            dataForCell = @{@"text1":@"1. mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"isSelectable":@"1", @"text2":@"0.00000001BTC", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
-            [dataForCells addObject:dataForCell];
+            for (NSInteger i = 0; i < [_transaction.dic[@"vout"] count]; i++) {
+                NSDictionary *outDic = [_transaction.dic[@"vout"] objectAtIndex:i];
+                dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
+                dataForCell[@"text1"] = [NSString stringWithFormat:@"%ld.%@", i, [_transaction outAddressAtIndex:i]];
+                dataForCell[@"text2"] = [NSString stringWithFormat:@"%@ BTC", outDic[@"value"]];
+                [dataForCells addObject:dataForCell];
+            }
         }
         _dataForCells = dataForCells;
     }
