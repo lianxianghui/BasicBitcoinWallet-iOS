@@ -141,9 +141,9 @@
             dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@ BTC", NSLocalizedString(@"输出数量", nil), transactionDic[@"valueOut"]];
             [dataForCells addObject:dataForCell];             
 
-            //fees
+            //fees 
             dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTextCell"}.mutableCopy;
-            dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@ BTC", NSLocalizedString(@"手续费", nil), transactionDic[@"fees"]];
+            dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@ BTC", NSLocalizedString(@"手续费", nil), _transaction.fees];
             [dataForCells addObject:dataForCell];  
 
             //in count

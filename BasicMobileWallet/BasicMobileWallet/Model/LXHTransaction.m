@@ -88,4 +88,9 @@
     return sum;
 }
 
+- (NSDecimalNumber *)fees {
+    NSDecimalNumber *ret = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", _dic[@"fees"]]];
+    return ret;
+}
+
 @end
