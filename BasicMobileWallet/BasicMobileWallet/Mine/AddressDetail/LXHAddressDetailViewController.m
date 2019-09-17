@@ -12,6 +12,7 @@
 #import "LXHAddressDetailCell.h"
 #import "LXHEmptyWithSeparatorCell.h"
 #import "LXHAddressDetailTextRightIconCell.h"
+#import "LXHWallet.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -22,6 +23,7 @@
 @interface LXHAddressDetailViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHAddressDetailView *contentView;
 @property (nonatomic) NSDictionary *data;
+@property (nonatomic) NSMutableArray *cellDataArray;
 @end
 
 @implementation LXHAddressDetailViewController
@@ -84,30 +86,49 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
+    if (!_cellDataArray) {
+        _cellDataArray = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            dic = @{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE"};
-            [dataForCells addObject:dic];
-            dic = @{@"title":@"本地路径 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":@"m/44’/1’/0/0/1"};
-            [dataForCells addObject:dic];
-            dic = @{@"title":@"使用情况", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":@"未使用"};
-            [dataForCells addObject:dic];
-            dic = @{@"title":@"地址类型 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":@"P2PKH (Pay-to-Public-Key-Hash)"};
-            [dataForCells addObject:dic];
-            dic = @{@"title":@"地址用途 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":@"接收"};
-            [dataForCells addObject:dic];
-            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"相关交易", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailTextRightIconCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"地址二维码", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailTextRightIconCell"};
-            [dataForCells addObject:dic];
+            LXHAddressType type = [_data[@"addressType"] integerValue];
+            NSInteger index = [_data[@"addressIndex"] integerValue];
+            LXHAccount *account = LXHWallet.mainAccount;
+            //@{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE"};
+            NSDictionary *addressDetailCellDic = @{@"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell"};
+            
+            NSMutableDictionary *dic = addressDetailCellDic.mutableCopy;
+            dic[@"title"] = NSLocalizedString(@"地址Base58", nil); 
+            dic[@"text"] = [account addressWithType:type index:index];
+            [_cellDataArray addObject:dic];
+            
+            dic = addressDetailCellDic.mutableCopy;
+            dic[@"title"] = NSLocalizedString(@"本地路径", nil);
+            dic[@"text"] = [account addressPathWithType:type index:index];
+            [_cellDataArray addObject:dic];
+
+            dic = addressDetailCellDic.mutableCopy;
+            dic[@"title"] = NSLocalizedString(@"使用情况", nil);
+            dic[@"text"] = @"TODO 重构代码后实现";
+            [_cellDataArray addObject:dic];   
+            
+            dic = addressDetailCellDic.mutableCopy;
+            dic[@"title"] = NSLocalizedString(@"地址类型", nil);
+            dic[@"text"] = @"P2PKH (Pay-to-Public-Key-Hash)";
+            [_cellDataArray addObject:dic];
+            
+            dic = addressDetailCellDic.mutableCopy;
+            dic[@"title"] = NSLocalizedString(@"地址用途", nil);
+            dic[@"text"] = type == LXHAddressTypeReceiving ? @"接收" : @"找零";
+            [_cellDataArray addObject:dic];
+            
+            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"}.mutableCopy;
+            [_cellDataArray addObject:dic];
+            dic = @{@"text":NSLocalizedString(@"相关交易", nil), @"isSelectable":@"1", @"cellType":@"LXHAddressDetailTextRightIconCell"}.mutableCopy;
+            [_cellDataArray addObject:dic];
+            dic = @{@"text":NSLocalizedString(@"地址二维码", nil), @"isSelectable":@"1", @"cellType":@"LXHAddressDetailTextRightIconCell"}.mutableCopy;
+            [_cellDataArray addObject:dic];
         }
     }
-    return dataForCells;
+    return _cellDataArray;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {

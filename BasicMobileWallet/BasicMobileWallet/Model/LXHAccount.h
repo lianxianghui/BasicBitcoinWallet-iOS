@@ -56,6 +56,7 @@ typedef NS_ENUM(NSUInteger, LXHAddressType) {
 - (NSString *)addressWithType:(LXHAddressType)type index:(NSUInteger)index;
 - (NSString *)addressPathWithType:(LXHAddressType)typ index:(NSUInteger)index;
 - (NSMutableArray *)usedAndCurrentAddressesWithType:(LXHAddressType)type;
+//- (BOOL)isUsedAddressWithType:(LXHAddressType)type index:(NSUInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END

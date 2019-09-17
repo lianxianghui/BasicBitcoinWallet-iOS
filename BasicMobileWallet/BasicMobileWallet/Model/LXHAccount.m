@@ -181,6 +181,12 @@
     return type == LXHAddressTypeReceiving ? [self usedAndCurrentReceivingAddresses] : [self usedAndCurrentChangeAddresses];
 }
 
+//- (BOOL)isUsedAddressWithType:(LXHAddressType)type index:(NSUInteger)index {
+//    if (type == LXHAddressTypeReceiving) {
+//        
+//    }
+//}
+
 - (BTCPublicKeyAddress *)addressWithKey:(BTCKey *)key {
     if (_currentNetworkType == LXHBitcoinNetworkTypeMainnet)
         return key.address;
