@@ -43,13 +43,9 @@
         make.left.right.equalTo(self.view);
         make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
     }];
+    [self setViewData];
     [self addActions];
     [self setDelegates];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self setViewData];
 }
 
 - (void)setViewData {
@@ -59,13 +55,12 @@
     NSString *address = [[LXHWallet mainAccount] addressWithType:type index:index];
     [self.contentView.addressText updateAttributedTextString:address];
     
-    CGSize imageSize = self.contentView.qrImage.bounds.size;
+    CGSize imageSize = {198, 198};
     UIImage *qrImage = [BTCQRCode imageForString:address size:imageSize scale:1];
     self.contentView.qrImage.image = qrImage;
     
     NSString *path = [[LXHWallet mainAccount] addressPathWithType:type index:index];
     [self.contentView.addressPath updateAttributedTextString:path];
-    
 }
 
 - (void)addActions {
