@@ -73,7 +73,7 @@
 }
 
 - (NSString *)currentChangeAddress {
-    return [self receivingAddressWithIndex:self.currentChangeAddressIndex];
+    return [self changeAddressWithIndex:self.currentChangeAddressIndex];
 }
 
 - (NSString *)currentChangeAddressPath {
