@@ -171,7 +171,7 @@
             for (NSInteger i = 0; i < [_transaction.dic[@"vout"] count]; i++) {
                 NSDictionary *outDic = [_transaction.dic[@"vout"] objectAtIndex:i];
                 dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
-                dataForCell[@"text1"] = [NSString stringWithFormat:@"%ld.%@", i, [_transaction outAddressAtIndex:i]];
+                dataForCell[@"text1"] = [NSString stringWithFormat:@"%ld. %@", i+1, [_transaction outAddressAtIndex:i]];
                 dataForCell[@"text2"] = [NSString stringWithFormat:@"%@ BTC", outDic[@"value"]];
                 [dataForCells addObject:dataForCell];
             }
