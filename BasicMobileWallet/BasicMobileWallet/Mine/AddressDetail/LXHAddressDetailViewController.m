@@ -234,7 +234,7 @@
         if ([cellType isEqualToString:@"LXHEmptyWithSeparatorCell"])
             return 18;
         if ([cellType isEqualToString:@"LXHAddressDetailTextRightIconCell"])
-            return 46.99999999999977;
+            return 47;
     }
     return 0;
 }
@@ -252,30 +252,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch(indexPath.row) {
-        case 0:
-            {
-            }
-            break;
-        case 1:
-            {
-            }
-            break;
-        case 2:
-            {
-            }
-            break;
-        case 3:
-            {
-            }
-            break;
-        case 4:
-            {
-            }
-            break;
-        case 5:
-            {
-            }
-            break;
         case 6:
             {
             UIViewController *controller = [[LXHTransactionDetailViewController alloc] init];
@@ -284,7 +260,7 @@
             break;
         case 7:
             {
-            UIViewController *controller = [[LXHAddressViewController alloc] init];
+            UIViewController *controller = [[LXHAddressViewController alloc] initWithData:_data];
             [self.navigationController pushViewController:controller animated:YES];
             }
             break;

@@ -159,7 +159,6 @@
 		8CAA669A230E468200B17222 /* LXHAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA6692230E468200B17222 /* LXHAddressView.m */; };
 		8CAA669B230E468200B17222 /* LXHAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA6693230E468200B17222 /* LXHAddressViewController.m */; };
 		8CAA669C230E468200B17222 /* LXHTabBarPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA6698230E468200B17222 /* LXHTabBarPageViewController.m */; };
-		8CAA669F230E5DD500B17222 /* LXHCurrentReceivingAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA669E230E5DD500B17222 /* LXHCurrentReceivingAddressViewController.m */; };
 		8CAA66A1230E747600B17222 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CAA66A0230E747500B17222 /* Assets.xcassets */; };
 		8CAA66B0230E92E300B17222 /* LXHSendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66A6230E92E300B17222 /* LXHSendView.m */; };
 		8CAA66B1230E92E300B17222 /* LXHFeeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66A9230E92E300B17222 /* LXHFeeCell.m */; };
@@ -649,8 +648,6 @@
 		8CAA6695230E468200B17222 /* LXHAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHAddressViewController.h; sourceTree = "<group>"; };
 		8CAA6698230E468200B17222 /* LXHTabBarPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHTabBarPageViewController.m; sourceTree = "<group>"; };
 		8CAA6699230E468200B17222 /* LXHTabBarPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHTabBarPageViewController.h; sourceTree = "<group>"; };
-		8CAA669D230E5DD500B17222 /* LXHCurrentReceivingAddressViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHCurrentReceivingAddressViewController.h; sourceTree = "<group>"; };
-		8CAA669E230E5DD500B17222 /* LXHCurrentReceivingAddressViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHCurrentReceivingAddressViewController.m; sourceTree = "<group>"; };
 		8CAA66A0230E747500B17222 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8CAA66A4230E92E300B17222 /* LXHSelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectionCell.h; sourceTree = "<group>"; };
 		8CAA66A5230E92E300B17222 /* LXHEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHEmptyCell.h; sourceTree = "<group>"; };
@@ -1470,12 +1467,10 @@
 		8CAA6691230E468200B17222 /* Address */ = {
 			isa = PBXGroup;
 			children = (
-				8CAA6692230E468200B17222 /* LXHAddressView.m */,
-				8CAA6693230E468200B17222 /* LXHAddressViewController.m */,
 				8CAA6694230E468200B17222 /* LXHAddressView.h */,
+				8CAA6692230E468200B17222 /* LXHAddressView.m */,
 				8CAA6695230E468200B17222 /* LXHAddressViewController.h */,
-				8CAA669D230E5DD500B17222 /* LXHCurrentReceivingAddressViewController.h */,
-				8CAA669E230E5DD500B17222 /* LXHCurrentReceivingAddressViewController.m */,
+				8CAA6693230E468200B17222 /* LXHAddressViewController.m */,
 			);
 			path = Address;
 			sourceTree = "<group>";
@@ -1491,8 +1486,8 @@
 		8CAA6697230E468200B17222 /* TabBarPage */ = {
 			isa = PBXGroup;
 			children = (
-				8CAA6698230E468200B17222 /* LXHTabBarPageViewController.m */,
 				8CAA6699230E468200B17222 /* LXHTabBarPageViewController.h */,
+				8CAA6698230E468200B17222 /* LXHTabBarPageViewController.m */,
 			);
 			path = TabBarPage;
 			sourceTree = "<group>";
@@ -1879,7 +1874,6 @@
 				8CA3226A22DEBE9900CEA828 /* NSData+BTCData.m in Sources */,
 				8CA3229E22DEBE9900CEA828 /* BTC256+Tests.m in Sources */,
 				8CA3229922DEBE9900CEA828 /* BTCPaymentProtocol.m in Sources */,
-				8CAA669F230E5DD500B17222 /* LXHCurrentReceivingAddressViewController.m in Sources */,
 				8CA31F8A22D98BAC00CEA828 /* LXHInitSetupViewController.m in Sources */,
 				8CA3227122DEBE9900CEA828 /* BTCNumberFormatter.m in Sources */,
 				8CA3226922DEBE9900CEA828 /* BTCBitcoinURL+Tests.m in Sources */,

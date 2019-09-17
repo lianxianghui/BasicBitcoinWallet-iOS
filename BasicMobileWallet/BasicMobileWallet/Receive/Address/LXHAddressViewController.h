@@ -11,5 +11,6 @@
 
 @property (nonatomic) LXHAddressView *contentView;
 
-- (void)setViewData; //for override
+- (instancetype)initWithData:(NSDictionary *)data;
+
 @end
