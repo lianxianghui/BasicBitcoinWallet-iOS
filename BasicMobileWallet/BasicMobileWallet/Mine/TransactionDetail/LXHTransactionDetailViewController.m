@@ -148,10 +148,9 @@
             dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@ BTC", NSLocalizedString(@"手续费", nil), _transaction.fees];
             [dataForCells addObject:dataForCell];  
 
-            //in count
+            //in title
             dataForCell = @{@"isSelectable":@"0", @"cellType":@"LXHTitleCell"}.mutableCopy;
-            NSArray *vin = transactionDic[@"vin"];
-            dataForCell[@"title"] = [NSString stringWithFormat: @"%@: %ld", NSLocalizedString(@"输入数", nil), vin.count];
+            dataForCell[@"title"] = NSLocalizedString(@"输入数", nil);
             [dataForCells addObject:dataForCell]; 
             //vin
             for (NSInteger i = 0; i < [_transaction.dic[@"vin"] count]; i++) {
@@ -163,10 +162,9 @@
                 [dataForCells addObject:dataForCell];
             }
             
-            //out count
+            //out title
             dataForCell = @{@"isSelectable":@"0", @"cellType":@"LXHTitleCell"}.mutableCopy;
-            NSArray *vout = transactionDic[@"vout"];
-            dataForCell[@"title"] = [NSString stringWithFormat: @"%@: %ld", NSLocalizedString(@"输出数", nil), vout.count];
+            dataForCell[@"title"] = NSLocalizedString(@"输出数", nil);
             [dataForCells addObject:dataForCell]; 
             
             //vout
@@ -308,7 +306,7 @@
         if ([cellType isEqualToString:@"LXHTextCell"])
             return 47;
         if ([cellType isEqualToString:@"LXHTitleCell"])
-            return 36;
+            return 27;
         if ([cellType isEqualToString:@"LXHTransDetailLeftRightTextCell"])
             return 50;
     }

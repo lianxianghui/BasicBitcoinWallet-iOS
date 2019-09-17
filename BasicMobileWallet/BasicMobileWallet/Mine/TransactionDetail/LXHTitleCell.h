@@ -8,6 +8,7 @@
 
 @interface LXHTitleCell : UIView
 
+@property (nonatomic) UIView *separator;
 @property (nonatomic) UILabel *title;
 
 @end

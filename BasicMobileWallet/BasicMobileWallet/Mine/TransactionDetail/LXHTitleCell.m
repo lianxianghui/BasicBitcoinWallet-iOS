@@ -32,12 +32,19 @@
 
 - (void)addSubviews {
     [self addSubview:self.title];
+    [self addSubview:self.separator];
 }
 
 - (void)makeConstraints {
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.mas_centerY);
         make.left.equalTo(self.mas_left).offset(8);
+    }];
+    [self.separator mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.mas_right);
+        make.left.equalTo(self.mas_left);
+        make.bottom.equalTo(self.mas_bottom);
+        make.height.mas_equalTo(0.5);
     }];
 }
 
@@ -62,6 +69,15 @@
         _title.attributedText = text;
     }
     return _title;
+}
+
+- (UIView *)separator {
+    if (!_separator) {
+        _separator = [[UIView alloc] init];
+        _separator.backgroundColor = UIColorFromRGBA(0xC8C7CCFF);
+        _separator.alpha = 1;
+    }
+    return _separator;
 }
 
 @end
