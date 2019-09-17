@@ -150,13 +150,13 @@
 
             //in title
             dataForCell = @{@"isSelectable":@"0", @"cellType":@"LXHTitleCell"}.mutableCopy;
-            dataForCell[@"title"] = NSLocalizedString(@"输入数", nil);
+            dataForCell[@"title"] = NSLocalizedString(@"输入", nil);
             [dataForCells addObject:dataForCell]; 
             //vin
             for (NSInteger i = 0; i < [_transaction.dic[@"vin"] count]; i++) {
                 NSDictionary *inDic = [_transaction.dic[@"vin"] objectAtIndex:i];
                 dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
-                dataForCell[@"text1"] = [NSString stringWithFormat:@"%ld.%@", i, inDic[@"addr"]];
+                dataForCell[@"text1"] = [NSString stringWithFormat:@"%ld. %@", i, inDic[@"addr"]];
                 dataForCell[@"text2"] = [NSString stringWithFormat:@"%@ BTC", inDic[@"value"]];
                 dataForCell[@"data"] = inDic;
                 [dataForCells addObject:dataForCell];
@@ -164,7 +164,7 @@
             
             //out title
             dataForCell = @{@"isSelectable":@"0", @"cellType":@"LXHTitleCell"}.mutableCopy;
-            dataForCell[@"title"] = NSLocalizedString(@"输出数", nil);
+            dataForCell[@"title"] = NSLocalizedString(@"输出", nil);
             [dataForCells addObject:dataForCell]; 
             
             //vout
