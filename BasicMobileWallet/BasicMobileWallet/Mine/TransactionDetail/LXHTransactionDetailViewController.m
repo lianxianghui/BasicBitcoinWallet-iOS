@@ -153,12 +153,13 @@
             NSArray *vin = transactionDic[@"vin"];
             dataForCell[@"title"] = [NSString stringWithFormat: @"%@: %ld", NSLocalizedString(@"输入数", nil), vin.count];
             [dataForCells addObject:dataForCell]; 
-            
+            //vin
             for (NSInteger i = 0; i < [_transaction.dic[@"vin"] count]; i++) {
                 NSDictionary *inDic = [_transaction.dic[@"vin"] objectAtIndex:i];
                 dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
                 dataForCell[@"text1"] = [NSString stringWithFormat:@"%ld.%@", i, inDic[@"addr"]];
                 dataForCell[@"text2"] = [NSString stringWithFormat:@"%@ BTC", inDic[@"value"]];
+                dataForCell[@"data"] = inDic;
                 [dataForCells addObject:dataForCell];
             }
             
@@ -168,11 +169,13 @@
             dataForCell[@"title"] = [NSString stringWithFormat: @"%@: %ld", NSLocalizedString(@"输出数", nil), vout.count];
             [dataForCells addObject:dataForCell]; 
             
+            //vout
             for (NSInteger i = 0; i < [_transaction.dic[@"vout"] count]; i++) {
                 NSDictionary *outDic = [_transaction.dic[@"vout"] objectAtIndex:i];
                 dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
                 dataForCell[@"text1"] = [NSString stringWithFormat:@"%ld. %@", i+1, [_transaction outAddressAtIndex:i]];
                 dataForCell[@"text2"] = [NSString stringWithFormat:@"%@ BTC", outDic[@"value"]];
+                dataForCell[@"data"] = outDic;
                 [dataForCells addObject:dataForCell];
             }
         }
@@ -236,8 +239,6 @@
         view.tag = tag;
         [cell.contentView addSubview:view];
         //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
-        //cell.contentView.backgroundColor = view.backgroundColor;
-        //cell.backgroundColor = view.backgroundColor;
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -305,11 +306,11 @@
         if ([cellType isEqualToString:@"LXHTransactionCell"])
             return 60;
         if ([cellType isEqualToString:@"LXHTextCell"])
-            return 46.7400016784668;
+            return 47;
         if ([cellType isEqualToString:@"LXHTitleCell"])
-            return 36.34000015258789;
+            return 36;
         if ([cellType isEqualToString:@"LXHTransDetailLeftRightTextCell"])
-            return 49.50999832153332;
+            return 50;
     }
     return 0;
 }
@@ -326,58 +327,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch(indexPath.row) {
-        case 0:
-            {
-            }
-            break;
-        case 1:
-            {
-            }
-            break;
-        case 2:
-            {
-            }
-            break;
-        case 3:
-            {
-            }
-            break;
-        case 4:
-            {
-            }
-            break;
-        case 5:
-            {
-            }
-            break;
-        case 6:
-            {
-            }
-            break;
-        case 7:
-            {
-            }
-            break;
-        case 8:
-            {
-            }
-            break;
-        case 9:
-            {
-            }
-            break;
-        case 10:
-            {
-            }
-            break;
-        case 11:
-            {
-            }
-            break;
-        default:
-            break;
-    }
+    //TODO 
 }
 
 @end
