@@ -1,7 +1,7 @@
 // LXHLocalAddressCell.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-09-16
+//  Created by lianxianghui on 19-09-17
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -38,12 +38,16 @@
 
 - (void)makeConstraints {
     [self.separator mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_left);
+        make.right.equalTo(self.mas_right);
+        make.height.mas_equalTo(0.5);
+        make.bottom.equalTo(self.mas_bottom);
     }];
     [self.receiveAddress mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.mas_centerY);
         make.left.equalTo(self.mas_left).offset(8);
-        make.height.mas_equalTo(50);
         make.right.equalTo(self.mas_right).offset(-30);
+        make.height.mas_equalTo(50);
     }];
     [self.addressText mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.receiveAddress.mas_top).offset(6);
@@ -54,8 +58,8 @@
         make.left.equalTo(self.type.mas_right).offset(5);
     }];
     [self.localPath mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.addressText.mas_centerY);
         make.right.equalTo(self.receiveAddress.mas_right);
+        make.centerY.equalTo(self.addressText.mas_centerY);
     }];
     [self.type mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.receiveAddress.mas_bottom).offset(-8);
@@ -152,7 +156,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.2652941) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"m/44’/1’/0/1/1 ", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"m/44’/1’/0/0/1 ", nil) attributes:textAttributes];
         _localPath.attributedText = text;
     }
     return _localPath;

@@ -7,5 +7,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LXHAddressDetailViewController : UIViewController
-
+- (instancetype)initWithData:(NSDictionary *)data;
 @end

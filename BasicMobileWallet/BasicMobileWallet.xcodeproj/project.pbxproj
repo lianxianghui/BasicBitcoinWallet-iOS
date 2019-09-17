@@ -714,13 +714,13 @@
 				8C2CC672232F20E4005AA93C /* LXHTransactionDetailView.h */,
 				8C2CC66C232F20E4005AA93C /* LXHTransactionDetailView.m */,
 				8C2CC66E232F20E4005AA93C /* LXHTextCell.h */,
+				8C2CC675232F20E4005AA93C /* LXHTextCell.m */,
+				8C2CC673232F20E4005AA93C /* LXHTitleCell.h */,
 				8C2CC670232F20E4005AA93C /* LXHTitleCell.m */,
 				8C2CC674232F20E4005AA93C /* LXHTransDetailLeftRightTextCell.h */,
 				8C2CC66F232F20E4005AA93C /* LXHTransDetailLeftRightTextCell.m */,
 				8C2CC671232F20E4005AA93C /* LXHTransactionCell.h */,
 				8C2CC677232F20E4005AA93C /* LXHTransactionCell.m */,
-				8C2CC673232F20E4005AA93C /* LXHTitleCell.h */,
-				8C2CC675232F20E4005AA93C /* LXHTextCell.m */,
 				8C2CC676232F20E4005AA93C /* LXHTransactionDetailViewController.h */,
 				8C2CC66D232F20E4005AA93C /* LXHTransactionDetailViewController.m */,
 			);
@@ -745,12 +745,12 @@
 		8C2CC681232F20E4005AA93C /* AddressList */ = {
 			isa = PBXGroup;
 			children = (
-				8C2CC682232F20E4005AA93C /* LXHAddressListViewController.m */,
 				8C2CC683232F20E4005AA93C /* LXHLocalAddressCell.h */,
+				8C2CC68C232F20E4005AA93C /* LXHLocalAddressCell.m */,
+				8C2CC68A232F20E4005AA93C /* LXHAddressListView.h */,
 				8C2CC685232F20E4005AA93C /* LXHAddressListView.m */,
 				8C2CC689232F20E4005AA93C /* LXHAddressListViewController.h */,
-				8C2CC68A232F20E4005AA93C /* LXHAddressListView.h */,
-				8C2CC68C232F20E4005AA93C /* LXHLocalAddressCell.m */,
+				8C2CC682232F20E4005AA93C /* LXHAddressListViewController.m */,
 			);
 			path = AddressList;
 			sourceTree = "<group>";
@@ -758,16 +758,16 @@
 		8C2CC68D232F20E4005AA93C /* AddressDetail */ = {
 			isa = PBXGroup;
 			children = (
-				8C2CC68E232F20E4005AA93C /* LXHAddressDetailView.h */,
 				8C2CC68F232F20E4005AA93C /* LXHAddressDetailCell.h */,
-				8C2CC690232F20E4005AA93C /* LXHAddressDetailTextRightIconCell.h */,
-				8C2CC691232F20E4005AA93C /* LXHEmptyWithSeparatorCell.m */,
-				8C2CC692232F20E4005AA93C /* LXHAddressDetailViewController.h */,
-				8C2CC693232F20E4005AA93C /* LXHAddressDetailView.m */,
 				8C2CC694232F20E4005AA93C /* LXHAddressDetailCell.m */,
+				8C2CC690232F20E4005AA93C /* LXHAddressDetailTextRightIconCell.h */,
 				8C2CC695232F20E4005AA93C /* LXHAddressDetailTextRightIconCell.m */,
-				8C2CC696232F20E4005AA93C /* LXHAddressDetailViewController.m */,
 				8C2CC697232F20E4005AA93C /* LXHEmptyWithSeparatorCell.h */,
+				8C2CC691232F20E4005AA93C /* LXHEmptyWithSeparatorCell.m */,
+				8C2CC68E232F20E4005AA93C /* LXHAddressDetailView.h */,
+				8C2CC693232F20E4005AA93C /* LXHAddressDetailView.m */,
+				8C2CC692232F20E4005AA93C /* LXHAddressDetailViewController.h */,
+				8C2CC696232F20E4005AA93C /* LXHAddressDetailViewController.m */,
 			);
 			path = AddressDetail;
 			sourceTree = "<group>";

@@ -10,6 +10,7 @@
 #import "LXHAddressDetailViewController.h"
 #import "LXHTitleCell.h"
 #import "LXHLocalAddressCell.h"
+#import "LXHWallet.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -19,7 +20,7 @@
     
 @interface LXHAddressListViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHAddressListView *contentView;
-
+@property (nonatomic) NSMutableArray *dataForCells;
 @end
 
 @implementation LXHAddressListViewController
@@ -72,23 +73,43 @@
 }
 
 //Delegate Methods
+
+- (NSArray *)localAddressCellDicArrayWithAddressType:(LXHAddressType)addressType {
+    NSMutableArray *ret = [NSMutableArray array];
+    LXHAccount *account = LXHWallet.mainAccount;
+    NSArray *usedAndCurrentAddresses = [account usedAndCurrentAddressesWithType:addressType];
+    NSDictionary *localAddressCellFixedData = @{ @"isSelectable":@"1", @"type":@"P2PKH ", @"cellType":@"LXHLocalAddressCell"};
+    //使用过的在前面，当前未用过的在最后一个
+    for (NSInteger i = 0; i < usedAndCurrentAddresses.count; i++) {
+        NSMutableDictionary *localAddressCellDic = localAddressCellFixedData.mutableCopy;
+        localAddressCellDic[@"addressText"] = usedAndCurrentAddresses[i];
+        localAddressCellDic[@"used"] = i < [account currentAddressIndexWithType:addressType] ? @"用过的" : @"未用过的";
+        localAddressCellDic[@"localPath"] = [account addressPathWithType:addressType index:i];
+        localAddressCellDic[@"type"] = @"P2PKH";
+        localAddressCellDic[@"data"] =  @{@"addressType":@(addressType), @"addressIndex":@(i)};
+        [ret addObject:localAddressCellDic];
+    } 
+    return ret;
+}
+
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
+    if (!_dataForCells) {
+        _dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
             NSDictionary *dic = nil;
+            //receiving addresses title
             dic = @{@"title":@"接收地址", @"isSelectable":@"0", @"cellType":@"LXHTitleCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE", @"used":@"未用过的 ", @"isSelectable":@"1", @"type":@"P2PKH ", @"localPath":@"m/44’/1’/0/0/1 ", @"cellType":@"LXHLocalAddressCell"};
-            [dataForCells addObject:dic];
+            [_dataForCells addObject:dic];
+            //receiving addresses info cells
+            [_dataForCells addObjectsFromArray:[self localAddressCellDicArrayWithAddressType:LXHAddressTypeReceiving]];
+            //change addresses title
             dic = @{@"title":@"找零地址", @"isSelectable":@"0", @"cellType":@"LXHTitleCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE", @"used":@"未用过的 ", @"isSelectable":@"1", @"type":@"P2PKH ", @"localPath":@"m/44’/1’/0/1/1 ", @"cellType":@"LXHLocalAddressCell"};
-            [dataForCells addObject:dic];
+            [_dataForCells addObject:dic];
+            //change addresses info cells
+            [_dataForCells addObjectsFromArray:[self localAddressCellDicArrayWithAddressType:LXHAddressTypeChange]];
         }
     }
-    return dataForCells;
+    return _dataForCells;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -197,9 +218,9 @@
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
     if (tableView == self.contentView.listView) {
         if ([cellType isEqualToString:@"LXHTitleCell"])
-            return 28.09000015258789;
+            return 28;
         if ([cellType isEqualToString:@"LXHLocalAddressCell"])
-            return 73.84999847412109;
+            return 74;
     }
     return 0;
 }
@@ -216,28 +237,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch(indexPath.row) {
-        case 0:
-            {
-            }
-            break;
-        case 1:
-            {
-            UIViewController *controller = [[LXHAddressDetailViewController alloc] init];
-            [self.navigationController pushViewController:controller animated:YES];
-            }
-            break;
-        case 2:
-            {
-            }
-            break;
-        case 3:
-            {
-            }
-            break;
-        default:
-            break;
-    }
+    NSDictionary *cellDic = [self cellDataForTableView:tableView atIndexPath:indexPath];
+    NSMutableDictionary *data = cellDic[@"data"];
+    UIViewController *controller = [[LXHAddressDetailViewController alloc] initWithData:data];
+    [self.navigationController pushViewController:controller animated:YES];
+
 }
 
 @end

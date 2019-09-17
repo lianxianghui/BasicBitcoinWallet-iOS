@@ -21,10 +21,19 @@
     
 @interface LXHAddressDetailViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHAddressDetailView *contentView;
-
+@property (nonatomic) NSDictionary *data;
 @end
 
 @implementation LXHAddressDetailViewController
+
+- (instancetype)initWithData:(NSDictionary *)data
+{
+    self = [super init];
+    if (self) {
+        _data = data;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
