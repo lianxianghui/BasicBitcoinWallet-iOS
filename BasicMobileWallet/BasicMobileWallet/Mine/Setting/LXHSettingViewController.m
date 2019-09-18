@@ -87,6 +87,8 @@
             NSDictionary *dic = nil;
             dic = @{@"text":@"设置PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
             [dataForCells addObject:dic];
+            dic = @{@"text":@"清除PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
+            [dataForCells addObject:dic];
             dic = @{@"text":@"重置钱包", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
             [dataForCells addObject:dic];
         }
@@ -188,18 +190,25 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch(indexPath.row) {
         case 0:
-            {
-                [self validatePINWithPassedHandler:^{
-                    [self enterSetPinViewController];
-                }];
-            }
+        {
+            [self validatePINWithPassedHandler:^{
+                [self enterSetPinViewController];
+            }];
+        }
             break;
         case 1:
-            {
-                [self validatePINWithPassedHandler:^{
-                    [self resetWallet];
-                }];
-            }
+        {
+            [self validatePINWithPassedHandler:^{
+                [[LXHKeychainStore sharedInstance].store setData:nil forKey:kLXHKeychainStorePIN];
+            }];
+        }
+            break;
+        case 2:
+        {
+            [self validatePINWithPassedHandler:^{
+                [self resetWallet];
+            }];
+        }
             break;
         default:
             break;
