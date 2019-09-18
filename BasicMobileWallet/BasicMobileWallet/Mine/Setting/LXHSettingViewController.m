@@ -26,6 +26,7 @@
     
 @interface LXHSettingViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSettingView *contentView;
+@property (nonatomic) NSMutableArray *dataForCells;
 
 @end
 
@@ -47,6 +48,11 @@
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
     [self setDelegates];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self refreshData];
 }
 
 - (void)swipeView:(id)sender {
@@ -80,20 +86,21 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
+    if (!_dataForCells) {
+        _dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
             NSDictionary *dic = nil;
-            dic = @{@"text":@"设置PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"清除PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
-            [dataForCells addObject:dic];
             dic = @{@"text":@"重置钱包", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
-            [dataForCells addObject:dic];
+            [_dataForCells addObject:dic];
+            dic = @{@"text":@"设置PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
+            [_dataForCells addObject:dic];
+            if ([self hasPin]) {
+                dic = @{@"text":@"清除PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
+                [_dataForCells addObject:dic];
+            }
         }
     }
-    return dataForCells;
+    return _dataForCells;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -189,21 +196,21 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch(indexPath.row) {
-        case 0:
+        case 1:
         {
             [self validatePINWithPassedHandler:^{
                 [self enterSetPinViewController];
             }];
         }
             break;
-        case 1:
+        case 2:
         {
             [self validatePINWithPassedHandler:^{
-                [[LXHKeychainStore sharedInstance].store setData:nil forKey:kLXHKeychainStorePIN];
+                [self clearPin];
             }];
         }
             break;
-        case 2:
+        case 0:
         {
             [self validatePINWithPassedHandler:^{
                 [self resetWallet];
@@ -229,6 +236,22 @@
         AppDelegate *appDelegate = (AppDelegate*)UIApplication.sharedApplication.delegate;
         LXHRootViewController *rootViewController = (LXHRootViewController *)appDelegate.window.rootViewController;
         [rootViewController clearAndPushMainController];
+    } cancelHandler:nil];
+}
+
+- (BOOL)hasPin {
+    return [[LXHKeychainStore sharedInstance].store dataForKey:kLXHKeychainStorePIN] != nil;
+}
+
+- (void)refreshData {
+    _dataForCells = nil;
+    [self.contentView.listView reloadData];
+}
+
+- (void)clearPin {
+    [self showOkCancelAlertViewWithTitle:NSLocalizedString(@"警告", nil) message:NSLocalizedString(@"清除PIN码将会带来一定的安全隐患，您确定吗？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
+        [[LXHKeychainStore sharedInstance].store setData:nil forKey:kLXHKeychainStorePIN];
+        [self refreshData];
     } cancelHandler:nil];
 }
 
