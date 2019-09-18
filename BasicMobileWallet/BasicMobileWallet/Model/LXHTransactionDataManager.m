@@ -33,6 +33,11 @@ static NSString *const aesPassword = LXHAESPassword;
     return instance;
 }
 
+- (void)clearCachedData {
+    [[NSFileManager defaultManager] removeItemAtPath:LXHTransactionDataManagerCacheFilePath error:nil];
+    _transactionList = nil;
+}
+
 - (NSArray *)transactionList {
     if (!_transactionList) {
         _transactionList = [self transactionListFromCacheFile];

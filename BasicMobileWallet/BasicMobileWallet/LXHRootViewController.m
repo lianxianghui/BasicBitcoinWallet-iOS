@@ -6,20 +6,24 @@
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "LXHRootViewController.h"
 #import "LXHWelcomeViewController.h"
 #import "LXHWallet.h"
 #import "LXHTabBarPageViewController.h"
 
-@interface ViewController ()
+@interface LXHRootViewController ()
 
 @end
 
-@implementation ViewController
+@implementation LXHRootViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationBar.hidden = YES;
+    [self pushMainController];
+}
+
+- (void)pushMainController {
     UIViewController *controller = nil;
     if ([LXHWallet walletDataGenerated]) {
         controller = [LXHTabBarPageViewController new];
@@ -27,6 +31,11 @@
         controller = [LXHWelcomeViewController new];
     }
     [self pushViewController:controller animated:NO];
+}
+
+- (void)clearAndPushMainController {
+    [self popViewControllerAnimated:NO];
+    [self pushMainController];
 }
 
 

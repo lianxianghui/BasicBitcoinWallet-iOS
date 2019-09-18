@@ -22,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSData *)decryptedDataForKey:(NSString *)key error:(NSError **)error;
 - (BOOL)encryptAndSetString:(nullable NSString *)string forKey:(NSString *)key;
 - (NSString *)decryptedStringForKey:(NSString *)key error:(NSError **)error;
+
+- (BOOL)data:(NSData *)data isEqualToEncryptedDataForKey:(NSString *)key;
+- (BOOL)string:(NSString *)string isEqualToEncryptedStringForKey:(NSString *)key;
 @end
 
 NS_ASSUME_NONNULL_END

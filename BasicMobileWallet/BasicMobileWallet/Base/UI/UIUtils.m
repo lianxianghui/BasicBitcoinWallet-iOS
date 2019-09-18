@@ -30,4 +30,23 @@
     return alert;
 }
 
+
++ (UIAlertController *)pinCodeInputAlertWithMessage:(NSString *)message textBlock:(void (^)(NSString *text))textBlock {
+    
+    UIAlertController *pinCodeInput = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"请输入PIN码", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+    __block UITextField *pinCodeTextField = nil;
+    [pinCodeInput addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = NSLocalizedString(@"PIN码", nil);
+        [textField setSecureTextEntry:YES];
+        pinCodeTextField = textField;
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", nil)  style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", nil)  style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        textBlock(pinCodeTextField.text);
+    }];
+    [pinCodeInput addAction:cancelAction];
+    [pinCodeInput addAction:okAction];
+    return pinCodeInput;
+}
+
 @end

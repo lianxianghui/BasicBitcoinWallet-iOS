@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UINavigationController
+@interface LXHRootViewController : UINavigationController
 
+- (void)clearAndPushMainController;
 
 @end
 

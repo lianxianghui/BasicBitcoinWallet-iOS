@@ -9,6 +9,14 @@
 #import "LXHSettingView.h"
 #import "LXHSetPinViewController.h"
 #import "LXHTextRightIconCell.h"
+#import "UIUtils.h"
+#import "LXHKeychainStore.h"
+#import "UIViewController+LXHAlert.h"
+#import "LXHWallet.h"
+#import "AppDelegate.h"
+#import "LXHRootViewController.h"
+#import "UIViewController+LXHBasicMobileWallet.h"
+#import "LXHTransactionDataManager.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -135,8 +143,6 @@
         view.tag = tag;
         [cell.contentView addSubview:view];
         //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
-        //cell.contentView.backgroundColor = view.backgroundColor;
-        //cell.backgroundColor = view.backgroundColor;
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -183,17 +189,60 @@
     switch(indexPath.row) {
         case 0:
             {
-            UIViewController *controller = [[LXHSetPinViewController alloc] init];
-            [self.navigationController pushViewController:controller animated:YES];
+                [self validatePINWithPassedHandler:^{
+                    [self enterSetPinViewController];
+                }];
+//                if ([[LXHKeychainStore sharedInstance].store dataForKey:kLXHKeychainStorePIN]) {
+//                    UIAlertController *pinCodeInput = [UIUtils pinCodeInputAlertWithMessage:nil textBlock:^(NSString *text) {
+//                        if ([[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN])
+//                            [self enterSetPinViewController];
+//                        else
+//                            [self showOkAlertViewWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"PIN码不正确", nil) handler:nil];
+//                    }];
+//                    [self presentViewController:pinCodeInput animated:YES completion:nil];
+//                } else {
+//                    [self enterSetPinViewController];
+//                }
             }
             break;
         case 1:
             {
+//                if ([[LXHKeychainStore sharedInstance].store dataForKey:kLXHKeychainStorePIN]) {
+//                    UIAlertController *pinCodeInput = [UIUtils pinCodeInputAlertWithMessage:nil textBlock:^(NSString *text) {
+//                        if ([[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN])
+//                            [self resetWallet];
+//                        else
+//                            [self showOkAlertViewWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"PIN码不正确", nil) handler:nil];
+//                    }];
+//                    [self presentViewController:pinCodeInput animated:YES completion:nil];
+//                } else {
+//                    [self resetWallet];
+//                }
+//                [self validatePINWithPassedHandler:^{
+                    [self resetWallet];
+ //               }];
             }
             break;
         default:
             break;
     }
+}
+
+- (void)enterSetPinViewController {
+    UIViewController *controller = [[LXHSetPinViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)resetWallet {
+    [self showOkCancelAlertViewWithTitle:NSLocalizedString(@"警告", nil) message:NSLocalizedString(@"重置将会清除本地的钱包数据，务必要保证已经备份了钱包助记词。您确定现在要重置吗？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
+        //clear data
+        [LXHWallet clearData];
+        [[LXHTransactionDataManager sharedInstance] clearCachedData];
+        //show welcome page
+        AppDelegate *appDelegate = (AppDelegate*)UIApplication.sharedApplication.delegate;
+        LXHRootViewController *rootViewController = (LXHRootViewController *)appDelegate.window.rootViewController;
+        [rootViewController clearAndPushMainController];
+    } cancelHandler:nil];
 }
 
 @end

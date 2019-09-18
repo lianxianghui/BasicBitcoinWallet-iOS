@@ -21,8 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)requestDataWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock 
                        failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 
-
+- (void)clearCachedData;
 + (instancetype)sharedInstance;
+
 
 + (void)requestTransactionsWithAddresses:(NSArray *)address
                             successBlock:(void (^)(NSDictionary *resultDic))successBlock 
