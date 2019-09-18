@@ -12,6 +12,8 @@
 #import "LXHSettingViewController.h"
 #import "LXHLineCell.h"
 #import "LXHTextRightIconCell.h"
+#import "LXHShowWalletMnemonicWordsViewController.h"
+#import "UIViewController+LXHBasicMobileWallet.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -188,13 +190,18 @@
             break;
         case 2:
             {
+                UIViewController *controller = [[LXHShowWalletMnemonicWordsViewController alloc] init];
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
             }
             break;
         case 3:
             {
-                UIViewController *controller = [[LXHAddressListViewController alloc] init];
-                controller.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:controller animated:YES];
+                [self validatePINWithPassedHandler:^{
+                    UIViewController *controller = [[LXHAddressListViewController alloc] init];
+                    controller.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:controller animated:YES];
+                }];
             }
             break;
         case 4:
