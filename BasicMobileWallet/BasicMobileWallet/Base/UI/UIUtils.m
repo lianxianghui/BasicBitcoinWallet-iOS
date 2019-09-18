@@ -38,6 +38,7 @@
     [pinCodeInput addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = NSLocalizedString(@"PIN码", nil);
         [textField setSecureTextEntry:YES];
+        textField.keyboardType = UIKeyboardTypeNumberPad;
         pinCodeTextField = textField;
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", nil)  style:UIAlertActionStyleCancel handler:nil];

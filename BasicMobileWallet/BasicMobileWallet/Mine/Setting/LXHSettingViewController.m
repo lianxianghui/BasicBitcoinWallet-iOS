@@ -192,35 +192,13 @@
                 [self validatePINWithPassedHandler:^{
                     [self enterSetPinViewController];
                 }];
-//                if ([[LXHKeychainStore sharedInstance].store dataForKey:kLXHKeychainStorePIN]) {
-//                    UIAlertController *pinCodeInput = [UIUtils pinCodeInputAlertWithMessage:nil textBlock:^(NSString *text) {
-//                        if ([[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN])
-//                            [self enterSetPinViewController];
-//                        else
-//                            [self showOkAlertViewWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"PIN码不正确", nil) handler:nil];
-//                    }];
-//                    [self presentViewController:pinCodeInput animated:YES completion:nil];
-//                } else {
-//                    [self enterSetPinViewController];
-//                }
             }
             break;
         case 1:
             {
-//                if ([[LXHKeychainStore sharedInstance].store dataForKey:kLXHKeychainStorePIN]) {
-//                    UIAlertController *pinCodeInput = [UIUtils pinCodeInputAlertWithMessage:nil textBlock:^(NSString *text) {
-//                        if ([[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN])
-//                            [self resetWallet];
-//                        else
-//                            [self showOkAlertViewWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"PIN码不正确", nil) handler:nil];
-//                    }];
-//                    [self presentViewController:pinCodeInput animated:YES completion:nil];
-//                } else {
-//                    [self resetWallet];
-//                }
-//                [self validatePINWithPassedHandler:^{
+                [self validatePINWithPassedHandler:^{
                     [self resetWallet];
- //               }];
+                }];
             }
             break;
         default:
