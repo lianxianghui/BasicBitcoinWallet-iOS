@@ -731,13 +731,13 @@
 			isa = PBXGroup;
 			children = (
 				8C2CC679232F20E4005AA93C /* LXHLineCell.h */,
-				8C2CC67A232F20E4005AA93C /* LXHMineView.h */,
-				8C2CC67B232F20E4005AA93C /* LXHMineViewController.h */,
-				8C2CC67C232F20E4005AA93C /* LXHTextRightIconCell.m */,
 				8C2CC67D232F20E4005AA93C /* LXHLineCell.m */,
-				8C2CC67E232F20E4005AA93C /* LXHMineView.m */,
-				8C2CC67F232F20E4005AA93C /* LXHMineViewController.m */,
 				8C2CC680232F20E4005AA93C /* LXHTextRightIconCell.h */,
+				8C2CC67C232F20E4005AA93C /* LXHTextRightIconCell.m */,
+				8C2CC67A232F20E4005AA93C /* LXHMineView.h */,
+				8C2CC67E232F20E4005AA93C /* LXHMineView.m */,
+				8C2CC67B232F20E4005AA93C /* LXHMineViewController.h */,
+				8C2CC67F232F20E4005AA93C /* LXHMineViewController.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";

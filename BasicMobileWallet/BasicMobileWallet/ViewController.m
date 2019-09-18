@@ -19,6 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationBar.hidden = YES;
     UIViewController *controller = nil;
     if ([LXHWallet walletDataGenerated]) {
         controller = [LXHTabBarPageViewController new];

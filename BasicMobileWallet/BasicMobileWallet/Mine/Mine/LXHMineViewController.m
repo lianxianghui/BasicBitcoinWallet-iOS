@@ -129,8 +129,6 @@
         view.tag = tag;
         [cell.contentView addSubview:view];
         //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
-        //cell.contentView.backgroundColor = view.backgroundColor;
-        //cell.backgroundColor = view.backgroundColor;
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -141,9 +139,6 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     UIView *view = [cell.contentView viewWithTag:tag];
-    if ([cellType isEqualToString:@"LXHLineCell"]) {
-        LXHLineCell *cellView = (LXHLineCell *)view;
-    }
     if ([cellType isEqualToString:@"LXHTextRightIconCell"]) {
         LXHTextRightIconCell *cellView = (LXHTextRightIconCell *)view;
         NSString *text = [dataForRow valueForKey:@"text"];
@@ -186,8 +181,9 @@
             break;
         case 1:
             {
-            UIViewController *controller = [[LXHTransactionListViewController alloc] init];
-            [self.navigationController pushViewController:controller animated:YES];
+                UIViewController *controller = [[LXHTransactionListViewController alloc] init];
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
             }
             break;
         case 2:
@@ -196,14 +192,16 @@
             break;
         case 3:
             {
-            UIViewController *controller = [[LXHAddressListViewController alloc] init];
-            [self.navigationController pushViewController:controller animated:YES];
+                UIViewController *controller = [[LXHAddressListViewController alloc] init];
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
             }
             break;
         case 4:
             {
-            UIViewController *controller = [[LXHSettingViewController alloc] init];
-            [self.navigationController pushViewController:controller animated:YES];
+                UIViewController *controller = [[LXHSettingViewController alloc] init];
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
             }
             break;
         default:

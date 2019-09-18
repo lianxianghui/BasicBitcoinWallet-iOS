@@ -67,14 +67,13 @@
     item = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"我的", nil) image:itemImage selectedImage:itemSelectedImage];
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
+    
+    self.tabBar.translucent = NO;
     self.delegate = self;
 
+    
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = YES;
-}
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     UINavigationController *navigationController = (UINavigationController *)viewController;
