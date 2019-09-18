@@ -67,6 +67,7 @@
 //Actions
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)leftImageButtonTouchDown:(UIButton *)sender {
