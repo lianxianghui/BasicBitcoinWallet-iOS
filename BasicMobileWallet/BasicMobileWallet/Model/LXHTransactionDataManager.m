@@ -14,7 +14,6 @@
 #import <RNCryptor/RNEncryptor.h>
 
 #import "LXHNetworkRequest.h"
-#import "LXHWallet.h"
 
 static NSString *const cacheFileName = @"LXHTransactionDataManagerCacheFile.aes";
 static NSString *const aesPassword = LXHAESPassword;
@@ -87,8 +86,15 @@ static NSString *const aesPassword = LXHAESPassword;
 + (void)requestTransactionsWithAddresses:(NSArray *)addresses
                             successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                             failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+    [self requestTransactionsWithNetworkType:LXHWallet.mainAccount.currentNetworkType addresses:addresses successBlock:successBlock failureBlock:failureBlock];
+}
+
++ (void)requestTransactionsWithNetworkType:(LXHBitcoinNetworkType)type
+                            addresses:(NSArray *)addresses
+                            successBlock:(void (^)(NSDictionary *resultDic))successBlock 
+                            failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     NSString *baseUrl;
-    if ([[LXHWallet mainAccount] currentNetworkType] == LXHBitcoinNetworkTypeMainnet)
+    if (type == LXHBitcoinNetworkTypeMainnet)
         baseUrl = @"https://insight.bitpay.com/";
     else
         baseUrl = @"https://test-insight.bitpay.com/";

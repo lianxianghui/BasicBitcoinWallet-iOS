@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LXHWallet.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,10 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)clearCachedData;
 + (instancetype)sharedInstance;
 
-
-+ (void)requestTransactionsWithAddresses:(NSArray *)address
-                            successBlock:(void (^)(NSDictionary *resultDic))successBlock 
-                            failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
++ (void)requestTransactionsWithNetworkType:(LXHBitcoinNetworkType)type
+                                 addresses:(NSArray *)addresses
+                              successBlock:(void (^)(NSDictionary *resultDic))successBlock 
+                              failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 @end
 
 NS_ASSUME_NONNULL_END

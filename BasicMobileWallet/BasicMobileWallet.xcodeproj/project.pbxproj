@@ -1545,10 +1545,10 @@
 		8CD2691F230A452A001B9300 /* GenerateWallet */ = {
 			isa = PBXGroup;
 			children = (
-				8CD26920230A452A001B9300 /* LXHGenerateWalletViewController.m */,
-				8CD26921230A452A001B9300 /* LXHGenerateWalletView.m */,
 				8CD26922230A452A001B9300 /* LXHGenerateWalletView.h */,
+				8CD26921230A452A001B9300 /* LXHGenerateWalletView.m */,
 				8CD26923230A452A001B9300 /* LXHGenerateWalletViewController.h */,
+				8CD26920230A452A001B9300 /* LXHGenerateWalletViewController.m */,
 			);
 			path = GenerateWallet;
 			sourceTree = "<group>";
