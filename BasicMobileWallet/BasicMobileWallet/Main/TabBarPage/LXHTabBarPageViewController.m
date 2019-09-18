@@ -80,7 +80,7 @@
     UINavigationController *navigationController = (UINavigationController *)viewController;
     UIViewController *rootViewController = navigationController.viewControllers[0];
     if (rootViewController == [LXHCurrentReceivingAddressViewController sharedInstance]) { //refresh current receiving address
-        [[LXHCurrentReceivingAddressViewController sharedInstance] refreshViewWithCurrentReceivingAddress];
+        //TODO 暂时留着 [[LXHCurrentReceivingAddressViewController sharedInstance] refreshViewWithCurrentReceivingAddress];
     }
     return YES;
 }
