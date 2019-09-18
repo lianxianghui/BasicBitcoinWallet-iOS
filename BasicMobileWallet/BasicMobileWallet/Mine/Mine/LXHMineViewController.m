@@ -190,18 +190,18 @@
             break;
         case 2:
             {
-                UIViewController *controller = [[LXHShowWalletMnemonicWordsViewController alloc] init];
-                controller.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:controller animated:YES];
+                [self validatePINWithPassedHandler:^{
+                    UIViewController *controller = [[LXHShowWalletMnemonicWordsViewController alloc] init];
+                    controller.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:controller animated:YES];
+                }];
             }
             break;
         case 3:
             {
-                [self validatePINWithPassedHandler:^{
-                    UIViewController *controller = [[LXHAddressListViewController alloc] init];
-                    controller.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:controller animated:YES];
-                }];
+                UIViewController *controller = [[LXHAddressListViewController alloc] init];
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
             }
             break;
         case 4:
