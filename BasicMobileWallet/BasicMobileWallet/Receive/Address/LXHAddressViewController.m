@@ -78,6 +78,9 @@
     [self.contentView.copyButton addTarget:self action:@selector(copyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.copyButton addTarget:self action:@selector(copyButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
     [self.contentView.copyButton addTarget:self action:@selector(copyButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+    [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
 - (void)setDelegates {
@@ -105,6 +108,19 @@
 }
 
 - (void)copyButtonTouchUpOutside:(UIButton *)sender {
+    sender.alpha = 1;
+}
+
+- (void)leftImageButtonClicked:(UIButton *)sender {
+    sender.alpha = 1;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)leftImageButtonTouchDown:(UIButton *)sender {
+    sender.alpha = 0.5;
+}
+
+- (void)leftImageButtonTouchUpOutside:(UIButton *)sender {
     sender.alpha = 1;
 }
 

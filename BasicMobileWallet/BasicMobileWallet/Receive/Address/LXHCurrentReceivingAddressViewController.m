@@ -28,7 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.contentView.leftImageButton.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
