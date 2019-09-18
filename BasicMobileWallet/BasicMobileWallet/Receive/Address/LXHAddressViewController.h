@@ -7,10 +7,13 @@
 #import <UIKit/UIKit.h>
 #import "LXHAddressView.h"
 
+/**
+ * 显示任意地址二维码
+ */
 @interface LXHAddressViewController : UIViewController
 
 @property (nonatomic) LXHAddressView *contentView;
 
 - (instancetype)initWithData:(NSDictionary *)data;
-
+- (void)refreshViewWithData:(NSDictionary *)data;
 @end

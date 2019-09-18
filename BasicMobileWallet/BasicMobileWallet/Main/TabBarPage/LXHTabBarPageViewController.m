@@ -7,7 +7,7 @@
 #import "LXHTabBarPageViewController.h"
 //#import "LXHBalanceViewController.h"
 #import "LXHSendViewController.h"
-#import "LXHAddressViewController.h"
+#import "LXHCurrentReceivingAddressViewController.h"
 #import "LXHMineViewController.h"
 #import "LXHWallet.h"
 
@@ -17,7 +17,7 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
 
-@interface LXHTabBarPageViewController()
+@interface LXHTabBarPageViewController()<UITabBarControllerDelegate>
 @end
 
 @implementation LXHTabBarPageViewController
@@ -44,8 +44,7 @@
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
 
-    NSDictionary *data = @{@"addressType":@(LXHAddressTypeReceiving), @"addressIndex":@([LXHWallet.mainAccount currentReceivingAddressIndex])};
-    viewController = [[LXHAddressViewController alloc] initWithData:data];
+    viewController = [LXHCurrentReceivingAddressViewController sharedInstance];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_unselected_icon"];
     itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_selected_icon"];
@@ -68,12 +67,22 @@
     item = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"我的", nil) image:itemImage selectedImage:itemSelectedImage];
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
+    self.delegate = self;
 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
+}
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    UINavigationController *navigationController = (UINavigationController *)viewController;
+    UIViewController *rootViewController = navigationController.viewControllers[0];
+    if (rootViewController == [LXHCurrentReceivingAddressViewController sharedInstance]) { //refresh current receiving address
+        [[LXHCurrentReceivingAddressViewController sharedInstance] refreshViewWithCurrentReceivingAddress];
+    }
+    return YES;
 }
 
 @end

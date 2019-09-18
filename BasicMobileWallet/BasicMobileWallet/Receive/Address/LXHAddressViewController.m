@@ -43,12 +43,20 @@
         make.left.right.equalTo(self.view);
         make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
     }];
-    [self setViewData];
+    [self refreshView];
     [self addActions];
     [self setDelegates];
 }
 
-- (void)setViewData {
+- (void)refreshView {
+    if (_data)
+        [self refreshViewWithData:_data];
+}
+
+- (void)refreshViewWithData:(NSDictionary *)data {
+    if (!data)
+        return;
+    _data = data;
     LXHAddressType type = [_data[@"addressType"] integerValue];
     NSInteger index = [_data[@"addressIndex"] integerValue];
     

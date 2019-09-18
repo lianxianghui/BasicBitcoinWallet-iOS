@@ -17,8 +17,23 @@
 
 @implementation LXHCurrentReceivingAddressViewController
 
++ (instancetype)sharedInstance {
+    static LXHCurrentReceivingAddressViewController *instance = nil;
+    static dispatch_once_t tokon;
+    dispatch_once(&tokon, ^{
+        instance = [[LXHCurrentReceivingAddressViewController alloc] init];
+    });
+    return instance;
+}
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+}
 
-
+- (void)refreshViewWithCurrentReceivingAddress {
+    NSDictionary *data = @{@"addressType":@(LXHAddressTypeReceiving), @"addressIndex":@([LXHWallet.mainAccount currentReceivingAddressIndex])};
+    [self refreshViewWithData:data];
+} 
 
 @end
