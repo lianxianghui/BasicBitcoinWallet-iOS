@@ -58,7 +58,7 @@
         return;
     _data = data;
     LXHAddressType type = [_data[@"addressType"] integerValue];
-    NSInteger index = [_data[@"addressIndex"] integerValue];
+    uint32_t index = [_data[@"addressIndex"] unsignedIntValue];
     
     NSString *address = [[LXHWallet mainAccount] addressWithType:type index:index];
     [self.contentView.addressText updateAttributedTextString:address];

@@ -90,7 +90,7 @@
         _cellDataArray = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
             LXHAddressType type = [_data[@"addressType"] integerValue];
-            NSInteger index = [_data[@"addressIndex"] integerValue];
+            uint32_t index = [_data[@"addressIndex"] unsignedIntValue];
             LXHAccount *account = LXHWallet.mainAccount;
             //@{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE"};
             NSDictionary *addressDetailCellDic = @{@"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell"};
@@ -210,9 +210,6 @@
         NSMutableAttributedString *titleAttributedString = [cellView.title.attributedText mutableCopy];
         [titleAttributedString.mutableString setString:title];
         cellView.title.attributedText = titleAttributedString;
-    }
-    if ([cellType isEqualToString:@"LXHEmptyWithSeparatorCell"]) {
-        LXHEmptyWithSeparatorCell *cellView = (LXHEmptyWithSeparatorCell *)view;
     }
     if ([cellType isEqualToString:@"LXHAddressDetailTextRightIconCell"]) {
         LXHAddressDetailTextRightIconCell *cellView = (LXHAddressDetailTextRightIconCell *)view;

@@ -84,7 +84,7 @@
         NSMutableDictionary *localAddressCellDic = localAddressCellFixedData.mutableCopy;
         localAddressCellDic[@"addressText"] = usedAndCurrentAddresses[i];
         localAddressCellDic[@"used"] = i < [account currentAddressIndexWithType:addressType] ? @"用过的" : @"未用过的";
-        localAddressCellDic[@"localPath"] = [account addressPathWithType:addressType index:i];
+        localAddressCellDic[@"localPath"] = [account addressPathWithType:addressType index:(uint32_t)i];
         localAddressCellDic[@"type"] = @"P2PKH";
         localAddressCellDic[@"data"] =  @{@"addressType":@(addressType), @"addressIndex":@(i)};
         [ret addObject:localAddressCellDic];

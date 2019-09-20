@@ -9,6 +9,7 @@
 #import "LXHAccount.h"
 #import "CoreBitcoin.h"
 #import "NSMutableArray+Base.h"
+#import "LXHWalletChangeLevelModel.h"
 
 @interface LXHAccount ()
 @property (nonatomic) BTCKeychain *masterKeychain;
@@ -18,6 +19,8 @@
 @property (nonatomic, readwrite) NSInteger currentChangeAddressIndex;
 @property (nonatomic, readwrite) NSInteger currentReceivingAddressIndex;
 @property (nonatomic, readwrite) LXHBitcoinNetworkType currentNetworkType;
+@property (nonatomic, readwrite) LXHWalletChangeLevelModel *receiving;
+@property (nonatomic, readwrite) LXHWalletChangeLevelModel *change;
 @end
 
 @implementation LXHAccount
@@ -49,136 +52,58 @@
     return [_masterKeychain derivedKeychainWithPath:path];
 }
 
-
-- (BTCKeychain *)receivingKeychain {
-    if (!_receivingKeychain) {
-        _receivingKeychain = [self.accountKeychain derivedKeychainAtIndex:0 hardened:NO];
+- (LXHWalletChangeLevelModel *)receivingLevel {
+    if (!_receiving) {
+        _receiving = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHAddressTypeReceiving accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)_currentReceivingAddressIndex];
     }
-    return _receivingKeychain;
+    return _receiving;
 }
 
-- (BTCKeychain *)changeKeychain {
-    if (!_changeKeychain) {
-        _changeKeychain = [self.accountKeychain derivedKeychainAtIndex:1 hardened:NO];
+- (LXHWalletChangeLevelModel *)changeLevel {
+    if (!_change) {
+        _change = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHAddressTypeChange accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)_currentChangeAddressIndex];
     }
-    return _changeKeychain;
+    return _change;
 }
 
-- (NSString *)currentReceivingAddress {
-    return [self receivingAddressWithIndex:self.currentReceivingAddressIndex];
-}
-
-- (NSString *)currentReceivingAddressPath {
-    return [self receivingAddressPathWithIndex:self.currentReceivingAddressIndex];
-}
-
-- (NSString *)currentChangeAddress {
-    return [self changeAddressWithIndex:self.currentChangeAddressIndex];
-}
-
-- (NSString *)currentChangeAddressPath {
-    return [self changeAddressPathWithIndex:self.currentReceivingAddressIndex];
-}
-
-- (NSString *)receivingAddressPathWithIndex:(NSUInteger)index {
-    return [NSString stringWithFormat:@"m/44'/%ld'/0'/0/%ld", self.currentNetworkType, index];
-}
-
-- (NSString *)changeAddressPathWithIndex:(NSUInteger)index {
-    return [NSString stringWithFormat:@"m/44'/%ld'/0'/1/%ld", self.currentNetworkType, index];
-}
-
-- (NSString *)receivingAddressWithIndex:(NSUInteger)index {
-    BTCKey *key = [[self receivingKeychain] keyAtIndex:(uint32_t)index];
-    NSString *address = [self addressWithKey:key].string;
-    return address;
-}
-
-- (NSArray *)receivingAddressesFromIndex:(NSUInteger)fromIndex count:(NSUInteger)count {
-    NSMutableArray *addresses = [NSMutableArray array];
-    for (NSUInteger i = fromIndex; i < fromIndex+count; i++) {
-        [addresses addObject:[self receivingAddressWithIndex:i]];
-    }
-    return addresses;
-}
-
-- (NSArray *)usedReceivingAddresses {
-    NSArray *ret = [self receivingAddressesFromZeroToIndex:_currentReceivingAddressIndex-1];
-    return ret;
-}
-
-- (NSArray *)usedChangeAddresses {
-    NSArray *ret = [self changeAddressesFromZeroToIndex:_currentChangeAddressIndex-1];
-    return ret;
-}
-
-- (NSMutableArray *)usedAddresses {
+- (NSArray *)usedAddresses {
     NSMutableArray *ret = [NSMutableArray array];
-    [ret addObjectsIfNotNil:[self usedReceivingAddresses]];
-    [ret addObjectsIfNotNil:[self usedChangeAddresses]];
+    [ret addObjectsIfNotNil:[self.receivingLevel usedAddresses]];
+    [ret addObjectsIfNotNil:[self.changeLevel usedAddresses]];
     return ret;
 }
 
 - (NSArray *)usedAndCurrentAddresses {
-    NSMutableArray *ret = [self usedAddresses];
-    [ret addObjectIfNotNil:[self currentReceivingAddress]];
-    [ret addObjectIfNotNil:[self currentChangeAddress]];
-    return ret;
-}
-
-- (NSMutableArray *)usedAndCurrentReceivingAddresses {
     NSMutableArray *ret = [NSMutableArray array];
-    [ret addObjectsIfNotNil:[self usedReceivingAddresses]];
-    [ret addObjectIfNotNil:[self currentReceivingAddress]];
+    [ret addObjectIfNotNil:[self usedAddresses]];
+    [ret addObjectIfNotNil:[self currentAddressWithType:LXHAddressTypeReceiving]];
+    [ret addObjectIfNotNil:[self currentAddressWithType:LXHAddressTypeChange]];
     return ret;
-}
-
-- (NSMutableArray *)usedAndCurrentChangeAddresses {
-    NSMutableArray *ret = [NSMutableArray array];
-    [ret addObjectsIfNotNil:[self usedChangeAddresses]];
-    [ret addObjectIfNotNil:[self currentChangeAddress]];
-    return ret;
-}
-
-- (NSArray *)receivingAddressesFromZeroToIndex:(NSInteger)toIndex {
-    NSMutableArray *addresses = [NSMutableArray array];
-    for (NSInteger i = 0; i <= toIndex; i++) {
-        [addresses addObject:[self receivingAddressWithIndex:i]];
-    }
-    return addresses;
-}
-
-- (NSArray *)changeAddressesFromZeroToIndex:(NSInteger)toIndex {
-    NSMutableArray *addresses = [NSMutableArray array];
-    for (NSInteger i = 0; i <= toIndex; i++) {
-        [addresses addObject:[self changeAddressWithIndex:i]];
-    }
-    return addresses;
-}
-
-- (NSString *)changeAddressWithIndex:(NSUInteger)index {
-    BTCKeychain *keychain = [[self changeKeychain] derivedKeychainAtIndex:(uint32_t)index];
-    return [self addressWithKey:keychain.key].string;
 }
 
 - (NSInteger)currentAddressIndexWithType:(LXHAddressType)type {
-    return type == LXHAddressTypeReceiving ? self.currentReceivingAddressIndex : self.currentChangeAddressIndex;
+    return [self changeLeveWithType:type].currentAddressIndex;
 }
 
 - (NSString *)currentAddressWithType:(LXHAddressType)type {
-    return type == LXHAddressTypeReceiving ? [self currentReceivingAddress] : [self currentChangeAddress];
+    return [[self changeLeveWithType:type] currentAddress];
 }
 
-- (NSString *)addressWithType:(LXHAddressType)type index:(NSUInteger)index {
-    return type == LXHAddressTypeReceiving ? [self receivingAddressWithIndex:index] : [self changeAddressWithIndex:index];
+- (NSString *)addressWithType:(LXHAddressType)type index:(uint32_t)index {
+    return [[self changeLeveWithType:type] addressStringWithIndex:index];
 }
 
-- (NSString *)addressPathWithType:(LXHAddressType)type index:(NSUInteger)index {
-    return type == LXHAddressTypeReceiving ? [self receivingAddressPathWithIndex:index] : [self changeAddressPathWithIndex:index];
+- (NSString *)addressPathWithType:(LXHAddressType)type index:(uint32_t)index {
+    return [[self changeLeveWithType:type] addressPathWithIndex:index]; 
 }
 
-- (NSMutableArray *)usedAndCurrentAddressesWithType:(LXHAddressType)type {
-    return type == LXHAddressTypeReceiving ? [self usedAndCurrentReceivingAddresses] : [self usedAndCurrentChangeAddresses];
+- (NSArray *)usedAndCurrentAddressesWithType:(LXHAddressType)type {
+    return [[self changeLeveWithType:type] usedAndCurrentAddresses];
+}
+
+- (LXHWalletChangeLevelModel *)changeLeveWithType:(LXHAddressType)type {
+    LXHWalletChangeLevelModel *changeLevel = (type == LXHAddressTypeReceiving) ? self.receiving : self.change;
+    return changeLevel;
 }
 
 //- (BOOL)isUsedAddressWithType:(LXHAddressType)type index:(NSUInteger)index {
@@ -187,11 +112,6 @@
 //    }
 //}
 
-- (BTCPublicKeyAddress *)addressWithKey:(BTCKey *)key {
-    if (_currentNetworkType == LXHBitcoinNetworkTypeMainnet)
-        return key.address;
-    else
-        return key.addressTestnet;
-}
+
 
 @end
