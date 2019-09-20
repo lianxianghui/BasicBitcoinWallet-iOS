@@ -107,7 +107,7 @@
 
             dic = addressDetailCellDic.mutableCopy;
             dic[@"title"] = NSLocalizedString(@"使用情况", nil);
-            dic[@"text"] = @"TODO 重构代码后实现";
+            dic[@"text"] = [account isUsedAddressWithType:type index:index] ? NSLocalizedString(@"使用过", nil) : NSLocalizedString(@"未使用过", nil);
             [_cellDataArray addObject:dic];   
             
             dic = addressDetailCellDic.mutableCopy;
@@ -117,7 +117,7 @@
             
             dic = addressDetailCellDic.mutableCopy;
             dic[@"title"] = NSLocalizedString(@"地址用途", nil);
-            dic[@"text"] = type == LXHAddressTypeReceiving ? @"接收" : @"找零";
+            dic[@"text"] = type == LXHAddressTypeReceiving ? NSLocalizedString(@"接收", nil) : NSLocalizedString(@"找零", nil);
             [_cellDataArray addObject:dic];
             
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"}.mutableCopy;

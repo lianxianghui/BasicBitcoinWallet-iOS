@@ -106,11 +106,9 @@
     return changeLevel;
 }
 
-//- (BOOL)isUsedAddressWithType:(LXHAddressType)type index:(NSUInteger)index {
-//    if (type == LXHAddressTypeReceiving) {
-//        
-//    }
-//}
+- (BOOL)isUsedAddressWithType:(LXHAddressType)type index:(NSUInteger)index {
+    return [[self changeLeveWithType:type] isUsedAddressWithIndex:index];
+}
 
 
 

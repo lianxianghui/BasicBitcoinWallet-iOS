@@ -92,4 +92,8 @@
     return [self addressStringWithIndex:_currentAddressIndex];
 }
 
+- (BOOL)isUsedAddressWithIndex:(NSUInteger)index {
+    return index < [self usedAddresses].count;
+}
+
 @end
