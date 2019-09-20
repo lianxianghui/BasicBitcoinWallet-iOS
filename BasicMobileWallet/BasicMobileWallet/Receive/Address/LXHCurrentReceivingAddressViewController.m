@@ -37,7 +37,7 @@
 }
 
 - (void)refreshViewWithCurrentReceivingAddress {
-    NSDictionary *data = @{@"addressType":@(LXHAddressTypeReceiving), @"addressIndex":@([LXHWallet.mainAccount currentReceivingAddressIndex])};
+    NSDictionary *data = @{@"addressType":@(LXHAddressTypeReceiving), @"addressIndex":@(LXHWallet.mainAccount.receiving.currentAddressIndex)};
     [self refreshViewWithData:data];
 } 
 

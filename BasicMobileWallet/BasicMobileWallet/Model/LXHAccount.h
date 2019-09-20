@@ -15,10 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LXHAccount : NSObject
 
 @property (nonatomic, readonly) LXHBitcoinNetworkType currentNetworkType;
-@property (nonatomic, readonly) NSInteger currentChangeAddressIndex;
-@property (nonatomic, readonly) NSInteger currentReceivingAddressIndex;
-@property (nonatomic, readonly) LXHWalletChangeLevelModel *receivingLevel;
-@property (nonatomic, readonly) LXHWalletChangeLevelModel *changeLevel;
+@property (nonatomic, readonly) LXHWalletChangeLevelModel *receiving;
+@property (nonatomic, readonly) LXHWalletChangeLevelModel *change;
 
 - (instancetype)initWithRootSeed:(NSData *)rootSeed
               currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType;

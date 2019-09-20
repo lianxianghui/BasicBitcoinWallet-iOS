@@ -14,10 +14,6 @@
 @interface LXHAccount ()
 @property (nonatomic) BTCKeychain *masterKeychain;
 @property (nonatomic) BTCKeychain *accountKeychain;
-@property (nonatomic) BTCKeychain *receivingKeychain;
-@property (nonatomic) BTCKeychain *changeKeychain;
-@property (nonatomic, readwrite) NSInteger currentChangeAddressIndex;
-@property (nonatomic, readwrite) NSInteger currentReceivingAddressIndex;
 @property (nonatomic, readwrite) LXHBitcoinNetworkType currentNetworkType;
 @property (nonatomic, readwrite) LXHWalletChangeLevelModel *receiving;
 @property (nonatomic, readwrite) LXHWalletChangeLevelModel *change;
@@ -32,9 +28,9 @@
     self = [super init];
     if (self) {
         _masterKeychain = [[BTCKeychain alloc] initWithSeed:rootSeed];
-        _currentReceivingAddressIndex = currentReceivingAddressIndex;
-        _currentChangeAddressIndex = currentChangeAddressIndex;
         _currentNetworkType = currentNetworkType;
+        _receiving = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHAddressTypeReceiving accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)currentReceivingAddressIndex];
+        _change = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHAddressTypeChange accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)currentChangeAddressIndex];
     }
     return self;
 }
@@ -52,24 +48,10 @@
     return [_masterKeychain derivedKeychainWithPath:path];
 }
 
-- (LXHWalletChangeLevelModel *)receiving {
-    if (!_receiving) {
-        _receiving = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHAddressTypeReceiving accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)_currentReceivingAddressIndex];
-    }
-    return _receiving;
-}
-
-- (LXHWalletChangeLevelModel *)change {
-    if (!_change) {
-        _change = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHAddressTypeChange accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)_currentChangeAddressIndex];
-    }
-    return _change;
-}
-
 - (NSArray *)usedAddresses {
     NSMutableArray *ret = [NSMutableArray array];
-    [ret addObjectsIfNotNil:[self.receivingLevel usedAddresses]];
-    [ret addObjectsIfNotNil:[self.changeLevel usedAddresses]];
+    [ret addObjectsIfNotNil:[self.receiving usedAddresses]];
+    [ret addObjectsIfNotNil:[self.change usedAddresses]];
     return ret;
 }
 

@@ -55,7 +55,7 @@
                             successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                             failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     uint32_t gapLimit = 20;
-    NSArray *addressesForRequesting = [_account.receivingLevel addressesFromIndex:(uint32_t)fromIndex count:gapLimit];
+    NSArray *addressesForRequesting = [_account.receiving addressesFromIndex:(uint32_t)fromIndex count:gapLimit];
     //异步请求，通过successBlock传回事务数据
     [LXHTransactionDataManager requestTransactionsWithNetworkType:_account.currentNetworkType addresses:addressesForRequesting successBlock:^(NSDictionary *resultDic) {
         NSArray *transactions = resultDic[@"items"];
@@ -111,7 +111,7 @@
     NSSet *allOutAddressSet = [self outAddressesWithTransactions:allTransactions];
     NSInteger maxPossibleUsedChangeAddressCount = allOutAddressSet.count; //找零地址肯定在allOutAddressSet里面，所以最大不会超过allOutAddressSet的数量
     for (NSInteger i = maxPossibleUsedChangeAddressCount-1; i >= 0; i--) { //找到倒数第一个用过的，也就是最后一个用过的，加一就得到下一个准备使用的找零地址
-        NSString *changeAddress = [_account.changeLevel addressStringWithIndex:(uint32_t)i];
+        NSString *changeAddress = [_account.change addressStringWithIndex:(uint32_t)i];
         if ([allOutAddressSet containsObject:changeAddress])
             return i+1;
     }
