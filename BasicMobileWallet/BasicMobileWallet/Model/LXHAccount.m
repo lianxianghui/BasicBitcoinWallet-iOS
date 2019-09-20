@@ -52,14 +52,14 @@
     return [_masterKeychain derivedKeychainWithPath:path];
 }
 
-- (LXHWalletChangeLevelModel *)receivingLevel {
+- (LXHWalletChangeLevelModel *)receiving {
     if (!_receiving) {
         _receiving = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHAddressTypeReceiving accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)_currentReceivingAddressIndex];
     }
     return _receiving;
 }
 
-- (LXHWalletChangeLevelModel *)changeLevel {
+- (LXHWalletChangeLevelModel *)change {
     if (!_change) {
         _change = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHAddressTypeChange accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)_currentChangeAddressIndex];
     }

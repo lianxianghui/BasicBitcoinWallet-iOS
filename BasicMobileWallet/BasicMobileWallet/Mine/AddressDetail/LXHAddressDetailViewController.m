@@ -107,7 +107,7 @@
 
             dic = addressDetailCellDic.mutableCopy;
             dic[@"title"] = NSLocalizedString(@"使用情况", nil);
-            dic[@"text"] = [account isUsedAddressWithType:type index:index] ? NSLocalizedString(@"使用过", nil) : NSLocalizedString(@"未使用过", nil);
+            dic[@"text"] = [account isUsedAddressWithType:type index:index] ? NSLocalizedString(@"用过的", nil) : NSLocalizedString(@"未用过的", nil);
             [_cellDataArray addObject:dic];   
             
             dic = addressDetailCellDic.mutableCopy;

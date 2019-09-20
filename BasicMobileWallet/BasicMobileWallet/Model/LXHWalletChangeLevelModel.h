@@ -29,7 +29,7 @@ typedef NS_ENUM(NSUInteger, LXHAddressType) {
 
 - (NSArray *)addressesFromIndex:(uint32_t)fromIndex count:(uint32_t)count;
 - (NSString *)addressStringWithIndex:(uint32_t)index;
-- (NSString *)addressPathWithIndex:(uint32_t)index;
+- (NSString *)addressPathWithIndex:(NSUInteger)index;
 - (BOOL)isUsedAddressWithIndex:(NSUInteger)index;
 - (NSString *)currentAddress;
 - (NSArray *)usedAddresses;

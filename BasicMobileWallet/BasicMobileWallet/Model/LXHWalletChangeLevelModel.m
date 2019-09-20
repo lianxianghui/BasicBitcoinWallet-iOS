@@ -69,6 +69,8 @@
 }
 
 - (NSArray *)usedAddresses {
+    if (_currentAddressIndex == 0)
+        return nil;
     NSArray *ret = [self addressesFromZeroToIndex:_currentAddressIndex-1];
     return ret;
 }
