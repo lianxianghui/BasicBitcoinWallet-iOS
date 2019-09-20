@@ -292,7 +292,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.4099999964237213) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"接收地址", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"地址二维码", nil) attributes:textAttributes];
         _title.attributedText = text;
     }
     return _title;
