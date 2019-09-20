@@ -713,13 +713,13 @@
 		8C2CC66A232F20E4005AA93C /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				8C2CC69F232F20E4005AA93C /* TransactionList */,
 				8C2CC66B232F20E4005AA93C /* TransactionDetail */,
 				8C2CC678232F20E4005AA93C /* Mine */,
 				8C2CC6E3233236A9005AA93C /* ShowWalletMnemonicWords */,
 				8C2CC681232F20E4005AA93C /* AddressList */,
 				8C2CC68D232F20E4005AA93C /* AddressDetail */,
 				8C2CC698232F20E4005AA93C /* Setting */,
-				8C2CC69F232F20E4005AA93C /* TransactionList */,
 			);
 			path = Mine;
 			sourceTree = "<group>";

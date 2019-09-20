@@ -56,8 +56,7 @@
 }
 
 - (NSArray *)usedAndCurrentAddresses {
-    NSMutableArray *ret = [NSMutableArray array];
-    [ret addObjectIfNotNil:[self usedAddresses]];
+    NSMutableArray *ret = [[self usedAddresses] mutableCopy];
     [ret addObjectIfNotNil:[self currentAddressWithType:LXHAddressTypeReceiving]];
     [ret addObjectIfNotNil:[self currentAddressWithType:LXHAddressTypeChange]];
     return ret;
