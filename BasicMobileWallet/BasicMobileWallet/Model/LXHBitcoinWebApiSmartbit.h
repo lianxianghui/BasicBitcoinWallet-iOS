@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "LXHBitcoinWebApi.h"
+#import "LXHGlobalHeader.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHBitcoinWebApiSmartbit : NSObject <LXHBitcoinWebApi>
-
+- (instancetype)initWithType:(LXHBitcoinNetworkType)type;
 @end
 
 NS_ASSUME_NONNULL_END

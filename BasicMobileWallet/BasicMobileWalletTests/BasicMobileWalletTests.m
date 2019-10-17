@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "LXHWallet.h"
 #import "LXHAccountAddressSearcher.h"
+#import "LXHBitcoinWebApiSmartbit.h"
 
 @interface BasicMobileWalletTests : XCTestCase
 @property (nonatomic) NSArray *words;
@@ -63,6 +64,20 @@
         [expectation fulfill];
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         
+    }];
+    [self waitForExpectationsWithTimeout:30 handler:nil];
+}
+
+- (void)testSmartBitRequest {
+    //mrQoR4BMyZWyAZfHF4NuqRmkVtp87AqsUh,n1dAqxk6UCb6568d5f28W2sh6LvwkP5snW
+    LXHBitcoinWebApiSmartbit *api = [[LXHBitcoinWebApiSmartbit alloc] initWithType:LXHBitcoinNetworkTypeTestnet];
+    NSMutableArray *addresses = [NSMutableArray array];
+    [addresses addObject:@"mrQoR4BMyZWyAZfHF4NuqRmkVtp87AqsUh"];
+    [addresses addObject:@"n1dAqxk6UCb6568d5f28W2sh6LvwkP5snW"];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"测试成功"];
+    [api requestAllTransactionsWithAddresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
+        [expectation fulfill];
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
     }];
     [self waitForExpectationsWithTimeout:30 handler:nil];
 }

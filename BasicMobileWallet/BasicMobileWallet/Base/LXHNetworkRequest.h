@@ -12,10 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHNetworkRequest : NSObject
 
-+ (id)postWithUrlString:(NSString *)url 
++ (id)POSTWithUrlString:(NSString *)url 
              parameters:(NSDictionary *)parameters 
         successCallback:(void (^)(NSDictionary *resultDic))successCallback 
         failureCallback:(void (^)(NSDictionary *resultDic))failureCallback;
+
++ (id)GETWithUrlString:(NSString *)url
+            parameters:(NSDictionary *)parameters
+       successCallback:(void (^)(NSDictionary *resultDic))successCallback
+       failureCallback:(void (^)(NSDictionary *resultDic))failureCallback;
 @end
 
 NS_ASSUME_NONNULL_END

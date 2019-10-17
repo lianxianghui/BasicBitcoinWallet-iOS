@@ -101,7 +101,7 @@ static NSString *const aesPassword = LXHAESPassword;
     NSString *url = [NSString stringWithFormat:@"%@%@", baseUrl, @"api/addrs/txs"];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"addrs"] = [addresses componentsJoinedByString:@","];
-    [LXHNetworkRequest postWithUrlString:url parameters:parameters
+    [LXHNetworkRequest POSTWithUrlString:url parameters:parameters
                       successCallback:^(NSDictionary * _Nonnull resultDic) {
                           successBlock(resultDic);
                       } failureCallback:^(NSDictionary * _Nonnull resultDic) {
