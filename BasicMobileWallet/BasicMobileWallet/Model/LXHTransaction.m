@@ -103,4 +103,16 @@
     return nil;
 }
 
+- (NSMutableArray<LXHTransactionInput *> *)inputs {
+    if (!_inputs)
+        _inputs = [NSMutableArray array];
+    return _inputs;
+}
+
+- (NSMutableArray<LXHTransactionOutput *> *)outputs {
+    if (!_outputs)
+        _outputs = [NSMutableArray array];
+    return _outputs;
+}
+
 @end

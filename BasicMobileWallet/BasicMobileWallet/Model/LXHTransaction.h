@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LXHTransactionInput.h"
+#import "LXHTransactionOutput.h"
 
 typedef NS_ENUM(NSUInteger, LXHTransactionSendOrReceiveType) {
     LXHTransactionSendOrReceiveTypeNotDefined,
@@ -37,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSString *blockheight;// = 1576427;
 @property (nonatomic) NSString *blocktime;// = 1567157500;
 @property (nonatomic) NSString *confirmations;// = 717;
-//@property (nonatomic) NSString *fees = "0.0003";
+@property (nonatomic) NSString *feesString;// = "0.0003";
 //locktime = 0;
 //size = 191;
 //time = 1567157500;
@@ -45,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 //valueIn = "0.03";
 //valueOut = "0.0297";
 //version = 1;
+@property (nonatomic) NSMutableArray<LXHTransactionInput *> *inputs;
+@property (nonatomic) NSMutableArray<LXHTransactionOutput *> *outputs;
 @end
 
 NS_ASSUME_NONNULL_END
