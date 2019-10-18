@@ -104,13 +104,12 @@
         _dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
             NSArray *transactionList = [LXHTransactionDataManager sharedInstance].transactionList;  
-            for (NSDictionary *transactionDic in transactionList) {
+            for (LXHTransaction *transaction in transactionList) {
 //                NSDictionary *dic = @{@"value":@"0.00000001BTC", @"isSelectable":@"1", @"confirmation":@"确认数：2", @"InitializedTime":@"发起时间：2019-05-16  12：34", @"cellType":@"LXHTransactionInfoCell", @"type":@"交易类型：发送"};
                 
                 NSMutableDictionary *dic = @{@"isSelectable":@"1", @"cellType":@"LXHTransactionInfoCell"}.mutableCopy;
-                LXHTransaction *transaction = [[LXHTransaction alloc] initWithDic:transactionDic];
                 
-                id confirmation = transactionDic[@"confirmations"];
+                id confirmation = transaction.confirmations;
                 if (confirmation)
                     dic[@"confirmation"] = [NSString stringWithFormat: @"%@:%@", NSLocalizedString(@"确认数", nil), confirmation];
                 else 
@@ -120,7 +119,7 @@
                     formatter = [[NSDateFormatter alloc] init];
                     formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
                 }
-                NSInteger time = [transactionDic[@"time"] integerValue];
+                NSInteger time = [transaction.time integerValue];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
                 NSString *dateString = [formatter stringFromDate:date];
                 dic[@"InitializedTime"] = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];

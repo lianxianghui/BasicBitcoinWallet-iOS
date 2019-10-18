@@ -64,9 +64,12 @@
         LXHTransaction *model = [[LXHTransaction alloc] init];
         model.txid = dic[@"txid"];
         model.blockhash = dic[@"hash"];//todo
-        model.blockheight = dic[@"block"];//todo height
-        model.blocktime = dic[@"time"];//todo  blocktime
+        model.block = dic[@"block"];
+        model.time = dic[@"time"];
         model.confirmations = dic[@"confirmations"];
+        model.inputAmount = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", dic[@"input_amount"]]];
+        model.outputAmount = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", dic[@"output_amount"]]];
+        model.fees = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", dic[@"fee"]]];
         NSArray *inputs = dic[@"inputs"];
         for (NSDictionary *inputDic in inputs) {
             LXHTransactionInput *input = [LXHTransactionInput new];

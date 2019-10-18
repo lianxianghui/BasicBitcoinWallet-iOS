@@ -10,21 +10,11 @@
 #import "LXHWallet.h"
 
 @interface LXHTransaction ()
-@property (nonatomic, readwrite) NSDictionary *dic;
 @property (nonatomic) NSDecimalNumber *sentValueSumFromLocalAddress;
 @property (nonatomic) NSDecimalNumber *receivedValueSumFromLocalAddress;
 @end
 
 @implementation LXHTransaction
-
-- (instancetype)initWithDic:(NSDictionary *)dic
-{
-    self = [super init];
-    if (self) {
-        _dic = dic;
-    }
-    return self;
-}
 
 - (LXHTransactionSendOrReceiveType)sendOrReceiveType {
     NSDecimalNumber *sentValueSumFromLocalAddress = [self sentValueSumFromLocalAddress];
@@ -38,18 +28,21 @@
     }
 }
 
-//来自当前钱包地址的输入和，也就是从当前钱包转出去的总值
+//由于当前支持P2PKH (Pay To PubKey Hash)地址
+//当前交易里来自当前钱包地址的输入和，也就是从当前钱包转出去的总值
 - (NSDecimalNumber *)sentValueSumFromLocalAddress {
     if (_sentValueSumFromLocalAddress)
         return _sentValueSumFromLocalAddress;
-    NSArray *inputs = _dic[@"vin"];
+    NSArray *inputs = self.inputs;
     NSDecimalNumber *sum = [NSDecimalNumber zero];
     NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
-    for (NSDictionary *inputDic in inputs) {
-        NSString *inputAddr = inputDic[@"addr"];
-        if (![usedAndCurrentAddresses containsObject:inputAddr])
+    for (LXHTransactionInput *input in inputs) {
+        NSString *address = input.address;
+        if (!address) //不应该发生
             continue;
-        NSString *value = inputDic[@"value"]; 
+        if (![usedAndCurrentAddresses containsObject:address])
+            continue;
+        NSString *value = input.value;
         if (!value)
             continue;
         value = [NSString stringWithFormat:@"%@", value];
@@ -67,14 +60,16 @@
 - (NSDecimalNumber *)receivedValueSumFromLocalAddress {
     if (_receivedValueSumFromLocalAddress)
         return _receivedValueSumFromLocalAddress;
-    NSArray *outputs = _dic[@"vout"];
+    NSArray *outputs = self.outputs;
     NSDecimalNumber *sum = [NSDecimalNumber zero];
     NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
-    for (NSDictionary *outputDic in outputs) {
-        NSString *addr = [outputDic valueForKeyPath:@"scriptPubKey.addresses"][0];
+    for (LXHTransactionOutput *output in outputs) {
+        NSString *addr = output.address;
+        if (!addr)
+            continue;
         if (![usedAndCurrentAddresses containsObject:addr])
             continue;
-        NSString *value = outputDic[@"value"];
+        NSString *value = output.value;
         if (!value)
             continue;
         value = [NSString stringWithFormat:@"%@", value];
@@ -86,21 +81,6 @@
     }
     _receivedValueSumFromLocalAddress = sum;
     return sum;
-}
-
-- (NSDecimalNumber *)fees {
-    NSDecimalNumber *ret = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", _dic[@"fees"]]];
-    return ret;
-}
-
-- (NSString *)outAddressAtIndex:(NSInteger)index {
-    NSArray *outputs = _dic[@"vout"];
-    if (index < outputs.count) {
-        NSDictionary *outputDic = outputs[index];
-        NSString *addr = [outputDic valueForKeyPath:@"scriptPubKey.addresses"][0];
-        return addr;
-    }
-    return nil;
 }
 
 - (NSMutableArray<LXHTransactionInput *> *)inputs {
