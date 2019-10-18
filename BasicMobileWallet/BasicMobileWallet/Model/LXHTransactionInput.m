@@ -7,7 +7,25 @@
 //
 
 #import "LXHTransactionInput.h"
+#import "LXHGlobalHeader.h"
 
 @implementation LXHTransactionInput
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    LXHDecodeObjectStament(address);
+    LXHDecodeObjectStament(value);
+    LXHDecodeObjectStament(txid);
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    LXHEncodeObjectStament(address);
+    LXHEncodeObjectStament(value);
+    LXHEncodeObjectStament(txid);
+}
 
 @end

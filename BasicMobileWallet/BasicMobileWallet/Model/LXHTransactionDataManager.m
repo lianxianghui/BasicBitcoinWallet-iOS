@@ -14,11 +14,12 @@
 #import <RNCryptor/RNEncryptor.h>
 
 #import "LXHNetworkRequest.h"
+#import "LXHBitcoinWebApiSmartbit.h"
 
 static NSString *const cacheFileName = @"LXHTransactionDataManagerCacheFile.aes";
 static NSString *const aesPassword = LXHAESPassword;
 
-#define LXHTransactionDataManagerCacheFilePath [NSString stringWithFormat:@"%@/%@",  LXCacheFileDir, cacheFileName]
+#define LXHTransactionDataManagerCacheFilePath [NSString stringWithFormat:@"%@/%@",  LXHCacheFileDir, cacheFileName]
 
 @implementation LXHTransactionDataManager
 @synthesize transactionList = _transactionList;
@@ -70,12 +71,11 @@ static NSString *const aesPassword = LXHAESPassword;
         [encryptedData writeToFile:LXHTransactionDataManagerCacheFilePath atomically:YES];
 }
 
-
 - (void)requestDataWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock 
                        failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     NSArray *addresses = [[LXHWallet mainAccount] usedAddresses];
-    [LXHTransactionDataManager requestTransactionsWithAddresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
-        NSArray *transactions = resultDic[@"items"];
+    [LXHTransactionDataManager requestTransactionsWithNetworkType:LXHWallet.mainAccount.currentNetworkType addresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
+        NSArray *transactions = resultDic[@"transactions"];
         [self setTransactionList:transactions];
         successBlock(resultDic);
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
@@ -83,33 +83,38 @@ static NSString *const aesPassword = LXHAESPassword;
     }];
 }
 
-+ (void)requestTransactionsWithAddresses:(NSArray *)addresses
-                            successBlock:(void (^)(NSDictionary *resultDic))successBlock 
-                            failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    [self requestTransactionsWithNetworkType:LXHWallet.mainAccount.currentNetworkType addresses:addresses successBlock:successBlock failureBlock:failureBlock];
-}
-
 + (void)requestTransactionsWithNetworkType:(LXHBitcoinNetworkType)type
                             addresses:(NSArray *)addresses
-                            successBlock:(void (^)(NSDictionary *resultDic))successBlock 
+                            successBlock:(void (^)(NSDictionary *resultDic))successBlock
                             failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    NSString *baseUrl;
-    if (type == LXHBitcoinNetworkTypeMainnet)
-        baseUrl = @"https://insight.bitpay.com/";
-    else
-        baseUrl = @"https://test-insight.bitpay.com/";
-    NSString *url = [NSString stringWithFormat:@"%@%@", baseUrl, @"api/addrs/txs"];
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"addrs"] = [addresses componentsJoinedByString:@","];
-    [LXHNetworkRequest POSTWithUrlString:url parameters:parameters
-                      successCallback:^(NSDictionary * _Nonnull resultDic) {
-                          successBlock(resultDic);
-                      } failureCallback:^(NSDictionary * _Nonnull resultDic) {
-                          NSError *error = resultDic[@"error"];
-                          failureBlock(@{@"error":error.localizedDescription});
-                      }];
+    id<LXHBitcoinWebApi> webApi = [self webApiWithType:type];
+    [webApi requestAllTransactionsWithAddresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
+        successBlock(resultDic);
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        failureBlock(resultDic);
+    }];
+    
+//    NSString *baseUrl;
+//    if (type == LXHBitcoinNetworkTypeMainnet)
+//        baseUrl = @"https://insight.bitpay.com/";
+//    else
+//        baseUrl = @"https://test-insight.bitpay.com/";
+//    NSString *url = [NSString stringWithFormat:@"%@%@", baseUrl, @"api/addrs/txs"];
+//    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+//    parameters[@"addrs"] = [addresses componentsJoinedByString:@","];
+//    [LXHNetworkRequest POSTWithUrlString:url parameters:parameters
+//                      successCallback:^(NSDictionary * _Nonnull resultDic) {
+//                          successBlock(resultDic);
+//                      } failureCallback:^(NSDictionary * _Nonnull resultDic) {
+//                          NSError *error = resultDic[@"error"];
+//                          failureBlock(@{@"error":error.localizedDescription});
+//                      }];
 }
 
++ (id<LXHBitcoinWebApi>)webApiWithType:(LXHBitcoinNetworkType)type {
+    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiSmartbit alloc] initWithType:type];
+    return ret;
+}
 
 
 @end

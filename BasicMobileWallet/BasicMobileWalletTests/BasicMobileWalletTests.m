@@ -27,7 +27,7 @@
 
 - (void)testTmp {
     XCTestExpectation *expectation = [self expectationWithDescription:@"测试成功"];
-    [LXHWallet  restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
+    [LXHWallet restoreExistWalletDataWithMnemonicCodeWords:self.words mnemonicPassphrase:nil netType:LXHBitcoinNetworkTypeTestnet successBlock:^(NSDictionary * _Nonnull resultDic) {
         [expectation fulfill];
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         

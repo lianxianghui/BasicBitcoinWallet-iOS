@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, LXHTransactionSendOrReceiveType) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LXHTransaction : NSObject
+@interface LXHTransaction : NSObject <NSCoding>
 
 @property (nonatomic) NSString * blockhash;
 @property (nonatomic) NSString *block;

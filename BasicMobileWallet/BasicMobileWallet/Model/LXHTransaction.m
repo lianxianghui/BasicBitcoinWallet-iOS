@@ -8,6 +8,7 @@
 
 #import "LXHTransaction.h"
 #import "LXHWallet.h"
+#import "LXHGlobalHeader.h"
 
 @interface LXHTransaction ()
 @property (nonatomic) NSDecimalNumber *sentValueSumFromLocalAddress;
@@ -15,6 +16,37 @@
 @end
 
 @implementation LXHTransaction
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    LXHDecodeObjectStament(blockhash);
+    LXHDecodeObjectStament(block);
+    LXHDecodeObjectStament(time);
+    LXHDecodeObjectStament(confirmations);
+    LXHDecodeObjectStament(inputAmount);
+    LXHDecodeObjectStament(outputAmount);
+    LXHDecodeObjectStament(fees);
+    LXHDecodeObjectStament(txid);
+    LXHDecodeObjectStament(inputs);
+    LXHDecodeObjectStament(outputs);
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    LXHEncodeObjectStament(blockhash);
+    LXHEncodeObjectStament(block);
+    LXHEncodeObjectStament(time);
+    LXHEncodeObjectStament(confirmations);
+    LXHEncodeObjectStament(inputAmount);
+    LXHEncodeObjectStament(outputAmount);
+    LXHEncodeObjectStament(fees);
+    LXHEncodeObjectStament(txid);
+    LXHEncodeObjectStament(inputs);
+    LXHEncodeObjectStament(outputs);
+}
 
 - (LXHTransactionSendOrReceiveType)sendOrReceiveType {
     NSDecimalNumber *sentValueSumFromLocalAddress = [self sentValueSumFromLocalAddress];

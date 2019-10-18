@@ -15,6 +15,10 @@ typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) { //do not modify
 };
 
 #define LXHAESPassword @"serefddetggg" //TODO 随便写的，用你自己的代替
-#define LXCacheFileDir [NSSearchPathForDirectoriesInDomains(NSCachesDirectory ,NSUserDomainMask, YES) objectAtIndex:0]
+#define LXHCacheFileDir [NSSearchPathForDirectoriesInDomains(NSCachesDirectory ,NSUserDomainMask, YES) objectAtIndex:0]
 #define LXHTranactionTimeDateFormat @"yyyy-MM-dd HH:mm:ss"
+
+//encode decode statement macro
+#define LXHDecodeObjectStament(propertyName) self.propertyName = [decoder decodeObjectForKey:@#propertyName];
+#define LXHEncodeObjectStament(propertyName) [encoder encodeObject:self.propertyName forKey:@#propertyName];
 #endif /* LXHGlobalHeader_h */

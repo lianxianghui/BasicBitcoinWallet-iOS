@@ -58,7 +58,7 @@
     NSArray *addressesForRequesting = [_account.receiving addressesFromIndex:(uint32_t)fromIndex count:gapLimit];
     //异步请求，通过successBlock传回事务数据
     [LXHTransactionDataManager requestTransactionsWithNetworkType:_account.currentNetworkType addresses:addressesForRequesting successBlock:^(NSDictionary *resultDic) {
-        NSArray *transactions = resultDic[@"items"];
+        NSArray *transactions = resultDic[@"transactions"];
         if (transactions.count == 0) { //未找到新的交易，说明当前的20个地址都未用过，所以就是要找的Gap
             successBlock(@{@"FirstUnusedReceivingAddressesGapStartIndex":@(fromIndex)});
         } else {
