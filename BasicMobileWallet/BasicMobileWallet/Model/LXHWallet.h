@@ -40,7 +40,7 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
                                            netType:(LXHBitcoinNetworkType)netType;
 
 + (void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
-                                 mnemonicPassphrase:(NSString *)mnemonicPassphrase
+                                 mnemonicPassphrase:(nullable NSString *)mnemonicPassphrase
                                             netType:(LXHBitcoinNetworkType)netType
                                        successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                                        failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;

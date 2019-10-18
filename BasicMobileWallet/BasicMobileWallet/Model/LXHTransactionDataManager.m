@@ -93,7 +93,13 @@ static NSString *const aesPassword = LXHAESPassword;
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         failureBlock(resultDic);
     }];
-    
+}
+
+//bitpay insight code
+//+ (void)requestTransactionsWithNetworkType:(LXHBitcoinNetworkType)type
+//                                 addresses:(NSArray *)addresses
+//                              successBlock:(void (^)(NSDictionary *resultDic))successBlock
+//                              failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
 //    NSString *baseUrl;
 //    if (type == LXHBitcoinNetworkTypeMainnet)
 //        baseUrl = @"https://insight.bitpay.com/";
@@ -103,13 +109,14 @@ static NSString *const aesPassword = LXHAESPassword;
 //    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
 //    parameters[@"addrs"] = [addresses componentsJoinedByString:@","];
 //    [LXHNetworkRequest POSTWithUrlString:url parameters:parameters
-//                      successCallback:^(NSDictionary * _Nonnull resultDic) {
-//                          successBlock(resultDic);
-//                      } failureCallback:^(NSDictionary * _Nonnull resultDic) {
-//                          NSError *error = resultDic[@"error"];
-//                          failureBlock(@{@"error":error.localizedDescription});
-//                      }];
-}
+//                         successCallback:^(NSDictionary * _Nonnull resultDic) {
+//                             successBlock(resultDic);
+//                         } failureCallback:^(NSDictionary * _Nonnull resultDic) {
+//                             NSError *error = resultDic[@"error"];
+//                             failureBlock(@{@"error":error.localizedDescription});
+//                         }];
+//
+//}
 
 + (id<LXHBitcoinWebApi>)webApiWithType:(LXHBitcoinNetworkType)type {
     id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiSmartbit alloc] initWithType:type];

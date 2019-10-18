@@ -69,9 +69,8 @@
         NSArray *outputs = dic[@"outputs"];
         for (NSDictionary *outputDic in outputs) {
             LXHTransactionOutput *output = [LXHTransactionOutput new];
-            [output setValuesForKeysWithDictionary:outputDic];
             output.value = outputDic[@"value"];
-            output.spendTxid = outputDic[@"spend_txid"];
+            output.spendTxid = [outputDic[@"spend_txid"] isEqual:[NSNull null]] ? nil : outputDic[@"spend_txid"];
             NSArray *outputAddresses = [outputDic valueForKey:@"addresses"];
             if (outputAddresses.count == 1) //目前只处理每个输出只有一个输出地址的情况
                 output.address = outputAddresses[0];
@@ -92,8 +91,20 @@
         NSArray *transactions = dic[@"transactions"];
         if (transactions.count > 0)
             [resultTransactions addObjectsFromArray:transactions];
-        NSString *nextLink = [dic valueForKeyPath:@"transaction_paging.next_link"];
-        BOOL hasValidNextLink = nextLink && ![nextLink isEqualToString:@"<null>"] && [nextLink hasPrefix:@"https:"];
+        id nextLink = [dic valueForKeyPath:@"transaction_paging.next_link"];
+        BOOL hasValidNextLink = NO;
+        if (!nextLink)
+            hasValidNextLink = NO;
+        else {
+            if ([nextLink isEqual:[NSNull null]])
+                hasValidNextLink = NO;
+            else if ([nextLink isKindOfClass:[NSString class]]) {
+                if (![nextLink isEqualToString:@"<null>"] && [nextLink hasPrefix:@"https:"])
+                    hasValidNextLink = YES;
+                else
+                    hasValidNextLink = NO;
+            }
+        }
         if (!hasValidNextLink) { //结束返回
             successBlock(nil);
         } else { //递归调用，这时候直接用nextLink

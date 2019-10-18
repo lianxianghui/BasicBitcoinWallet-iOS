@@ -11,6 +11,7 @@
 #import "NSJSONSerialization+VLBase.h"
 #import "CoreBitcoin.h"
 #import "LXHTransactionDataManager.h"
+#import "LXHTransaction.h"
 
 @interface LXHAccountAddressSearcher ()
 @property (nonatomic) LXHAccount *account;
@@ -84,11 +85,10 @@
 
 - (NSMutableSet *)inAddressesWithTransactions:(NSArray *)transactions {
     NSMutableSet *ret = [NSMutableSet set];
-    for (NSDictionary *dic in transactions) {
-        NSArray *vins = dic[@"vin"];
-        for (NSDictionary *vin in vins) {
-            if (vin[@"addr"])
-                [ret addObject:vin[@"addr"]];
+    for (LXHTransaction *transaction in transactions) {
+        for (LXHTransactionInput *input in transaction.inputs) {
+            if (input.address)
+                [ret addObject:input.address];
         }
     }
     return ret;
@@ -96,12 +96,10 @@
 
 - (NSMutableSet *)outAddressesWithTransactions:(NSArray *)transactions {
     NSMutableSet *ret = [NSMutableSet set];
-    for (NSDictionary *dic in transactions) {
-        NSArray *vouts = dic[@"vout"];
-        for (NSDictionary *vout in vouts) {
-            NSString *address = vout[@"scriptPubKey"][@"addresses"][0];//TODO check
-            if (address)
-                [ret addObject:address];
+    for (LXHTransaction *transaction in transactions) {
+        for (LXHTransactionOutput *output in transaction.outputs) {
+            if (output.address)
+                [ret addObject:output.address];
         }
     }
     return ret;
