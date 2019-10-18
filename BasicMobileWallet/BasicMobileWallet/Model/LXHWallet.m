@@ -12,6 +12,7 @@
 #import "LXHAccountAddressSearcher.h"
 #import "CoreBitcoin.h"
 #import "LXHAccount.h"
+#import "LXHTransactionDataManager.h"
 
 //for wallet
 #define kLXHKeychainStoreMnemonicCodeWords @"MnemonicCodeWords" //AES encrypt 
@@ -87,10 +88,14 @@
         saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:currentUnusedChangeAddressIndex.stringValue forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
         saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@(netType).stringValue forKey:kLXHKeychainStoreBitcoinNetType];
         saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@"1" forKey:kLXHKeychainStoreWalletDataGenerated];
+        
         if (!saveResult) {
             [self clearData];
             failureBlock(nil);
         } else {
+            //充分利用已经请求到的数据，不用重新请求交易数据
+            NSArray *allTransactions = resultDic[@"allTransactions"];
+            [[LXHTransactionDataManager sharedInstance] setTransactionList:allTransactions];
             successBlock(resultDic);//has @"allTransactions":allTransaction
         }
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {

@@ -46,7 +46,7 @@ static NSString *const aesPassword = LXHAESPassword;
 }
 
 - (void)setTransactionList:(NSArray *)transactionList {
-    if (!transactionList)
+    if (!transactionList || transactionList.count == 0)
         return;
     [self saveTransactionListToCacheFileWithArray:transactionList];
     _transactionList = transactionList;
