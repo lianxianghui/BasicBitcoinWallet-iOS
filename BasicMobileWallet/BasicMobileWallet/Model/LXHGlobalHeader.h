@@ -21,4 +21,7 @@ typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) { //do not modify
 //encode decode statement macro
 #define LXHDecodeObjectStament(propertyName) self.propertyName = [decoder decodeObjectForKey:@#propertyName];
 #define LXHEncodeObjectStament(propertyName) [encoder encodeObject:self.propertyName forKey:@#propertyName];
+
+#define LXHDecodeIntegerTypeStament(propertyName) self.propertyName = [[decoder decodeObjectForKey:@#propertyName] integerValue];
+#define LXHEncodeIntegerStament(propertyName) [encoder encodeObject:@(self.propertyName) forKey:@#propertyName];
 #endif /* LXHGlobalHeader_h */

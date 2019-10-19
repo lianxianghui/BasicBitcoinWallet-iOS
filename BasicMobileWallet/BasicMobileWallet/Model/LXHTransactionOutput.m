@@ -18,6 +18,8 @@
     }
     LXHDecodeObjectStament(address);
     LXHDecodeObjectStament(value);
+    LXHDecodeObjectStament(lockingScript);
+    LXHDecodeIntegerTypeStament(scriptType);
     LXHDecodeObjectStament(spendTxid);
     return self;
 }
@@ -25,6 +27,8 @@
 - (void)encodeWithCoder:(NSCoder *)encoder {
     LXHEncodeObjectStament(address);
     LXHEncodeObjectStament(value);
+    LXHEncodeObjectStament(lockingScript);
+    LXHEncodeIntegerStament(scriptType);
     LXHEncodeObjectStament(spendTxid);
 }
 
