@@ -69,8 +69,8 @@
     if (!_content) {
         _content = [[UILabel alloc] init];
         _content.numberOfLines = 0;
-        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
-        if (!font) font = [UIFont systemFontOfSize:14];
+        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
+        if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.alignment = NSTextAlignmentNatural;
         paragraphStyle.maximumLineHeight = 0;
@@ -82,7 +82,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.3376471) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"71e8a069e7ce8985c3e260cdb0bde4d50d0294c42704b102f3b1ac5db0f9d2b9 ", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"OP_DUP OP_HASH160 4a74c9313284709ea893c40ce666d5159eebdab5 OP_EQUALVERIFY OP_CHECKSIG", nil) attributes:textAttributes];
         _content.attributedText = text;
     }
     return _content;

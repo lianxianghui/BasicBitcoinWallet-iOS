@@ -20,6 +20,7 @@
 @interface LXHOutputDetailViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHOutputDetailView *contentView;
 @property (nonatomic) LXHTransactionOutput *model;
+@property (nonatomic) NSMutableArray *dataForCells;
 @end
 
 @implementation LXHOutputDetailViewController
@@ -68,6 +69,7 @@
 //Actions
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)leftImageButtonTouchDown:(UIButton *)sender {
@@ -80,25 +82,26 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
+    if (!_dataForCells) {
+        _dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
             NSDictionary *dic = nil;
             dic = @{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": _model.address ?: @""};
-            [dataForCells addObject:dic];
-            dic = @{@"title":@"输出数量 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": _model.value.stringValue ?: @""};
-            [dataForCells addObject:dic];
+            [_dataForCells addObject:dic];
+            NSString *valueText = _model.value ? [NSString stringWithFormat:@"%@ BTC", _model.value] : @"";
+            dic = @{@"title":@"输出数量 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": valueText};
+            [_dataForCells addObject:dic];
             dic = @{@"content":_model.lockingScript ?: @"", @"isSelectable":@"1", @"title":@"锁定脚本", @"cellType":@"LXHLockingScriptCell"};
-            [dataForCells addObject:dic];
+            [_dataForCells addObject:dic];
             dic = @{@"title":@"脚本类型 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": [self scriptTypeText]};
-            [dataForCells addObject:dic];
+            [_dataForCells addObject:dic];
             dic = @{@"title":@"使用情况", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell",
                     @"text": [_model isUnspent] ? @"未花费" : @"已花费"};
-            [dataForCells addObject:dic];
+            [_dataForCells addObject:dic];
         }
+        
     }
-    return dataForCells;
+    return _dataForCells;
 }
 
 - (NSString *)scriptTypeText {

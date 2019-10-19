@@ -75,7 +75,7 @@
             if (outputAddresses.count == 1) //目前只处理每个输出只有一个输出地址的情况
                 output.address = outputAddresses[0];
             output.lockingScript = [outputDic valueForKeyPath:@"script_pub_key.asm"];
-            output.scriptType = [self scriptTypeByTypeString:[outputDic valueForKeyPath:@"script_pub_key.type"]];
+            output.scriptType = [self scriptTypeByTypeString:[outputDic valueForKeyPath:@"type"]];
             [model.outputs addObject:output];
         }
         [ret addObject:model];

@@ -19,6 +19,7 @@
 @interface LXHInputDetailViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHInputDetailView *contentView;
 @property (nonatomic) LXHTransactionInput *model;
+@property (nonatomic) NSMutableArray *dataForCells;
 @end
 
 @implementation LXHInputDetailViewController
@@ -66,6 +67,7 @@
 //Actions
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)leftImageButtonTouchDown:(UIButton *)sender {
@@ -78,18 +80,18 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
+    if (!_dataForCells) {
+        _dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
             NSDictionary *dic = nil;
-            dic = @{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": _model.address ?: @""};
-            [dataForCells addObject:dic];
+            NSString *valueText = _model.value ? [NSString stringWithFormat:@"%@ BTC", _model.value] : @"";
+            dic = @{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": valueText};
+            [_dataForCells addObject:dic];
             dic = @{@"title":@"输入数量 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": _model.value.stringValue ?: @""};
-            [dataForCells addObject:dic];
+            [_dataForCells addObject:dic];
         }
     }
-    return dataForCells;
+    return _dataForCells;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
