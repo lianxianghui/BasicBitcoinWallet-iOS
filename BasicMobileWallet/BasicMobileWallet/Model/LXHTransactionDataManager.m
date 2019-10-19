@@ -15,6 +15,7 @@
 
 #import "LXHNetworkRequest.h"
 #import "LXHBitcoinWebApiSmartbit.h"
+#import "BlocksKit.h"
 
 static NSString *const cacheFileName = @"LXHTransactionDataManagerCacheFile.aes";
 static NSString *const aesPassword = LXHAESPassword;
@@ -121,6 +122,17 @@ static NSString *const aesPassword = LXHAESPassword;
 + (id<LXHBitcoinWebApi>)webApiWithType:(LXHBitcoinNetworkType)type {
     id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiSmartbit alloc] initWithType:type];
     return ret;
+}
+
+//从全部交易列表里过滤出 输入地址或输出地址为address的交易
+- (NSArray *)transactionListByAddress:(NSString *)address {
+    return [self.transactionList bk_select:^BOOL(LXHTransaction *transaction) {
+        return [transaction.inputs bk_any:^BOOL(LXHTransactionInput *input) {
+            return [input.address isEqualToString:address];
+        }] || [transaction.outputs bk_any:^BOOL(LXHTransactionOutput *output) {
+            return [output.address isEqualToString:address];
+        }];
+    }];
 }
 
 

@@ -24,9 +24,19 @@
 @property (nonatomic) LXHTransactionListView *contentView;
 @property (nonatomic) NSMutableArray *dataForCells;
 
+@property (nonatomic) NSDictionary *data;
 @end
 
 @implementation LXHTransactionListViewController
+
+- (instancetype)initWithData:(NSDictionary *)data
+{
+    self = [super init];
+    if (self) {
+        _data = data;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -98,12 +108,30 @@
     sender.alpha = 1;
 }
 
+- (NSArray *)transactionList {
+    LXHTransactionListViewControllerType type;
+    if (!_data)
+        type = LXHTransactionListViewControllerTypeAllTransactions;
+    type = [_data[@"type"] integerValue];
+    if (type == LXHTransactionListViewControllerTypeAllTransactions)
+        return [LXHTransactionDataManager sharedInstance].transactionList;
+    else if (type == LXHTransactionListViewControllerTypeTransactionByAddress) {
+        NSString *address = _data[@"address"];
+        if (!address)
+            return nil;
+        else
+            return [[LXHTransactionDataManager sharedInstance] transactionListByAddress:address];
+    } else {
+        return nil;
+    }
+}
+
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
     if (!_dataForCells) {
         _dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
-            NSArray *transactionList = [LXHTransactionDataManager sharedInstance].transactionList;  
+            NSArray *transactionList = [self transactionList];
             for (LXHTransaction *transaction in transactionList) {
 //                NSDictionary *dic = @{@"value":@"0.00000001BTC", @"isSelectable":@"1", @"confirmation":@"确认数：2", @"InitializedTime":@"发起时间：2019-05-16  12：34", @"cellType":@"LXHTransactionInfoCell", @"type":@"交易类型：发送"};
                 

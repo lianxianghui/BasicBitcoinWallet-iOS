@@ -6,6 +6,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, LXHTransactionListViewControllerType) {
+    LXHTransactionListViewControllerTypeAllTransactions,
+    LXHTransactionListViewControllerTypeTransactionByAddress,
+};
+
 @interface LXHTransactionListViewController : UIViewController
 
+- (instancetype)initWithData:(NSDictionary *)data;//data has key "type"
 @end

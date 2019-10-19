@@ -29,6 +29,11 @@ NS_ASSUME_NONNULL_BEGIN
                                  addresses:(NSArray *)addresses
                               successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                               failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
+
+/**
+ 从全部交易列表里过滤出 输入地址或输出地址为address的交易
+ */
+- (NSArray *)transactionListByAddress:(NSString *)address;
 @end
 
 NS_ASSUME_NONNULL_END

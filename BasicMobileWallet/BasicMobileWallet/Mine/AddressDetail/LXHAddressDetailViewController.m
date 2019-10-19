@@ -13,6 +13,7 @@
 #import "LXHEmptyWithSeparatorCell.h"
 #import "LXHAddressDetailTextRightIconCell.h"
 #import "LXHWallet.h"
+#import "LXHTransactionListViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -250,16 +251,21 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch(indexPath.row) {
         case 6:
-            {
-            UIViewController *controller = [[LXHTransactionDetailViewController alloc] init];
+        {
+            LXHAddressType type = [_data[@"addressType"] integerValue];
+            uint32_t index = [_data[@"addressIndex"] unsignedIntValue];
+            NSString *address = [LXHWallet.mainAccount addressWithType:type index:index];
+            //显示地址相关的交易
+            NSDictionary *data = @{@"type":@(LXHTransactionListViewControllerTypeTransactionByAddress), @"address": address};
+            UIViewController *controller = [[LXHTransactionListViewController alloc] initWithData:data];
             [self.navigationController pushViewController:controller animated:YES];
-            }
+        }
             break;
         case 7:
-            {
+        {
             UIViewController *controller = [[LXHAddressViewController alloc] initWithData:_data];
             [self.navigationController pushViewController:controller animated:YES];
-            }
+        }
             break;
         default:
             break;
