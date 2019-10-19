@@ -13,6 +13,8 @@
 #import "LXHTransDetailLeftRightTextCell.h"
 #import "LXHTransaction.h"
 #import "LXHGlobalHeader.h"
+#import "LXHInputDetailViewController.h"
+#import "LXHOutputDetailViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -325,7 +327,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    //TODO 
+    id dataForRow = [self cellDataForTableView:tableView atIndexPath:indexPath];
+    id data = [dataForRow valueForKey:@"data"];
+    UIViewController *controller = nil;
+    if ([data isKindOfClass:[LXHTransactionInput class]]) {
+        LXHTransactionInput *input = (LXHTransactionInput *)data;
+        controller = [[LXHInputDetailViewController alloc] initWithInput:input];
+    } else if ([data isKindOfClass:[LXHTransactionOutput class]]) {
+        LXHTransactionOutput *output = (LXHTransactionOutput *)data;
+        controller = [[LXHOutputDetailViewController alloc] initWithOutput:output];
+    }
+    if (controller)
+        [self.navigationController pushViewController:controller animated:YES];
 }
 
 @end
