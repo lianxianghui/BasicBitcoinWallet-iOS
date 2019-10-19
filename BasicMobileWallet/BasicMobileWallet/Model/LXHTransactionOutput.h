@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSString *address;
 @property (nonatomic) NSString *value;
 @property (nonatomic) NSString *spendTxid;
+
+- (BOOL)isUnspent;
 @end
 
 NS_ASSUME_NONNULL_END

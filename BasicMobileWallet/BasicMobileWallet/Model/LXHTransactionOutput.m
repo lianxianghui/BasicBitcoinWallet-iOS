@@ -28,4 +28,8 @@
     LXHEncodeObjectStament(spendTxid);
 }
 
+- (BOOL)isUnspent {
+    return _spendTxid == nil || [_spendTxid isEqual:[NSNull null]];
+}
+
 @end

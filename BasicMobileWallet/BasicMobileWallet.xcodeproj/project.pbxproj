@@ -1725,21 +1725,17 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-BasicMobileWallet/Pods-BasicMobileWallet-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-BasicMobileWallet/Pods-BasicMobileWallet-resources.sh",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BasicMobileWallet/Pods-BasicMobileWallet-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BasicMobileWallet/Pods-BasicMobileWallet-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		775A75452916FB2BCCAD2461 /* [CP] Check Pods Manifest.lock */ = {

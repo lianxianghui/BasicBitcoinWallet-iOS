@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (LXHTransactionSendOrReceiveType)sendOrReceiveType;
 - (NSDecimalNumber *)sentValueSumFromLocalAddress;
 - (NSDecimalNumber *)receivedValueSumFromLocalAddress;
+- (NSArray<LXHTransactionOutput *> *)utxos;//Unspent Transaction Outputs
 @end
 
 NS_ASSUME_NONNULL_END

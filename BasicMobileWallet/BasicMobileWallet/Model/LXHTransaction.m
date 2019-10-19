@@ -9,6 +9,7 @@
 #import "LXHTransaction.h"
 #import "LXHWallet.h"
 #import "LXHGlobalHeader.h"
+#import "BlocksKit.h"
 
 @interface LXHTransaction ()
 @property (nonatomic) NSDecimalNumber *sentValueSumFromLocalAddress;
@@ -125,6 +126,12 @@
     if (!_outputs)
         _outputs = [NSMutableArray array];
     return _outputs;
+}
+
+- (NSArray<LXHTransactionOutput *> *)utxos {
+    return [self.outputs bk_select:^BOOL(LXHTransactionOutput *obj) {
+        return [obj isUnspent];
+    }];
 }
 
 @end
