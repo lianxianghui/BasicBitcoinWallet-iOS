@@ -45,5 +45,8 @@
     return string;
 }
 
+- (NSDecimalNumber *)decimalValue {
+    return [NSDecimalNumber decimalNumberWithString:self];
+}
 
 @end

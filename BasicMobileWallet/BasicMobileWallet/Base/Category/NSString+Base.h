@@ -14,4 +14,5 @@
 - (NSString *)firstLetterCapitalized;
 - (NSString *)firstLetterLowercase;
 - (NSString *)md5;
+- (NSDecimalNumber *)decimalValue;
 @end

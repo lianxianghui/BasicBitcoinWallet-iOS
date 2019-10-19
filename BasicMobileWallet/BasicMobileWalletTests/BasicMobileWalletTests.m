@@ -10,6 +10,7 @@
 #import "LXHWallet.h"
 #import "LXHAccountAddressSearcher.h"
 #import "LXHBitcoinWebApiSmartbit.h"
+#import "LXHTransactionDataManager.h"
 
 @interface BasicMobileWalletTests : XCTestCase
 @property (nonatomic) NSArray *words;
@@ -49,6 +50,10 @@
 //    LXHWallet *wallet = [[LXHWallet alloc] initWithRootSeed:rootSeed currentNetworkType:LXHBitcoinNetworkTypeTestnet];
 //    NSArray *address = [wallet receivingAddressesFromZeroToIndex:19];
 //    NSLog(@"%@", address);
+}
+
+- (void)testClear {
+    [[LXHTransactionDataManager sharedInstance] clearCachedData];
 }
 
 - (void)testWalletAddressSearcher {

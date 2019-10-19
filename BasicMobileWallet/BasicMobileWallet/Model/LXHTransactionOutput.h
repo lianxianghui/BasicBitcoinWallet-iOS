@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHTransactionOutput : NSObject
 @property (nonatomic) NSString *address;
-@property (nonatomic) NSString *value;
+@property (nonatomic) NSDecimalNumber *value;
 @property (nonatomic) NSString *spendTxid;
 
 - (BOOL)isUnspent;

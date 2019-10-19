@@ -74,11 +74,10 @@
             return sum;
         if (![usedAndCurrentAddresses containsObject:address])
             return sum;
-        NSString *value = input.value;
+        NSDecimalNumber *value = input.value;
         if (!value)
             return sum;
-        NSDecimalNumber *decimalValue = [NSDecimalNumber decimalNumberWithString:value];
-        sum = [sum decimalNumberByAdding:decimalValue];
+        sum = [sum decimalNumberByAdding:value];
         return sum;
     }];
     return _sentValueSumFromLocalAddress;
@@ -96,11 +95,10 @@
             return sum;
         if (![usedAndCurrentAddresses containsObject:address])
             return sum;
-        NSString *value = output.value;
+        NSDecimalNumber *value = output.value;
         if (!value)
             return sum;
-        NSDecimalNumber *decimalValue = [NSDecimalNumber decimalNumberWithString:value];
-        sum = [sum decimalNumberByAdding:decimalValue];
+        sum = [sum decimalNumberByAdding:value];
         return sum;
     }];
     return _receivedValueSumFromLocalAddress;
