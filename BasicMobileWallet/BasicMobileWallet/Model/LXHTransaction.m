@@ -66,54 +66,44 @@
 - (NSDecimalNumber *)sentValueSumFromLocalAddress {
     if (_sentValueSumFromLocalAddress)
         return _sentValueSumFromLocalAddress;
-    NSArray *inputs = self.inputs;
-    NSDecimalNumber *sum = [NSDecimalNumber zero];
     NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
-    for (LXHTransactionInput *input in inputs) {
+    //用Reduce累加
+    _sentValueSumFromLocalAddress = [self.inputs bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionInput *input) {
         NSString *address = input.address;
         if (!address) //不应该发生
-            continue;
+            return sum;
         if (![usedAndCurrentAddresses containsObject:address])
-            continue;
+            return sum;
         NSString *value = input.value;
         if (!value)
-            continue;
-        value = [NSString stringWithFormat:@"%@", value];
+            return sum;
         NSDecimalNumber *decimalValue = [NSDecimalNumber decimalNumberWithString:value];
-        if (!sum) 
-            sum = decimalValue;
-        else
-            sum = [sum decimalNumberByAdding:decimalValue];
-    }
-    _sentValueSumFromLocalAddress = sum;
-    return sum;
+        sum = [sum decimalNumberByAdding:decimalValue];
+        return sum;
+    }];
+    return _sentValueSumFromLocalAddress;
 }
 
 //当前钱包收到的总值
 - (NSDecimalNumber *)receivedValueSumFromLocalAddress {
     if (_receivedValueSumFromLocalAddress)
         return _receivedValueSumFromLocalAddress;
-    NSArray *outputs = self.outputs;
-    NSDecimalNumber *sum = [NSDecimalNumber zero];
     NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
-    for (LXHTransactionOutput *output in outputs) {
-        NSString *addr = output.address;
-        if (!addr)
-            continue;
-        if (![usedAndCurrentAddresses containsObject:addr])
-            continue;
+    //用Reduce累加
+    _receivedValueSumFromLocalAddress = [self.outputs bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionOutput *output) {
+        NSString *address = output.address;
+        if (!address) //不应该发生
+            return sum;
+        if (![usedAndCurrentAddresses containsObject:address])
+            return sum;
         NSString *value = output.value;
         if (!value)
-            continue;
-        value = [NSString stringWithFormat:@"%@", value];
+            return sum;
         NSDecimalNumber *decimalValue = [NSDecimalNumber decimalNumberWithString:value];
-        if (!sum) 
-            sum = decimalValue;
-        else
-            sum = [sum decimalNumberByAdding:decimalValue];
-    }
-    _receivedValueSumFromLocalAddress = sum;
-    return sum;
+        sum = [sum decimalNumberByAdding:decimalValue];
+        return sum;
+    }];
+    return _receivedValueSumFromLocalAddress;
 }
 
 - (NSMutableArray<LXHTransactionInput *> *)inputs {
