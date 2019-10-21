@@ -25,6 +25,7 @@
 @property (nonatomic) NSMutableArray *cellDataListForListView;
 @property (nonatomic) NSString *observerToken;
 @property (nonatomic) NSDictionary *data;
+@property (nonatomic) NSMutableArray *selectedUtxos;
 @end
 
 @implementation LXHSelectInputViewController
@@ -34,8 +35,18 @@
     self = [super init];
     if (self) {
         _data = data;
+        
     }
     return self;
+}
+
+- (NSMutableArray *)selectedUtxos {
+    if (!_selectedUtxos) {
+        _selectedUtxos = [_data[@"selectedUtxos"] mutableCopy];
+        if (!_selectedUtxos)
+            _selectedUtxos = [NSMutableArray array];
+    }
+    return _selectedUtxos;
 }
 
 - (void)dealloc
@@ -60,6 +71,7 @@
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
     [self setDelegates];
+    [self setViewProperties];
 }
 
 - (void)swipeView:(id)sender {
@@ -82,9 +94,13 @@
 }
 
 - (void)setViewProperties {
-//    NSString *balanceValueText = [NSString stringWithFormat:@"%@ BTC", [[LXHTransactionDataManager sharedInstance] balance]];
-//    [self.contentView.value updateAttributedTextString:balanceValueText];
+    [self refreshValueText];
+}
 
+- (void)refreshValueText {
+    NSDecimalNumber *seletedUtxosValueSum = [LXHTransactionOutput valueSumOfOutputs:self.selectedUtxos];
+    NSString *text = [NSString stringWithFormat:@"%@ BTC", seletedUtxosValueSum];
+    [self.contentView.value updateAttributedTextString:text];
 }
 
 - (void)addObservers {
@@ -136,7 +152,7 @@
     if (index >= self.cellDataListForListView.count)
         return;
     NSDictionary *cellData = self.cellDataListForListView[index];
-    LXHTransactionOutput *output = cellData[@"data"];
+    LXHTransactionOutput *output = cellData[@"model"];
     if (!output)
         return;
     UIViewController *controller = [[LXHOutputDetailViewController alloc] initWithOutput:output];
@@ -194,7 +210,8 @@
                 dic[@"btcValue"] = valueText;
                 dic[@"addressText"] = utxo.address ?: @"";
                 dic[@"timeValue"] = transactionTime;
-                dic[@"data"] = utxo;
+                dic[@"model"] = utxo;
+                dic[@"isChecked"] = @([self.selectedUtxos containsObject:utxo]);
                 [_cellDataListForListView addObject:dic];
             }
         }
@@ -266,9 +283,6 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     UIView *view = [cell.contentView viewWithTag:tag];
-    if ([cellType isEqualToString:@"LXHTopLineCell"]) {
-        LXHTopLineCell *cellView = (LXHTopLineCell *)view;
-    }
     if ([cellType isEqualToString:@"LXHSelectInputCell"]) {
         LXHSelectInputCell *cellView = (LXHSelectInputCell *)view;
         NSString *btcValue = [dataForRow valueForKey:@"btcValue"];
@@ -301,6 +315,8 @@
         NSString *checkedImageImageName = [dataForRow valueForKey:@"checkedImage"];
         if (checkedImageImageName)
             cellView.checkedImage.image = [UIImage imageNamed:checkedImageImageName];
+        BOOL isChecked = [[dataForRow valueForKey:@"isChecked"] boolValue];
+        cellView.checkedImage.hidden = !isChecked;
         cellView.button.tag = indexPath.row;
         [cellView.button addTarget:self action:@selector(LXHSelectInputCellButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -330,18 +346,26 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch(indexPath.row) {
-        case 0:
-            {
-            }
-            break;
-        case 1:
-            {
-            }
-            break;
-        default:
-            break;
-    }
+    NSMutableDictionary *cellData = [self cellDataForTableView:tableView atIndexPath:indexPath];
+    NSString *cellType = cellData[@"cellType"];
+    if (![cellType isEqualToString:@"LXHSelectInputCell"])
+        return;
+    LXHTransactionOutput *output = cellData[@"model"];
+    BOOL isChecked =  [cellData[@"isChecked"] boolValue];
+    isChecked = !isChecked;
+    cellData[@"isChecked"] = @(isChecked);
+    if (isChecked)
+        [self.selectedUtxos addObject:output];
+    else
+        [self.selectedUtxos removeObject:output];
+    [self reloadListView];
+    [self refreshValueText];
+    
+//    NSInteger tag = [self tableView:tableView viewTagAtIndexPath:indexPath];
+//    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+//    UIView *view = [cell.contentView viewWithTag:tag];
+//    LXHSelectInputCell *cellView = (LXHSelectInputCell *)view;
+//    cellView.checkedImage.hidden = !isChecked;
 }
 
 @end

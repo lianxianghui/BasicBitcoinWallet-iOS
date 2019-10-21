@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, LXHLockingScriptType) {
 
 - (BOOL)isUnspent;
 
++ (NSDecimalNumber *)valueSumOfOutputs:(NSArray<LXHTransactionOutput *> *)outputs;
 @end
 
 NS_ASSUME_NONNULL_END

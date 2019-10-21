@@ -153,6 +153,7 @@ static NSString *const aesPassword = LXHAESPassword;
     return [utxos bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionOutput *utxo) {
         return [sum decimalNumberByAdding:utxo.value];
     }];
+    return [LXHTransactionOutput valueSumOfOutputs:utxos];
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "LXHTransactionOutput.h"
 #import "LXHGlobalHeader.h"
+#import "BlocksKit.h"
 
 @implementation LXHTransactionOutput
 
@@ -45,6 +46,12 @@
         return NO;
     LXHTransactionOutput *output = (LXHTransactionOutput *)object;
     return [self.lockingScript isEqualToString:output.lockingScript];
+}
+
++ (NSDecimalNumber *)valueSumOfOutputs:(NSArray<LXHTransactionOutput *> *)outputs {
+    return [outputs bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionOutput *utxo) {
+        return [sum decimalNumberByAdding:utxo.value];
+    }];
 }
 
 @end
