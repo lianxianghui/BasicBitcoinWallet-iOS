@@ -24,9 +24,19 @@
 @property (nonatomic) LXHSelectInputView *contentView;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
 @property (nonatomic) NSString *observerToken;
+@property (nonatomic) NSDictionary *data;
 @end
 
 @implementation LXHSelectInputViewController
+
+- (instancetype)initWithData:(NSDictionary *)data
+{
+    self = [super init];
+    if (self) {
+        _data = data;
+    }
+    return self;
+}
 
 - (void)dealloc
 {
@@ -72,8 +82,8 @@
 }
 
 - (void)setViewProperties {
-    NSString *balanceValueText = [NSString stringWithFormat:@"%@ BTC", [[LXHTransactionDataManager sharedInstance] balance]];
-    [self.contentView.value updateAttributedTextString:balanceValueText];
+//    NSString *balanceValueText = [NSString stringWithFormat:@"%@ BTC", [[LXHTransactionDataManager sharedInstance] balance]];
+//    [self.contentView.value updateAttributedTextString:balanceValueText];
 
 }
 
@@ -136,10 +146,21 @@
 
 //按value从大到小排序
 - (NSMutableArray<LXHTransactionOutput *> *)utxos {
-    NSMutableArray<LXHTransactionOutput *> *ret = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
-    [ret sortUsingComparator:^NSComparisonResult(LXHTransactionOutput *  _Nonnull obj1, LXHTransactionOutput *  _Nonnull obj2) {
+    NSMutableArray<LXHTransactionOutput *> *utxos = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
+    [utxos sortUsingComparator:^NSComparisonResult(LXHTransactionOutput *  _Nonnull obj1, LXHTransactionOutput *  _Nonnull obj2) {
         return -[obj1.value compare:obj2.value];
     }];
+    
+    NSMutableArray *ret = nil;
+    NSArray *selectedUtxos = _data[@"selectedUtxos"];
+    if (selectedUtxos) { //把selectedUtxos放前面
+        ret = [NSMutableArray arrayWithCapacity:utxos.count];
+        [utxos removeObjectsInArray:selectedUtxos];
+        [ret addObjectsFromArray:selectedUtxos];
+        [ret addObjectsFromArray:utxos];
+    } else {
+        ret = utxos;
+    }
     return ret;
 }
 

@@ -38,4 +38,13 @@
     return _spendTxid == nil || [_spendTxid isEqual:[NSNull null]];
 }
 
+- (BOOL)isEqual:(id)object {
+    if (object == self)
+        return YES;
+    if (![object isMemberOfClass:[LXHTransactionOutput class]])
+        return NO;
+    LXHTransactionOutput *output = (LXHTransactionOutput *)object;
+    return [self.lockingScript isEqualToString:output.lockingScript];
+}
+
 @end

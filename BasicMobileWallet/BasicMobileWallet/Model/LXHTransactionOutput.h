@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, LXHLockingScriptType) {
 @property (nonatomic) NSString *txid;//所在交易的Id
 
 - (BOOL)isUnspent;
+
 @end
 
 NS_ASSUME_NONNULL_END
