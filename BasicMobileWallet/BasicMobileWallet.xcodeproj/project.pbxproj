@@ -986,13 +986,13 @@
 			isa = PBXGroup;
 			children = (
 				8C93345E235DB14C00FBF238 /* LXHSelectInputView.h */,
-				8C93345F235DB14C00FBF238 /* LXHSelectInputViewController.h */,
-				8C933460235DB14C00FBF238 /* LXHSelectInputCell.h */,
-				8C933461235DB14C00FBF238 /* LXHTopLineCell.m */,
-				8C933462235DB14C00FBF238 /* LXHSelectInputViewController.m */,
 				8C933463235DB14C00FBF238 /* LXHSelectInputView.m */,
-				8C933464235DB14C00FBF238 /* LXHTopLineCell.h */,
+				8C933460235DB14C00FBF238 /* LXHSelectInputCell.h */,
 				8C933465235DB14C00FBF238 /* LXHSelectInputCell.m */,
+				8C933461235DB14C00FBF238 /* LXHTopLineCell.m */,
+				8C933464235DB14C00FBF238 /* LXHTopLineCell.h */,
+				8C93345F235DB14C00FBF238 /* LXHSelectInputViewController.h */,
+				8C933462235DB14C00FBF238 /* LXHSelectInputViewController.m */,
 			);
 			path = SelectInput;
 			sourceTree = "<group>";
@@ -1780,12 +1780,12 @@
 			children = (
 				8C9332C9235D816200FBF238 /* LXHOutputDetailTextRightIconCell.h */,
 				8C9332CA235D816200FBF238 /* LXHOutputDetailTextRightIconCell.m */,
-				8CF405ED235B0456008639F5 /* LXHOutputDetailViewController.h */,
-				8CF405F3235B0456008639F5 /* LXHOutputDetailViewController.m */,
 				8CF405F2235B0456008639F5 /* LXHOutputDetailView.h */,
 				8CF405EF235B0456008639F5 /* LXHOutputDetailView.m */,
 				8CF405F4235B0456008639F5 /* LXHLockingScriptCell.h */,
 				8CF405F0235B0456008639F5 /* LXHLockingScriptCell.m */,
+				8CF405ED235B0456008639F5 /* LXHOutputDetailViewController.h */,
+				8CF405F3235B0456008639F5 /* LXHOutputDetailViewController.m */,
 			);
 			path = OutputDetail;
 			sourceTree = "<group>";

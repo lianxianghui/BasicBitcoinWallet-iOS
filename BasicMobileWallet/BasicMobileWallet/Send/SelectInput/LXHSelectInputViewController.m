@@ -7,9 +7,12 @@
 #import "LXHSelectInputViewController.h"
 #import "Masonry.h"
 #import "LXHSelectInputView.h"
-#import "LXHTransactionDetailViewController.h"
+#import "LXHOutputDetailViewController.h"
 #import "LXHTopLineCell.h"
 #import "LXHSelectInputCell.h"
+#import "LXHTransactionDataManager.h"
+#import "UILabel+LXHText.h"
+#import "BlocksKit.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -19,10 +22,17 @@
     
 @interface LXHSelectInputViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSelectInputView *contentView;
-
+@property (nonatomic) NSMutableArray *cellDataListForListView;
+@property (nonatomic) NSString *observerToken;
 @end
 
 @implementation LXHSelectInputViewController
+
+- (void)dealloc
+{
+    if (_observerToken)
+        [[LXHTransactionDataManager sharedInstance] bk_removeObserversWithIdentifier:_observerToken];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,6 +71,25 @@
     self.contentView.listView.delegate = self;
 }
 
+- (void)setViewProperties {
+    NSString *balanceValueText = [NSString stringWithFormat:@"%@ BTC", [[LXHTransactionDataManager sharedInstance] balance]];
+    [self.contentView.value updateAttributedTextString:balanceValueText];
+
+}
+
+- (void)addObservers {
+    //观察transactionList, 有变化时刷新列表
+    __weak __typeof(self)weakSelf = self;
+    _observerToken =  [[LXHTransactionDataManager sharedInstance] bk_addObserverForKeyPath:@"transactionList" task:^(id target) {
+        [weakSelf reloadListView];
+    }];
+}
+
+- (void)reloadListView {
+    self.cellDataListForListView = nil;
+    [self.contentView.listView reloadData];
+}
+
 //Actions
 - (void)buttonClicked:(UIButton *)sender {
 }
@@ -93,26 +122,65 @@
 }
 
 - (void)LXHSelectInputCellButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHTransactionDetailViewController alloc] init];
+    NSUInteger index = (NSUInteger)sender.tag;
+    if (index >= self.cellDataListForListView.count)
+        return;
+    NSDictionary *cellData = self.cellDataListForListView[index];
+    LXHTransactionOutput *output = cellData[@"data"];
+    if (!output)
+        return;
+    UIViewController *controller = [[LXHOutputDetailViewController alloc] initWithOutput:output];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
+//按value从大到小排序
+- (NSMutableArray<LXHTransactionOutput *> *)utxos {
+    NSMutableArray<LXHTransactionOutput *> *ret = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
+    [ret sortUsingComparator:^NSComparisonResult(LXHTransactionOutput *  _Nonnull obj1, LXHTransactionOutput *  _Nonnull obj2) {
+        return -[obj1.value compare:obj2.value];
+    }];
+    return ret;
+}
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
+    if (tableView == self.contentView.listView) {
+        if (!_cellDataListForListView) {
+            _cellDataListForListView = [NSMutableArray array];
             NSDictionary *dic = nil;
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"circleImage":@"check_circle", @"cellType":@"LXHSelectInputCell", @"time":@"交易时间:", @"btcValue":@"0.00000004 BTC", @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"checkedImage":@"checked_circle", @"isSelectable":@"1", @"timeValue":@"2019-09-01 12:36"};
-            [dataForCells addObject:dic];
+            [_cellDataListForListView addObject:dic];
+            for (LXHTransactionOutput *utxo in [self utxos]) {
+                NSString *valueText = [NSString stringWithFormat:@"%@ BTC", utxo.value];
+                
+                static NSDateFormatter *formatter = nil;
+                if (!formatter) {
+                    formatter = [[NSDateFormatter alloc] init];
+                    formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+                }
+                LXHTransaction *transaction = [[LXHTransactionDataManager sharedInstance] transactionByTxid:utxo.txid];
+                NSInteger time = [transaction.time integerValue];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
+                NSString *transactionTime = [formatter stringFromDate:date];
+                NSMutableDictionary *dic = @{@"circleImage":@"check_circle",
+                                             @"cellType":@"LXHSelectInputCell",
+                                             @"time": NSLocalizedString(@"交易时间:", nil),
+                                             @"btcValue":@"0.00000004 BTC",
+                                             @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ",
+                                             @"checkedImage":@"checked_circle", @"isSelectable":@"1",
+                                             @"timeValue":@"2019-09-01 12:36"}.mutableCopy;
+                dic[@"btcValue"] = valueText;
+                dic[@"addressText"] = utxo.address ?: @"";
+                dic[@"timeValue"] = transactionTime;
+                dic[@"data"] = utxo;
+                [_cellDataListForListView addObject:dic];
+            }
         }
+        return _cellDataListForListView;
+    } else {
+        return nil;
     }
-    return dataForCells;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -122,7 +190,6 @@
     else
         return nil;
 }
-
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
