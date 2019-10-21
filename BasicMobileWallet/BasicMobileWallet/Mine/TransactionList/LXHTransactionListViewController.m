@@ -13,6 +13,7 @@
 #import "LXHTransaction.h"
 #import "LXHGlobalHeader.h"
 #import "MJRefresh.h"
+#import "BlocksKit.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -23,8 +24,8 @@
 @interface LXHTransactionListViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHTransactionListView *contentView;
 @property (nonatomic) NSMutableArray *dataForCells;
-
 @property (nonatomic) NSDictionary *data;
+@property (nonatomic) NSString *observerToken;
 @end
 
 @implementation LXHTransactionListViewController
@@ -36,6 +37,12 @@
         _data = data;
     }
     return self;
+}
+
+- (void)dealloc
+{
+    if (_observerToken)
+        [[LXHTransactionDataManager sharedInstance] bk_removeObserversWithIdentifier:_observerToken];
 }
 
 - (void)viewDidLoad {
@@ -52,28 +59,32 @@
     }];
     
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(listViewRefresh)];
-    // 设置自动切换透明度(在导航栏下面自动隐藏)
- //   header.automaticallyChangeAlpha = YES;
-//    // 隐藏时间
-//    header.lastUpdatedTimeLabel.hidden = YES;
-    // 设置header
     self.contentView.listView.mj_header = header;
     
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
     [self setDelegates];
+    [self addObservers];
 }
 
 - (void)swipeView:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)addObservers {
+    //观察transactionList, 有变化时刷新列表
+    __weak __typeof(self)weakSelf = self;
+    _observerToken =  [[LXHTransactionDataManager sharedInstance] bk_addObserverForKeyPath:@"transactionList" task:^(id target) {
+        [weakSelf reloadListView];
+    }];
+}
+
 - (void)listViewRefresh {
     [[LXHTransactionDataManager sharedInstance] requestDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
         [self.contentView.listView.mj_header endRefreshing];
-        [self reloadListView];
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        [self.contentView.listView.mj_header endRefreshing];
         //TODO 显示提示
     }];
 }

@@ -12,6 +12,8 @@
 #import "LXHBalanceLeftRightTextCell.h"
 #import "LXHTransactionDataManager.h"
 #import "UILabel+LXHText.h"
+#import "BlocksKit.h"
+#import "MJRefresh.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -22,9 +24,16 @@
 @interface LXHBalanceViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHBalanceView *contentView;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
+@property (nonatomic) NSString *observerToken;
 @end
 
 @implementation LXHBalanceViewController
+
+- (void)dealloc
+{
+    if (_observerToken)
+        [[LXHTransactionDataManager sharedInstance] bk_removeObserversWithIdentifier:_observerToken];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,6 +50,7 @@
     [self addActions];
     [self setDelegates];
     [self setViewProperties];
+    [self addObservers];
 }
 
 - (void)addActions {
@@ -54,6 +64,31 @@
 - (void)setViewProperties {
     NSString *balanceValueText = [NSString stringWithFormat:@"%@ BTC", [[LXHTransactionDataManager sharedInstance] balance]];
     [self.contentView.balanceValue updateAttributedTextString:balanceValueText];
+    
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(listViewRefresh)];
+    self.contentView.listView.mj_header = header;
+}
+
+- (void)addObservers {
+    //观察transactionList, 有变化时刷新列表
+    __weak __typeof(self)weakSelf = self;
+   _observerToken =  [[LXHTransactionDataManager sharedInstance] bk_addObserverForKeyPath:@"transactionList" task:^(id target) {
+       [weakSelf reloadListView];
+    }];
+}
+
+- (void)listViewRefresh {
+    [[LXHTransactionDataManager sharedInstance] requestDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+        [self.contentView.listView.mj_header endRefreshing];
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        [self.contentView.listView.mj_header endRefreshing];
+        //TODO 显示提示
+    }];
+}
+
+- (void)reloadListView {
+    self.cellDataListForListView = nil;
+    [self.contentView.listView reloadData];
 }
 
 //按value从大到小排序
