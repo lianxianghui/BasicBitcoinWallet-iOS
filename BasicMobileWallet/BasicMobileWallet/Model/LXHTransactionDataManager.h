@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "LXHWallet.h"
+#import "LXHTransaction.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -34,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
  从全部交易列表里过滤出 输入地址或输出地址为address的交易
  */
 - (NSArray *)transactionListByAddress:(NSString *)address;
+- (LXHTransaction *)transactionByTxid:(NSString *)txid;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -135,6 +135,11 @@ static NSString *const aesPassword = LXHAESPassword;
     }];
 }
 
+- (LXHTransaction *)transactionByTxid:(NSString *)txid {
+    return [self.transactionList bk_match:^BOOL(LXHTransaction *transaction) {
+        return [transaction.txid isEqualToString:txid];
+    }];
+}
 
 @end
 

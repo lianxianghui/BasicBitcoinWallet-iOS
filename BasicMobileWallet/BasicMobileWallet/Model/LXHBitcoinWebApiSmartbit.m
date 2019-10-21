@@ -76,6 +76,7 @@
                 output.address = outputAddresses[0];
             output.lockingScript = [outputDic valueForKeyPath:@"script_pub_key.asm"];
             output.scriptType = [self scriptTypeByTypeString:[outputDic valueForKeyPath:@"type"]];
+            output.txid = model.txid;
             [model.outputs addObject:output];
         }
         [ret addObject:model];

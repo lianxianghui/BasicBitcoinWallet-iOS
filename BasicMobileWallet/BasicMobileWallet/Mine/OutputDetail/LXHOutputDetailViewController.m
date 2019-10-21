@@ -1,15 +1,19 @@
 // LXHOutputDetailViewController.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-19
+//  Created by lianxianghui on 19-10-21
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import "LXHOutputDetailViewController.h"
 #import "Masonry.h"
 #import "LXHOutputDetailView.h"
+#import "LXHTransactionDetailViewController.h"
 #import "LXHAddressDetailCell.h"
 #import "LXHLockingScriptCell.h"
+#import "LXHEmptyWithSeparatorCell.h"
+#import "LXHOutputDetailTextRightIconCell.h"
 #import "LXHTransactionOutput.h"
+#import "LXHTransactionDataManager.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -21,10 +25,10 @@
 @property (nonatomic) LXHOutputDetailView *contentView;
 @property (nonatomic) LXHTransactionOutput *model;
 @property (nonatomic) NSMutableArray *dataForCells;
+
 @end
 
 @implementation LXHOutputDetailViewController
-
 - (instancetype)initWithOutput:(LXHTransactionOutput *)output
 {
     self = [super init];
@@ -33,6 +37,7 @@
     }
     return self;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColorFromRGBA(0xFAFAFAFF);
@@ -98,8 +103,11 @@
             dic = @{@"title":@"使用情况", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell",
                     @"text": [_model isUnspent] ? @"未花费" : @"已花费"};
             [_dataForCells addObject:dic];
+            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
+            [_dataForCells addObject:dic];
+            dic = @{@"text":@"所在交易", @"isSelectable":@"1", @"cellType":@"LXHOutputDetailTextRightIconCell"};
+            [_dataForCells addObject:dic];
         }
-        
     }
     return _dataForCells;
 }
@@ -147,6 +155,10 @@
         return 100;
     if ([cellType isEqualToString:@"LXHLockingScriptCell"])
         return 101;
+    if ([cellType isEqualToString:@"LXHEmptyWithSeparatorCell"])
+        return 102;
+    if ([cellType isEqualToString:@"LXHOutputDetailTextRightIconCell"])
+        return 103;
     return -1;
 }
 
@@ -214,6 +226,15 @@
         [titleAttributedString.mutableString setString:title];
         cellView.title.attributedText = titleAttributedString;
     }
+    if ([cellType isEqualToString:@"LXHOutputDetailTextRightIconCell"]) {
+        LXHOutputDetailTextRightIconCell *cellView = (LXHOutputDetailTextRightIconCell *)view;
+        NSString *text = [dataForRow valueForKey:@"text"];
+        if (!text)
+            text = @"";
+        NSMutableAttributedString *textAttributedString = [cellView.text.attributedText mutableCopy];
+        [textAttributedString.mutableString setString:text];
+        cellView.text.attributedText = textAttributedString;
+    }
     return cell;
 }
 
@@ -224,6 +245,10 @@
             return 47;
         if ([cellType isEqualToString:@"LXHLockingScriptCell"])
             return 60;
+        if ([cellType isEqualToString:@"LXHEmptyWithSeparatorCell"])
+            return 18;
+        if ([cellType isEqualToString:@"LXHOutputDetailTextRightIconCell"])
+            return 47;
     }
     return 0;
 }
@@ -240,6 +265,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    switch(indexPath.row) {
+        case 6:
+        {
+            if (!_model.txid)
+                return;
+            LXHTransaction *transaction = [[LXHTransactionDataManager sharedInstance] transactionByTxid:_model.txid];
+            if (!transaction)
+                return;
+            UIViewController *controller = [[LXHTransactionDetailViewController alloc] initWithModel:transaction];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 @end

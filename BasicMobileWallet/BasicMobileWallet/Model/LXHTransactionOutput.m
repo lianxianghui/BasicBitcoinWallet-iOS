@@ -21,6 +21,7 @@
     LXHDecodeObjectStament(lockingScript);
     LXHDecodeIntegerTypeStament(scriptType);
     LXHDecodeObjectStament(spendTxid);
+    LXHDecodeObjectStament(txid);
     return self;
 }
 
@@ -30,6 +31,7 @@
     LXHEncodeObjectStament(lockingScript);
     LXHEncodeIntegerStament(scriptType);
     LXHEncodeObjectStament(spendTxid);
+    LXHEncodeObjectStament(txid);
 }
 
 - (BOOL)isUnspent {

@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, LXHLockingScriptType) {
 //    LXHLockingScriptTypeP2WSH, //Pay-to-Witness-Script-Hash (P2WSH)
 };
 
+@class LXHTransaction;
 @interface LXHTransactionOutput : NSObject
 @property (nonatomic) NSString *address;
 @property (nonatomic) NSDecimalNumber *value;
@@ -33,6 +34,9 @@ typedef NS_ENUM(NSInteger, LXHLockingScriptType) {
 @property (nonatomic) LXHLockingScriptType scriptType;
 
 @property (nonatomic) NSString *spendTxid;
+
+@property (nonatomic) NSString *txid;//所在交易的Id
+
 - (BOOL)isUnspent;
 @end
 
