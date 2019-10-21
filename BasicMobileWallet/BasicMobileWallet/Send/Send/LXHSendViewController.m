@@ -15,6 +15,8 @@
 #import "LXHSelectionCell.h"
 #import "LXHInputOutputCell.h"
 #import "LXHFeeCell.h"
+#import "LXHTransactionInput.h"
+#import "LXHTransactionOutput.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -24,10 +26,21 @@
     
 @interface LXHSendViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSendView *contentView;
-
+@property (nonatomic) NSMutableDictionary *inputDataDic;
+@property (nonatomic) NSMutableDictionary *outputDataDic;
 @end
 
 @implementation LXHSendViewController
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _inputDataDic = [NSMutableDictionary dictionary];
+        _outputDataDic = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -173,9 +186,6 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     UIView *view = [cell.contentView viewWithTag:tag];
-    if ([cellType isEqualToString:@"LXHEmptyCell"]) {
-        LXHEmptyCell *cellView = (LXHEmptyCell *)view;
-    }
     if ([cellType isEqualToString:@"LXHSelectionCell"]) {
         LXHSelectionCell *cellView = (LXHSelectionCell *)view;
         NSString *text = [dataForRow valueForKey:@"text"];
@@ -259,7 +269,8 @@
             break;
         case 1:
             {
-            UIViewController *controller = [[LXHSelectInputViewController alloc] init];
+            
+            UIViewController *controller = [[LXHSelectInputViewController alloc] initWithData:self.inputDataDic];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
             }

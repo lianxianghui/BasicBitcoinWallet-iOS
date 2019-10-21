@@ -24,18 +24,17 @@
 @property (nonatomic) LXHSelectInputView *contentView;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
 @property (nonatomic) NSString *observerToken;
-@property (nonatomic) NSDictionary *data;
+@property (nonatomic) NSMutableDictionary *data;
 @property (nonatomic) NSMutableArray *selectedUtxos;
 @end
 
 @implementation LXHSelectInputViewController
 
-- (instancetype)initWithData:(NSDictionary *)data
+- (instancetype)initWithData:(NSMutableDictionary *)data
 {
     self = [super init];
     if (self) {
         _data = data;
-        
     }
     return self;
 }
@@ -123,6 +122,7 @@
 
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    _data[@"selectedUtxos"] = self.selectedUtxos;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
