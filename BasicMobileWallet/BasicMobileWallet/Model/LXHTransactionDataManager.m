@@ -141,10 +141,17 @@ static NSString *const aesPassword = LXHAESPassword;
     }];
 }
 
-- (NSArray<LXHTransactionOutput *> *)utxosOfAllTransactions {
+- (NSMutableArray<LXHTransactionOutput *> *)utxosOfAllTransactions {
     return [self.transactionList bk_reduce:[NSMutableArray array] withBlock:^id(NSMutableArray *utxos, LXHTransaction *transaction) {
         [utxos addObjectsFromArray:[transaction utxos]];
         return utxos;
+    }];
+}
+
+- (NSDecimalNumber *)balance {
+    NSArray *utxos = [self utxosOfAllTransactions];
+    return [utxos bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionOutput *utxo) {
+        return [sum decimalNumberByAdding:utxo.value];
     }];
 }
 

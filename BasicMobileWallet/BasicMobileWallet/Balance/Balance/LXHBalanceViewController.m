@@ -10,6 +10,8 @@
 #import "LXHOutputDetailViewController.h"
 #import "LXHLineCell.h"
 #import "LXHBalanceLeftRightTextCell.h"
+#import "LXHTransactionDataManager.h"
+#import "UILabel+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -36,14 +38,9 @@
         make.left.right.equalTo(self.view);
         make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
     }];
-    UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
-    [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
     [self setDelegates];
-}
-
-- (void)swipeView:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self setViewProperties];
 }
 
 - (void)addActions {
@@ -54,27 +51,42 @@
     self.contentView.listView.delegate = self;
 }
 
+- (void)setViewProperties {
+    NSString *balanceValueText = [NSString stringWithFormat:@"%@ BTC", [[LXHTransactionDataManager sharedInstance] balance]];
+    [self.contentView.balanceValue updateAttributedTextString:balanceValueText];
+}
+
+//按value从大到小排序
+- (NSMutableArray<LXHTransactionOutput *> *)utxos {
+    NSMutableArray<LXHTransactionOutput *> *ret = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
+    [ret sortUsingComparator:^NSComparisonResult(LXHTransactionOutput *  _Nonnull obj1, LXHTransactionOutput *  _Nonnull obj2) {
+        return -[obj1.value compare:obj2.value];
+    }];
+    return ret;
+}
+
 //Delegate Methods
-- (NSArray *)dataForTableView:(UITableView *)tableView {
-    if (!_cellDataListForListView) {
-        _cellDataListForListView = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
+- (nullable NSArray *)cellDataListForTableView:(UITableView *)tableView {
+    if (tableView == self.contentView.listView) {
+        if (!_cellDataListForListView) {
+            _cellDataListForListView = [NSMutableArray array];
             NSDictionary *dic = nil;
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHLineCell"};
             [_cellDataListForListView addObject:dic];
-            dic = @{@"text1":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"isSelectable":@"1", @"text2":@"0.00000001BTC", @"cellType":@"LXHBalanceLeftRightTextCell"};
-            [_cellDataListForListView addObject:dic];
-            dic = @{@"text1":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"isSelectable":@"1", @"text2":@"0.00000001BTC", @"cellType":@"LXHBalanceLeftRightTextCell"};
-            [_cellDataListForListView addObject:dic];
-            dic = @{@"text1":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"isSelectable":@"1", @"text2":@"0.00000001BTC", @"cellType":@"LXHBalanceLeftRightTextCell"};
-            [_cellDataListForListView addObject:dic];
+            for (LXHTransactionOutput *utxo in [self utxos]) {
+                NSString *valueText = [NSString stringWithFormat:@"%@ BTC", utxo.value];
+                dic = @{@"text1": utxo.address ?: @"", @"isSelectable":@"1", @"text2": valueText, @"cellType":@"LXHBalanceLeftRightTextCell", @"data": utxo};
+                [_cellDataListForListView addObject:dic];
+            }
         }
+        return _cellDataListForListView;
+    } else {
+        return nil;
     }
-    return _cellDataListForListView;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    NSArray *dataForTableView = [self dataForTableView:tableView];
+    NSArray *dataForTableView = [self cellDataListForTableView:tableView];
     if (indexPath.row < dataForTableView.count)
         return [dataForTableView objectAtIndex:indexPath.row];
     else
@@ -84,7 +96,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
-        NSArray *data = [self dataForTableView:tableView];
+        NSArray *data = [self cellDataListForTableView:tableView];
         if (indexPath.row < data.count) {
             NSDictionary *cellData = [data objectAtIndex:indexPath.row];
             return [cellData valueForKey:@"cellType"];
@@ -109,7 +121,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self dataForTableView:tableView].count;
+    return [self cellDataListForTableView:tableView].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -136,9 +148,6 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     UIView *view = [cell.contentView viewWithTag:tag];
-    if ([cellType isEqualToString:@"LXHLineCell"]) {
-        LXHLineCell *cellView = (LXHLineCell *)view;
-    }
     if ([cellType isEqualToString:@"LXHBalanceLeftRightTextCell"]) {
         LXHBalanceLeftRightTextCell *cellView = (LXHBalanceLeftRightTextCell *)view;
         NSString *text2 = [dataForRow valueForKey:@"text2"];
@@ -180,7 +189,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIViewController *controller = [[LXHOutputDetailViewController alloc] init];
+    LXHTransactionOutput *output = [[self cellDataForTableView:tableView atIndexPath:indexPath] valueForKey:@"data"];
+    if (!output)
+        return;
+    UIViewController *controller = [[LXHOutputDetailViewController alloc] initWithOutput:output];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
 

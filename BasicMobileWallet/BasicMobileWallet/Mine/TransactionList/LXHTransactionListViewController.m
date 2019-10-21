@@ -10,7 +10,7 @@
 #import "LXHTransactionDetailViewController.h"
 #import "LXHTransactionInfoCell.h"
 #import "LXHTransactionDataManager.h"
-#import "LXhTransaction.h"
+#import "LXHTransaction.h"
 #import "LXHGlobalHeader.h"
 #import "MJRefresh.h"
 
