@@ -1,7 +1,7 @@
 // LXHInputOutputCell.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-08-22
+//  Created by lianxianghui on 19-10-21
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -40,8 +40,8 @@
     [self.separator mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
-        make.height.mas_equalTo(0.5);
         make.bottom.equalTo(self.mas_bottom);
+        make.height.mas_equalTo(0.5);
     }];
     [self.btcValue mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.mas_centerY);
@@ -54,8 +54,8 @@
         make.right.equalTo(self.addressText.mas_right);
     }];
     [self.addressText mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.text.mas_right).offset(1);
         make.centerY.equalTo(self.receiveAddress.mas_centerY);
+        make.left.equalTo(self.text.mas_right).offset(2);
     }];
     [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.receiveAddress.mas_centerY);
@@ -76,6 +76,7 @@
 - (UILabel *)btcValue {
     if (!_btcValue) {
         _btcValue = [[UILabel alloc] init];
+        _btcValue.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -89,7 +90,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.2652941) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"0.000003023 BTC", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"0.00000323 BTC", nil) attributes:textAttributes];
         _btcValue.attributedText = text;
     }
     return _btcValue;
@@ -109,6 +110,7 @@
 - (UILabel *)addressText {
     if (!_addressText) {
         _addressText = [[UILabel alloc] init];
+        _addressText.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -122,7 +124,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.2652941) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"mouvddfefefefdfdfd ", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx ", nil) attributes:textAttributes];
         _addressText.attributedText = text;
     }
     return _addressText;
@@ -131,6 +133,7 @@
 - (UILabel *)text {
     if (!_text) {
         _text = [[UILabel alloc] init];
+        _text.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -144,7 +147,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.2652941) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"输入1: ", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"1. ", nil) attributes:textAttributes];
         _text.attributedText = text;
     }
     return _text;

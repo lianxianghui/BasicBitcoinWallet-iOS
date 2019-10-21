@@ -1,12 +1,16 @@
 // LXHSendViewController.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-08-22
+//  Created by lianxianghui on 19-10-21
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import "LXHSendViewController.h"
 #import "Masonry.h"
 #import "LXHSendView.h"
+#import "LXHInputFeeViewController.h"
+#import "LXHSelectInputViewController.h"
+#import "LXHOutputListViewController.h"
+#import "LXHSelectFeeRateViewController.h"
 #import "LXHEmptyCell.h"
 #import "LXHSelectionCell.h"
 #import "LXHInputOutputCell.h"
@@ -19,7 +23,6 @@
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
 @interface LXHSendViewController() <UITableViewDataSource, UITableViewDelegate>
-
 @property (nonatomic) LXHSendView *contentView;
 
 @end
@@ -56,6 +59,21 @@
     self.contentView.listView.delegate = self;
 }
 
+//Actions
+- (void)LXHFeeCellInputFeeValueButtonClicked:(UIButton *)sender {
+    UIViewController *controller = [[LXHInputFeeViewController alloc] init];
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES]; 
+}
+
+
+- (void)LXHFeeCellSelectFeerateButtonClicked:(UIButton *)sender {
+    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] init];
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES]; 
+}
+
+
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
     static NSMutableArray *dataForCells = nil;
@@ -65,23 +83,23 @@
             NSDictionary *dic = nil;
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
             [dataForCells addObject:dic];
-            dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosureindicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输入"};
+            dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输入"};
             [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mouvddfefefefdfdfd ", @"text":@"输入1: ", @"isSelectable":@"0", @"btcValue":@"0.000003023 BTC", @"cellType":@"LXHInputOutputCell"};
+            dic = @{@"addressText":@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx ", @"text":@"1. ", @"isSelectable":@"1", @"btcValue":@"0.00000323 BTC", @"cellType":@"LXHInputOutputCell"};
             [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mouvddfefefefdfdfd ", @"text":@"输入2: ", @"isSelectable":@"0", @"btcValue":@"0.000003023 BTC", @"cellType":@"LXHInputOutputCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text1":@"选择费率", @"text2":@"手动输入", @"isSelectable":@"0", @"cellType":@"LXHFeeCell", @"text":@"手续费：40sat/byte （费率）"};
+            dic = @{@"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"text":@"2.", @"isSelectable":@"1", @"btcValue":@"0.00000323 BTC", @"cellType":@"LXHInputOutputCell"};
             [dataForCells addObject:dic];
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
             [dataForCells addObject:dic];
-            dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosureindicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输出"};
+            dic = @{@"text":@"手续费：40sat/byte （费率）", @"isSelectable":@"0", @"cellType":@"LXHFeeCell"};
             [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mouvddfefefefdfdfd ", @"text":@"输出1: ", @"isSelectable":@"0", @"btcValue":@"0.000003023 BTC", @"cellType":@"LXHInputOutputCell"};
+            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
             [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mouvddfefefefdfdfd ", @"text":@"输出1: ", @"isSelectable":@"0", @"btcValue":@"0.000003023 BTC", @"cellType":@"LXHInputOutputCell"};
+            dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输出"};
+            [dataForCells addObject:dic];
+            dic = @{@"addressText":@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx ", @"text":@"1. ", @"isSelectable":@"1", @"btcValue":@"0.00003023 BTC", @"cellType":@"LXHInputOutputCell"};
+            [dataForCells addObject:dic];
+            dic = @{@"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"text":@"2.", @"isSelectable":@"1", @"btcValue":@"0.00000023 BTC", @"cellType":@"LXHInputOutputCell"};
             [dataForCells addObject:dic];
         }
     }
@@ -90,8 +108,8 @@
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     NSArray *dataForTableView = [self dataForTableView:tableView];
-    if (indexPath.row < dataForTableView.count) 
-        return dataForTableView[indexPath.row];
+    if (indexPath.row < dataForTableView.count)
+        return [dataForTableView objectAtIndex:indexPath.row];
     else
         return nil;
 }
@@ -101,8 +119,8 @@
     if (tableView == self.contentView.listView) {
         NSArray *data = [self dataForTableView:tableView];
         if (indexPath.row < data.count) {
-            NSDictionary *cellData = data[indexPath.row];
-            return cellData[@"cellType"];
+            NSDictionary *cellData = [data objectAtIndex:indexPath.row];
+            return [cellData valueForKey:@"cellType"];
         }
     }
     return nil;
@@ -139,7 +157,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellType];
         NSString *viewClass = [self tableView:tableView cellContentViewClassStingAtIndexPath:indexPath];
-        UIView *view = [NSClassFromString(viewClass) new];
+        UIView *view = [[NSClassFromString(viewClass) alloc] init];
         view.tag = tag;
         [cell.contentView addSubview:view];
         //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
@@ -154,8 +172,10 @@
         if ([isSelectable isEqualToString:@"0"])
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    
     UIView *view = [cell.contentView viewWithTag:tag];
+    if ([cellType isEqualToString:@"LXHEmptyCell"]) {
+        LXHEmptyCell *cellView = (LXHEmptyCell *)view;
+    }
     if ([cellType isEqualToString:@"LXHSelectionCell"]) {
         LXHSelectionCell *cellView = (LXHSelectionCell *)view;
         NSString *text = [dataForRow valueForKey:@"text"];
@@ -197,18 +217,10 @@
         NSMutableAttributedString *textAttributedString = [cellView.text.attributedText mutableCopy];
         [textAttributedString.mutableString setString:text];
         cellView.text.attributedText = textAttributedString;
-        NSString *text1 = [dataForRow valueForKey:@"text1"];
-        if (!text1)
-            text1 = @"";
-        NSMutableAttributedString *text1AttributedString = [cellView.text1.attributedText mutableCopy];
-        [text1AttributedString.mutableString setString:text1];
-        cellView.text1.attributedText = text1AttributedString;
-        NSString *text2 = [dataForRow valueForKey:@"text2"];
-        if (!text2)
-            text2 = @"";
-        NSMutableAttributedString *text2AttributedString = [cellView.text2.attributedText mutableCopy];
-        [text2AttributedString.mutableString setString:text2];
-        cellView.text2.attributedText = text2AttributedString;
+        cellView.inputFeeValueButton.tag = indexPath.row;
+        [cellView.inputFeeValueButton addTarget:self action:@selector(LXHFeeCellInputFeeValueButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        cellView.selectFeerateButton.tag = indexPath.row;
+        [cellView.selectFeerateButton addTarget:self action:@selector(LXHFeeCellSelectFeerateButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     return cell;
 }
@@ -219,11 +231,11 @@
         if ([cellType isEqualToString:@"LXHEmptyCell"])
             return 18;
         if ([cellType isEqualToString:@"LXHSelectionCell"])
-            return 44;
+            return 50;
         if ([cellType isEqualToString:@"LXHInputOutputCell"])
-            return 44;
+            return 50;
         if ([cellType isEqualToString:@"LXHFeeCell"])
-            return 44;
+            return 49.99999999999997;
     }
     return 0;
 }
@@ -240,8 +252,56 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    switch(indexPath.row) {
+        case 0:
+            {
+            }
+            break;
+        case 1:
+            {
+            UIViewController *controller = [[LXHSelectInputViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+            }
+            break;
+        case 2:
+            {
+            }
+            break;
+        case 3:
+            {
+            }
+            break;
+        case 4:
+            {
+            }
+            break;
+        case 5:
+            {
+            }
+            break;
+        case 6:
+            {
+            }
+            break;
+        case 7:
+            {
+            UIViewController *controller = [[LXHOutputListViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+            }
+            break;
+        case 8:
+            {
+            }
+            break;
+        case 9:
+            {
+            }
+            break;
+        default:
+            break;
+    }
 }
-
-
 
 @end

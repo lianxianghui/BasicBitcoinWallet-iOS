@@ -1,7 +1,7 @@
 // LXHFeeCell.h
 // BasicWallet
 //
-//  Created by lianxianghui on 19-08-22
+//  Created by lianxianghui on 19-10-21
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import <UIKit/UIKit.h>
@@ -10,9 +10,7 @@
 
 @property (nonatomic) UIView *separator;
 @property (nonatomic) UILabel *text;
-@property (nonatomic) UIView *selectFeerateButton;
-@property (nonatomic) UILabel *text1;
-@property (nonatomic) UIView *inputFeeValueButton;
-@property (nonatomic) UILabel *text2;
+@property (nonatomic) UIButton *inputFeeValueButton;
+@property (nonatomic) UIButton *selectFeerateButton;
 
 @end

@@ -120,7 +120,7 @@
     if (!_disclosureIndicator) {
         _disclosureIndicator = [[UIImageView alloc] init];
         _disclosureIndicator.alpha = 1;
-        _disclosureIndicator.image = [UIImage imageNamed:@"disclosureindicator"];
+        _disclosureIndicator.image = [UIImage imageNamed:@"disclosure_indicator"];
     }
     return _disclosureIndicator;
 }

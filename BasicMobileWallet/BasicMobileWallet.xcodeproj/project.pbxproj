@@ -51,6 +51,28 @@
 		8C9332D4235D8BD600FBF238 /* LXHBalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332CE235D8BD600FBF238 /* LXHBalanceViewController.m */; };
 		8C9332D5235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332CF235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m */; };
 		8C9332D6235D8BD600FBF238 /* LXHBalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332D0235D8BD600FBF238 /* LXHBalanceView.m */; };
+		8C9333DA235DA9D100FBF238 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C9333D9235DA9D000FBF238 /* Assets.xcassets */; };
+		8C933496235DB14C00FBF238 /* LXHTopLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933461235DB14C00FBF238 /* LXHTopLineCell.m */; };
+		8C933497235DB14C00FBF238 /* LXHSelectInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933462235DB14C00FBF238 /* LXHSelectInputViewController.m */; };
+		8C933498235DB14C00FBF238 /* LXHSelectInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933463235DB14C00FBF238 /* LXHSelectInputView.m */; };
+		8C933499235DB14C00FBF238 /* LXHSelectInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933465235DB14C00FBF238 /* LXHSelectInputCell.m */; };
+		8C93349A235DB14C00FBF238 /* LXHSelectFeeRateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933469235DB14C00FBF238 /* LXHSelectFeeRateViewController.m */; };
+		8C93349B235DB14C00FBF238 /* LXHSelectFeeRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C93346A235DB14C00FBF238 /* LXHSelectFeeRateView.m */; };
+		8C93349C235DB14C00FBF238 /* LXHFeeOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C93346C235DB14C00FBF238 /* LXHFeeOptionCell.m */; };
+		8C93349D235DB14C00FBF238 /* LXHOutputListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C93346F235DB14C00FBF238 /* LXHOutputListViewController.m */; };
+		8C93349E235DB14C00FBF238 /* LXHOutputListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933470235DB14C00FBF238 /* LXHOutputListView.m */; };
+		8C9334A4235DB14C00FBF238 /* LXHSelectedOutputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933477235DB14C00FBF238 /* LXHSelectedOutputCell.m */; };
+		8C9334A5235DB14C00FBF238 /* LXHAddOutputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C93347C235DB14C00FBF238 /* LXHAddOutputViewController.m */; };
+		8C9334A6235DB14C00FBF238 /* LXHAddOutputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C93347D235DB14C00FBF238 /* LXHAddOutputView.m */; };
+		8C9334A8235DB14C00FBF238 /* LXHInputAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933482235DB14C00FBF238 /* LXHInputAddressCell.m */; };
+		8C9334A9235DB14C00FBF238 /* LXHSendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933487235DB14C00FBF238 /* LXHSendView.m */; };
+		8C9334AA235DB14C00FBF238 /* LXHFeeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C93348A235DB14C00FBF238 /* LXHFeeCell.m */; };
+		8C9334AB235DB14C00FBF238 /* LXHEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C93348B235DB14C00FBF238 /* LXHEmptyCell.m */; };
+		8C9334AC235DB14C00FBF238 /* LXHSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C93348C235DB14C00FBF238 /* LXHSelectionCell.m */; };
+		8C9334AD235DB14C00FBF238 /* LXHInputOutputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C93348D235DB14C00FBF238 /* LXHInputOutputCell.m */; };
+		8C9334AE235DB14C00FBF238 /* LXHSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933490235DB14C00FBF238 /* LXHSendViewController.m */; };
+		8C9334AF235DB14C00FBF238 /* LXHInputFeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933492235DB14C00FBF238 /* LXHInputFeeViewController.m */; };
+		8C9334B0235DB14C00FBF238 /* LXHInputFeeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933495235DB14C00FBF238 /* LXHInputFeeView.m */; };
 		8CA31F5C22D9872A00CEA828 /* LXHInputMnemonicWordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */; };
 		8CA31F5D22D9872A00CEA828 /* LXHInputMnemonicWordsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5A22D9872900CEA828 /* LXHInputMnemonicWordsView.m */; };
 		8CA31F5E22D9872A00CEA828 /* LXHWordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5B22D9872900CEA828 /* LXHWordCell.m */; };
@@ -172,13 +194,6 @@
 		8CAA669A230E468200B17222 /* LXHAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA6692230E468200B17222 /* LXHAddressView.m */; };
 		8CAA669B230E468200B17222 /* LXHAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA6693230E468200B17222 /* LXHAddressViewController.m */; };
 		8CAA669C230E468200B17222 /* LXHTabBarPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA6698230E468200B17222 /* LXHTabBarPageViewController.m */; };
-		8CAA66A1230E747600B17222 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CAA66A0230E747500B17222 /* Assets.xcassets */; };
-		8CAA66B0230E92E300B17222 /* LXHSendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66A6230E92E300B17222 /* LXHSendView.m */; };
-		8CAA66B1230E92E300B17222 /* LXHFeeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66A9230E92E300B17222 /* LXHFeeCell.m */; };
-		8CAA66B2230E92E300B17222 /* LXHEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66AA230E92E300B17222 /* LXHEmptyCell.m */; };
-		8CAA66B3230E92E300B17222 /* LXHSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66AB230E92E300B17222 /* LXHSelectionCell.m */; };
-		8CAA66B4230E92E300B17222 /* LXHInputOutputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66AC230E92E300B17222 /* LXHInputOutputCell.m */; };
-		8CAA66B5230E92E300B17222 /* LXHSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA66AF230E92E300B17222 /* LXHSendViewController.m */; };
 		8CD26924230A452B001B9300 /* LXHGenerateWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD26920230A452A001B9300 /* LXHGenerateWalletViewController.m */; };
 		8CD26925230A452B001B9300 /* LXHGenerateWalletView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD26921230A452A001B9300 /* LXHGenerateWalletView.m */; };
 		8CF405F5235B0456008639F5 /* LXHInputDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF405E6235B0455008639F5 /* LXHInputDetailViewController.m */; };
@@ -291,6 +306,49 @@
 		8C9332D1235D8BD600FBF238 /* LXHBalanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHBalanceViewController.h; sourceTree = "<group>"; };
 		8C9332D2235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHBalanceLeftRightTextCell.h; sourceTree = "<group>"; };
 		8C9332D3235D8BD600FBF238 /* LXHBalanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHBalanceView.h; sourceTree = "<group>"; };
+		8C9333D9235DA9D000FBF238 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8C93345E235DB14C00FBF238 /* LXHSelectInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectInputView.h; sourceTree = "<group>"; };
+		8C93345F235DB14C00FBF238 /* LXHSelectInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectInputViewController.h; sourceTree = "<group>"; };
+		8C933460235DB14C00FBF238 /* LXHSelectInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectInputCell.h; sourceTree = "<group>"; };
+		8C933461235DB14C00FBF238 /* LXHTopLineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHTopLineCell.m; sourceTree = "<group>"; };
+		8C933462235DB14C00FBF238 /* LXHSelectInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSelectInputViewController.m; sourceTree = "<group>"; };
+		8C933463235DB14C00FBF238 /* LXHSelectInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSelectInputView.m; sourceTree = "<group>"; };
+		8C933464235DB14C00FBF238 /* LXHTopLineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHTopLineCell.h; sourceTree = "<group>"; };
+		8C933465235DB14C00FBF238 /* LXHSelectInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSelectInputCell.m; sourceTree = "<group>"; };
+		8C933467235DB14C00FBF238 /* LXHSelectFeeRateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectFeeRateView.h; sourceTree = "<group>"; };
+		8C933468235DB14C00FBF238 /* LXHFeeOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHFeeOptionCell.h; sourceTree = "<group>"; };
+		8C933469235DB14C00FBF238 /* LXHSelectFeeRateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSelectFeeRateViewController.m; sourceTree = "<group>"; };
+		8C93346A235DB14C00FBF238 /* LXHSelectFeeRateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSelectFeeRateView.m; sourceTree = "<group>"; };
+		8C93346B235DB14C00FBF238 /* LXHSelectFeeRateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectFeeRateViewController.h; sourceTree = "<group>"; };
+		8C93346C235DB14C00FBF238 /* LXHFeeOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHFeeOptionCell.m; sourceTree = "<group>"; };
+		8C93346E235DB14C00FBF238 /* LXHSelectedOutputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectedOutputCell.h; sourceTree = "<group>"; };
+		8C93346F235DB14C00FBF238 /* LXHOutputListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHOutputListViewController.m; sourceTree = "<group>"; };
+		8C933470235DB14C00FBF238 /* LXHOutputListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHOutputListView.m; sourceTree = "<group>"; };
+		8C933477235DB14C00FBF238 /* LXHSelectedOutputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSelectedOutputCell.m; sourceTree = "<group>"; };
+		8C933478235DB14C00FBF238 /* LXHOutputListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHOutputListViewController.h; sourceTree = "<group>"; };
+		8C93347A235DB14C00FBF238 /* LXHOutputListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHOutputListView.h; sourceTree = "<group>"; };
+		8C93347C235DB14C00FBF238 /* LXHAddOutputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHAddOutputViewController.m; sourceTree = "<group>"; };
+		8C93347D235DB14C00FBF238 /* LXHAddOutputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHAddOutputView.m; sourceTree = "<group>"; };
+		8C93347E235DB14C00FBF238 /* LXHInputAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputAddressCell.h; sourceTree = "<group>"; };
+		8C933480235DB14C00FBF238 /* LXHAddOutputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHAddOutputViewController.h; sourceTree = "<group>"; };
+		8C933481235DB14C00FBF238 /* LXHAddOutputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHAddOutputView.h; sourceTree = "<group>"; };
+		8C933482235DB14C00FBF238 /* LXHInputAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputAddressCell.m; sourceTree = "<group>"; };
+		8C933485235DB14C00FBF238 /* LXHSelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectionCell.h; sourceTree = "<group>"; };
+		8C933486235DB14C00FBF238 /* LXHEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHEmptyCell.h; sourceTree = "<group>"; };
+		8C933487235DB14C00FBF238 /* LXHSendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSendView.m; sourceTree = "<group>"; };
+		8C933488235DB14C00FBF238 /* LXHInputOutputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputOutputCell.h; sourceTree = "<group>"; };
+		8C933489235DB14C00FBF238 /* LXHSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSendViewController.h; sourceTree = "<group>"; };
+		8C93348A235DB14C00FBF238 /* LXHFeeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHFeeCell.m; sourceTree = "<group>"; };
+		8C93348B235DB14C00FBF238 /* LXHEmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHEmptyCell.m; sourceTree = "<group>"; };
+		8C93348C235DB14C00FBF238 /* LXHSelectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSelectionCell.m; sourceTree = "<group>"; };
+		8C93348D235DB14C00FBF238 /* LXHInputOutputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputOutputCell.m; sourceTree = "<group>"; };
+		8C93348E235DB14C00FBF238 /* LXHSendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSendView.h; sourceTree = "<group>"; };
+		8C93348F235DB14C00FBF238 /* LXHFeeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHFeeCell.h; sourceTree = "<group>"; };
+		8C933490235DB14C00FBF238 /* LXHSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSendViewController.m; sourceTree = "<group>"; };
+		8C933492235DB14C00FBF238 /* LXHInputFeeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputFeeViewController.m; sourceTree = "<group>"; };
+		8C933493235DB14C00FBF238 /* LXHInputFeeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputFeeView.h; sourceTree = "<group>"; };
+		8C933494235DB14C00FBF238 /* LXHInputFeeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputFeeViewController.h; sourceTree = "<group>"; };
+		8C933495235DB14C00FBF238 /* LXHInputFeeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputFeeView.m; sourceTree = "<group>"; };
 		8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputMnemonicWordsViewController.m; sourceTree = "<group>"; };
 		8CA31F5722D9872900CEA828 /* LXHInputMnemonicWordsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputMnemonicWordsView.h; sourceTree = "<group>"; };
 		8CA31F5822D9872900CEA828 /* LXHWordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWordCell.h; sourceTree = "<group>"; };
@@ -693,19 +751,6 @@
 		8CAA6695230E468200B17222 /* LXHAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHAddressViewController.h; sourceTree = "<group>"; };
 		8CAA6698230E468200B17222 /* LXHTabBarPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHTabBarPageViewController.m; sourceTree = "<group>"; };
 		8CAA6699230E468200B17222 /* LXHTabBarPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHTabBarPageViewController.h; sourceTree = "<group>"; };
-		8CAA66A0230E747500B17222 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8CAA66A4230E92E300B17222 /* LXHSelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectionCell.h; sourceTree = "<group>"; };
-		8CAA66A5230E92E300B17222 /* LXHEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHEmptyCell.h; sourceTree = "<group>"; };
-		8CAA66A6230E92E300B17222 /* LXHSendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSendView.m; sourceTree = "<group>"; };
-		8CAA66A7230E92E300B17222 /* LXHInputOutputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputOutputCell.h; sourceTree = "<group>"; };
-		8CAA66A8230E92E300B17222 /* LXHSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSendViewController.h; sourceTree = "<group>"; };
-		8CAA66A9230E92E300B17222 /* LXHFeeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHFeeCell.m; sourceTree = "<group>"; };
-		8CAA66AA230E92E300B17222 /* LXHEmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHEmptyCell.m; sourceTree = "<group>"; };
-		8CAA66AB230E92E300B17222 /* LXHSelectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSelectionCell.m; sourceTree = "<group>"; };
-		8CAA66AC230E92E300B17222 /* LXHInputOutputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputOutputCell.m; sourceTree = "<group>"; };
-		8CAA66AD230E92E300B17222 /* LXHSendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSendView.h; sourceTree = "<group>"; };
-		8CAA66AE230E92E300B17222 /* LXHFeeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHFeeCell.h; sourceTree = "<group>"; };
-		8CAA66AF230E92E300B17222 /* LXHSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSendViewController.m; sourceTree = "<group>"; };
 		8CD26920230A452A001B9300 /* LXHGenerateWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHGenerateWalletViewController.m; sourceTree = "<group>"; };
 		8CD26921230A452A001B9300 /* LXHGenerateWalletView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHGenerateWalletView.m; sourceTree = "<group>"; };
 		8CD26922230A452A001B9300 /* LXHGenerateWalletView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHGenerateWalletView.h; sourceTree = "<group>"; };
@@ -919,6 +964,103 @@
 				8C9332D3235D8BD600FBF238 /* LXHBalanceView.h */,
 			);
 			path = Balance;
+			sourceTree = "<group>";
+		};
+		8C93345C235DB14C00FBF238 /* Send */ = {
+			isa = PBXGroup;
+			children = (
+				8C93345D235DB14C00FBF238 /* SelectInput */,
+				8C933466235DB14C00FBF238 /* SelectFeeRate */,
+				8C93346D235DB14C00FBF238 /* OutputList */,
+				8C93347B235DB14C00FBF238 /* AddOutput */,
+				8C933484235DB14C00FBF238 /* Send */,
+				8C933491235DB14C00FBF238 /* InputFee */,
+			);
+			path = Send;
+			sourceTree = "<group>";
+		};
+		8C93345D235DB14C00FBF238 /* SelectInput */ = {
+			isa = PBXGroup;
+			children = (
+				8C93345E235DB14C00FBF238 /* LXHSelectInputView.h */,
+				8C93345F235DB14C00FBF238 /* LXHSelectInputViewController.h */,
+				8C933460235DB14C00FBF238 /* LXHSelectInputCell.h */,
+				8C933461235DB14C00FBF238 /* LXHTopLineCell.m */,
+				8C933462235DB14C00FBF238 /* LXHSelectInputViewController.m */,
+				8C933463235DB14C00FBF238 /* LXHSelectInputView.m */,
+				8C933464235DB14C00FBF238 /* LXHTopLineCell.h */,
+				8C933465235DB14C00FBF238 /* LXHSelectInputCell.m */,
+			);
+			path = SelectInput;
+			sourceTree = "<group>";
+		};
+		8C933466235DB14C00FBF238 /* SelectFeeRate */ = {
+			isa = PBXGroup;
+			children = (
+				8C933467235DB14C00FBF238 /* LXHSelectFeeRateView.h */,
+				8C933468235DB14C00FBF238 /* LXHFeeOptionCell.h */,
+				8C933469235DB14C00FBF238 /* LXHSelectFeeRateViewController.m */,
+				8C93346A235DB14C00FBF238 /* LXHSelectFeeRateView.m */,
+				8C93346B235DB14C00FBF238 /* LXHSelectFeeRateViewController.h */,
+				8C93346C235DB14C00FBF238 /* LXHFeeOptionCell.m */,
+			);
+			path = SelectFeeRate;
+			sourceTree = "<group>";
+		};
+		8C93346D235DB14C00FBF238 /* OutputList */ = {
+			isa = PBXGroup;
+			children = (
+				8C93346E235DB14C00FBF238 /* LXHSelectedOutputCell.h */,
+				8C93346F235DB14C00FBF238 /* LXHOutputListViewController.m */,
+				8C933470235DB14C00FBF238 /* LXHOutputListView.m */,
+				8C933477235DB14C00FBF238 /* LXHSelectedOutputCell.m */,
+				8C933478235DB14C00FBF238 /* LXHOutputListViewController.h */,
+				8C93347A235DB14C00FBF238 /* LXHOutputListView.h */,
+			);
+			path = OutputList;
+			sourceTree = "<group>";
+		};
+		8C93347B235DB14C00FBF238 /* AddOutput */ = {
+			isa = PBXGroup;
+			children = (
+				8C93347C235DB14C00FBF238 /* LXHAddOutputViewController.m */,
+				8C93347D235DB14C00FBF238 /* LXHAddOutputView.m */,
+				8C93347E235DB14C00FBF238 /* LXHInputAddressCell.h */,
+				8C933480235DB14C00FBF238 /* LXHAddOutputViewController.h */,
+				8C933481235DB14C00FBF238 /* LXHAddOutputView.h */,
+				8C933482235DB14C00FBF238 /* LXHInputAddressCell.m */,
+			);
+			path = AddOutput;
+			sourceTree = "<group>";
+		};
+		8C933484235DB14C00FBF238 /* Send */ = {
+			isa = PBXGroup;
+			children = (
+				8C933485235DB14C00FBF238 /* LXHSelectionCell.h */,
+				8C933486235DB14C00FBF238 /* LXHEmptyCell.h */,
+				8C933487235DB14C00FBF238 /* LXHSendView.m */,
+				8C933488235DB14C00FBF238 /* LXHInputOutputCell.h */,
+				8C933489235DB14C00FBF238 /* LXHSendViewController.h */,
+				8C93348A235DB14C00FBF238 /* LXHFeeCell.m */,
+				8C93348B235DB14C00FBF238 /* LXHEmptyCell.m */,
+				8C93348C235DB14C00FBF238 /* LXHSelectionCell.m */,
+				8C93348D235DB14C00FBF238 /* LXHInputOutputCell.m */,
+				8C93348E235DB14C00FBF238 /* LXHSendView.h */,
+				8C93348F235DB14C00FBF238 /* LXHFeeCell.h */,
+				8C933490235DB14C00FBF238 /* LXHSendViewController.m */,
+			);
+			path = Send;
+			sourceTree = "<group>";
+		};
+		8C933491235DB14C00FBF238 /* InputFee */ = {
+			isa = PBXGroup;
+			children = (
+				8C933492235DB14C00FBF238 /* LXHInputFeeViewController.m */,
+				8C933493235DB14C00FBF238 /* LXHInputFeeView.h */,
+				8C933494235DB14C00FBF238 /* LXHInputFeeViewController.h */,
+				8C933495235DB14C00FBF238 /* LXHInputFeeView.m */,
+			);
+			path = InputFee;
 			sourceTree = "<group>";
 		};
 		8CA31F5522D9872900CEA828 /* InputMnemonicWords */ = {
@@ -1518,7 +1660,6 @@
 			isa = PBXGroup;
 			children = (
 				8CA322AA22E1D26600CEA828 /* BasicMobileWallet.entitlements */,
-				8CAA66A0230E747500B17222 /* Assets.xcassets */,
 				8CA7019C22D8713600F42814 /* AppDelegate.h */,
 				8CA7019D22D8713600F42814 /* AppDelegate.m */,
 				8CA7019F22D8713600F42814 /* LXHRootViewController.h */,
@@ -1527,9 +1668,10 @@
 				8CA701A722D8713E00F42814 /* LaunchScreen.storyboard */,
 				8CA701AA22D8713E00F42814 /* Info.plist */,
 				8CA701AB22D8713E00F42814 /* main.m */,
+				8C9333D9235DA9D000FBF238 /* Assets.xcassets */,
 				8CA701C822D8747F00F42814 /* Init */,
 				8CAA6696230E468200B17222 /* Main */,
-				8CAA66A2230E92E300B17222 /* Send */,
+				8C93345C235DB14C00FBF238 /* Send */,
 				8CAA6690230E468200B17222 /* Receive */,
 				8C9332CC235D8BD600FBF238 /* Balance */,
 				8C2CC66A232F20E4005AA93C /* Mine */,
@@ -1604,33 +1746,6 @@
 				8CAA6698230E468200B17222 /* LXHTabBarPageViewController.m */,
 			);
 			path = TabBarPage;
-			sourceTree = "<group>";
-		};
-		8CAA66A2230E92E300B17222 /* Send */ = {
-			isa = PBXGroup;
-			children = (
-				8CAA66A3230E92E300B17222 /* Send */,
-			);
-			path = Send;
-			sourceTree = "<group>";
-		};
-		8CAA66A3230E92E300B17222 /* Send */ = {
-			isa = PBXGroup;
-			children = (
-				8CAA66A4230E92E300B17222 /* LXHSelectionCell.h */,
-				8CAA66A5230E92E300B17222 /* LXHEmptyCell.h */,
-				8CAA66A6230E92E300B17222 /* LXHSendView.m */,
-				8CAA66A7230E92E300B17222 /* LXHInputOutputCell.h */,
-				8CAA66A8230E92E300B17222 /* LXHSendViewController.h */,
-				8CAA66A9230E92E300B17222 /* LXHFeeCell.m */,
-				8CAA66AA230E92E300B17222 /* LXHEmptyCell.m */,
-				8CAA66AB230E92E300B17222 /* LXHSelectionCell.m */,
-				8CAA66AC230E92E300B17222 /* LXHInputOutputCell.m */,
-				8CAA66AD230E92E300B17222 /* LXHSendView.h */,
-				8CAA66AE230E92E300B17222 /* LXHFeeCell.h */,
-				8CAA66AF230E92E300B17222 /* LXHSendViewController.m */,
-			);
-			path = Send;
 			sourceTree = "<group>";
 		};
 		8CD2691F230A452A001B9300 /* GenerateWallet */ = {
@@ -1782,8 +1897,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CA701A922D8713E00F42814 /* LaunchScreen.storyboard in Resources */,
-				8CAA66A1230E747600B17222 /* Assets.xcassets in Resources */,
 				8CA701A422D8713600F42814 /* Main.storyboard in Resources */,
+				8C9333DA235DA9D100FBF238 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1876,6 +1991,7 @@
 				8C6ACE8D23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m in Sources */,
 				8CA3228822DEBE9900CEA828 /* BTCOutpoint.m in Sources */,
 				8CA3226F22DEBE9900CEA828 /* BTCScript+Tests.m in Sources */,
+				8C9334A8235DB14C00FBF238 /* LXHInputAddressCell.m in Sources */,
 				8CA3229122DEBE9900CEA828 /* BTCTransactionOutput.m in Sources */,
 				8CA322B7230049A000CEA828 /* RNDecryptor.m in Sources */,
 				8CA3210E22DC7C9C00CEA828 /* UIButton+LXHText.m in Sources */,
@@ -1886,23 +2002,25 @@
 				8CA3228322DEBE9900CEA828 /* BTCTransactionInput.m in Sources */,
 				8CA3228922DEBE9900CEA828 /* BTCMerkleTree.m in Sources */,
 				8C2CC6B2232F20E5005AA93C /* LXHAddressListView.m in Sources */,
+				8C9334AB235DB14C00FBF238 /* LXHEmptyCell.m in Sources */,
 				8C2CC6D3232F679A005AA93C /* LXHWallet.m in Sources */,
+				8C9334AC235DB14C00FBF238 /* LXHSelectionCell.m in Sources */,
 				8CA3228E22DEBE9900CEA828 /* BTCCurvePoint.m in Sources */,
 				8CA31F5D22D9872A00CEA828 /* LXHInputMnemonicWordsView.m in Sources */,
 				8CA3228022DEBE9900CEA828 /* BTCAssetAddress.m in Sources */,
 				8CA3227C22DEBE9900CEA828 /* BTCCurvePoint+Tests.m in Sources */,
 				8C2CC6AF232F20E5005AA93C /* LXHMineViewController.m in Sources */,
+				8C933496235DB14C00FBF238 /* LXHTopLineCell.m in Sources */,
 				8CA3212922DEB85900CEA828 /* LXHPreference.m in Sources */,
 				8CF405FB235B0456008639F5 /* LXHOutputDetailViewController.m in Sources */,
 				8CA3229F22DEBE9900CEA828 /* BTCKey.m in Sources */,
-				8CAA66B5230E92E300B17222 /* LXHSendViewController.m in Sources */,
 				8CA31FD222D9A37600CEA828 /* UIUtils.m in Sources */,
 				8C2CC6BB232F20E5005AA93C /* LXHSettingView.m in Sources */,
 				8CD26924230A452B001B9300 /* LXHGenerateWalletViewController.m in Sources */,
 				8CA3211822DD69E800CEA828 /* LXHWalletMnemonicPassphraseForRestoringViewController.m in Sources */,
 				8C2CC6AE232F20E5005AA93C /* LXHMineView.m in Sources */,
-				8CAA66B2230E92E300B17222 /* LXHEmptyCell.m in Sources */,
 				8C2CC6AB232F20E5005AA93C /* LXHTransactionCell.m in Sources */,
+				8C933499235DB14C00FBF238 /* LXHSelectInputCell.m in Sources */,
 				8C2CC6AD232F20E5005AA93C /* LXHLineCell.m in Sources */,
 				8C9332D5235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m in Sources */,
 				8CA3226722DEBE9900CEA828 /* BTCBlindSignature.m in Sources */,
@@ -1918,9 +2036,12 @@
 				8CA3226E22DEBE9900CEA828 /* BTCBigNumber.m in Sources */,
 				8CA322B9230049A000CEA828 /* RNCryptorEngine.m in Sources */,
 				8C2CC6A9232F20E5005AA93C /* LXHTitleCell.m in Sources */,
+				8C93349E235DB14C00FBF238 /* LXHOutputListView.m in Sources */,
+				8C9334A5235DB14C00FBF238 /* LXHAddOutputViewController.m in Sources */,
 				8CF405F6235B0456008639F5 /* LXHInputDetailView.m in Sources */,
 				8CA31F9722D98BAC00CEA828 /* LXHWalletMnemonicPassphraseViewController.m in Sources */,
 				8CA31F9122D98BAC00CEA828 /* LXHInitWalletViewController.m in Sources */,
+				8C93349D235DB14C00FBF238 /* LXHOutputListViewController.m in Sources */,
 				8CA31FCE22D9A37600CEA828 /* NSJSONSerialization+VLBase.m in Sources */,
 				8CA3226522DEBE9900CEA828 /* BTCAssetID.m in Sources */,
 				8CA3228A22DEBE9900CEA828 /* BTCAddress+Tests.m in Sources */,
@@ -1941,19 +2062,23 @@
 				8CA3229722DEBE9900CEA828 /* BTCCurrencyConverter.m in Sources */,
 				8CA3227022DEBE9900CEA828 /* BTCBlockchainInfo.m in Sources */,
 				8CA3225E22DEBE9900CEA828 /* BTCBlock.m in Sources */,
-				8CAA66B0230E92E300B17222 /* LXHSendView.m in Sources */,
+				8C9334AA235DB14C00FBF238 /* LXHFeeCell.m in Sources */,
+				8C9334A6235DB14C00FBF238 /* LXHAddOutputView.m in Sources */,
 				8CA31FD922D9AC5600CEA828 /* LXHKeychainStore.m in Sources */,
 				8C2CC6B0232F20E5005AA93C /* LXHAddressListViewController.m in Sources */,
 				8C2CC6A8232F20E5005AA93C /* LXHTransDetailLeftRightTextCell.m in Sources */,
+				8C9334A9235DB14C00FBF238 /* LXHSendView.m in Sources */,
 				8CA31F8D22D98BAC00CEA828 /* LXHSetPassphraseViewController.m in Sources */,
+				8C933498235DB14C00FBF238 /* LXHSelectInputView.m in Sources */,
 				8CA3227E22DEBE9900CEA828 /* BTCEncryptedMessage+Tests.m in Sources */,
 				8CA31F9422D98BAC00CEA828 /* LXHWalletMnemonicWordsViewController.m in Sources */,
 				8CA3212522DDE61900CEA828 /* LXHSetPinViewController.m in Sources */,
 				8CA3227D22DEBE9900CEA828 /* BTCPriceSource+Tests.m in Sources */,
+				8C9334AE235DB14C00FBF238 /* LXHSendViewController.m in Sources */,
 				8CA322A022DEBE9900CEA828 /* BTCData+Tests.m in Sources */,
 				8CA322A122DEBE9900CEA828 /* BTCFancyEncryptedMessage+Tests.m in Sources */,
+				8C9334A4235DB14C00FBF238 /* LXHSelectedOutputCell.m in Sources */,
 				8CA3226322DEBE9900CEA828 /* BTCAssetType.m in Sources */,
-				8CAA66B4230E92E300B17222 /* LXHInputOutputCell.m in Sources */,
 				8CAA669B230E468200B17222 /* LXHAddressViewController.m in Sources */,
 				8CA3229A22DEBE9900CEA828 /* BTCBase58.m in Sources */,
 				8C2CC6C3232F30D4005AA93C /* LXHNetworkRequest.m in Sources */,
@@ -1965,6 +2090,7 @@
 				8C2CC6C0232F20E5005AA93C /* LXHTransactionListView.m in Sources */,
 				8CA3229C22DEBE9900CEA828 /* BTCBlockchainInfo+Tests.m in Sources */,
 				8CA3227822DEBE9900CEA828 /* BTCPriceSource.m in Sources */,
+				8C93349C235DB14C00FBF238 /* LXHFeeOptionCell.m in Sources */,
 				8CA3227A22DEBE9900CEA828 /* BTCOpcode.m in Sources */,
 				8C9332D6235D8BD600FBF238 /* LXHBalanceView.m in Sources */,
 				8CA3211F22DDD99400CEA828 /* LXHSelectMnemonicWordLengthView.m in Sources */,
@@ -1980,10 +2106,8 @@
 				8CA31F9622D98BAC00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.m in Sources */,
 				8C2CC6E223321615005AA93C /* UIViewController+LXHBasicMobileWallet.m in Sources */,
 				8CA3228B22DEBE9900CEA828 /* BTCEncryptedBackup+Tests.m in Sources */,
-				8CAA66B1230E92E300B17222 /* LXHFeeCell.m in Sources */,
 				8CA3229022DEBE9900CEA828 /* BTCMerkleTree+Tests.m in Sources */,
 				8CA31F8C22D98BAC00CEA828 /* LXHSetPassphraseView.m in Sources */,
-				8CAA66B3230E92E300B17222 /* LXHSelectionCell.m in Sources */,
 				8C2CC6E9233236A9005AA93C /* LXHShowWalletMnemonicWordsView.m in Sources */,
 				8CA322B6230049A000CEA828 /* RNCryptor.m in Sources */,
 				8CA3228222DEBE9900CEA828 /* NS+BTCBase58.m in Sources */,
@@ -1999,6 +2123,7 @@
 				8CA3229D22DEBE9900CEA828 /* BTCEncryptedMessage.m in Sources */,
 				8CA31F9322D98BAC00CEA828 /* LXHWalletMnemonicWordsView.m in Sources */,
 				8CA7019E22D8713600F42814 /* AppDelegate.m in Sources */,
+				8C93349B235DB14C00FBF238 /* LXHSelectFeeRateView.m in Sources */,
 				8C2CC6DA2331CEDE005AA93C /* LXHCurrentReceivingAddressViewController.m in Sources */,
 				8CA3225F22DEBE9900CEA828 /* BTCBlockHeader.m in Sources */,
 				8CA3229222DEBE9900CEA828 /* BTCPaymentRequest.m in Sources */,
@@ -2007,9 +2132,11 @@
 				8CA31FCB22D9A37600CEA828 /* NSDictionary+Enumerate.m in Sources */,
 				8CA3226D22DEBE9900CEA828 /* BTCTransaction+Tests.m in Sources */,
 				8CA3226222DEBE9900CEA828 /* BTCTransactionBuilder.m in Sources */,
+				8C9334B0235DB14C00FBF238 /* LXHInputFeeView.m in Sources */,
 				8CA3229522DEBE9900CEA828 /* BTCScript.m in Sources */,
 				8CA3227B22DEBE9900CEA828 /* BTCFancyEncryptedMessage.m in Sources */,
 				8C2CC6AA232F20E5005AA93C /* LXHTextCell.m in Sources */,
+				8C9334AD235DB14C00FBF238 /* LXHInputOutputCell.m in Sources */,
 				8C2CC6D4232F679A005AA93C /* LXHAccount.m in Sources */,
 				8C2CC6AC232F20E5005AA93C /* LXHTextRightIconCell.m in Sources */,
 				8C2CC6B9232F20E5005AA93C /* LXHAddressDetailTextRightIconCell.m in Sources */,
@@ -2022,10 +2149,12 @@
 				8CA3211122DCB17500CEA828 /* UITextField+LXHText.m in Sources */,
 				8CF405F8235B0456008639F5 /* LXHOutputDetailView.m in Sources */,
 				8CA31F9522D98BAC00CEA828 /* LXHWalletMnemonicWordsOneByOneView.m in Sources */,
+				8C933497235DB14C00FBF238 /* LXHSelectInputViewController.m in Sources */,
 				8CA3229622DEBE9900CEA828 /* BTCHashID.m in Sources */,
 				8CA3228C22DEBE9900CEA828 /* BTCData.m in Sources */,
 				8CA3212622DDE61900CEA828 /* LXHSetPinView.m in Sources */,
 				8C03E2DF2359710100936B31 /* LXHTransactionOutput.m in Sources */,
+				8C9334AF235DB14C00FBF238 /* LXHInputFeeViewController.m in Sources */,
 				8CA31F5E22D9872A00CEA828 /* LXHWordCell.m in Sources */,
 				8CA3226A22DEBE9900CEA828 /* NSData+BTCData.m in Sources */,
 				8CA3229E22DEBE9900CEA828 /* BTC256+Tests.m in Sources */,
@@ -2036,6 +2165,7 @@
 				8CA3227422DEBE9900CEA828 /* BTCProtocolSerialization.m in Sources */,
 				8C2CC6B5232F20E5005AA93C /* LXHLocalAddressCell.m in Sources */,
 				8CA322A222DEBE9900CEA828 /* BTCErrors.m in Sources */,
+				8C93349A235DB14C00FBF238 /* LXHSelectFeeRateViewController.m in Sources */,
 				8CA31F9822D98BAC00CEA828 /* LXHWalletMnemonicPassphraseView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

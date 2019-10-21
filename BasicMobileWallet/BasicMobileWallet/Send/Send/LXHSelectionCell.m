@@ -1,7 +1,7 @@
 // LXHSelectionCell.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-08-22
+//  Created by lianxianghui on 19-10-21
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -40,8 +40,8 @@
     [self.separator mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
-        make.height.mas_equalTo(0.5);
         make.bottom.equalTo(self.mas_bottom);
+        make.height.mas_equalTo(0.5);
     }];
     [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.mas_centerY);
@@ -49,9 +49,9 @@
     }];
     [self.disclosureIndicator mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.mas_centerY);
-        make.right.equalTo(self.mas_right).offset(-10);
         make.height.mas_equalTo(13);
         make.width.mas_equalTo(8);
+        make.right.equalTo(self.mas_right).offset(-15);
     }];
 }
 
@@ -68,6 +68,7 @@
 - (UILabel *)text {
     if (!_text) {
         _text = [[UILabel alloc] init];
+        _text.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -91,7 +92,7 @@
     if (!_disclosureIndicator) {
         _disclosureIndicator = [[UIImageView alloc] init];
         _disclosureIndicator.alpha = 1;
-        _disclosureIndicator.image = [UIImage imageNamed:@"disclosureindicator"];
+        _disclosureIndicator.image = [UIImage imageNamed:@"disclosure_indicator"];
     }
     return _disclosureIndicator;
 }
