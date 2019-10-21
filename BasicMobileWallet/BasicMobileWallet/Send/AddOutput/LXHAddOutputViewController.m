@@ -10,6 +10,7 @@
 #import "LXHAddressListViewController.h"
 #import "LXHTopLineCell.h"
 #import "LXHInputAddressCell.h"
+#import "LXHInputAmountCell.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -126,6 +127,18 @@
     sender.alpha = 1;
 }
 
+- (void)LXHInputAmountCellTextButtonClicked:(UIButton *)sender {
+    sender.alpha = 1;
+}
+
+- (void)LXHInputAmountCellTextButtonTouchDown:(UIButton *)sender {
+    sender.alpha = 0.5;
+}
+
+- (void)LXHInputAmountCellTextButtonTouchUpOutside:(UIButton *)sender {
+    sender.alpha = 1;
+}
+
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
     static NSMutableArray *dataForCells = nil;
@@ -136,6 +149,8 @@
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
             [dataForCells addObject:dic];
             dic = @{@"text1":@"扫描", @"text3":@"地址: ", @"cellType":@"LXHInputAddressCell", @"text2":@"选择", @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"text":@"粘贴", @"isSelectable":@"0", @"warningText":@"用过的本地找零地址 "};
+            [dataForCells addObject:dic];
+            dic = @{@"text":@"数量:", @"text1":@"输入最大值", @"isSelectable":@"0", @"BTC":@" BTC", @"cellType":@"LXHInputAmountCell"};
             [dataForCells addObject:dic];
         }
     }
@@ -168,6 +183,8 @@
         return 100;
     if ([cellType isEqualToString:@"LXHInputAddressCell"])
         return 101;
+    if ([cellType isEqualToString:@"LXHInputAmountCell"])
+        return 102;
     return -1;
 }
 
@@ -259,6 +276,31 @@
         [cellView.textButton3 addTarget:self action:@selector(LXHInputAddressCellTextButton3TouchDown:) forControlEvents:UIControlEventTouchDown];
         [cellView.textButton3 addTarget:self action:@selector(LXHInputAddressCellTextButton3TouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
     }
+    if ([cellType isEqualToString:@"LXHInputAmountCell"]) {
+        LXHInputAmountCell *cellView = (LXHInputAmountCell *)view;
+        NSString *BTC = [dataForRow valueForKey:@"BTC"];
+        if (!BTC)
+            BTC = @"";
+        NSMutableAttributedString *BTCAttributedString = [cellView.BTC.attributedText mutableCopy];
+        [BTCAttributedString.mutableString setString:BTC];
+        cellView.BTC.attributedText = BTCAttributedString;
+        NSString *text = [dataForRow valueForKey:@"text"];
+        if (!text)
+            text = @"";
+        NSMutableAttributedString *textAttributedString = [cellView.text.attributedText mutableCopy];
+        [textAttributedString.mutableString setString:text];
+        cellView.text.attributedText = textAttributedString;
+        NSString *text1 = [dataForRow valueForKey:@"text1"];
+        if (!text1)
+            text1 = @"";
+        NSMutableAttributedString *text1AttributedString = [cellView.text1.attributedText mutableCopy];
+        [text1AttributedString.mutableString setString:text1];
+        cellView.text1.attributedText = text1AttributedString;
+        cellView.textButton.tag = indexPath.row;
+        [cellView.textButton addTarget:self action:@selector(LXHInputAmountCellTextButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [cellView.textButton addTarget:self action:@selector(LXHInputAmountCellTextButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+        [cellView.textButton addTarget:self action:@selector(LXHInputAmountCellTextButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+    }
     return cell;
 }
 
@@ -268,6 +310,8 @@
         if ([cellType isEqualToString:@"LXHTopLineCell"])
             return 0.5;
         if ([cellType isEqualToString:@"LXHInputAddressCell"])
+            return 65;
+        if ([cellType isEqualToString:@"LXHInputAmountCell"])
             return 65;
     }
     return 0;
@@ -291,6 +335,10 @@
             }
             break;
         case 1:
+            {
+            }
+            break;
+        case 2:
             {
             }
             break;

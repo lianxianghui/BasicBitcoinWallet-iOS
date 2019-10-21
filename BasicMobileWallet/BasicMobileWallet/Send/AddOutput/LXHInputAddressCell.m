@@ -119,7 +119,6 @@
 - (UILabel *)text {
     if (!_text) {
         _text = [[UILabel alloc] init];
-        _text.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -153,7 +152,6 @@
 - (UILabel *)text1 {
     if (!_text1) {
         _text1 = [[UILabel alloc] init];
-        _text1.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -187,7 +185,6 @@
 - (UILabel *)text2 {
     if (!_text2) {
         _text2 = [[UILabel alloc] init];
-        _text2.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -222,7 +219,6 @@
 - (UILabel *)warningText {
     if (!_warningText) {
         _warningText = [[UILabel alloc] init];
-        _warningText.numberOfLines = 0;
         NSMutableAttributedString *attributedText = [NSMutableAttributedString new];
         UIFont *font = nil;
         NSMutableParagraphStyle *paragraphStyle = nil;
@@ -267,7 +263,6 @@
 - (UILabel *)addressText {
     if (!_addressText) {
         _addressText = [[UILabel alloc] init];
-        _addressText.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:10.5];
         if (!font) font = [UIFont systemFontOfSize:10.5];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -290,7 +285,6 @@
 - (UILabel *)text3 {
     if (!_text3) {
         _text3 = [[UILabel alloc] init];
-        _text3.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:12];
         if (!font) font = [UIFont systemFontOfSize:12];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];

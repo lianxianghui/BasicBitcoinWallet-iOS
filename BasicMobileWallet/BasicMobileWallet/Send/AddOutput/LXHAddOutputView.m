@@ -127,7 +127,6 @@
 - (UILabel *)value {
     if (!_value) {
         _value = [[UILabel alloc] init];
-        _value.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"" size:13];
         if (!font) font = [UIFont systemFontOfSize:13];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -150,7 +149,6 @@
 - (UILabel *)title {
     if (!_title) {
         _title = [[UILabel alloc] init];
-        _title.numberOfLines = 0;
         NSMutableAttributedString *attributedText = [NSMutableAttributedString new];
         UIFont *font = nil;
         NSMutableParagraphStyle *paragraphStyle = nil;
@@ -219,7 +217,6 @@
 - (UILabel *)text {
     if (!_text) {
         _text = [[UILabel alloc] init];
-        _text.numberOfLines = 0;
         NSMutableAttributedString *attributedText = [NSMutableAttributedString new];
         UIFont *font = nil;
         NSMutableParagraphStyle *paragraphStyle = nil;
@@ -273,7 +270,6 @@
 - (UILabel *)title1 {
     if (!_title1) {
         _title1 = [[UILabel alloc] init];
-        _title1.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Light" size:17];
         if (!font) font = [UIFont systemFontOfSize:17];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -307,7 +303,6 @@
 - (UILabel *)leftText {
     if (!_leftText) {
         _leftText = [[UILabel alloc] init];
-        _leftText.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Light" size:17];
         if (!font) font = [UIFont systemFontOfSize:17];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
