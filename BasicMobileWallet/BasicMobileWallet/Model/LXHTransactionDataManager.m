@@ -141,5 +141,12 @@ static NSString *const aesPassword = LXHAESPassword;
     }];
 }
 
+- (NSArray<LXHTransactionOutput *> *)utxosOfAllTransactions {
+    return [self.transactionList bk_reduce:[NSMutableArray array] withBlock:^id(NSMutableArray *utxos, LXHTransaction *transaction) {
+        [utxos addObjectsFromArray:[transaction utxos]];
+        return utxos;
+    }];
+}
+
 @end
 

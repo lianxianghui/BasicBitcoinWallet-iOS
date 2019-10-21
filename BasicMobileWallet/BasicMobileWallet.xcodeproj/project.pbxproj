@@ -48,6 +48,9 @@
 		8C2CC6EC2334C0D8005AA93C /* LXHWalletChangeLevelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC6EB2334C0D8005AA93C /* LXHWalletChangeLevelModel.m */; };
 		8C6ACE8D23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C6ACE8C23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m */; };
 		8C9332CB235D816200FBF238 /* LXHOutputDetailTextRightIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332CA235D816200FBF238 /* LXHOutputDetailTextRightIconCell.m */; };
+		8C9332D4235D8BD600FBF238 /* LXHBalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332CE235D8BD600FBF238 /* LXHBalanceViewController.m */; };
+		8C9332D5235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332CF235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m */; };
+		8C9332D6235D8BD600FBF238 /* LXHBalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332D0235D8BD600FBF238 /* LXHBalanceView.m */; };
 		8CA31F5C22D9872A00CEA828 /* LXHInputMnemonicWordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */; };
 		8CA31F5D22D9872A00CEA828 /* LXHInputMnemonicWordsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5A22D9872900CEA828 /* LXHInputMnemonicWordsView.m */; };
 		8CA31F5E22D9872A00CEA828 /* LXHWordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5B22D9872900CEA828 /* LXHWordCell.m */; };
@@ -282,6 +285,12 @@
 		8C6ACE8C23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHBitcoinWebApiSmartbit.m; sourceTree = "<group>"; };
 		8C9332C9235D816200FBF238 /* LXHOutputDetailTextRightIconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHOutputDetailTextRightIconCell.h; sourceTree = "<group>"; };
 		8C9332CA235D816200FBF238 /* LXHOutputDetailTextRightIconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHOutputDetailTextRightIconCell.m; sourceTree = "<group>"; };
+		8C9332CE235D8BD600FBF238 /* LXHBalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHBalanceViewController.m; sourceTree = "<group>"; };
+		8C9332CF235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHBalanceLeftRightTextCell.m; sourceTree = "<group>"; };
+		8C9332D0235D8BD600FBF238 /* LXHBalanceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHBalanceView.m; sourceTree = "<group>"; };
+		8C9332D1235D8BD600FBF238 /* LXHBalanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHBalanceViewController.h; sourceTree = "<group>"; };
+		8C9332D2235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHBalanceLeftRightTextCell.h; sourceTree = "<group>"; };
+		8C9332D3235D8BD600FBF238 /* LXHBalanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHBalanceView.h; sourceTree = "<group>"; };
 		8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputMnemonicWordsViewController.m; sourceTree = "<group>"; };
 		8CA31F5722D9872900CEA828 /* LXHInputMnemonicWordsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputMnemonicWordsView.h; sourceTree = "<group>"; };
 		8CA31F5822D9872900CEA828 /* LXHWordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWordCell.h; sourceTree = "<group>"; };
@@ -889,6 +898,27 @@
 				8C2CC6E5233236A9005AA93C /* LXHShowWalletMnemonicWordsView.m */,
 			);
 			path = ShowWalletMnemonicWords;
+			sourceTree = "<group>";
+		};
+		8C9332CC235D8BD600FBF238 /* Balance */ = {
+			isa = PBXGroup;
+			children = (
+				8C9332CD235D8BD600FBF238 /* Balance */,
+			);
+			path = Balance;
+			sourceTree = "<group>";
+		};
+		8C9332CD235D8BD600FBF238 /* Balance */ = {
+			isa = PBXGroup;
+			children = (
+				8C9332D1235D8BD600FBF238 /* LXHBalanceViewController.h */,
+				8C9332CE235D8BD600FBF238 /* LXHBalanceViewController.m */,
+				8C9332D2235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.h */,
+				8C9332CF235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m */,
+				8C9332D0235D8BD600FBF238 /* LXHBalanceView.m */,
+				8C9332D3235D8BD600FBF238 /* LXHBalanceView.h */,
+			);
+			path = Balance;
 			sourceTree = "<group>";
 		};
 		8CA31F5522D9872900CEA828 /* InputMnemonicWords */ = {
@@ -1501,6 +1531,7 @@
 				8CAA6696230E468200B17222 /* Main */,
 				8CAA66A2230E92E300B17222 /* Send */,
 				8CAA6690230E468200B17222 /* Receive */,
+				8C9332CC235D8BD600FBF238 /* Balance */,
 				8C2CC66A232F20E4005AA93C /* Mine */,
 				8C2CC6C7232F670A005AA93C /* Model */,
 				8C2CC6DC23321484005AA93C /* HelperClass */,
@@ -1873,10 +1904,12 @@
 				8CAA66B2230E92E300B17222 /* LXHEmptyCell.m in Sources */,
 				8C2CC6AB232F20E5005AA93C /* LXHTransactionCell.m in Sources */,
 				8C2CC6AD232F20E5005AA93C /* LXHLineCell.m in Sources */,
+				8C9332D5235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m in Sources */,
 				8CA3226722DEBE9900CEA828 /* BTCBlindSignature.m in Sources */,
 				8CA31F9922D98BAC00CEA828 /* LXHWelcomeView.m in Sources */,
 				8C2CC6A7232F20E5005AA93C /* LXHTransactionDetailViewController.m in Sources */,
 				8CA3228122DEBE9900CEA828 /* BTCBitcoinURL.m in Sources */,
+				8C9332D4235D8BD600FBF238 /* LXHBalanceViewController.m in Sources */,
 				8C2CC6E8233236A9005AA93C /* LXHShowWalletMnemonicWordsViewController.m in Sources */,
 				8CA3226822DEBE9900CEA828 /* BTCQRCode.m in Sources */,
 				8C2CC6BD232F20E5005AA93C /* LXHSettingViewController.m in Sources */,
@@ -1933,6 +1966,7 @@
 				8CA3229C22DEBE9900CEA828 /* BTCBlockchainInfo+Tests.m in Sources */,
 				8CA3227822DEBE9900CEA828 /* BTCPriceSource.m in Sources */,
 				8CA3227A22DEBE9900CEA828 /* BTCOpcode.m in Sources */,
+				8C9332D6235D8BD600FBF238 /* LXHBalanceView.m in Sources */,
 				8CA3211F22DDD99400CEA828 /* LXHSelectMnemonicWordLengthView.m in Sources */,
 				8CA3227622DEBE9900CEA828 /* BTCBase58+Tests.m in Sources */,
 				8CA3227922DEBE9900CEA828 /* BTCSecretSharing.m in Sources */,

@@ -5,7 +5,7 @@
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import "LXHTabBarPageViewController.h"
-//#import "LXHBalanceViewController.h"
+#import "LXHBalanceViewController.h"
 #import "LXHSendViewController.h"
 #import "LXHCurrentReceivingAddressViewController.h"
 #import "LXHMineViewController.h"
@@ -52,13 +52,13 @@
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
 
-//    viewController = [[LXHBalanceViewController alloc] init];
-//    navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-//    itemImage = [UIImage imageNamed:@"main_tabbarpage_item_3inner_unselected_icon"];
-//    itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_3inner_selected_icon"];
-//    item = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"余额", nil) image:itemImage selectedImage:itemSelectedImage];
-//    navigationController.tabBarItem = item;
-//    [self addChildViewController:navigationController];
+    viewController = [[LXHBalanceViewController alloc] init];
+    navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    itemImage = [UIImage imageNamed:@"main_tabbarpage_item_3inner_unselected_icon"];
+    itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_3inner_selected_icon"];
+    item = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"余额", nil) image:itemImage selectedImage:itemSelectedImage];
+    navigationController.tabBarItem = item;
+    [self addChildViewController:navigationController];
 
     viewController = [[LXHMineViewController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];

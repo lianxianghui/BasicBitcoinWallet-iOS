@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSArray *)transactionListByAddress:(NSString *)address;
 - (LXHTransaction *)transactionByTxid:(NSString *)txid;
+- (NSArray<LXHTransactionOutput *> *)utxosOfAllTransactions;
 @end
 
 NS_ASSUME_NONNULL_END
