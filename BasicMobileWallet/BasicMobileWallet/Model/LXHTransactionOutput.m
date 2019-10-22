@@ -48,10 +48,18 @@
     return [self.lockingScript isEqualToString:output.lockingScript];
 }
 
+- (NSMutableDictionary *)tempData {
+    if (!_tempData)
+        _tempData = [NSMutableDictionary dictionary];
+    return _tempData;
+}
+
 + (NSDecimalNumber *)valueSumOfOutputs:(NSArray<LXHTransactionOutput *> *)outputs {
     return [outputs bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionOutput *utxo) {
         return [sum decimalNumberByAdding:utxo.value];
     }];
 }
+
+
 
 @end

@@ -37,6 +37,8 @@ typedef NS_ENUM(NSInteger, LXHLockingScriptType) {
 
 @property (nonatomic) NSString *txid;//所在交易的Id
 
+@property (nonatomic) NSMutableDictionary *tempData;
+
 - (BOOL)isUnspent;
 
 + (NSDecimalNumber *)valueSumOfOutputs:(NSArray<LXHTransactionOutput *> *)outputs;
