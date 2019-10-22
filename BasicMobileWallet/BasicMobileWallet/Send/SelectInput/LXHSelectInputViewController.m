@@ -12,6 +12,7 @@
 #import "LXHSelectInputCell.h"
 #import "LXHTransactionDataManager.h"
 #import "UILabel+LXHText.h"
+#import "UIButton+LXHText.h"
 #import "BlocksKit.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -116,9 +117,12 @@
 }
 
 //Actions
-- (void)buttonClicked:(UIButton *)sender {
+- (void)buttonClicked:(UIButton *)sender { //调整顺序按钮
+    UITableView *listView = self.contentView.listView;
+    [listView setEditing:!listView.editing animated:YES];
+    NSString *text = listView.editing ? NSLocalizedString(@"完成", nil) : NSLocalizedString(@"调整顺序", nil);
+    [sender updateAttributedTitleString:text forState:UIControlStateNormal];
 }
-
 
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
@@ -197,9 +201,15 @@
                     formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
                 }
                 LXHTransaction *transaction = [[LXHTransactionDataManager sharedInstance] transactionByTxid:utxo.txid];
-                NSInteger time = [transaction.time integerValue];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
-                NSString *transactionTime = [formatter stringFromDate:date];
+                
+                NSString *transactionTime = nil;
+                if ([transaction.time isEqual:[NSNull null]]) { //还没有打进包
+                    transactionTime = @"";
+                } else {
+                    NSInteger time = [transaction.time integerValue];
+                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
+                    transactionTime = [formatter stringFromDate:date];
+                }
                 NSMutableDictionary *dic = @{@"circleImage":@"check_circle",
                                              @"cellType":@"LXHSelectInputCell",
                                              @"time": NSLocalizedString(@"交易时间:", nil),
@@ -271,10 +281,10 @@
         view.tag = tag;
         [cell.contentView addSubview:view];
         //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
-        //cell.contentView.backgroundColor = view.backgroundColor;
-        //cell.backgroundColor = view.backgroundColor;
-        cell.contentView.backgroundColor = [UIColor clearColor];
-        cell.backgroundColor = [UIColor clearColor];
+        cell.contentView.backgroundColor = view.backgroundColor;
+        cell.backgroundColor = view.backgroundColor;
+//        cell.contentView.backgroundColor = [UIColor clearColor];
+//        cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(cell.contentView);
         }];
@@ -364,6 +374,27 @@
     [self reloadListView];
     //[self tableView:tableView cellForRowAtIndexPath:indexPath];//will refresh cell with changed cellData
     
+}
+
+//以下代码使得Tableview cell 可以通过被拖动改变顺序
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleNone;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
+    if ([cellType isEqualToString:@"LXHSelectInputCell"])
+        return YES;
+    else
+        return NO;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    [self.cellDataListForListView exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
 @end

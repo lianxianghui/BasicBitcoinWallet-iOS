@@ -70,7 +70,7 @@
         for (NSDictionary *outputDic in outputs) {
             LXHTransactionOutput *output = [LXHTransactionOutput new];
             output.value = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", outputDic[@"value"]]];
-            output.spendTxid = [outputDic[@"spend_txid"] isEqual:[NSNull null]] ? nil : outputDic[@"spend_txid"];
+            output.spendTxid = outputDic[@"spend_txid"];
             NSArray *outputAddresses = [outputDic valueForKey:@"addresses"];
             if (outputAddresses.count == 1) //目前只处理每个输出只有一个输出地址的情况
                 output.address = outputAddresses[0];

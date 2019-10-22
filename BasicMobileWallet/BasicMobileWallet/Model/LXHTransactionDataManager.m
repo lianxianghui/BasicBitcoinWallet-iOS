@@ -74,7 +74,7 @@ static NSString *const aesPassword = LXHAESPassword;
 
 - (void)requestDataWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock 
                        failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    NSArray *addresses = [[LXHWallet mainAccount] usedAddresses];
+    NSArray *addresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
     [LXHTransactionDataManager requestTransactionsWithNetworkType:LXHWallet.mainAccount.currentNetworkType addresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
         NSArray *transactions = resultDic[@"transactions"];
         [self setTransactionList:transactions];
@@ -143,7 +143,7 @@ static NSString *const aesPassword = LXHAESPassword;
 
 - (NSMutableArray<LXHTransactionOutput *> *)utxosOfAllTransactions {
     return [self.transactionList bk_reduce:[NSMutableArray array] withBlock:^id(NSMutableArray *utxos, LXHTransaction *transaction) {
-        [utxos addObjectsFromArray:[transaction utxos]];
+        [utxos addObjectsFromArray:[transaction myUtxos]];
         return utxos;
     }];
 }

@@ -1056,14 +1056,14 @@
 		8C9334B1235DD15A00FBF238 /* AddOutput */ = {
 			isa = PBXGroup;
 			children = (
-				8C9334B2235DD15A00FBF238 /* LXHAddOutputViewController.m */,
+				8C9334B7235DD15A00FBF238 /* LXHAddOutputView.h */,
 				8C9334B3235DD15A00FBF238 /* LXHAddOutputView.m */,
 				8C9334B4235DD15A00FBF238 /* LXHInputAddressCell.h */,
-				8C9334B5235DD15A00FBF238 /* LXHInputAmountCell.h */,
-				8C9334B6235DD15A00FBF238 /* LXHAddOutputViewController.h */,
-				8C9334B7235DD15A00FBF238 /* LXHAddOutputView.h */,
 				8C9334B8235DD15A00FBF238 /* LXHInputAddressCell.m */,
+				8C9334B5235DD15A00FBF238 /* LXHInputAmountCell.h */,
 				8C9334B9235DD15A00FBF238 /* LXHInputAmountCell.m */,
+				8C9334B6235DD15A00FBF238 /* LXHAddOutputViewController.h */,
+				8C9334B2235DD15A00FBF238 /* LXHAddOutputViewController.m */,
 			);
 			path = AddOutput;
 			sourceTree = "<group>";

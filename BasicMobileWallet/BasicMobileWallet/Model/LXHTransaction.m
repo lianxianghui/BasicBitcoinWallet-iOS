@@ -116,9 +116,10 @@
     return _outputs;
 }
 
-- (NSArray<LXHTransactionOutput *> *)utxos {
+- (NSArray<LXHTransactionOutput *> *)myUtxos {
     return [self.outputs bk_select:^BOOL(LXHTransactionOutput *obj) {
-        return [obj isUnspent];
+        NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
+        return [usedAndCurrentAddresses containsObject:obj.address] && [obj isUnspent];
     }];
 }
 
