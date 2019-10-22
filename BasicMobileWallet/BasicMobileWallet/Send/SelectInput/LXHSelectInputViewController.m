@@ -36,17 +36,11 @@
     self = [super init];
     if (self) {
         _data = data;
-    }
-    return self;
-}
-
-- (NSMutableArray *)selectedUtxos {
-    if (!_selectedUtxos) {
         _selectedUtxos = [_data[@"selectedUtxos"] mutableCopy];
         if (!_selectedUtxos)
             _selectedUtxos = [NSMutableArray array];
     }
-    return _selectedUtxos;
+    return self;
 }
 
 - (void)dealloc
@@ -172,7 +166,7 @@
     }];
     
     NSMutableArray *ret = nil;
-    NSArray *selectedUtxos = _data[@"selectedUtxos"];
+    NSArray *selectedUtxos = self.selectedUtxos;
     if (selectedUtxos) { //把selectedUtxos放前面
         ret = [NSMutableArray arrayWithCapacity:utxos.count];
         [utxos removeObjectsInArray:selectedUtxos];
@@ -204,7 +198,7 @@
                 
                 NSString *transactionTime = nil;
                 if ([transaction.time isEqual:[NSNull null]]) { //还没有打进包
-                    transactionTime = @"";
+                    transactionTime = @" ";
                 } else {
                     NSInteger time = [transaction.time integerValue];
                     NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
@@ -391,10 +385,19 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     [self.cellDataListForListView exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
+    self.selectedUtxos = [self selectedUtxosFromCellDataList].mutableCopy;
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
+}
+
+- (NSArray *)selectedUtxosFromCellDataList {
+    return [[self.cellDataListForListView bk_select:^BOOL(NSDictionary *cellData) {
+        return [cellData[@"isChecked"] boolValue];
+    }] bk_map:^id(NSDictionary *cellData) {
+        return cellData[@"model"];
+    }];
 }
 
 @end
