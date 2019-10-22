@@ -365,9 +365,8 @@
     [self refreshValueText];
     
     cellData[@"isChecked"] = @(isChecked);
-    [self reloadListView];
-    //[self tableView:tableView cellForRowAtIndexPath:indexPath];//will refresh cell with changed cellData
     
+    [self.contentView.listView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 //以下代码使得Tableview cell 可以通过被拖动改变顺序
