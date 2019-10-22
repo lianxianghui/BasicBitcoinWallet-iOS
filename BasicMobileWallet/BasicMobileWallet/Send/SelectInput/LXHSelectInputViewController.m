@@ -317,6 +317,7 @@
             cellView.checkedImage.image = [UIImage imageNamed:checkedImageImageName];
         BOOL isChecked = [[dataForRow valueForKey:@"isChecked"] boolValue];
         cellView.checkedImage.hidden = !isChecked;
+        cellView.circleImage.hidden = isChecked;
         cellView.button.tag = indexPath.row;
         [cellView.button addTarget:self action:@selector(LXHSelectInputCellButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -353,19 +354,16 @@
     LXHTransactionOutput *output = cellData[@"model"];
     BOOL isChecked =  [cellData[@"isChecked"] boolValue];
     isChecked = !isChecked;
-    cellData[@"isChecked"] = @(isChecked);
     if (isChecked)
         [self.selectedUtxos addObject:output];
     else
         [self.selectedUtxos removeObject:output];
-    [self reloadListView];
     [self refreshValueText];
     
-//    NSInteger tag = [self tableView:tableView viewTagAtIndexPath:indexPath];
-//    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-//    UIView *view = [cell.contentView viewWithTag:tag];
-//    LXHSelectInputCell *cellView = (LXHSelectInputCell *)view;
-//    cellView.checkedImage.hidden = !isChecked;
+    cellData[@"isChecked"] = @(isChecked);
+    [self reloadListView];
+    //[self tableView:tableView cellForRowAtIndexPath:indexPath];//will refresh cell with changed cellData
+    
 }
 
 @end
