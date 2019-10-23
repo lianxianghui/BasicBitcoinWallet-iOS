@@ -8,9 +8,9 @@
 #import "Masonry.h"
 #import "LXHSelectFeeRateView.h"
 #import "LXHFeeOptionCell.h"
-#import "LXHBitcoinfeesNetworkRequest.h"
 #import "UIViewController+LXHAlert.h"
 #import "NSString+Base.h"
+#import "LXHBitcoinfeesNetworkRequest.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -22,9 +22,19 @@
 @property (nonatomic) LXHSelectFeeRateView *contentView;
 @property (nonatomic) NSDictionary *feeRateDic;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
+@property (nonatomic) NSMutableDictionary *data;
 @end
 
 @implementation LXHSelectFeeRateViewController
+
+- (instancetype)initWithData:(NSMutableDictionary *)data
+{
+    self = [super init];
+    if (self) {
+        _data = data;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -85,6 +95,7 @@
 //Actions
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    _data[@"feeRateValue"] = [self currentSelectedFeeRate];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -119,7 +130,9 @@
                 for (NSString *key in keys) {
                     NSString *feeRateTitle = [key firstLetterCapitalized];
                     NSString *feeRateValueText = [NSString stringWithFormat:@"%@ sat/byte", _feeRateDic[key]];
-                    NSDictionary *dic = @{@"feeRate":feeRateValueText, @"isSelectable":@"1", @"title":feeRateTitle, @"circleImage":@"check_circle", @"cellType":@"LXHFeeOptionCell", @"checkedImage":@"checked_circle"};
+                    NSMutableDictionary *dic = @{@"feeRate":feeRateValueText, @"isSelectable":@"1", @"title":feeRateTitle, @"circleImage":@"check_circle", @"cellType":@"LXHFeeOptionCell", @"checkedImage":@"checked_circle"}.mutableCopy;
+                    dic[@"isChecked"] = @([key isEqualToString:@"fastestFee"]);
+                    dic[@"feeRateValue"] = _feeRateDic[key];
                     [_cellDataListForListView addObject:dic];
                 }
             }
@@ -211,6 +224,8 @@
         NSString *checkedImageImageName = [dataForRow valueForKey:@"checkedImage"];
         if (checkedImageImageName)
             cellView.checkedImage.image = [UIImage imageNamed:checkedImageImageName];
+        BOOL isChecked = [[dataForRow valueForKey:@"isChecked"] boolValue];
+        cellView.checkedImage.hidden = !isChecked;
     }
     return cell;
 }
@@ -236,22 +251,25 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch(indexPath.row) {
-        case 0:
-            {
-            }
-            break;
-        case 1:
-            {
-            }
-            break;
-        case 2:
-            {
-            }
-            break;
-        default:
-            break;
+    NSMutableDictionary *cellData = [self cellDataForTableView:tableView atIndexPath:indexPath];
+    [self clearIsChecked];
+    cellData[@"isChecked"] = @(YES);
+    [tableView reloadData];
+}
+
+- (void)clearIsChecked {
+    for (NSMutableDictionary *cellData in _cellDataListForListView) {
+        cellData[@"isChecked"] = @(NO);
     }
+}
+
+- (id)currentSelectedFeeRate {
+    for (NSDictionary *cellData in _cellDataListForListView) {
+        if ([cellData[@"isChecked"] isEqual:@(YES)]) {
+            return cellData[@"feeRateValue"];
+        }
+    }
+    return nil;
 }
 
 @end

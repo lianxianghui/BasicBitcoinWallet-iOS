@@ -16,10 +16,19 @@
     
 @interface LXHInputFeeViewController()
 @property (nonatomic) LXHInputFeeView *contentView;
-
+@property (nonatomic) NSMutableDictionary *data;
 @end
 
 @implementation LXHInputFeeViewController
+
+- (instancetype)initWithData:(NSMutableDictionary *)data {
+    self = [super init];
+    if (self) {
+        _data = data;
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

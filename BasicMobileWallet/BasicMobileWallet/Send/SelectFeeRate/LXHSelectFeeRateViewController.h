@@ -8,4 +8,5 @@
 
 @interface LXHSelectFeeRateViewController : UIViewController
 
+- (instancetype)initWithData:(NSMutableDictionary *)data;
 @end

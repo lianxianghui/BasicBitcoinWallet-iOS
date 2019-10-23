@@ -29,7 +29,7 @@ static NSString *const cacheFileName = @"LXHBitcoinfeesNetworkRequestCache";
 - (void)requestWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock
                    failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     NSDictionary *cachedDate = [self cachedData];
-    if (cachedDate && [self cacheExpiredWithDate:cachedDate[@"responseTime"]]) {
+    if (cachedDate && ![self cacheExpiredWithDate:cachedDate[@"responseTime"]]) {
         successBlock(cachedDate[@"responseData"]);
         return;
     } else {

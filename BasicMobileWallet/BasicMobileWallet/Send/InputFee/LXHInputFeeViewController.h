@@ -7,5 +7,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LXHInputFeeViewController : UIViewController
-
+- (instancetype)initWithData:(NSMutableDictionary *)data;
 @end

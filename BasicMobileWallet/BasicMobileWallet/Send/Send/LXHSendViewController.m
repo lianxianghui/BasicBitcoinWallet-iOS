@@ -28,6 +28,8 @@
 @property (nonatomic) LXHSendView *contentView;
 @property (nonatomic) NSMutableDictionary *inputDataDic;
 @property (nonatomic) NSMutableDictionary *outputDataDic;
+@property (nonatomic) NSMutableDictionary *feeRateDic;
+@property (nonatomic) NSMutableDictionary *feeDic;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
 @end
 
@@ -39,6 +41,8 @@
     if (self) {
         _inputDataDic = [NSMutableDictionary dictionary];
         _outputDataDic = [NSMutableDictionary dictionary];
+        _feeRateDic = [NSMutableDictionary dictionary];
+        _feeDic = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -80,13 +84,13 @@
 
 //Actions
 - (void)LXHFeeCellInputFeeValueButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHInputFeeViewController alloc] init];
+    UIViewController *controller = [[LXHInputFeeViewController alloc] initWithData:_feeDic];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
 - (void)LXHFeeCellSelectFeerateButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] init];
+    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithData:_feeRateDic];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
@@ -264,7 +268,7 @@
         if ([cellType isEqualToString:@"LXHInputOutputCell"])
             return 50;
         if ([cellType isEqualToString:@"LXHFeeCell"])
-            return 49.99999999999997;
+            return 50;
     }
     return 0;
 }
