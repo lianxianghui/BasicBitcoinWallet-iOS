@@ -28,6 +28,7 @@
 @property (nonatomic) LXHSendView *contentView;
 @property (nonatomic) NSMutableDictionary *inputDataDic;
 @property (nonatomic) NSMutableDictionary *outputDataDic;
+@property (nonatomic) NSMutableArray *cellDataListForListView;
 @end
 
 @implementation LXHSendViewController
@@ -60,6 +61,11 @@
     [self setDelegates];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self refreshListView];
+}
+
 - (void)swipeView:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -79,48 +85,61 @@
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
-
 - (void)LXHFeeCellSelectFeerateButtonClicked:(UIButton *)sender {
     UIViewController *controller = [[LXHSelectFeeRateViewController alloc] init];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
+- (void)refreshListView {
+    _cellDataListForListView = nil;
+    [self.contentView.listView reloadData];
+}
 
 //Delegate Methods
-- (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
+- (NSArray *)cellDataListForTableView:(UITableView *)tableView {
+    if (tableView == self.contentView.listView) {
+        if (!_cellDataListForListView) {
+            _cellDataListForListView = [NSMutableArray array];
             NSDictionary *dic = nil;
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
-            [dataForCells addObject:dic];
+            [_cellDataListForListView addObject:dic];
             dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输入"};
-            [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx ", @"text":@"1. ", @"isSelectable":@"1", @"btcValue":@"0.00000323 BTC", @"cellType":@"LXHInputOutputCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"text":@"2.", @"isSelectable":@"1", @"btcValue":@"0.00000323 BTC", @"cellType":@"LXHInputOutputCell"};
-            [dataForCells addObject:dic];
+            [_cellDataListForListView addObject:dic];
+            NSArray *selectedUtxos = _inputDataDic[@"selectedUtxos"];
+            for (NSUInteger i = 0 ; i < selectedUtxos.count; i++) {
+                LXHTransactionOutput *utxo = selectedUtxos[i];
+                NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
+                mutableDic[@"addressText"] = utxo.address;
+                mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i+1];
+                mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", utxo.value];
+                [_cellDataListForListView addObject:mutableDic];
+            }
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
-            [dataForCells addObject:dic];
+            [_cellDataListForListView addObject:dic];
             dic = @{@"text":@"手续费：40sat/byte （费率）", @"isSelectable":@"0", @"cellType":@"LXHFeeCell"};
-            [dataForCells addObject:dic];
+            [_cellDataListForListView addObject:dic];
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
-            [dataForCells addObject:dic];
+            [_cellDataListForListView addObject:dic];
             dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输出"};
-            [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx ", @"text":@"1. ", @"isSelectable":@"1", @"btcValue":@"0.00003023 BTC", @"cellType":@"LXHInputOutputCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"text":@"2.", @"isSelectable":@"1", @"btcValue":@"0.00000023 BTC", @"cellType":@"LXHInputOutputCell"};
-            [dataForCells addObject:dic];
+            [_cellDataListForListView addObject:dic];
+            NSArray *outputs = _outputDataDic[@"outputs"];
+            for (NSUInteger i = 0 ; i < outputs.count; i++) {
+                LXHTransactionOutput *output = outputs[i];
+                NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
+                mutableDic[@"addressText"] = output.address;
+                mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i+1];
+                mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", output.value];
+                [_cellDataListForListView addObject:mutableDic];
+            }
         }
+        return _cellDataListForListView;
     }
-    return dataForCells;
+    return nil;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    NSArray *dataForTableView = [self dataForTableView:tableView];
+    NSArray *dataForTableView = [self cellDataListForTableView:tableView];
     if (indexPath.row < dataForTableView.count)
         return [dataForTableView objectAtIndex:indexPath.row];
     else
@@ -130,7 +149,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
-        NSArray *data = [self dataForTableView:tableView];
+        NSArray *data = [self cellDataListForTableView:tableView];
         if (indexPath.row < data.count) {
             NSDictionary *cellData = [data objectAtIndex:indexPath.row];
             return [cellData valueForKey:@"cellType"];
@@ -159,7 +178,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self dataForTableView:tableView].count;
+    return [self cellDataListForTableView:tableView].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
