@@ -19,4 +19,6 @@
  如果key为null则什么都不做
  */
 - (void)setValue:(nullable id)value forNullableKey:(nullable NSString *)key;
+
+- (void)eliminateAllNullObjectValues;
 @end

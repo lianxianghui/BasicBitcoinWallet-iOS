@@ -9,6 +9,7 @@
 #import "LXHBitcoinWebApiSmartbit.h"
 #import "LXHNetworkRequest.h"
 #import "LXHTransaction.h"
+#import "NSMutableDictionary+Base.h"
 
 @interface LXHBitcoinWebApiSmartbit ()
 @property (nonatomic) LXHBitcoinNetworkType type;
@@ -46,7 +47,9 @@
 //参考 https://testnet-api.smartbit.com.au/v1/blockchain/address/mrQoR4BMyZWyAZfHF4NuqRmkVtp87AqsUh,n1dAqxk6UCb6568d5f28W2sh6LvwkP5snW/wallet 的返回值
 - (NSArray<LXHTransaction *> *)allTransactionModelsWithTransactionDics:(NSArray *)transactionDics {
     NSMutableArray *ret = [NSMutableArray array];
-    for (NSDictionary *dic  in transactionDics) {
+    for (NSDictionary *originalDic  in transactionDics) {
+        NSMutableDictionary *dic = [originalDic mutableCopy];
+        [dic eliminateAllNullObjectValues];
         LXHTransaction *model = [[LXHTransaction alloc] init];
         model.txid = dic[@"txid"];
         model.blockhash = dic[@"hash"];//todo
@@ -57,7 +60,9 @@
         model.outputAmount = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", dic[@"output_amount"]]];
         model.fees = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", dic[@"fee"]]];
         NSArray *inputs = dic[@"inputs"];
-        for (NSDictionary *inputDic in inputs) {
+        for (NSDictionary *originalInputDic in inputs) {
+            NSMutableDictionary *inputDic = [originalInputDic mutableCopy];
+            [inputDic eliminateAllNullObjectValues];
             LXHTransactionInput *input = [LXHTransactionInput new];
             input.value =  [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", inputDic[@"value"]]];
             input.txid = inputDic[@"txid"];
@@ -67,7 +72,9 @@
             [model.inputs addObject:input];
         }
         NSArray *outputs = dic[@"outputs"];
-        for (NSDictionary *outputDic in outputs) {
+        for (NSDictionary *originalOutputDic in outputs) {
+            NSMutableDictionary *outputDic = [originalOutputDic mutableCopy];
+            [outputDic eliminateAllNullObjectValues];
             LXHTransactionOutput *output = [LXHTransactionOutput new];
             output.value = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", outputDic[@"value"]]];
             output.spendTxid = outputDic[@"spend_txid"];

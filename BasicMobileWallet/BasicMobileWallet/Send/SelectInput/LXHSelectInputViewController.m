@@ -187,7 +187,7 @@
                 LXHTransaction *transaction = [[LXHTransactionDataManager sharedInstance] transactionByTxid:utxo.txid];
                 
                 NSString *transactionTime = nil;
-                if ([transaction.time isEqual:[NSNull null]]) { //还没有打进包
+                if (!transaction.time) { //还没有打进包
                     transactionTime = @" ";
                 } else {
                     NSInteger time = [transaction.time integerValue];

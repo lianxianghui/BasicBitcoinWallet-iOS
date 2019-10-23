@@ -62,18 +62,27 @@
 }
 
 - (void)setViewProperties {
-    NSString *balanceValueText = [NSString stringWithFormat:@"%@ BTC", [[LXHTransactionDataManager sharedInstance] balance]];
-    [self.contentView.balanceValue updateAttributedTextString:balanceValueText];
+    [self refreshBalance];
     
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(listViewRefresh)];
     self.contentView.listView.mj_header = header;
+}
+
+- (void)refreshBalance {
+    NSString *balanceValueText = [NSString stringWithFormat:@"%@ BTC", [[LXHTransactionDataManager sharedInstance] balance]];
+    [self.contentView.balanceValue updateAttributedTextString:balanceValueText];
+}
+
+- (void)refreshContentView {
+    [self refreshBalance];
+    [self reloadListView];
 }
 
 - (void)addObservers {
     //观察transactionList, 有变化时刷新列表
     __weak __typeof(self)weakSelf = self;
    _observerToken =  [[LXHTransactionDataManager sharedInstance] bk_addObserverForKeyPath:@"transactionList" task:^(id target) {
-       [weakSelf reloadListView];
+       [weakSelf refreshContentView];
     }];
 }
 

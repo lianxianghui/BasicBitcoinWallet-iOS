@@ -36,7 +36,7 @@
 }
 
 - (BOOL)isUnspent {
-    return _spendTxid == nil || [_spendTxid isEqual:[NSNull null]];
+    return _spendTxid == nil;
 }
 
 - (BOOL)isEqual:(id)object {

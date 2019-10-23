@@ -36,4 +36,13 @@
         [self setValue:value forKey:key];
 }
 
+- (void)eliminateAllNullObjectValues {
+    NSMutableArray *keys = [NSMutableArray array];
+    [self enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        if ([obj isEqual:[NSNull null]])
+            [keys addObject:key];
+    }];
+    [self removeObjectsForKeys:keys];
+}
+
 @end
