@@ -12,7 +12,7 @@
 @implementation LXHNetworkRequest
 
 + (id)POSTWithUrlString:(NSString *)url 
-             parameters:(NSDictionary *)parameters 
+             parameters:(nullable NSDictionary *)parameters 
         successCallback:(void (^)(NSDictionary *resultDic))successCallback 
         failureCallback:(void (^)(NSDictionary *resultDic))failureCallback {
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] init];
@@ -25,7 +25,7 @@
 }
 
 + (id)GETWithUrlString:(NSString *)url
-             parameters:(NSDictionary *)parameters
+             parameters:(nullable NSDictionary *)parameters
         successCallback:(void (^)(NSDictionary *resultDic))successCallback
         failureCallback:(void (^)(NSDictionary *resultDic))failureCallback {
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] init];

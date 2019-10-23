@@ -8,6 +8,9 @@
 #import "Masonry.h"
 #import "LXHSelectFeeRateView.h"
 #import "LXHFeeOptionCell.h"
+#import "LXHBitcoinfeesNetworkRequest.h"
+#import "UIViewController+LXHAlert.h"
+#import "NSString+Base.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -17,7 +20,8 @@
     
 @interface LXHSelectFeeRateViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSelectFeeRateView *contentView;
-
+@property (nonatomic) NSDictionary *feeRateDic;
+@property (nonatomic) NSMutableArray *cellDataListForListView;
 @end
 
 @implementation LXHSelectFeeRateViewController
@@ -37,7 +41,7 @@
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
-    [self setDelegates];
+    [self requestFeeRate];
 }
 
 - (void)swipeView:(id)sender {
@@ -56,6 +60,26 @@
 - (void)setDelegates {
     self.contentView.listView.dataSource = self;
     self.contentView.listView.delegate = self;
+}
+
+- (void)refreshListView {
+    _cellDataListForListView = nil;
+    [self.contentView.listView reloadData];
+}
+
+- (void)requestFeeRate {
+    __weak __typeof(self)weakSelf = self;
+    [[LXHBitcoinfeesNetworkRequest sharedInstance] requestWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+        //show indicator
+        weakSelf.feeRateDic = resultDic;
+        [weakSelf setDelegates];
+        [weakSelf refreshListView];
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请求费率数据失败，请稍后重试", nil) handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        return;
+    }];
 }
 
 //Actions
@@ -87,20 +111,23 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            dic = @{@"feeRate":@"40 sat/byte", @"isSelectable":@"1", @"title":@"FastestFee", @"circleImage":@"check_circle", @"cellType":@"LXHFeeOptionCell", @"checkedImage":@"checked_circle"};
-            [dataForCells addObject:dic];
-            dic = @{@"feeRate":@"36 sat/byte", @"isSelectable":@"1", @"title":@"HalfHourFee", @"circleImage":@"check_circle", @"cellType":@"LXHFeeOptionCell", @"checkedImage":@"checked_circle"};
-            [dataForCells addObject:dic];
-            dic = @{@"feeRate":@"2 sat/byte", @"isSelectable":@"1", @"title":@"HourFee", @"circleImage":@"check_circle", @"cellType":@"LXHFeeOptionCell", @"checkedImage":@"checked_circle"};
-            [dataForCells addObject:dic];
+    if (tableView == self.contentView.listView) {
+        if (!_cellDataListForListView) {
+            if (_feeRateDic) {
+                _cellDataListForListView = [NSMutableArray array];
+                NSArray *keys = @[@"fastestFee", @"halfHourFee", @"hourFee"];
+                for (NSString *key in keys) {
+                    NSString *feeRateTitle = [key firstLetterCapitalized];
+                    NSString *feeRateValueText = [NSString stringWithFormat:@"%@ sat/byte", _feeRateDic[key]];
+                    NSDictionary *dic = @{@"feeRate":feeRateValueText, @"isSelectable":@"1", @"title":feeRateTitle, @"circleImage":@"check_circle", @"cellType":@"LXHFeeOptionCell", @"checkedImage":@"checked_circle"};
+                    [_cellDataListForListView addObject:dic];
+                }
+            }
         }
+        return _cellDataListForListView;
+    } else {
+        return nil;
     }
-    return dataForCells;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
