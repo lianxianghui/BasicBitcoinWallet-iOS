@@ -12,17 +12,21 @@
 
 @implementation LXHTransactionOutput
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 - (id)initWithCoder:(NSCoder *)decoder {
     self = [super init];
     if (!self) {
         return nil;
     }
-    LXHDecodeObjectStament(address);
-    LXHDecodeObjectStament(value);
-    LXHDecodeObjectStament(lockingScript);
+    LXHDecodeObjectOfStringClassStament(address);
+    LXHDecodeObjectOfDecimalNumberClassStament(value);
+    LXHDecodeObjectOfStringClassStament(lockingScript);
     LXHDecodeIntegerTypeStament(scriptType);
-    LXHDecodeObjectStament(spendTxid);
-    LXHDecodeObjectStament(txid);
+    LXHDecodeObjectOfStringClassStament(spendTxid);
+    LXHDecodeObjectOfStringClassStament(txid);
     return self;
 }
 

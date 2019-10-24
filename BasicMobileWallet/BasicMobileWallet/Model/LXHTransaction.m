@@ -18,21 +18,25 @@
 
 @implementation LXHTransaction
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 - (id)initWithCoder:(NSCoder *)decoder {
     self = [super init];
     if (!self) {
         return nil;
     }
-    LXHDecodeObjectStament(blockhash);
-    LXHDecodeObjectStament(block);
-    LXHDecodeObjectStament(time);
-    LXHDecodeObjectStament(confirmations);
-    LXHDecodeObjectStament(inputAmount);
-    LXHDecodeObjectStament(outputAmount);
-    LXHDecodeObjectStament(fees);
-    LXHDecodeObjectStament(txid);
-    LXHDecodeObjectStament(inputs);
-    LXHDecodeObjectStament(outputs);
+    LXHDecodeObjectOfStringClassStament(blockhash);
+    LXHDecodeObjectOfStringClassStament(block);
+    LXHDecodeObjectOfStringClassStament(time);
+    LXHDecodeObjectOfStringClassStament(confirmations);
+    LXHDecodeObjectOfDecimalNumberClassStament(inputAmount);
+    LXHDecodeObjectOfDecimalNumberClassStament(outputAmount);
+    LXHDecodeObjectOfDecimalNumberClassStament(fees);
+    LXHDecodeObjectOfStringClassStament(txid);
+    LXHDecodeObjectOfMutableArrayClassStament(inputs);
+    LXHDecodeObjectOfMutableArrayClassStament(outputs);
     return self;
 }
 

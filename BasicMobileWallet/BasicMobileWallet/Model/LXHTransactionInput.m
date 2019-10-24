@@ -11,14 +11,18 @@
 
 @implementation LXHTransactionInput
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 - (id)initWithCoder:(NSCoder *)decoder {
     self = [super init];
     if (!self) {
         return nil;
     }
-    LXHDecodeObjectStament(address);
-    LXHDecodeObjectStament(value);
-    LXHDecodeObjectStament(txid);
+    LXHDecodeObjectOfStringClassStament(address);
+    LXHDecodeObjectOfDecimalNumberClassStament(value);
+    LXHDecodeObjectOfStringClassStament(txid);
     return self;
 }
 

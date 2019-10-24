@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LXHTransactionInput : NSObject
+@interface LXHTransactionInput : NSObject <NSSecureCoding>
 @property (nonatomic) NSString *address;
 @property (nonatomic) NSDecimalNumber *value;
 @property (nonatomic) NSString *txid;

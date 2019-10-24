@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, LXHLockingScriptType) {
 };
 
 @class LXHTransaction;
-@interface LXHTransactionOutput : NSObject
+@interface LXHTransactionOutput : NSObject <NSSecureCoding>
 @property (nonatomic) NSString *address;
 @property (nonatomic) NSDecimalNumber *value;
 /**

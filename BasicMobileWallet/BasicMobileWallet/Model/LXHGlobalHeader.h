@@ -24,4 +24,13 @@ typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) { //do not modify
 
 #define LXHDecodeIntegerTypeStament(propertyName) self.propertyName = [[decoder decodeObjectForKey:@#propertyName] integerValue];
 #define LXHEncodeIntegerStament(propertyName) [encoder encodeObject:@(self.propertyName) forKey:@#propertyName];
+
+#define LXHDecodeObjectOfStringClassStament(propertyName) self.propertyName = [decoder decodeObjectOfClass:[NSString class] forKey:@#propertyName];
+#define LXHDecodeObjectOfDecimalNumberClassStament(propertyName) self.propertyName = [decoder decodeObjectOfClass:[NSDecimalNumber class] forKey:@#propertyName];
+#define LXHDecodeObjectOfNumberClassStament(propertyName) self.propertyName = [decoder decodeObjectOfClass:[NSNumber class] forKey:@#propertyName];
+#define LXHDecodeObjectOfMutableArrayClassStament(propertyName) self.propertyName = [decoder decodeObjectOfClass:[NSMutableArray class] forKey:@#propertyName];
+#define LXHDecodeObjectOfArrayClassStament(propertyName) self.propertyName = [decoder decodeObjectOfClass:[NSArray class] forKey:@#propertyName];
+
+#define LXHDecodeIntegerTypeStament(propertyName) self.propertyName = [[decoder decodeObjectForKey:@#propertyName] integerValue];
+#define LXHEncodeIntegerStament(propertyName) [encoder encodeObject:@(self.propertyName) forKey:@#propertyName];
 #endif /* LXHGlobalHeader_h */
