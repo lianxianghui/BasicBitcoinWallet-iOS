@@ -15,7 +15,7 @@
              parameters:(nullable NSDictionary *)parameters 
         successCallback:(void (^)(NSDictionary *resultDic))successCallback 
         failureCallback:(void (^)(NSDictionary *resultDic))failureCallback {
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] init];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
     return [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         successCallback(responseObject);
@@ -28,7 +28,7 @@
              parameters:(nullable NSDictionary *)parameters
         successCallback:(void (^)(NSDictionary *resultDic))successCallback
         failureCallback:(void (^)(NSDictionary *resultDic))failureCallback {
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] init];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
     return [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         successCallback(responseObject);

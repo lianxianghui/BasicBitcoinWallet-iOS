@@ -18,8 +18,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [LXHPreference sharedInstance];//init default preference
+//    [LXHPreference sharedInstance];//init default preference
     //application.statusBarStyle = UIStatusBarStyleLightContent;
+    //disable cache for privacy
+    [[NSURLCache sharedURLCache] setDiskCapacity:0];
+    [[NSURLCache sharedURLCache] setMemoryCapacity:0];
     return YES;
 }
 
