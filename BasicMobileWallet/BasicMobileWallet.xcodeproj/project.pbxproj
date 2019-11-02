@@ -1050,10 +1050,10 @@
 		8C933491235DB14C00FBF238 /* InputFee */ = {
 			isa = PBXGroup;
 			children = (
-				8C933492235DB14C00FBF238 /* LXHInputFeeViewController.m */,
 				8C933493235DB14C00FBF238 /* LXHInputFeeView.h */,
-				8C933494235DB14C00FBF238 /* LXHInputFeeViewController.h */,
 				8C933495235DB14C00FBF238 /* LXHInputFeeView.m */,
+				8C933494235DB14C00FBF238 /* LXHInputFeeViewController.h */,
+				8C933492235DB14C00FBF238 /* LXHInputFeeViewController.m */,
 			);
 			path = InputFee;
 			sourceTree = "<group>";
@@ -1870,6 +1870,9 @@
 						CreatedOnToolsVersion = 10.1;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
 							com.apple.DataProtection = {
 								enabled = 1;
 							};
