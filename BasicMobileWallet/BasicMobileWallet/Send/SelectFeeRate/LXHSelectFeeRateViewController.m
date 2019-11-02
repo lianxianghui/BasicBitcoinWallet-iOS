@@ -78,13 +78,19 @@
 }
 
 - (void)requestFeeRate {
+    [self.contentView.indicatorView startAnimating];
     __weak __typeof(self)weakSelf = self;
     [[LXHBitcoinfeesNetworkRequest sharedInstance] requestWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
         //show indicator
-        weakSelf.feeRateDic = resultDic;
+        [weakSelf.contentView.indicatorView stopAnimating];
+        weakSelf.feeRateDic = resultDic[@"responseData"];
         [weakSelf setDelegates];
         [weakSelf refreshListView];
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        [weakSelf.contentView.indicatorView stopAnimating];
+//        weakSelf.feeRateDic = resultDic;
+//        [weakSelf setDelegates];
+//        [weakSelf refreshListView];
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请求费率数据失败，请稍后重试", nil) handler:^(UIAlertAction * _Nonnull action) {
             [self.navigationController popViewControllerAnimated:YES];
         }];

@@ -17,5 +17,6 @@
 @property (nonatomic) UIButton *leftImageButton;
 @property (nonatomic) UILabel *leftText;
 @property (nonatomic) UIImageView *leftBarItemImage;
+@property (nonatomic) UIActivityIndicatorView *indicatorView;
 
 @end

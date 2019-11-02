@@ -28,27 +28,29 @@ static NSString *const cacheFileName = @"LXHBitcoinfeesNetworkRequestCache";
 
 - (void)requestWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock
                    failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    NSDictionary *cachedDate = [self cachedData];
-    if (cachedDate && ![self cacheExpiredWithDate:cachedDate[@"responseTime"]]) {
-        successBlock(cachedDate[@"responseData"]);
-        return;
-    } else {
-        NSString *url = @"https://bitcoinfees.earn.com/api/v1/fees/recommended";
-        [LXHNetworkRequest GETWithUrlString:url parameters:nil successCallback:^(NSDictionary * _Nonnull resultDic) {
-            [self cacheResultDic:resultDic];
-            successBlock(resultDic);
-        } failureCallback:^(NSDictionary * _Nonnull resultDic) {
-            failureBlock(resultDic);
-        }];
-    }
+    NSString *url = @"https://bitcoinfees.earn.com/api/v1/fees/recommended";
+    [LXHNetworkRequest GETWithUrlString:url parameters:nil successCallback:^(NSDictionary * _Nonnull resultDic) {
+        NSMutableDictionary *dic = [self cacheResultDic:resultDic];
+        successBlock(dic);
+    } failureCallback:^(NSDictionary * _Nonnull resultDic) {
+        NSMutableDictionary *dic = [resultDic mutableCopy];
+        dic[@"cachedResult"] = [self cachedData];
+        failureBlock(dic);
+    }];
 }
 
-- (void)cacheResultDic:(NSDictionary *)resultDic {
+- (NSMutableDictionary *)dataHasTimeWithResultDic:(NSDictionary *)resultDic {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     dic[@"responseTime"] = [NSDate date];
     dic[@"responseData"] = resultDic;
+    return dic;
+}
+
+- (NSMutableDictionary *)cacheResultDic:(NSDictionary *)resultDic {
+    NSMutableDictionary *dic = [self dataHasTimeWithResultDic:resultDic];
     NSData *data =  [NSKeyedArchiver archivedDataWithRootObject:dic];
     [data writeToFile:LXHBitcoinfeesNetworkRequestCacheFilePath atomically:YES];
+    return dic;
 }
 
 - (NSDictionary *)cachedData {
@@ -61,9 +63,9 @@ static NSString *const cacheFileName = @"LXHBitcoinfeesNetworkRequestCache";
     }
 }
 
-- (BOOL)cacheExpiredWithDate:(NSDate *)date {
-    NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:date];
-    return interval >  2 * 60 * 60;
-}
+//- (BOOL)cacheExpiredWithDate:(NSDate *)date {
+//    NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:date];
+//    return interval >  2 * 60 * 60;
+//}
 
 @end
