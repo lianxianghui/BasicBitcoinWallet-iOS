@@ -65,6 +65,9 @@
     [self refreshBalance];
     
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(listViewRefresh)];
+    header.lastUpdatedTimeText = ^(NSDate *lastUpdatedTime) {
+        return @""; //todo
+    };
     self.contentView.listView.mj_header = header;
 }
 
