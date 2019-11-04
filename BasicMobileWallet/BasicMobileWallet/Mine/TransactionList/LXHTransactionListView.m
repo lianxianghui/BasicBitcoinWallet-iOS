@@ -1,7 +1,7 @@
 // LXHTransactionListView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-09-16
+//  Created by lianxianghui on 19-11-4
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -32,6 +32,7 @@
 
 - (void)addSubviews {
     [self addSubview:self.listView];
+    [self addSubview:self.infomation];
     [self addSubview:self.customNavigationBar];
 }
 
@@ -40,7 +41,17 @@
         make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
         make.bottom.equalTo(self.mas_bottom);
+        make.top.equalTo(self.infomation.mas_bottom);
+    }];
+    [self.infomation mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_left);
+        make.right.equalTo(self.mas_right);
+        make.height.mas_equalTo(32);
         make.top.equalTo(self.customNavigationBar.mas_bottom);
+    }];
+    [self.promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.infomation.mas_left).offset(8);
+        make.centerY.equalTo(self.infomation.mas_centerY);
     }];
     [self.customNavigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top);
@@ -86,6 +97,38 @@
         _listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return _listView;
+}
+
+- (UIView *)infomation {
+    if (!_infomation) {
+        _infomation = [[UIView alloc] init];
+        _infomation.backgroundColor = UIColorFromRGBA(0xFFFFFF00);
+        _infomation.alpha = 1;
+        [_infomation addSubview:self.promptLabel];
+    }
+    return _infomation;
+}
+
+- (UILabel *)promptLabel {
+    if (!_promptLabel) {
+        _promptLabel = [[UILabel alloc] init];
+        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
+        if (!font) font = [UIFont systemFontOfSize:13];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentNatural;
+        paragraphStyle.maximumLineHeight = 0;
+        paragraphStyle.minimumLineHeight = 0;
+        paragraphStyle.paragraphSpacing = 0;
+
+        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
+        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
+        [textAttributes setObject:font forKey:NSFontAttributeName];
+        [textAttributes setObject:@(-0.5788235) forKey:NSKernAttributeName];
+        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"下拉刷新数据", nil) attributes:textAttributes];
+        _promptLabel.attributedText = text;
+    }
+    return _promptLabel;
 }
 
 - (UIView *)customNavigationBar {
