@@ -1,7 +1,7 @@
 // LXHBalanceView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-21
+//  Created by lianxianghui on 19-11-4
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -55,7 +55,11 @@
     }];
     [self.balanceValue mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.infomation.mas_centerY);
-        make.left.equalTo(self.balance.mas_right).offset(8);
+        make.left.equalTo(self.balance.mas_right).offset(4);
+    }];
+    [self.promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.balance.mas_centerY);
+        make.left.equalTo(self.balanceValue.mas_right).offset(6);
     }];
     [self.customNavigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top);
@@ -94,6 +98,7 @@
         _infomation.alpha = 1;
         [_infomation addSubview:self.balance];
         [_infomation addSubview:self.balanceValue];
+        [_infomation addSubview:self.promptLabel];
     }
     return _infomation;
 }
@@ -101,7 +106,6 @@
 - (UILabel *)balance {
     if (!_balance) {
         _balance = [[UILabel alloc] init];
-        _balance.numberOfLines = 0;
         NSMutableAttributedString *attributedText = [NSMutableAttributedString new];
         UIFont *font = nil;
         NSMutableParagraphStyle *paragraphStyle = nil;
@@ -146,8 +150,7 @@
 - (UILabel *)balanceValue {
     if (!_balanceValue) {
         _balanceValue = [[UILabel alloc] init];
-        _balanceValue.numberOfLines = 0;
-        UIFont *font = [UIFont fontWithName:@"" size:13];
+        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
         if (!font) font = [UIFont systemFontOfSize:13];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.alignment = NSTextAlignmentNatural;
@@ -160,10 +163,32 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.5788235) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"0.002BTC ", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"0.00000002BTC ", nil) attributes:textAttributes];
         _balanceValue.attributedText = text;
     }
     return _balanceValue;
+}
+
+- (UILabel *)promptLabel {
+    if (!_promptLabel) {
+        _promptLabel = [[UILabel alloc] init];
+        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
+        if (!font) font = [UIFont systemFontOfSize:13];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentNatural;
+        paragraphStyle.maximumLineHeight = 0;
+        paragraphStyle.minimumLineHeight = 0;
+        paragraphStyle.paragraphSpacing = 0;
+
+        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
+        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
+        [textAttributes setObject:font forKey:NSFontAttributeName];
+        [textAttributes setObject:@(-0.5788235) forKey:NSKernAttributeName];
+        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"(下拉刷新)", nil) attributes:textAttributes];
+        _promptLabel.attributedText = text;
+    }
+    return _promptLabel;
 }
 
 - (UIView *)customNavigationBar {
@@ -189,7 +214,6 @@
 - (UILabel *)title {
     if (!_title) {
         _title = [[UILabel alloc] init];
-        _title.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Light" size:17];
         if (!font) font = [UIFont systemFontOfSize:17];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
