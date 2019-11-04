@@ -54,14 +54,15 @@
     [self requestFeeRate];
 }
 
+
 - (void)swipeView:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)addActions {
-    [self.contentView.rightTextButton addTarget:self action:@selector(rightTextButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView.rightTextButton addTarget:self action:@selector(rightTextButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-    [self.contentView.rightTextButton addTarget:self action:@selector(rightTextButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+//    [self.contentView.rightTextButton addTarget:self action:@selector(rightTextButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.contentView.rightTextButton addTarget:self action:@selector(rightTextButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+//    [self.contentView.rightTextButton addTarget:self action:@selector(rightTextButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
@@ -77,6 +78,10 @@
     [self.contentView.listView reloadData];
 }
 
+- (void)showPromptLabel {
+    self.contentView.promptLabel.hidden = NO;
+}
+
 - (void)requestFeeRate {
     [self.contentView.indicatorView startAnimating];
     __weak __typeof(self)weakSelf = self;
@@ -86,11 +91,13 @@
         weakSelf.feeRateDic = resultDic[@"responseData"];
         [weakSelf setDelegates];
         [weakSelf refreshListView];
+        [weakSelf showPromptLabel];
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         [weakSelf.contentView.indicatorView stopAnimating];
 //        weakSelf.feeRateDic = resultDic;
 //        [weakSelf setDelegates];
 //        [weakSelf refreshListView];
+        [weakSelf showPromptLabel];
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请求费率数据失败，请稍后重试", nil) handler:^(UIAlertAction * _Nonnull action) {
             [self.navigationController popViewControllerAnimated:YES];
         }];
@@ -99,19 +106,19 @@
 }
 
 //Actions
-- (void)rightTextButtonClicked:(UIButton *)sender {
-    sender.alpha = 1;
-    _data[@"feeRateValue"] = [self currentSelectedFeeRate];
-    [self.navigationController popViewControllerAnimated:YES];
-}
+//- (void)rightTextButtonClicked:(UIButton *)sender {
+//    sender.alpha = 1;
+//    _data[@"feeRateValue"] = [self currentSelectedFeeRate];
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
 
-- (void)rightTextButtonTouchDown:(UIButton *)sender {
-    sender.alpha = 0.5;
-}
-
-- (void)rightTextButtonTouchUpOutside:(UIButton *)sender {
-    sender.alpha = 1;
-}
+//- (void)rightTextButtonTouchDown:(UIButton *)sender {
+//    sender.alpha = 0.5;
+//}
+//
+//- (void)rightTextButtonTouchUpOutside:(UIButton *)sender {
+//    sender.alpha = 1;
+//}
 
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
@@ -137,7 +144,7 @@
                     NSString *feeRateTitle = [key firstLetterCapitalized];
                     NSString *feeRateValueText = [NSString stringWithFormat:@"%@ sat/byte", _feeRateDic[key]];
                     NSMutableDictionary *dic = @{@"feeRate":feeRateValueText, @"isSelectable":@"1", @"title":feeRateTitle, @"circleImage":@"check_circle", @"cellType":@"LXHFeeOptionCell", @"checkedImage":@"checked_circle"}.mutableCopy;
-                    dic[@"isChecked"] = @([key isEqualToString:@"fastestFee"]);
+                    //todo dic[@"isChecked"] = @([key isEqualToString:@"fastestFee"]);
                     dic[@"feeRateValue"] = _feeRateDic[key];
                     [_cellDataListForListView addObject:dic];
                 }
@@ -261,6 +268,11 @@
     [self clearIsChecked];
     cellData[@"isChecked"] = @(YES);
     [tableView reloadData];
+    
+    _data[@"feeRateValue"] = [self currentSelectedFeeRate];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.navigationController popViewControllerAnimated:YES];
+    });
 }
 
 - (void)clearIsChecked {

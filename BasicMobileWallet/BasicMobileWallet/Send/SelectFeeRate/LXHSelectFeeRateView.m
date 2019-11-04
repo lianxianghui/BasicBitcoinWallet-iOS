@@ -1,7 +1,7 @@
 // LXHSelectFeeRateView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-21
+//  Created by lianxianghui on 19-11-4
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -32,6 +32,7 @@
 
 - (void)addSubviews {
     [self addSubview:self.listView];
+    [self addSubview:self.infomation];
     [self addSubview:self.customNavigationBar];
     [self addSubview:self.indicatorView];
 }
@@ -41,7 +42,17 @@
         make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
         make.bottom.equalTo(self.mas_bottom);
+        make.top.equalTo(self.infomation.mas_bottom);
+    }];
+    [self.infomation mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_left);
+        make.right.equalTo(self.mas_right);
+        make.height.mas_equalTo(32);
         make.top.equalTo(self.customNavigationBar.mas_bottom);
+    }];
+    [self.promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.infomation.mas_left).offset(8);
+        make.centerY.equalTo(self.infomation.mas_centerY);
     }];
     [self.customNavigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top);
@@ -58,16 +69,6 @@
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.customNavigationBar.mas_centerX);
         make.centerY.equalTo(self.customNavigationBar.mas_centerY);
-    }];
-    [self.rightTextButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.customNavigationBar.mas_right);
-        make.bottom.equalTo(self.customNavigationBar.mas_bottom);
-        make.top.equalTo(self.customNavigationBar.mas_top);
-        make.width.mas_equalTo(60);
-    }];
-    [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.rightTextButton.mas_centerY);
-        make.centerX.equalTo(self.rightTextButton.mas_centerX);
     }];
     [self.leftImageButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.customNavigationBar.mas_left);
@@ -105,6 +106,39 @@
     return _listView;
 }
 
+- (UIView *)infomation {
+    if (!_infomation) {
+        _infomation = [[UIView alloc] init];
+        _infomation.backgroundColor = UIColorFromRGBA(0xFFFFFF00);
+        _infomation.alpha = 1;
+        [_infomation addSubview:self.promptLabel];
+    }
+    return _infomation;
+}
+
+- (UILabel *)promptLabel {
+    if (!_promptLabel) {
+        _promptLabel = [[UILabel alloc] init];
+        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
+        if (!font) font = [UIFont systemFontOfSize:13];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentNatural;
+        paragraphStyle.maximumLineHeight = 0;
+        paragraphStyle.minimumLineHeight = 0;
+        paragraphStyle.paragraphSpacing = 0;
+
+        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
+        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
+        [textAttributes setObject:font forKey:NSFontAttributeName];
+        [textAttributes setObject:@(-0.5788235) forKey:NSKernAttributeName];
+        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"下拉刷新数据", nil) attributes:textAttributes];
+        _promptLabel.attributedText = text;
+        _promptLabel.hidden = YES;
+    }
+    return _promptLabel;
+}
+
 - (UIView *)customNavigationBar {
     if (!_customNavigationBar) {
         _customNavigationBar = [[UIView alloc] init];
@@ -112,7 +146,6 @@
         _customNavigationBar.alpha = 1;
         [_customNavigationBar addSubview:self.bottomLine];
         [_customNavigationBar addSubview:self.title];
-        [_customNavigationBar addSubview:self.rightTextButton];
         [_customNavigationBar addSubview:self.leftImageButton];
     }
     return _customNavigationBar;
@@ -130,7 +163,6 @@
 - (UILabel *)title {
     if (!_title) {
         _title = [[UILabel alloc] init];
-        _title.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Light" size:17];
         if (!font) font = [UIFont systemFontOfSize:17];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -150,62 +182,6 @@
     return _title;
 }
 
-- (UIButton *)rightTextButton {
-    if (!_rightTextButton) {
-        _rightTextButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _rightTextButton.backgroundColor = UIColorFromRGBA(0xFFFFFF00);
-        _rightTextButton.layer.cornerRadius = 2;
-        _rightTextButton.alpha = 1;
-        [_rightTextButton addSubview:self.text];
-    }
-    return _rightTextButton;
-}
-
-- (UILabel *)text {
-    if (!_text) {
-        _text = [[UILabel alloc] init];
-        _text.numberOfLines = 0;
-        NSMutableAttributedString *attributedText = [NSMutableAttributedString new];
-        UIFont *font = nil;
-        NSMutableParagraphStyle *paragraphStyle = nil;
-        NSMutableDictionary *textAttributes = nil;
-        NSAttributedString *text = nil;
-
-        font = [UIFont fontWithName:@"HelveticaNeue" size:17];
-        if (!font) font = [UIFont systemFontOfSize:17];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentLeft;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x4A90E2FF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.425) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" ", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"PingFangSC-Regular" size:17];
-        if (!font) font = [UIFont systemFontOfSize:17];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentLeft;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x4A90E2FF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.425) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"确定", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        _text.attributedText = attributedText;
-    }
-    return _text;
-}
-
 - (UIButton *)leftImageButton {
     if (!_leftImageButton) {
         _leftImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -220,7 +196,6 @@
 - (UILabel *)leftText {
     if (!_leftText) {
         _leftText = [[UILabel alloc] init];
-        _leftText.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Light" size:17];
         if (!font) font = [UIFont systemFontOfSize:17];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
