@@ -15,6 +15,7 @@
 #import "BlocksKit.h"
 #import "MJRefresh.h"
 #import "LXHGlobalHeader.h"
+#import "UIView+Toast.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -106,7 +107,10 @@
         [self.contentView.listView.mj_header endRefreshing];
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         [self.contentView.listView.mj_header endRefreshing];
-        //TODO 显示提示
+        NSError *error = resultDic[@"error"];
+        NSString *format = NSLocalizedString(@"刷新失败:%@", nil);
+        NSString *errorPrompt = [NSString stringWithFormat:format, error.localizedDescription];
+        [self.view makeToast:errorPrompt];
     }];
 }
 

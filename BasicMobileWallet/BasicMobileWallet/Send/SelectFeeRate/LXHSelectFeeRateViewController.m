@@ -11,6 +11,9 @@
 #import "UIViewController+LXHAlert.h"
 #import "NSString+Base.h"
 #import "LXHBitcoinfeesNetworkRequest.h"
+#import "MJRefresh.h"
+#import "LXHGlobalHeader.h"
+#import "UIView+Toast.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -50,10 +53,30 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setViewProperties];
     [self addActions];
     [self requestFeeRate];
 }
 
+- (void)setViewProperties {
+    //set refreshing header
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(requestFeeRate)];
+    header.lastUpdatedTimeText = ^(NSDate *lastUpdatedTime) {
+        NSDate *updatedTime = self.feeRateDic[@"date"];
+        if (updatedTime) {
+            static NSDateFormatter *formatter = nil;
+            if (!formatter) {
+                formatter = [[NSDateFormatter alloc] init];
+                formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+            }
+            NSString *dateString = [formatter stringFromDate:updatedTime];
+            return [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
+        } else {
+            return @"";
+        }
+    };
+    self.contentView.listView.mj_header = header;
+}
 
 - (void)swipeView:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -86,22 +109,32 @@
     [self.contentView.indicatorView startAnimating];
     __weak __typeof(self)weakSelf = self;
     [[LXHBitcoinfeesNetworkRequest sharedInstance] requestWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
-        //show indicator
         [weakSelf.contentView.indicatorView stopAnimating];
+        [weakSelf.contentView.listView.mj_header endRefreshing];
         weakSelf.feeRateDic = resultDic[@"responseData"];
         [weakSelf setDelegates];
         [weakSelf refreshListView];
         [weakSelf showPromptLabel];
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         [weakSelf.contentView.indicatorView stopAnimating];
-//        weakSelf.feeRateDic = resultDic;
-//        [weakSelf setDelegates];
-//        [weakSelf refreshListView];
-        [weakSelf showPromptLabel];
-        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请求费率数据失败，请稍后重试", nil) handler:^(UIAlertAction * _Nonnull action) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }];
-        return;
+        [weakSelf.contentView.listView.mj_header endRefreshing];
+        if (resultDic) {
+            NSDictionary *cachedResult = resultDic[@"cachedResult"];
+            weakSelf.feeRateDic = cachedResult[@"responseData"];
+            [weakSelf setDelegates];
+            [weakSelf refreshListView];
+            [weakSelf showPromptLabel];
+            
+            NSError *error = resultDic[@"error"];
+            NSString *format = NSLocalizedString(@"由于%@请求费率失败，目前的显示费率有可能是过时的.", nil);
+            NSString *errorPrompt = [NSString stringWithFormat:format, error.localizedDescription];
+            [weakSelf.view makeToast:errorPrompt];
+        } else {
+            NSError *error = resultDic[@"error"];
+            NSString *format = NSLocalizedString(@"由于%@请求费率失败.", nil);
+            NSString *errorPrompt = [NSString stringWithFormat:format, error.localizedDescription];
+            [weakSelf.view makeToast:errorPrompt];
+        }
     }];
 }
 
