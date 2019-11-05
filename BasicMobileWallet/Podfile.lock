@@ -31,6 +31,7 @@ PODS:
     - BlocksKit/DynamicDelegate
   - Masonry (1.1.0)
   - MJRefresh (3.1.16)
+  - Toast (4.0.0)
   - UICKeyChainStore (2.1.2)
 
 DEPENDENCIES:
@@ -38,6 +39,7 @@ DEPENDENCIES:
   - BlocksKit
   - Masonry
   - MJRefresh
+  - Toast (~> 4.0.0)
   - UICKeyChainStore
 
 SPEC REPOS:
@@ -46,6 +48,7 @@ SPEC REPOS:
     - BlocksKit
     - Masonry
     - MJRefresh
+    - Toast
     - UICKeyChainStore
 
 SPEC CHECKSUMS:
@@ -53,8 +56,9 @@ SPEC CHECKSUMS:
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJRefresh: 7798e16e53a5ef7f332dd05b27664db4e29530fd
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   UICKeyChainStore: 85db518bb1d294366d15ec9b92a416c4e670518f
 
-PODFILE CHECKSUM: 7d7797b794ee707c4bf667e60ae6d4121aedf84f
+PODFILE CHECKSUM: 3d970651eb3148ac654ae47761fa0f481231477f
 
 COCOAPODS: 1.8.4
