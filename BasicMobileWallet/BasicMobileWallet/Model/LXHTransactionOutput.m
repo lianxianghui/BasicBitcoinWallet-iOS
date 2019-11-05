@@ -59,9 +59,12 @@
 }
 
 + (NSDecimalNumber *)valueSumOfOutputs:(NSArray<LXHTransactionOutput *> *)outputs {
-    return [outputs bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionOutput *utxo) {
-        return [sum decimalNumberByAdding:utxo.value];
-    }];
+    if (outputs.count == 0)
+        return [NSDecimalNumber zero];
+    else
+        return [outputs bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionOutput *utxo) {
+            return [sum decimalNumberByAdding:utxo.value];
+        }];
 }
 
 
