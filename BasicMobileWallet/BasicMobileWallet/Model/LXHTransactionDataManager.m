@@ -22,8 +22,11 @@ static NSString *const aesPassword = LXHAESPassword;
 
 #define LXHTransactionDataManagerCacheFilePath [NSString stringWithFormat:@"%@/%@",  LXHCacheFileDir, cacheFileName]
 
+@interface LXHTransactionDataManager ()
+@property (nonatomic) NSDictionary *transactionData;
+@end
+
 @implementation LXHTransactionDataManager
-@synthesize transactionList = _transactionList;
 
 + (instancetype)sharedInstance {
     static LXHTransactionDataManager *instance = nil;
@@ -36,34 +39,45 @@ static NSString *const aesPassword = LXHAESPassword;
 
 - (void)clearCachedData {
     [[NSFileManager defaultManager] removeItemAtPath:LXHTransactionDataManagerCacheFilePath error:nil];
-    _transactionList = nil;
+    self.transactionData = nil;
+}
+
+- (NSDictionary *)transactionData {
+    if (!_transactionData) {
+        _transactionData = [self transactionDataFromCacheFile];
+    }
+    return _transactionData;
 }
 
 - (NSArray *)transactionList {
-    if (!_transactionList) {
-        _transactionList = [self transactionListFromCacheFile];
-    }
-    return _transactionList;
+    return self.transactionData[@"transactions"];
+}
+
+- (NSDate *)dataRefreshingTime {
+    return self.transactionData[@"date"];
 }
 
 - (void)setTransactionList:(NSArray *)transactionList {
     if (!transactionList || transactionList.count == 0)
         return;
     [self saveTransactionListToCacheFileWithArray:transactionList];
-    _transactionList = transactionList;
 }
 
-- (NSArray *)transactionListFromCacheFile {
+- (NSDictionary *)transactionDataFromCacheFile {
     NSData *encryptedData = [NSData dataWithContentsOfFile:LXHTransactionDataManagerCacheFilePath];
     NSData *decryptedData = [RNDecryptor decryptData:encryptedData withSettings:kRNCryptorAES256Settings password:aesPassword error:nil];
-    NSArray *ret = nil;
-    if (decryptedData)
+    NSDictionary *ret = nil;
+    if (decryptedData) {
         ret = [NSKeyedUnarchiver unarchiveObjectWithData:decryptedData];
+    }
     return ret;
 }
 
 - (void)saveTransactionListToCacheFileWithArray:(NSArray *)array {
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:array];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@"date"] = [NSDate date];
+    dic[@"transactions"] = array;
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
     NSData *encryptedData = [RNEncryptor encryptData:data
                                         withSettings:kRNCryptorAES256Settings
                                             password:aesPassword

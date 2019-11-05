@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface LXHTransactionDataManager : NSObject
 @property (nonatomic) NSArray *transactionList;
+@property (nonatomic) NSDate *dataRefreshingTime;
 /**
  * 请求成功后会把事务数据保存到文件，同时放到transactionList里
  */
