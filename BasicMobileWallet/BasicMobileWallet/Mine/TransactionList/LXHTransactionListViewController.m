@@ -58,11 +58,9 @@
         make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
     }];
     
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(listViewRefresh)];
-    self.contentView.listView.mj_header = header;
-    
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setViewProperties];
     [self addActions];
     [self setDelegates];
     [self addObservers];
@@ -78,6 +76,25 @@
     _observerToken =  [[LXHTransactionDataManager sharedInstance] bk_addObserverForKeyPath:@"transactionList" task:^(id target) {
         [weakSelf reloadListView];
     }];
+}
+
+- (void)setViewProperties {
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(listViewRefresh)];
+    self.contentView.listView.mj_header = header;
+    header.lastUpdatedTimeText = ^(NSDate *lastUpdatedTime) {
+        static NSDateFormatter *formatter = nil;
+        if (!formatter) {
+            formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+        }
+        NSDate *updatedTime = [LXHTransactionDataManager sharedInstance].dataUpdatedTime;
+        if (updatedTime) {
+            NSString *dateString = [formatter stringFromDate:updatedTime];
+            return [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
+        } else {
+            return @"";
+        }
+    };
 }
 
 - (void)listViewRefresh {
