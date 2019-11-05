@@ -53,14 +53,19 @@ static NSString *const aesPassword = LXHAESPassword;
     return self.transactionData[@"transactions"];
 }
 
-- (NSDate *)dataRefreshingTime {
+- (NSDate *)dataUpdatedTime {
     return self.transactionData[@"date"];
 }
 
 - (void)setTransactionList:(NSArray *)transactionList {
     if (!transactionList || transactionList.count == 0)
         return;
-    [self saveTransactionListToCacheFileWithArray:transactionList];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@"date"] = [NSDate date];
+    dic[@"transactions"] = transactionList;
+    _transactionData = dic;
+    [self saveTransactionListToCacheFileWithDic:dic];
+    
 }
 
 - (NSDictionary *)transactionDataFromCacheFile {
@@ -73,10 +78,7 @@ static NSString *const aesPassword = LXHAESPassword;
     return ret;
 }
 
-- (void)saveTransactionListToCacheFileWithArray:(NSArray *)array {
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    dic[@"date"] = [NSDate date];
-    dic[@"transactions"] = array;
+- (void)saveTransactionListToCacheFileWithDic:(NSDictionary *)dic {
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
     NSData *encryptedData = [RNEncryptor encryptData:data
                                         withSettings:kRNCryptorAES256Settings

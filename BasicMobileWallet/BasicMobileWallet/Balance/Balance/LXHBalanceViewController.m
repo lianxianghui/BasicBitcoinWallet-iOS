@@ -14,6 +14,7 @@
 #import "UILabel+LXHText.h"
 #import "BlocksKit.h"
 #import "MJRefresh.h"
+#import "LXHGlobalHeader.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -63,10 +64,21 @@
 
 - (void)setViewProperties {
     [self refreshBalance];
-    
+    //set refreshing header
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(listViewRefresh)];
     header.lastUpdatedTimeText = ^(NSDate *lastUpdatedTime) {
-        return @""; //todo
+        static NSDateFormatter *formatter = nil;
+        if (!formatter) {
+            formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+        }
+        NSDate *updatedTime = [LXHTransactionDataManager sharedInstance].dataUpdatedTime;
+        if (updatedTime) {
+            NSString *dateString = [formatter stringFromDate:updatedTime];
+            return [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
+        } else {
+            return @"";
+        }
     };
     self.contentView.listView.mj_header = header;
 }
