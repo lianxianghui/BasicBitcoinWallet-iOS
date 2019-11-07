@@ -23,7 +23,7 @@
     
 @interface LXHSelectFeeRateViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSelectFeeRateView *contentView;
-@property (nonatomic) NSDictionary *feeRateDic;
+@property (nonatomic) NSDictionary *feeRateOptionsDic;// keys = @[@"fastestFee", @"halfHourFee", @"hourFee"];
 @property (nonatomic) NSMutableArray *cellDataListForListView;
 @property (nonatomic) NSMutableDictionary *data;
 @end
@@ -62,7 +62,7 @@
     //set refreshing header
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(requestFeeRate)];
     header.lastUpdatedTimeText = ^(NSDate *lastUpdatedTime) {
-        NSDate *updatedTime = self.feeRateDic[@"date"];
+        NSDate *updatedTime = self.feeRateOptionsDic[@"date"];
         if (updatedTime) {
             static NSDateFormatter *formatter = nil;
             if (!formatter) {
@@ -83,9 +83,6 @@
 }
 
 - (void)addActions {
-//    [self.contentView.rightTextButton addTarget:self action:@selector(rightTextButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.contentView.rightTextButton addTarget:self action:@selector(rightTextButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-//    [self.contentView.rightTextButton addTarget:self action:@selector(rightTextButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
@@ -111,7 +108,7 @@
     [[LXHBitcoinfeesNetworkRequest sharedInstance] requestWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
         [weakSelf.contentView.indicatorView stopAnimating];
         [weakSelf.contentView.listView.mj_header endRefreshing];
-        weakSelf.feeRateDic = resultDic[@"responseData"];
+        weakSelf.feeRateOptionsDic = resultDic[@"responseData"];
         [weakSelf setDelegates];
         [weakSelf refreshListView];
         [weakSelf showPromptLabel];
@@ -120,7 +117,7 @@
         [weakSelf.contentView.listView.mj_header endRefreshing];
         if (resultDic) {
             NSDictionary *cachedResult = resultDic[@"cachedResult"];
-            weakSelf.feeRateDic = cachedResult[@"responseData"];
+            weakSelf.feeRateOptionsDic = cachedResult[@"responseData"];
             [weakSelf setDelegates];
             [weakSelf refreshListView];
             [weakSelf showPromptLabel];
@@ -139,19 +136,6 @@
 }
 
 //Actions
-//- (void)rightTextButtonClicked:(UIButton *)sender {
-//    sender.alpha = 1;
-//    _data[@"feeRateValue"] = [self currentSelectedFeeRate];
-//    [self.navigationController popViewControllerAnimated:YES];
-//}
-
-//- (void)rightTextButtonTouchDown:(UIButton *)sender {
-//    sender.alpha = 0.5;
-//}
-//
-//- (void)rightTextButtonTouchUpOutside:(UIButton *)sender {
-//    sender.alpha = 1;
-//}
 
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
@@ -170,15 +154,20 @@
 - (NSArray *)dataForTableView:(UITableView *)tableView {
     if (tableView == self.contentView.listView) {
         if (!_cellDataListForListView) {
-            if (_feeRateDic) {
+            if (_feeRateOptionsDic) {
                 _cellDataListForListView = [NSMutableArray array];
                 NSArray *keys = @[@"fastestFee", @"halfHourFee", @"hourFee"];
                 for (NSString *key in keys) {
                     NSString *feeRateTitle = [key firstLetterCapitalized];
-                    NSString *feeRateValueText = [NSString stringWithFormat:@"%@ sat/byte", _feeRateDic[key]];
+                    id value = _feeRateOptionsDic[key];
+                    if (!value)
+                        continue;
+                    NSString *feeRateValueText = [NSString stringWithFormat:@"%@ sat/byte", value];
                     NSMutableDictionary *dic = @{@"feeRate":feeRateValueText, @"isSelectable":@"1", @"title":feeRateTitle, @"circleImage":@"check_circle", @"cellType":@"LXHFeeOptionCell", @"checkedImage":@"checked_circle"}.mutableCopy;
-                    //todo dic[@"isChecked"] = @([key isEqualToString:@"fastestFee"]);
-                    dic[@"feeRateValue"] = _feeRateDic[key];
+                    NSDictionary *feeRate = @{key : value};
+                    dic[@"feeRate"] = feeRate;
+                    if (_data[@"selectedFeeRate"])
+                        dic[@"isChecked"] = @([feeRate isEqual:_data[@"selectedFeeRate"]]);
                     [_cellDataListForListView addObject:dic];
                 }
             }
@@ -302,7 +291,7 @@
     cellData[@"isChecked"] = @(YES);
     [tableView reloadData];
     
-    _data[@"feeRateValue"] = [self currentSelectedFeeRate];
+    _data[@"selectedFeeRate"] = [self currentSelectedFeeRate];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.navigationController popViewControllerAnimated:YES];
     });
@@ -317,7 +306,7 @@
 - (id)currentSelectedFeeRate {
     for (NSDictionary *cellData in _cellDataListForListView) {
         if ([cellData[@"isChecked"] isEqual:@(YES)]) {
-            return cellData[@"feeRateValue"];
+            return cellData[@"feeRate"];
         }
     }
     return nil;

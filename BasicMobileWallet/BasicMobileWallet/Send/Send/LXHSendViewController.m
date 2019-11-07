@@ -26,11 +26,12 @@
     
 @interface LXHSendViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSendView *contentView;
+@property (nonatomic) NSMutableArray *cellDataListForListView;
+//下面几个是用来在几个页面之间传递数据的字典
 @property (nonatomic) NSMutableDictionary *inputDataDic;
 @property (nonatomic) NSMutableDictionary *outputDataDic;
-@property (nonatomic) NSMutableDictionary *feeRateDic;
-@property (nonatomic) NSMutableDictionary *feeDic;
-@property (nonatomic) NSMutableArray *cellDataListForListView;
+@property (nonatomic) NSMutableDictionary *selectedFeeRateItem;//key in @[@"fastestFee", @"halfHourFee", @"hourFee"]; value sat/byte
+@property (nonatomic) NSMutableDictionary *inputFeeRateData;//key @"feeRate" value at/byte
 @end
 
 @implementation LXHSendViewController
@@ -41,8 +42,8 @@
     if (self) {
         _inputDataDic = [NSMutableDictionary dictionary];
         _outputDataDic = [NSMutableDictionary dictionary];
-        _feeRateDic = [NSMutableDictionary dictionary];
-        _feeDic = [NSMutableDictionary dictionary];
+        _selectedFeeRateItem = [NSMutableDictionary dictionary];
+        _inputFeeRateData = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -84,13 +85,13 @@
 
 //Actions
 - (void)LXHFeeCellInputFeeValueButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHInputFeeViewController alloc] initWithData:_feeDic];
+    UIViewController *controller = [[LXHInputFeeViewController alloc] initWithData:_inputFeeRateData];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
 - (void)LXHFeeCellSelectFeerateButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithData:_feeRateDic];
+    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithData:_selectedFeeRateItem];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
