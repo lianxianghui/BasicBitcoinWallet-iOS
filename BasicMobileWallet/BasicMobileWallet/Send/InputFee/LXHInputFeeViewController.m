@@ -7,6 +7,8 @@
 #import "LXHInputFeeViewController.h"
 #import "Masonry.h"
 #import "LXHInputFeeView.h"
+#import "UIViewController+LXHAlert.h"
+#import "UITextField+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -57,6 +59,10 @@
 
 - (void)setViewProperties {
     self.contentView.textFieldWithPlaceHolder.keyboardType = UIKeyboardTypeNumberPad;
+    if (self.data[@"feeRate"]) {
+        NSString *feeRateString = [NSString stringWithFormat:@"%@", self.data[@"feeRate"]];
+        [self.contentView.textFieldWithPlaceHolder updateAttributedTextString:feeRateString];
+    }
 }
 
 - (void)addActions {
@@ -74,17 +80,22 @@
 //Actions
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
-    [self changeDataIfNeeded];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)changeDataIfNeeded {
+    
     NSString *text = self.contentView.textFieldWithPlaceHolder.text;
-    if (text.length > 0) {
+    BOOL inputFeeRateIsValid = [self isIntegerWithString:text];
+    if (inputFeeRateIsValid) {
         NSNumber *feeRate = @(text.integerValue);
         self.data[@"feeRate"] = feeRate;
         self.dataChangedCallback();
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self showOkAlertViewWithMessage:NSLocalizedString(@"请输入有效形式的费率(非负整数)", nil) handler:nil];
     }
+}
+
+- (BOOL)isIntegerWithString:(NSString*)string {
+    NSScanner* scanner = [NSScanner scannerWithString:string];
+    return [scanner scanInt:nil] && [scanner isAtEnd];
 }
 
 - (void)rightTextButtonTouchDown:(UIButton *)sender {

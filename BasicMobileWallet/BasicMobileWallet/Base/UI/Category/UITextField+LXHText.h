@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UITextField (LXHText)
 - (void)updateAttributedPlaceholderString:(NSString *)placeholderString;
+- (void)updateAttributedTextString:(NSString *)string;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -14,4 +14,10 @@
     [attributedString.mutableString setString:placeholderString];
     self.attributedPlaceholder = attributedString;
 }
+
+- (void)updateAttributedTextString:(NSString *)string {
+    NSMutableAttributedString *attributedString = [self.attributedText mutableCopy];
+    [attributedString.mutableString setString:string];
+    self.attributedText = attributedString;
+}
 @end
