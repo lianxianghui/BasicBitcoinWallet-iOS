@@ -14,6 +14,7 @@
 #import "MJRefresh.h"
 #import "LXHGlobalHeader.h"
 #import "UIView+Toast.h"
+#import "LXHGlobalHeader.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -27,15 +28,17 @@
 @property (nonatomic) NSDate *feeRateUpdatedTime;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
 @property (nonatomic) NSMutableDictionary *data;
+@property (nonatomic, copy) dataChangedCallback dataChangedCallback;
 @end
 
 @implementation LXHSelectFeeRateViewController
 
-- (instancetype)initWithData:(NSMutableDictionary *)data
-{
+- (instancetype)initWithData:(NSMutableDictionary *)data 
+         dataChangedCallback:(dataChangedCallback)dataChangedCallback {
     self = [super init];
     if (self) {
         _data = data;
+        _dataChangedCallback = dataChangedCallback;
     }
     return self;
 }
@@ -61,7 +64,7 @@
 
 - (void)setViewProperties {
     //set refreshing header
-    __weak typeof(self) weakSelf = self;
+    LXHWeakSelf
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(requestFeeRate)];
     header.lastUpdatedTimeText = ^(NSDate *lastUpdatedTime) {
         NSDate *updatedTime = weakSelf.feeRateUpdatedTime;
@@ -294,8 +297,7 @@
     [self clearIsChecked];
     cellData[@"isChecked"] = @(YES);
     [tableView reloadData];
-    
-    _data[@"selectedFeeRateItem"] = [self currentSelectedFeeRateItemData];
+    [self changeData];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.navigationController popViewControllerAnimated:YES];
     });
@@ -305,6 +307,11 @@
     for (NSMutableDictionary *cellData in _cellDataListForListView) {
         cellData[@"isChecked"] = @(NO);
     }
+}
+
+- (void)changeData {
+    _data[@"selectedFeeRateItem"] = [self currentSelectedFeeRateItemData];
+    _dataChangedCallback();
 }
 
 - (id)currentSelectedFeeRateItemData {

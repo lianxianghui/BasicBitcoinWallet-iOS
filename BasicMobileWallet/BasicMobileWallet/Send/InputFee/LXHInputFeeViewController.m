@@ -17,18 +17,20 @@
 @interface LXHInputFeeViewController()
 @property (nonatomic) LXHInputFeeView *contentView;
 @property (nonatomic) NSMutableDictionary *data;
+@property (nonatomic, copy) dataChangedCallback dataChangedCallback;
 @end
 
 @implementation LXHInputFeeViewController
 
-- (instancetype)initWithData:(NSMutableDictionary *)data {
+- (instancetype)initWithData:(NSMutableDictionary *)data
+         dataChangedCallback:(dataChangedCallback)dataChangedCallback {
     self = [super init];
     if (self) {
         _data = data;
+        _dataChangedCallback = dataChangedCallback;
     }
     return self;
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,12 +46,17 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setViewProperties];
     [self addActions];
     [self setDelegates];
 }
 
 - (void)swipeView:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)setViewProperties {
+    self.contentView.textFieldWithPlaceHolder.keyboardType = UIKeyboardTypeNumberPad;
 }
 
 - (void)addActions {
@@ -67,7 +74,17 @@
 //Actions
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    [self changeDataIfNeeded];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)changeDataIfNeeded {
+    NSString *text = self.contentView.textFieldWithPlaceHolder.text;
+    if (text.length > 0) {
+        NSNumber *feeRate = @(text.integerValue);
+        self.data[@"feeRate"] = feeRate;
+        self.dataChangedCallback();
+    }
 }
 
 - (void)rightTextButtonTouchDown:(UIButton *)sender {

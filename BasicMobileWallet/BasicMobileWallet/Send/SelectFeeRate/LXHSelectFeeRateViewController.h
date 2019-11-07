@@ -6,7 +6,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^dataChangedCallback)(void);
+
 @interface LXHSelectFeeRateViewController : UIViewController
 
-- (instancetype)initWithData:(NSMutableDictionary *)data;//key selectedFeeRate
+- (instancetype)initWithData:(NSMutableDictionary *)data //key selectedFeeRate
+         dataChangedCallback:(dataChangedCallback)dataChangedCallback;
 @end

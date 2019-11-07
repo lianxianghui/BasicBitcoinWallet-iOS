@@ -17,6 +17,7 @@
 #import "LXHFeeCell.h"
 #import "LXHTransactionInput.h"
 #import "LXHTransactionOutput.h"
+#import "LXHGlobalHeader.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -30,8 +31,8 @@
 //下面几个是用来在几个页面之间传递数据的字典
 @property (nonatomic) NSMutableDictionary *inputDataDic;
 @property (nonatomic) NSMutableDictionary *outputDataDic;
-@property (nonatomic) NSMutableDictionary *selectFeeRateData;//key in @[@"fastestFee", @"halfHourFee", @"hourFee"]; value sat/byte
-@property (nonatomic) NSMutableDictionary *inputFeeRateData;//key @"feeRate" value at/byte
+@property (nonatomic) NSMutableDictionary *selectFeeRateData;//key selectedFeeRateItem value is like {@"fastestFee", @(30)}
+@property (nonatomic) NSMutableDictionary *inputFeeRateData;//key @"feeRate" value 是整数 单位是sat/byte
 @end
 
 @implementation LXHSendViewController
@@ -85,13 +86,19 @@
 
 //Actions
 - (void)LXHFeeCellInputFeeValueButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHInputFeeViewController alloc] initWithData:_inputFeeRateData];
+    LXHWeakSelf
+    UIViewController *controller = [[LXHInputFeeViewController alloc] initWithData:_inputFeeRateData dataChangedCallback:^{
+        weakSelf.selectFeeRateData = [NSMutableDictionary dictionary];//把LXHSelectFeeRateViewController数据置空
+    }];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
 - (void)LXHFeeCellSelectFeerateButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithData:_selectFeeRateData];
+    LXHWeakSelf
+    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithData:_selectFeeRateData dataChangedCallback:^{
+        weakSelf.inputFeeRateData = [NSMutableDictionary dictionary];//把LXHInputFeeViewController数据置空
+    }];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
@@ -127,7 +134,7 @@
             if (_inputFeeRateData.count > 0)
                 feeRateValue = _inputFeeRateData[@"feeRate"];
             else if (_selectFeeRateData.count > 0) {
-                NSDictionary *selectedFeeRateItem = _selectFeeRateData[@"selectedFeeRateItem"];//key is title, value is fee rate value
+                NSDictionary *selectedFeeRateItem = _selectFeeRateData[@"selectedFeeRateItem"];
                 feeRateValue = selectedFeeRateItem.allValues[0];
             } else {
                 feeRateValue = nil;

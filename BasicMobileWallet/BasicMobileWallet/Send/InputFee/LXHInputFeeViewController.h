@@ -6,6 +6,9 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^dataChangedCallback)(void);
+
 @interface LXHInputFeeViewController : UIViewController
-- (instancetype)initWithData:(NSMutableDictionary *)data;
+- (instancetype)initWithData:(NSMutableDictionary *)data
+         dataChangedCallback:(dataChangedCallback)dataChangedCallback;
 @end

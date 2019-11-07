@@ -33,4 +33,7 @@ typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) { //do not modify
 
 #define LXHDecodeIntegerTypeStament(propertyName) self.propertyName = [[decoder decodeObjectForKey:@#propertyName] integerValue];
 #define LXHEncodeIntegerStament(propertyName) [encoder encodeObject:@(self.propertyName) forKey:@#propertyName];
+
+
+#define LXHWeakSelf __weak typeof(self) weakSelf = self;
 #endif /* LXHGlobalHeader_h */
