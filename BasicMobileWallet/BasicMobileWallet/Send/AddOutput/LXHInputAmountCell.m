@@ -39,16 +39,16 @@
 
 - (void)makeConstraints {
     [self.separator mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.mas_bottom);
         make.right.equalTo(self.mas_right);
         make.left.equalTo(self.mas_left);
         make.height.mas_equalTo(0.5);
+        make.bottom.equalTo(self.mas_bottom);
     }];
     [self.inputBTC mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(180);
         make.top.equalTo(self.mas_top);
-        make.bottom.equalTo(self.mas_bottom);
         make.left.equalTo(self.text1.mas_right).offset(6);
+        make.bottom.equalTo(self.mas_bottom).offset(-1);
     }];
     [self.BTC mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.textFieldWithPlaceHolder.mas_right).offset(6);
@@ -61,22 +61,22 @@
     [self.textFieldWithPlaceHolder mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.inputBTC.mas_left);
         make.width.mas_equalTo(143);
-        make.centerY.equalTo(self.inputBTC.mas_centerY).offset(-4);
         make.height.mas_equalTo(22);
+        make.centerY.equalTo(self.inputBTC.mas_centerY).offset(-1);
     }];
     [self.textButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.mas_centerY);
         make.right.equalTo(self.mas_right).offset(-8);
         make.width.mas_equalTo(67);
         make.height.mas_equalTo(28);
+        make.centerY.equalTo(self.mas_centerY);
     }];
     [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.textButton.mas_centerY);
         make.centerX.equalTo(self.textButton.mas_centerX);
     }];
     [self.text1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.mas_centerY);
         make.left.equalTo(self.mas_left).offset(6);
+        make.centerY.equalTo(self.mas_centerY).offset(-1);
     }];
 }
 
@@ -154,8 +154,8 @@
         _textFieldWithPlaceHolder.layer.borderWidth = 1;
         _textFieldWithPlaceHolder.layer.borderColor = UIColorFromRGBA(0xD8D8D8FF).CGColor;
         _textFieldWithPlaceHolder.alpha = 1;
-        UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
-        if (!font) font = [UIFont systemFontOfSize:14];
+        UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:12];
+        if (!font) font = [UIFont systemFontOfSize:12];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.alignment = NSTextAlignmentNatural;
         paragraphStyle.maximumLineHeight = 0;
@@ -163,12 +163,27 @@
         paragraphStyle.paragraphSpacing = 0;
 
         NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x999999FF) forKey:NSForegroundColorAttributeName];
+        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
         [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.3376471) forKey:NSKernAttributeName];
+        [textAttributes setObject:@(-0.2894118) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"输入数量", nil) attributes:textAttributes];
-        _textFieldWithPlaceHolder.attributedPlaceholder = text;
+	    _textFieldWithPlaceHolder.attributedText = text;
+        UIFont *placeHolderFont = [UIFont fontWithName:@"STHeitiSC-Light" size:12];
+        if (!placeHolderFont) placeHolderFont = [UIFont systemFontOfSize:12];
+        NSMutableParagraphStyle *placeHolderParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+        placeHolderParagraphStyle.alignment = NSTextAlignmentNatural;
+        placeHolderParagraphStyle.maximumLineHeight = 0;
+        placeHolderParagraphStyle.minimumLineHeight = 0;
+        placeHolderParagraphStyle.paragraphSpacing = 0;
+
+        NSMutableDictionary *placeHolderTextAttributes = [NSMutableDictionary dictionary];
+        [placeHolderTextAttributes setObject:UIColorFromRGBA(0x999999FF) forKey:NSForegroundColorAttributeName];
+        [placeHolderTextAttributes setObject:font forKey:NSFontAttributeName];
+        [placeHolderTextAttributes setObject:@(-0.2894118) forKey:NSKernAttributeName];
+        [placeHolderTextAttributes setObject:placeHolderParagraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *placeHolderText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"输入数量", nil) attributes:placeHolderTextAttributes];
+        _textFieldWithPlaceHolder.attributedPlaceholder = placeHolderText;
     }
     return _textFieldWithPlaceHolder;
 }
