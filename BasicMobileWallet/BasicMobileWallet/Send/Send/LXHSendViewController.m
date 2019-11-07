@@ -137,7 +137,7 @@
                 NSString *feeRateTextFormat = NSLocalizedString(@"手续费率: %@ sat/byte", nil);
                 feeRateText= [NSString stringWithFormat:feeRateTextFormat, feeRateValue];
             } else {
-                feeRateText = NSLocalizedString(@"请选择或输入手续费率", nil);
+                feeRateText = NSLocalizedString(@"请选择或者输入手续费率", nil);
             }
             dic = @{@"text":feeRateText, @"isSelectable":@"0", @"cellType":@"LXHFeeCell"};
             [_cellDataListForListView addObject:dic];

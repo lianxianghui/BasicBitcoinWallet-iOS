@@ -24,6 +24,7 @@
 @interface LXHSelectFeeRateViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSelectFeeRateView *contentView;
 @property (nonatomic) NSDictionary *feeRateOptionsDic;// keys = @[@"fastestFee", @"halfHourFee", @"hourFee"];
+@property (nonatomic) NSDate *feeRateUpdatedTime;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
 @property (nonatomic) NSMutableDictionary *data;
 @end
@@ -60,9 +61,10 @@
 
 - (void)setViewProperties {
     //set refreshing header
+    __weak typeof(self) weakSelf = self;
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(requestFeeRate)];
     header.lastUpdatedTimeText = ^(NSDate *lastUpdatedTime) {
-        NSDate *updatedTime = self.feeRateOptionsDic[@"date"];
+        NSDate *updatedTime = weakSelf.feeRateUpdatedTime;
         if (updatedTime) {
             static NSDateFormatter *formatter = nil;
             if (!formatter) {
@@ -109,6 +111,7 @@
         [weakSelf.contentView.indicatorView stopAnimating];
         [weakSelf.contentView.listView.mj_header endRefreshing];
         weakSelf.feeRateOptionsDic = resultDic[@"responseData"];
+        weakSelf.feeRateUpdatedTime = resultDic[@"responseTime"];
         [weakSelf setDelegates];
         [weakSelf refreshListView];
         [weakSelf showPromptLabel];
@@ -118,6 +121,7 @@
         if (resultDic) {
             NSDictionary *cachedResult = resultDic[@"cachedResult"];
             weakSelf.feeRateOptionsDic = cachedResult[@"responseData"];
+            weakSelf.feeRateUpdatedTime = resultDic[@"responseTime"];
             [weakSelf setDelegates];
             [weakSelf refreshListView];
             [weakSelf showPromptLabel];
