@@ -164,10 +164,10 @@
                         continue;
                     NSString *feeRateValueText = [NSString stringWithFormat:@"%@ sat/byte", value];
                     NSMutableDictionary *dic = @{@"feeRate":feeRateValueText, @"isSelectable":@"1", @"title":feeRateTitle, @"circleImage":@"check_circle", @"cellType":@"LXHFeeOptionCell", @"checkedImage":@"checked_circle"}.mutableCopy;
-                    NSDictionary *feeRate = @{key : value};
-                    dic[@"feeRate"] = feeRate;
-                    if (_data[@"selectedFeeRate"])
-                        dic[@"isChecked"] = @([feeRate isEqual:_data[@"selectedFeeRate"]]);
+                    NSDictionary *feeRateItem = @{key : value};
+                    if (_data[@"selectedFeeRateItem"])
+                        dic[@"isChecked"] = @([feeRateItem isEqual:_data[@"selectedFeeRateItem"]]);
+                    dic[@"feeRateItemData"] = feeRateItem;
                     [_cellDataListForListView addObject:dic];
                 }
             }
@@ -241,7 +241,7 @@
     UIView *view = [cell.contentView viewWithTag:tag];
     if ([cellType isEqualToString:@"LXHFeeOptionCell"]) {
         LXHFeeOptionCell *cellView = (LXHFeeOptionCell *)view;
-        NSString *feeRate = [dataForRow valueForKey:@"feeRate"];
+        NSString *feeRate = [dataForRow valueForKeyPath:@"feeRate"];
         if (!feeRate)
             feeRate = @"";
         NSMutableAttributedString *feeRateAttributedString = [cellView.feeRate.attributedText mutableCopy];
@@ -291,7 +291,7 @@
     cellData[@"isChecked"] = @(YES);
     [tableView reloadData];
     
-    _data[@"selectedFeeRate"] = [self currentSelectedFeeRate];
+    _data[@"selectedFeeRateItem"] = [self currentSelectedFeeRateItemData];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.navigationController popViewControllerAnimated:YES];
     });
@@ -303,10 +303,10 @@
     }
 }
 
-- (id)currentSelectedFeeRate {
+- (id)currentSelectedFeeRateItemData {
     for (NSDictionary *cellData in _cellDataListForListView) {
         if ([cellData[@"isChecked"] isEqual:@(YES)]) {
-            return cellData[@"feeRate"];
+            return cellData[@"feeRateItemData"];
         }
     }
     return nil;

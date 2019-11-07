@@ -30,7 +30,7 @@
 //下面几个是用来在几个页面之间传递数据的字典
 @property (nonatomic) NSMutableDictionary *inputDataDic;
 @property (nonatomic) NSMutableDictionary *outputDataDic;
-@property (nonatomic) NSMutableDictionary *selectedFeeRateItem;//key in @[@"fastestFee", @"halfHourFee", @"hourFee"]; value sat/byte
+@property (nonatomic) NSMutableDictionary *selectFeeRateData;//key in @[@"fastestFee", @"halfHourFee", @"hourFee"]; value sat/byte
 @property (nonatomic) NSMutableDictionary *inputFeeRateData;//key @"feeRate" value at/byte
 @end
 
@@ -42,7 +42,7 @@
     if (self) {
         _inputDataDic = [NSMutableDictionary dictionary];
         _outputDataDic = [NSMutableDictionary dictionary];
-        _selectedFeeRateItem = [NSMutableDictionary dictionary];
+        _selectFeeRateData = [NSMutableDictionary dictionary];
         _inputFeeRateData = [NSMutableDictionary dictionary];
     }
     return self;
@@ -91,7 +91,7 @@
 }
 
 - (void)LXHFeeCellSelectFeerateButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithData:_selectedFeeRateItem];
+    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithData:_selectFeeRateData];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
@@ -122,8 +122,26 @@
             }
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
             [_cellDataListForListView addObject:dic];
-            dic = @{@"text":@"手续费：40sat/byte （费率）", @"isSelectable":@"0", @"cellType":@"LXHFeeCell"};
+            //fee rate text
+            NSNumber *feeRateValue = nil;
+            if (_inputFeeRateData.count > 0)
+                feeRateValue = _inputFeeRateData[@"feeRate"];
+            else if (_selectFeeRateData.count > 0) {
+                NSDictionary *selectedFeeRateItem = _selectFeeRateData[@"selectedFeeRateItem"];//key is title, value is fee rate value
+                feeRateValue = selectedFeeRateItem.allValues[0];
+            } else {
+                feeRateValue = nil;
+            }
+            NSString *feeRateText = nil;
+            if (feeRateValue) {
+                NSString *feeRateTextFormat = NSLocalizedString(@"手续费率: %@ sat/byte", nil);
+                feeRateText= [NSString stringWithFormat:feeRateTextFormat, feeRateValue];
+            } else {
+                feeRateText = NSLocalizedString(@"请选择或输入手续费率", nil);
+            }
+            dic = @{@"text":feeRateText, @"isSelectable":@"0", @"cellType":@"LXHFeeCell"};
             [_cellDataListForListView addObject:dic];
+            
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
             [_cellDataListForListView addObject:dic];
             dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输出"};
