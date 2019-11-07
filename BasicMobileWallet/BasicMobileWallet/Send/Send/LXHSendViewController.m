@@ -108,6 +108,19 @@
     [self.contentView.listView reloadData];
 }
 
+- (NSNumber *)feeRateValue {
+    NSNumber *feeRateValue = nil;
+    if (_inputFeeRateData.count > 0)
+        feeRateValue = _inputFeeRateData[@"feeRate"];
+    else if (_selectFeeRateData.count > 0) {
+        NSDictionary *selectedFeeRateItem = _selectFeeRateData[@"selectedFeeRateItem"];
+        feeRateValue = selectedFeeRateItem.allValues[0];
+    } else {
+        feeRateValue = nil;
+    }
+    return feeRateValue;
+}
+
 //Delegate Methods
 - (NSArray *)cellDataListForTableView:(UITableView *)tableView {
     if (tableView == self.contentView.listView) {
@@ -130,19 +143,11 @@
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
             [_cellDataListForListView addObject:dic];
             //fee rate text
-            NSNumber *feeRateValue = nil;
-            if (_inputFeeRateData.count > 0)
-                feeRateValue = _inputFeeRateData[@"feeRate"];
-            else if (_selectFeeRateData.count > 0) {
-                NSDictionary *selectedFeeRateItem = _selectFeeRateData[@"selectedFeeRateItem"];
-                feeRateValue = selectedFeeRateItem.allValues[0];
-            } else {
-                feeRateValue = nil;
-            }
+            NSNumber *feeRateValue = [self feeRateValue];
             NSString *feeRateText = nil;
             if (feeRateValue) {
                 NSString *feeRateTextFormat = NSLocalizedString(@"手续费率: %@ sat/byte", nil);
-                feeRateText= [NSString stringWithFormat:feeRateTextFormat, feeRateValue];
+                feeRateText = [NSString stringWithFormat:feeRateTextFormat, feeRateValue];
             } else {
                 feeRateText = NSLocalizedString(@"请选择或者输入手续费率", nil);
             }
@@ -311,56 +316,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch(indexPath.row) {
-        case 0:
-            {
-            }
-            break;
-        case 1:
-            {
-            
+    NSString *type = [self tableView:tableView cellTypeAtIndexPath:indexPath];
+    if ([type isEqualToString:@"LXHSelectionCell"]) {
+        if (indexPath.row == 1) {
             UIViewController *controller = [[LXHSelectInputViewController alloc] initWithData:self.inputDataDic];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
-            }
-            break;
-        case 2:
-            {
-            }
-            break;
-        case 3:
-            {
-            }
-            break;
-        case 4:
-            {
-            }
-            break;
-        case 5:
-            {
-            }
-            break;
-        case 6:
-            {
-            }
-            break;
-        case 7:
-            {
+        } else {
             UIViewController *controller = [[LXHOutputListViewController alloc] init];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
-            }
-            break;
-        case 8:
-            {
-            }
-            break;
-        case 9:
-            {
-            }
-            break;
-        default:
-            break;
+        }
     }
 }
 
