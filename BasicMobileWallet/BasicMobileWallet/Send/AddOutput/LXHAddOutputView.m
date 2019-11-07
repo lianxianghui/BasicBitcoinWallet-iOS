@@ -1,7 +1,7 @@
 // LXHAddOutputView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-21
+//  Created by lianxianghui on 19-11-7
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -50,8 +50,8 @@
         make.height.mas_equalTo(30);
     }];
     [self.value mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.title.mas_right).offset(5);
         make.centerY.equalTo(self.title.mas_centerY);
+        make.left.equalTo(self.title.mas_right);
     }];
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.infomation.mas_left).offset(6);
@@ -149,43 +149,21 @@
 - (UILabel *)title {
     if (!_title) {
         _title = [[UILabel alloc] init];
-        NSMutableAttributedString *attributedText = [NSMutableAttributedString new];
-        UIFont *font = nil;
-        NSMutableParagraphStyle *paragraphStyle = nil;
-        NSMutableDictionary *textAttributes = nil;
-        NSAttributedString *text = nil;
-
-        font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
+        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
         if (!font) font = [UIFont systemFontOfSize:13];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.alignment = NSTextAlignmentNatural;
         paragraphStyle.maximumLineHeight = 0;
         paragraphStyle.minimumLineHeight = 0;
         paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
+
+        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
         [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.5788235) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"最大值", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"" size:13];
-        if (!font) font = [UIFont systemFontOfSize:13];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.5788235) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" ", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        _title.attributedText = attributedText;
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"可输入最大值: ", nil) attributes:textAttributes];
+        _title.attributedText = text;
     }
     return _title;
 }

@@ -1,13 +1,12 @@
 // LXHAddOutputViewController.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-21
+//  Created by lianxianghui on 19-11-7
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import "LXHAddOutputViewController.h"
 #import "Masonry.h"
 #import "LXHAddOutputView.h"
-#import "LXHAddressListViewController.h"
 #import "LXHTopLineCell.h"
 #import "LXHInputAddressCell.h"
 #import "LXHInputAmountCell.h"
@@ -88,45 +87,6 @@
     sender.alpha = 1;
 }
 
-- (void)LXHInputAddressCellTextButton1Clicked:(UIButton *)sender {
-    sender.alpha = 1;
-}
-
-- (void)LXHInputAddressCellTextButton1TouchDown:(UIButton *)sender {
-    sender.alpha = 0.5;
-}
-
-- (void)LXHInputAddressCellTextButton1TouchUpOutside:(UIButton *)sender {
-    sender.alpha = 1;
-}
-
-- (void)LXHInputAddressCellTextButton2Clicked:(UIButton *)sender {
-    sender.alpha = 1;
-}
-
-- (void)LXHInputAddressCellTextButton2TouchDown:(UIButton *)sender {
-    sender.alpha = 0.5;
-}
-
-- (void)LXHInputAddressCellTextButton2TouchUpOutside:(UIButton *)sender {
-    sender.alpha = 1;
-}
-
-- (void)LXHInputAddressCellTextButton3Clicked:(UIButton *)sender {
-    sender.alpha = 1;
-    UIViewController *controller = [[LXHAddressListViewController alloc] init];
-    controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
-}
-
-- (void)LXHInputAddressCellTextButton3TouchDown:(UIButton *)sender {
-    sender.alpha = 0.5;
-}
-
-- (void)LXHInputAddressCellTextButton3TouchUpOutside:(UIButton *)sender {
-    sender.alpha = 1;
-}
-
 - (void)LXHInputAmountCellTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
 }
@@ -148,7 +108,7 @@
             NSDictionary *dic = nil;
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
             [dataForCells addObject:dic];
-            dic = @{@"text1":@"扫描", @"text3":@"地址: ", @"cellType":@"LXHInputAddressCell", @"text2":@"选择", @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"text":@"粘贴", @"isSelectable":@"0", @"warningText":@"用过的本地找零地址 "};
+            dic = @{@"text":@"地址: ", @"warningText":@"用过的本地找零地址 ", @"isSelectable":@"1", @"cellType":@"LXHInputAddressCell", @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE"};
             [dataForCells addObject:dic];
             dic = @{@"text":@"数量:", @"text1":@"输入最大值", @"isSelectable":@"0", @"BTC":@" BTC", @"cellType":@"LXHInputAmountCell"};
             [dataForCells addObject:dic];
@@ -227,24 +187,6 @@
     }
     if ([cellType isEqualToString:@"LXHInputAddressCell"]) {
         LXHInputAddressCell *cellView = (LXHInputAddressCell *)view;
-        NSString *text = [dataForRow valueForKey:@"text"];
-        if (!text)
-            text = @"";
-        NSMutableAttributedString *textAttributedString = [cellView.text.attributedText mutableCopy];
-        [textAttributedString.mutableString setString:text];
-        cellView.text.attributedText = textAttributedString;
-        NSString *text1 = [dataForRow valueForKey:@"text1"];
-        if (!text1)
-            text1 = @"";
-        NSMutableAttributedString *text1AttributedString = [cellView.text1.attributedText mutableCopy];
-        [text1AttributedString.mutableString setString:text1];
-        cellView.text1.attributedText = text1AttributedString;
-        NSString *text2 = [dataForRow valueForKey:@"text2"];
-        if (!text2)
-            text2 = @"";
-        NSMutableAttributedString *text2AttributedString = [cellView.text2.attributedText mutableCopy];
-        [text2AttributedString.mutableString setString:text2];
-        cellView.text2.attributedText = text2AttributedString;
         NSString *warningText = [dataForRow valueForKey:@"warningText"];
         if (!warningText)
             warningText = @"";
@@ -257,24 +199,12 @@
         NSMutableAttributedString *addressTextAttributedString = [cellView.addressText.attributedText mutableCopy];
         [addressTextAttributedString.mutableString setString:addressText];
         cellView.addressText.attributedText = addressTextAttributedString;
-        NSString *text3 = [dataForRow valueForKey:@"text3"];
-        if (!text3)
-            text3 = @"";
-        NSMutableAttributedString *text3AttributedString = [cellView.text3.attributedText mutableCopy];
-        [text3AttributedString.mutableString setString:text3];
-        cellView.text3.attributedText = text3AttributedString;
-        cellView.textButton1.tag = indexPath.row;
-        [cellView.textButton1 addTarget:self action:@selector(LXHInputAddressCellTextButton1Clicked:) forControlEvents:UIControlEventTouchUpInside];
-        [cellView.textButton1 addTarget:self action:@selector(LXHInputAddressCellTextButton1TouchDown:) forControlEvents:UIControlEventTouchDown];
-        [cellView.textButton1 addTarget:self action:@selector(LXHInputAddressCellTextButton1TouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
-        cellView.textButton2.tag = indexPath.row;
-        [cellView.textButton2 addTarget:self action:@selector(LXHInputAddressCellTextButton2Clicked:) forControlEvents:UIControlEventTouchUpInside];
-        [cellView.textButton2 addTarget:self action:@selector(LXHInputAddressCellTextButton2TouchDown:) forControlEvents:UIControlEventTouchDown];
-        [cellView.textButton2 addTarget:self action:@selector(LXHInputAddressCellTextButton2TouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
-        cellView.textButton3.tag = indexPath.row;
-        [cellView.textButton3 addTarget:self action:@selector(LXHInputAddressCellTextButton3Clicked:) forControlEvents:UIControlEventTouchUpInside];
-        [cellView.textButton3 addTarget:self action:@selector(LXHInputAddressCellTextButton3TouchDown:) forControlEvents:UIControlEventTouchDown];
-        [cellView.textButton3 addTarget:self action:@selector(LXHInputAddressCellTextButton3TouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+        NSString *text = [dataForRow valueForKey:@"text"];
+        if (!text)
+            text = @"";
+        NSMutableAttributedString *textAttributedString = [cellView.text.attributedText mutableCopy];
+        [textAttributedString.mutableString setString:text];
+        cellView.text.attributedText = textAttributedString;
     }
     if ([cellType isEqualToString:@"LXHInputAmountCell"]) {
         LXHInputAmountCell *cellView = (LXHInputAmountCell *)view;
@@ -310,9 +240,9 @@
         if ([cellType isEqualToString:@"LXHTopLineCell"])
             return 0.5;
         if ([cellType isEqualToString:@"LXHInputAddressCell"])
-            return 65;
+            return 60;
         if ([cellType isEqualToString:@"LXHInputAmountCell"])
-            return 65;
+            return 60;
     }
     return 0;
 }

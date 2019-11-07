@@ -1,7 +1,7 @@
 // LXHInputAddressCell.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-21
+//  Created by lianxianghui on 19-11-7
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -32,9 +32,6 @@
 
 - (void)addSubviews {
     [self addSubview:self.separator];
-    [self addSubview:self.textButton1];
-    [self addSubview:self.textButton2];
-    [self addSubview:self.textButton3];
     [self addSubview:self.addressGroup];
 }
 
@@ -45,51 +42,21 @@
         make.left.equalTo(self.mas_left);
         make.height.mas_equalTo(0.5);
     }];
-    [self.textButton1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.mas_centerY);
-        make.width.mas_equalTo(32);
-        make.right.equalTo(self.textButton2.mas_left).offset(-8);
-        make.height.mas_equalTo(28);
-    }];
-    [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.textButton1.mas_centerY);
-        make.centerX.equalTo(self.textButton1.mas_centerX);
-    }];
-    [self.textButton2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.mas_centerY);
-        make.right.equalTo(self.textButton3.mas_left).offset(-8);
-        make.width.mas_equalTo(32);
-        make.height.mas_equalTo(28);
-    }];
-    [self.text1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.textButton2.mas_centerX);
-        make.centerY.equalTo(self.textButton2.mas_centerY);
-    }];
-    [self.textButton3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.mas_centerY);
-        make.right.equalTo(self.mas_right).offset(-6);
-        make.width.mas_equalTo(32);
-        make.height.mas_equalTo(28);
-    }];
-    [self.text2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.textButton3.mas_centerX);
-        make.centerY.equalTo(self.textButton3.mas_centerY);
-    }];
     [self.addressGroup mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.mas_centerY);
         make.left.equalTo(self.mas_left).offset(3);
-        make.height.mas_equalTo(33);
-        make.right.equalTo(self.addressText.mas_right);
+        make.top.equalTo(self.mas_top).offset(8);
+        make.right.equalTo(self.mas_right);
+        make.bottom.equalTo(self.mas_bottom);
     }];
     [self.warningText mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.addressText.mas_left);
-        make.top.equalTo(self.addressText.mas_bottom).offset(6);
+        make.centerY.equalTo(self.addressGroup.mas_centerY);
+        make.right.equalTo(self.addressGroup.mas_right).offset(-4);
     }];
     [self.addressText mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.addressGroup.mas_top);
-        make.left.equalTo(self.text3.mas_right);
+        make.left.equalTo(self.text.mas_right);
+        make.centerY.equalTo(self.addressGroup.mas_centerY);
     }];
-    [self.text3 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.addressGroup.mas_left);
         make.centerY.equalTo(self.addressGroup.mas_centerY);
     }];
@@ -105,105 +72,6 @@
     return _separator;
 }
 
-- (UIButton *)textButton1 {
-    if (!_textButton1) {
-        _textButton1 = [UIButton buttonWithType:UIButtonTypeCustom];
-        _textButton1.backgroundColor = UIColorFromRGBA(0x009688FF);
-        _textButton1.layer.cornerRadius = 2;
-        _textButton1.alpha = 1;
-        [_textButton1 addSubview:self.text];
-    }
-    return _textButton1;
-}
-
-- (UILabel *)text {
-    if (!_text) {
-        _text = [[UILabel alloc] init];
-        UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:11];
-        if (!font) font = [UIFont systemFontOfSize:11];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentCenter;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-
-        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0xFFFFFFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(0.3928571) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"粘贴", nil) attributes:textAttributes];
-        _text.attributedText = text;
-    }
-    return _text;
-}
-
-- (UIButton *)textButton2 {
-    if (!_textButton2) {
-        _textButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
-        _textButton2.backgroundColor = UIColorFromRGBA(0x009688FF);
-        _textButton2.layer.cornerRadius = 2;
-        _textButton2.alpha = 1;
-        [_textButton2 addSubview:self.text1];
-    }
-    return _textButton2;
-}
-
-- (UILabel *)text1 {
-    if (!_text1) {
-        _text1 = [[UILabel alloc] init];
-        UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:11];
-        if (!font) font = [UIFont systemFontOfSize:11];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentCenter;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-
-        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0xFFFFFFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(0.3928571) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"扫描", nil) attributes:textAttributes];
-        _text1.attributedText = text;
-    }
-    return _text1;
-}
-
-- (UIButton *)textButton3 {
-    if (!_textButton3) {
-        _textButton3 = [UIButton buttonWithType:UIButtonTypeCustom];
-        _textButton3.backgroundColor = UIColorFromRGBA(0x009688FF);
-        _textButton3.layer.cornerRadius = 2;
-        _textButton3.alpha = 1;
-        [_textButton3 addSubview:self.text2];
-    }
-    return _textButton3;
-}
-
-- (UILabel *)text2 {
-    if (!_text2) {
-        _text2 = [[UILabel alloc] init];
-        UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:11];
-        if (!font) font = [UIFont systemFontOfSize:11];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentCenter;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-
-        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0xFFFFFFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(0.3928571) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"选择", nil) attributes:textAttributes];
-        _text2.attributedText = text;
-    }
-    return _text2;
-}
-
 - (UIView *)addressGroup {
     if (!_addressGroup) {
         _addressGroup = [[UIView alloc] init];
@@ -211,7 +79,7 @@
         _addressGroup.alpha = 1;
         [_addressGroup addSubview:self.warningText];
         [_addressGroup addSubview:self.addressText];
-        [_addressGroup addSubview:self.text3];
+        [_addressGroup addSubview:self.text];
     }
     return _addressGroup;
 }
@@ -282,9 +150,9 @@
     return _addressText;
 }
 
-- (UILabel *)text3 {
-    if (!_text3) {
-        _text3 = [[UILabel alloc] init];
+- (UILabel *)text {
+    if (!_text) {
+        _text = [[UILabel alloc] init];
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:12];
         if (!font) font = [UIFont systemFontOfSize:12];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -299,9 +167,9 @@
         [textAttributes setObject:@(-0.2894118) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"地址: ", nil) attributes:textAttributes];
-        _text3.attributedText = text;
+        _text.attributedText = text;
     }
-    return _text3;
+    return _text;
 }
 
 @end
