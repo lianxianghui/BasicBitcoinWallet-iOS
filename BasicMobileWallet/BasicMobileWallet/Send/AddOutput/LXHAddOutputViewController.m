@@ -108,9 +108,9 @@
             NSDictionary *dic = nil;
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
             [dataForCells addObject:dic];
-            dic = @{@"text":@"地址: ", @"warningText":@"用过的本地找零地址 ", @"isSelectable":@"1", @"cellType":@"LXHInputAddressCell", @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE"};
+            dic = @{@"text":@"地址: ", @"warningText":@"用过的本地找零地址 ", @"isSelectable":@"1", @"cellType":@"LXHInputAddressCell", @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE "};
             [dataForCells addObject:dic];
-            dic = @{@"text":@"数量:", @"text1":@"输入最大值", @"isSelectable":@"0", @"BTC":@" BTC", @"cellType":@"LXHInputAmountCell"};
+            dic = @{@"maxValue":@"可输入最大值: 0.00000001 ", @"text1":@"数量:", @"isSelectable":@"0", @"text":@"输入最大值", @"cellType":@"LXHInputAmountCell", @"BTC":@" BTC"};
             [dataForCells addObject:dic];
         }
     }
@@ -214,6 +214,12 @@
         NSMutableAttributedString *BTCAttributedString = [cellView.BTC.attributedText mutableCopy];
         [BTCAttributedString.mutableString setString:BTC];
         cellView.BTC.attributedText = BTCAttributedString;
+        NSString *maxValue = [dataForRow valueForKey:@"maxValue"];
+        if (!maxValue)
+            maxValue = @"";
+        NSMutableAttributedString *maxValueAttributedString = [cellView.maxValue.attributedText mutableCopy];
+        [maxValueAttributedString.mutableString setString:maxValue];
+        cellView.maxValue.attributedText = maxValueAttributedString;
         NSString *text = [dataForRow valueForKey:@"text"];
         if (!text)
             text = @"";
@@ -240,7 +246,7 @@
         if ([cellType isEqualToString:@"LXHTopLineCell"])
             return 0.5;
         if ([cellType isEqualToString:@"LXHInputAddressCell"])
-            return 60;
+            return 59.99999999999997;
         if ([cellType isEqualToString:@"LXHInputAmountCell"])
             return 60;
     }

@@ -32,8 +32,9 @@
 
 - (void)addSubviews {
     [self addSubview:self.separator];
-    [self addSubview:self.inputGroup];
+    [self addSubview:self.inputBTC];
     [self addSubview:self.textButton];
+    [self addSubview:self.text1];
 }
 
 - (void)makeConstraints {
@@ -43,31 +44,25 @@
         make.left.equalTo(self.mas_left);
         make.height.mas_equalTo(0.5);
     }];
-    [self.inputGroup mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.mas_centerY);
-        make.left.equalTo(self.mas_left).offset(3);
-        make.right.equalTo(self.inputBTC.mas_right);
-        make.height.mas_equalTo(22);
-    }];
     [self.inputBTC mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.inputGroup.mas_top);
-        make.bottom.equalTo(self.inputGroup.mas_bottom);
-        make.right.equalTo(self.BTC.mas_right);
-        make.left.equalTo(self.text.mas_right).offset(4);
+        make.width.mas_equalTo(180);
+        make.top.equalTo(self.mas_top);
+        make.bottom.equalTo(self.mas_bottom);
+        make.left.equalTo(self.text1.mas_right).offset(6);
     }];
     [self.BTC mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.inputBTC.mas_centerY);
         make.left.equalTo(self.textFieldWithPlaceHolder.mas_right).offset(6);
+        make.centerY.equalTo(self.textFieldWithPlaceHolder.mas_centerY);
+    }];
+    [self.maxValue mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.inputBTC.mas_left).offset(2);
+        make.top.equalTo(self.textFieldWithPlaceHolder.mas_bottom).offset(3);
     }];
     [self.textFieldWithPlaceHolder mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.inputBTC.mas_left);
-        make.top.equalTo(self.inputBTC.mas_top);
-        make.bottom.equalTo(self.inputBTC.mas_bottom);
         make.width.mas_equalTo(143);
-    }];
-    [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.inputGroup.mas_left);
-        make.centerY.equalTo(self.inputGroup.mas_centerY);
+        make.centerY.equalTo(self.inputBTC.mas_centerY).offset(-4);
+        make.height.mas_equalTo(22);
     }];
     [self.textButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.mas_centerY);
@@ -75,9 +70,13 @@
         make.width.mas_equalTo(67);
         make.height.mas_equalTo(28);
     }];
-    [self.text1 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.textButton.mas_centerY);
         make.centerX.equalTo(self.textButton.mas_centerX);
+    }];
+    [self.text1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.mas_centerY);
+        make.left.equalTo(self.mas_left).offset(6);
     }];
 }
 
@@ -91,23 +90,13 @@
     return _separator;
 }
 
-- (UIView *)inputGroup {
-    if (!_inputGroup) {
-        _inputGroup = [[UIView alloc] init];
-        _inputGroup.backgroundColor = UIColorFromRGBA(0xFFFFFF00);
-        _inputGroup.alpha = 1;
-        [_inputGroup addSubview:self.inputBTC];
-        [_inputGroup addSubview:self.text];
-    }
-    return _inputGroup;
-}
-
 - (UIView *)inputBTC {
     if (!_inputBTC) {
         _inputBTC = [[UIView alloc] init];
         _inputBTC.backgroundColor = UIColorFromRGBA(0xFFFFFF00);
         _inputBTC.alpha = 1;
         [_inputBTC addSubview:self.BTC];
+        [_inputBTC addSubview:self.maxValue];
         [_inputBTC addSubview:self.textFieldWithPlaceHolder];
     }
     return _inputBTC;
@@ -133,6 +122,28 @@
         _BTC.attributedText = text;
     }
     return _BTC;
+}
+
+- (UILabel *)maxValue {
+    if (!_maxValue) {
+        _maxValue = [[UILabel alloc] init];
+        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:9];
+        if (!font) font = [UIFont systemFontOfSize:9];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentNatural;
+        paragraphStyle.maximumLineHeight = 0;
+        paragraphStyle.minimumLineHeight = 0;
+        paragraphStyle.paragraphSpacing = 0;
+
+        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
+        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
+        [textAttributes setObject:font forKey:NSFontAttributeName];
+        [textAttributes setObject:@(-0.400724) forKey:NSKernAttributeName];
+        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"可输入最大值: 0.00000001 ", nil) attributes:textAttributes];
+        _maxValue.attributedText = text;
+    }
+    return _maxValue;
 }
 
 - (UITextField *)textFieldWithPlaceHolder {
@@ -162,42 +173,20 @@
     return _textFieldWithPlaceHolder;
 }
 
-- (UILabel *)text {
-    if (!_text) {
-        _text = [[UILabel alloc] init];
-        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:12];
-        if (!font) font = [UIFont systemFontOfSize:12];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-
-        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.3683423) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"数量:", nil) attributes:textAttributes];
-        _text.attributedText = text;
-    }
-    return _text;
-}
-
 - (UIButton *)textButton {
     if (!_textButton) {
         _textButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _textButton.backgroundColor = UIColorFromRGBA(0x009688FF);
         _textButton.layer.cornerRadius = 2;
         _textButton.alpha = 1;
-        [_textButton addSubview:self.text1];
+        [_textButton addSubview:self.text];
     }
     return _textButton;
 }
 
-- (UILabel *)text1 {
-    if (!_text1) {
-        _text1 = [[UILabel alloc] init];
+- (UILabel *)text {
+    if (!_text) {
+        _text = [[UILabel alloc] init];
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -212,6 +201,28 @@
         [textAttributes setObject:@(0.3928571) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"输入最大值", nil) attributes:textAttributes];
+        _text.attributedText = text;
+    }
+    return _text;
+}
+
+- (UILabel *)text1 {
+    if (!_text1) {
+        _text1 = [[UILabel alloc] init];
+        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:12];
+        if (!font) font = [UIFont systemFontOfSize:12];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentNatural;
+        paragraphStyle.maximumLineHeight = 0;
+        paragraphStyle.minimumLineHeight = 0;
+        paragraphStyle.paragraphSpacing = 0;
+
+        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
+        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
+        [textAttributes setObject:font forKey:NSFontAttributeName];
+        [textAttributes setObject:@(-0.3683423) forKey:NSKernAttributeName];
+        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"数量:", nil) attributes:textAttributes];
         _text1.attributedText = text;
     }
     return _text1;

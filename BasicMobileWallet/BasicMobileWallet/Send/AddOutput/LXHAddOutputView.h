@@ -9,14 +9,11 @@
 @interface LXHAddOutputView : UIView
 
 @property (nonatomic) UITableView *listView;
-@property (nonatomic) UIView *infomation;
-@property (nonatomic) UILabel *value;
-@property (nonatomic) UILabel *title;
 @property (nonatomic) UIView *customNavigationBar;
 @property (nonatomic) UIButton *rightTextButton;
 @property (nonatomic) UILabel *text;
 @property (nonatomic) UIView *bottomLine;
-@property (nonatomic) UILabel *title1;
+@property (nonatomic) UILabel *title;
 @property (nonatomic) UIButton *leftImageButton;
 @property (nonatomic) UILabel *leftText;
 @property (nonatomic) UIImageView *leftBarItemImage;

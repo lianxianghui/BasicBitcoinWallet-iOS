@@ -43,18 +43,18 @@
         make.height.mas_equalTo(0.5);
     }];
     [self.addressGroup mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(3);
         make.top.equalTo(self.mas_top).offset(8);
         make.right.equalTo(self.mas_right);
         make.bottom.equalTo(self.mas_bottom);
+        make.left.equalTo(self.mas_left).offset(6);
     }];
     [self.warningText mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.addressGroup.mas_centerY);
         make.right.equalTo(self.addressGroup.mas_right).offset(-4);
     }];
     [self.addressText mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.text.mas_right);
         make.centerY.equalTo(self.addressGroup.mas_centerY);
+        make.left.equalTo(self.text.mas_right).offset(1);
     }];
     [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.addressGroup.mas_left);

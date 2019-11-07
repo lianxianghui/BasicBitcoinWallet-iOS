@@ -9,12 +9,12 @@
 @interface LXHInputAmountCell : UIView
 
 @property (nonatomic) UIView *separator;
-@property (nonatomic) UIView *inputGroup;
 @property (nonatomic) UIView *inputBTC;
 @property (nonatomic) UILabel *BTC;
+@property (nonatomic) UILabel *maxValue;
 @property (nonatomic) UITextField *textFieldWithPlaceHolder;
-@property (nonatomic) UILabel *text;
 @property (nonatomic) UIButton *textButton;
+@property (nonatomic) UILabel *text;
 @property (nonatomic) UILabel *text1;
 
 @end

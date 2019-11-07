@@ -32,7 +32,6 @@
 
 - (void)addSubviews {
     [self addSubview:self.listView];
-    [self addSubview:self.infomation];
     [self addSubview:self.customNavigationBar];
 }
 
@@ -41,21 +40,7 @@
         make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
         make.bottom.equalTo(self.mas_bottom);
-        make.top.equalTo(self.infomation.mas_bottom).offset(2);
-    }];
-    [self.infomation mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left);
-        make.right.equalTo(self.customNavigationBar.mas_right);
         make.top.equalTo(self.customNavigationBar.mas_bottom);
-        make.height.mas_equalTo(30);
-    }];
-    [self.value mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.title.mas_centerY);
-        make.left.equalTo(self.title.mas_right);
-    }];
-    [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.infomation.mas_left).offset(6);
-        make.centerY.equalTo(self.infomation.mas_centerY);
     }];
     [self.customNavigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top);
@@ -79,7 +64,7 @@
         make.bottom.equalTo(self.customNavigationBar.mas_bottom);
         make.height.mas_equalTo(0.5099999904632568);
     }];
-    [self.title1 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.customNavigationBar.mas_centerX);
         make.centerY.equalTo(self.customNavigationBar.mas_centerY);
     }];
@@ -113,61 +98,6 @@
     return _listView;
 }
 
-- (UIView *)infomation {
-    if (!_infomation) {
-        _infomation = [[UIView alloc] init];
-        _infomation.backgroundColor = UIColorFromRGBA(0xFFFFFF00);
-        _infomation.alpha = 1;
-        [_infomation addSubview:self.value];
-        [_infomation addSubview:self.title];
-    }
-    return _infomation;
-}
-
-- (UILabel *)value {
-    if (!_value) {
-        _value = [[UILabel alloc] init];
-        UIFont *font = [UIFont fontWithName:@"" size:13];
-        if (!font) font = [UIFont systemFontOfSize:13];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-
-        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.5788235) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"0.0000001BTC ", nil) attributes:textAttributes];
-        _value.attributedText = text;
-    }
-    return _value;
-}
-
-- (UILabel *)title {
-    if (!_title) {
-        _title = [[UILabel alloc] init];
-        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
-        if (!font) font = [UIFont systemFontOfSize:13];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-
-        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.5788235) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"可输入最大值: ", nil) attributes:textAttributes];
-        _title.attributedText = text;
-    }
-    return _title;
-}
-
 - (UIView *)customNavigationBar {
     if (!_customNavigationBar) {
         _customNavigationBar = [[UIView alloc] init];
@@ -175,7 +105,7 @@
         _customNavigationBar.alpha = 1;
         [_customNavigationBar addSubview:self.rightTextButton];
         [_customNavigationBar addSubview:self.bottomLine];
-        [_customNavigationBar addSubview:self.title1];
+        [_customNavigationBar addSubview:self.title];
         [_customNavigationBar addSubview:self.leftImageButton];
     }
     return _customNavigationBar;
@@ -245,9 +175,9 @@
     return _bottomLine;
 }
 
-- (UILabel *)title1 {
-    if (!_title1) {
-        _title1 = [[UILabel alloc] init];
+- (UILabel *)title {
+    if (!_title) {
+        _title = [[UILabel alloc] init];
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Light" size:17];
         if (!font) font = [UIFont systemFontOfSize:17];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -262,9 +192,9 @@
         [textAttributes setObject:@(-0.4099999964237213) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"添加输出", nil) attributes:textAttributes];
-        _title1.attributedText = text;
+        _title.attributedText = text;
     }
-    return _title1;
+    return _title;
 }
 
 - (UIButton *)leftImageButton {
