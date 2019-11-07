@@ -1019,11 +1019,11 @@
 			isa = PBXGroup;
 			children = (
 				8C93346E235DB14C00FBF238 /* LXHSelectedOutputCell.h */,
-				8C93346F235DB14C00FBF238 /* LXHOutputListViewController.m */,
-				8C933470235DB14C00FBF238 /* LXHOutputListView.m */,
 				8C933477235DB14C00FBF238 /* LXHSelectedOutputCell.m */,
-				8C933478235DB14C00FBF238 /* LXHOutputListViewController.h */,
 				8C93347A235DB14C00FBF238 /* LXHOutputListView.h */,
+				8C933470235DB14C00FBF238 /* LXHOutputListView.m */,
+				8C933478235DB14C00FBF238 /* LXHOutputListViewController.h */,
+				8C93346F235DB14C00FBF238 /* LXHOutputListViewController.m */,
 			);
 			path = OutputList;
 			sourceTree = "<group>";
