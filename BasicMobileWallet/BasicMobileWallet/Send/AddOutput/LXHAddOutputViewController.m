@@ -10,6 +10,8 @@
 #import "LXHTopLineCell.h"
 #import "LXHInputAddressCell.h"
 #import "LXHInputAmountCell.h"
+#import "BTCQRCode.h"
+#import "LXHGlobalHeader.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -23,6 +25,7 @@
 @property (nonatomic, copy) addOutputCallback addOutputCallback;
 @property (nonatomic) LXHTransactionOutput *output;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
+@property (nonatomic) UIView *scanerView;
 @end
 
 @implementation LXHAddOutputViewController
@@ -304,22 +307,34 @@
     return gpBoard.string;
 }
 
-- (BOOL)isValidAddress:(NSString *)address {
-    return YES;//todo
+- (NSString *)validAddress:(NSString *)address {
+    address = [address stringByReplacingOccurrencesOfString:@"bitcoin:" withString:@""];
+    //todo
+    return address;
 }
 
 - (void)showSettingAddressSheet {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
+    LXHWeakSelf
     UIAlertAction *pasteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"粘贴地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *pasteboardText = [self pastboardText];
-        if ([self isValidAddress:pasteboardText]) {
-            self.output.address = pasteboardText;
-            [self refreshListView];
+        NSString *text = [weakSelf pastboardText];
+        NSString *validAddress = [weakSelf validAddress:text];
+        if (validAddress) {
+            weakSelf.output.address = validAddress;
+            [weakSelf refreshListView];
         }
     }];
     
     UIAlertAction *scanAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"扫描二维码", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+        weakSelf.scanerView = [BTCQRCode scannerViewWithBlock:^(NSString *text) {
+            NSString *validAddress = [weakSelf validAddress:text];
+            if (validAddress) {
+                weakSelf.output.address = validAddress;
+                [weakSelf refreshListView];
+                [self.scanerView removeFromSuperview];
+            }
+        }];
+        [weakSelf.contentView.window addSubview:weakSelf.scanerView];
     }];
     
     UIAlertAction *selectAddressAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"选择本地地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
