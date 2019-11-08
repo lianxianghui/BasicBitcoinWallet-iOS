@@ -13,6 +13,7 @@
 #import "BTCQRCode.h"
 #import "LXHGlobalHeader.h"
 #import "LXHAddressListForSelectionViewController.h"
+#import "Toast.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -25,7 +26,7 @@
 @property (nonatomic) NSDictionary *data;
 @property (nonatomic, copy) addOutputCallback addOutputCallback;
 @property (nonatomic) LXHTransactionOutput *output;
-@property (nonatomic) NSDictionary *localAddressData;//@{@"addressType":@(addressType), @"addressIndex":@(i)};
+@property (nonatomic) LXHLocalAddress *localAddress;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
 @property (nonatomic) UIView *scanerView;
 @end
@@ -147,7 +148,14 @@
 }
 
 - (NSString *)warningText {
-    return @" ";//NSLocalizedString(@"用过的本地找零地址", nil);
+    if (_localAddress) {
+        NSString *format = NSLocalizedString(@"%@本地%@地址", nil); //例如 "用过的本地找零地址"
+        NSString *string1 = _localAddress.used ? NSLocalizedString(@"用过的", nil) : @"";
+        NSString *string2 = _localAddress.type == LXHAddressTypeChange ? NSLocalizedString(@"找零", nil) : NSLocalizedString(@"接收", nil);
+        NSString *text = [NSString stringWithFormat:format, string1, string2];
+        return text;
+    } else
+        return @" ";
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -328,6 +336,7 @@
     }];
     
     UIAlertAction *scanAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"扫描二维码", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+#if !(TARGET_IPHONE_SIMULATOR)
         weakSelf.scanerView = [BTCQRCode scannerViewWithBlock:^(NSString *text) {
             NSString *validAddress = [weakSelf validAddress:text];
             if (validAddress) {
@@ -337,12 +346,16 @@
             }
         }];
         [weakSelf.contentView.window addSubview:weakSelf.scanerView];
+#else
+        [weakSelf.view makeToast:NSLocalizedString(@"模拟器上无法使用该功能", nil)];
+#endif
     }];
     
     UIAlertAction *selectAddressAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"选择本地地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        LXHAddressListForSelectionViewController *controller = [[LXHAddressListForSelectionViewController alloc] initWithAddressSelectedCallback:^(NSDictionary * _Nonnull addressData) {
-            weakSelf.localAddressData = addressData;
-            //NSString *address =
+        LXHAddressListForSelectionViewController *controller = [[LXHAddressListForSelectionViewController alloc] initWithAddressSelectedCallback:^(LXHLocalAddress *localAddress) {
+            weakSelf.localAddress = localAddress;
+            weakSelf.output.address = localAddress.addressString;
+            [weakSelf refreshListView];
         }];
         [self.navigationController pushViewController:controller animated:YES];
     }];

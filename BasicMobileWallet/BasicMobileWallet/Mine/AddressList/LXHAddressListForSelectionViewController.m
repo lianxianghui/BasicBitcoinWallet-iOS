@@ -8,6 +8,8 @@
 
 #import "LXHAddressListForSelectionViewController.h"
 #import "LXHLocalAddressCell.h"
+#import "LXHLocalAddress.h"
+#import "LXHWallet.h"
 
 @interface LXHAddressListForSelectionViewController ()
 @property (nonatomic, copy) addressSelectedCallback addressSelectedCallback;
@@ -41,7 +43,13 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *cellDic = [self cellDataForTableView:tableView atIndexPath:indexPath];
     NSMutableDictionary *data = cellDic[@"data"];
-    _addressSelectedCallback(data);
+    if (!data) //应该不会发生
+        return;
+    LXHAccount *account = [LXHWallet mainAccount];
+    LXHAddressType type = [data[@"addressType"] integerValue];
+    uint32_t index = [data[@"addressIndex"] unsignedIntValue];
+    LXHLocalAddress *address = [account addressModelWithWithType:type index:index];
+    _addressSelectedCallback(address);
     [self.navigationController popViewControllerAnimated:YES];
 }
 
