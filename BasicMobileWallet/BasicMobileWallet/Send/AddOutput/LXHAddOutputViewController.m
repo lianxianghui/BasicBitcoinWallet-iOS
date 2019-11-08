@@ -122,10 +122,10 @@
             
             NSString *text, *warningText, *addressText;
             if (_output.address) {
-                text = @"地址: ";
+                text = NSLocalizedString(@"地址: ", nil);
                 addressText = _output.address;
             } else {
-                text = @"地址: 点击添加";
+                text = NSLocalizedString(@"地址: 点击添加", nil);
                 addressText = @"";
             }
             warningText = [self warningText];
@@ -139,7 +139,7 @@
 }
 
 - (NSString *)warningText {
-    return @"";//@"用过的本地找零地址";
+    return @"";//NSLocalizedString(@"用过的本地找零地址", nil);
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -291,21 +291,34 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch(indexPath.row) {
-        case 0:
-            {
-            }
-            break;
         case 1:
-            {
-            }
-            break;
-        case 2:
-            {
-            }
+            [self showSettingAddressSheet];
             break;
         default:
             break;
     }
+}
+
+- (void)showSettingAddressSheet {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
+    UIAlertAction *pasteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"粘贴地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+       
+    }];
+    
+    UIAlertAction *scanAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"扫描二维码", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    UIAlertAction *selectAddressAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"选择本地地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:pasteAction];
+    [alertController addAction:scanAction];
+    [alertController addAction:selectAddressAction];
+    [alertController addAction:cancleAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 @end
