@@ -19,10 +19,21 @@
     
 @interface LXHAddOutputViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHAddOutputView *contentView;
-
+@property (nonatomic) NSDictionary *data;
+@property (nonatomic, copy) addOutputCallback addOutputCallback;
+@property (nonatomic) LXHTransactionOutput *output;
 @end
 
 @implementation LXHAddOutputViewController
+
+- (instancetype)initWithData:(NSDictionary *)data addOutputCallback:(addOutputCallback)addOutputCallback {
+    self = [super init];
+    if (self) {
+        _data = data;
+        _addOutputCallback = addOutputCallback;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -108,13 +119,27 @@
             NSDictionary *dic = nil;
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
             [dataForCells addObject:dic];
-            dic = @{@"text":@"地址: ", @"warningText":@"用过的本地找零地址 ", @"isSelectable":@"1", @"cellType":@"LXHInputAddressCell", @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE "};
+            
+            NSString *text, *warningText, *addressText;
+            if (_output.address) {
+                text = @"地址: ";
+                addressText = _output.address;
+            } else {
+                text = @"地址: 点击添加";
+                addressText = @"";
+            }
+            warningText = [self warningText];
+            dic = @{@"text":text, @"warningText":warningText, @"isSelectable":@"1", @"cellType":@"LXHInputAddressCell", @"addressText":addressText};
             [dataForCells addObject:dic];
             dic = @{@"maxValue":@"可输入最大值: 0.00000001 ", @"text1":@"数量:", @"isSelectable":@"0", @"text":@"输入最大值", @"cellType":@"LXHInputAmountCell", @"BTC":@" BTC"};
             [dataForCells addObject:dic];
         }
     }
     return dataForCells;
+}
+
+- (NSString *)warningText {
+    return @"";//@"用过的本地找零地址";
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -246,7 +271,7 @@
         if ([cellType isEqualToString:@"LXHTopLineCell"])
             return 0.5;
         if ([cellType isEqualToString:@"LXHInputAddressCell"])
-            return 59.99999999999997;
+            return 50;
         if ([cellType isEqualToString:@"LXHInputAmountCell"])
             return 60;
     }

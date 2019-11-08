@@ -167,7 +167,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.2894118) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"输入数量", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"", nil) attributes:textAttributes];
 	    _textFieldWithPlaceHolder.attributedText = text;
         UIFont *placeHolderFont = [UIFont fontWithName:@"STHeitiSC-Light" size:12];
         if (!placeHolderFont) placeHolderFont = [UIFont systemFontOfSize:12];
