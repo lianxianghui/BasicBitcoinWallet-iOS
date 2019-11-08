@@ -14,6 +14,8 @@
 #import "LXHGlobalHeader.h"
 #import "LXHAddressListForSelectionViewController.h"
 #import "Toast.h"
+#import "NSString+Base.h"
+#import "BTCAddress.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -317,10 +319,17 @@
     return gpBoard.string;
 }
 
+
+/**
+ 返回有效的地址，如果无效返回nil
+ */
 - (NSString *)validAddress:(NSString *)address {
+    address = [address stringByTrimmingWhiteSpace];
     address = [address stringByReplacingOccurrencesOfString:@"bitcoin:" withString:@""];
-    //todo
-    return address;
+    if ([BTCAddress addressWithString:address]) //有效
+        return address;
+    else
+        return nil;
 }
 
 - (void)showSettingAddressSheet {
@@ -332,6 +341,8 @@
         if (validAddress) {
             weakSelf.output.address = validAddress;
             [weakSelf refreshListView];
+        } else {
+            [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址", nil)];
         }
     }];
     
@@ -342,8 +353,10 @@
             if (validAddress) {
                 weakSelf.output.address = validAddress;
                 [weakSelf refreshListView];
-                [self.scanerView removeFromSuperview];
+            } else {
+                [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址", nil)];
             }
+            [self.scanerView removeFromSuperview];
         }];
         [weakSelf.contentView.window addSubview:weakSelf.scanerView];
 #else
