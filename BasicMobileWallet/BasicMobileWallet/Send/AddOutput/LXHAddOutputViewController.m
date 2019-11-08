@@ -22,6 +22,7 @@
 @property (nonatomic) NSDictionary *data;
 @property (nonatomic, copy) addOutputCallback addOutputCallback;
 @property (nonatomic) LXHTransactionOutput *output;
+@property (nonatomic) NSMutableArray *cellDataListForListView;
 @end
 
 @implementation LXHAddOutputViewController
@@ -110,36 +111,38 @@
     sender.alpha = 1;
 }
 
+- (void)refreshListView {
+    _cellDataListForListView = nil;
+    [self.contentView.listView reloadData];
+}
+
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
-            [dataForCells addObject:dic];
-            
-            NSString *text, *warningText, *addressText;
-            if (_output.address) {
-                text = NSLocalizedString(@"地址: ", nil);
-                addressText = _output.address;
-            } else {
-                text = NSLocalizedString(@"地址: 点击添加", nil);
-                addressText = @"";
-            }
-            warningText = [self warningText];
-            dic = @{@"text":text, @"warningText":warningText, @"isSelectable":@"1", @"cellType":@"LXHInputAddressCell", @"addressText":addressText};
-            [dataForCells addObject:dic];
-            dic = @{@"maxValue":@"可输入最大值: 0.00000001 ", @"text1":@"数量:", @"isSelectable":@"0", @"text":@"输入最大值", @"cellType":@"LXHInputAmountCell", @"BTC":@" BTC"};
-            [dataForCells addObject:dic];
+    if (!_cellDataListForListView) {
+        _cellDataListForListView = [NSMutableArray array];
+        NSDictionary *dic = nil;
+        dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
+        [_cellDataListForListView addObject:dic];
+        
+        NSString *text, *warningText, *addressText;
+        if (_output.address) {
+            text = NSLocalizedString(@"地址: ", nil);
+            addressText = self.output.address ?: @" ";
+        } else {
+            text = NSLocalizedString(@"地址: 点击添加", nil);
+            addressText = @" ";
         }
+        warningText = [self warningText];
+        dic = @{@"text":text, @"warningText":warningText, @"isSelectable":@"1", @"cellType":@"LXHInputAddressCell", @"addressText":addressText};
+        [_cellDataListForListView addObject:dic];
+        dic = @{@"maxValue":@"可输入最大值: 0.00000001 ", @"text1":@"数量:", @"isSelectable":@"0", @"text":@"输入最大值", @"cellType":@"LXHInputAmountCell", @"BTC":@" BTC"};
+        [_cellDataListForListView addObject:dic];
     }
-    return dataForCells;
+    return _cellDataListForListView;
 }
 
 - (NSString *)warningText {
-    return @"";//NSLocalizedString(@"用过的本地找零地址", nil);
+    return @" ";//NSLocalizedString(@"用过的本地找零地址", nil);
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -207,26 +210,23 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     UIView *view = [cell.contentView viewWithTag:tag];
-    if ([cellType isEqualToString:@"LXHTopLineCell"]) {
-        LXHTopLineCell *cellView = (LXHTopLineCell *)view;
-    }
     if ([cellType isEqualToString:@"LXHInputAddressCell"]) {
         LXHInputAddressCell *cellView = (LXHInputAddressCell *)view;
         NSString *warningText = [dataForRow valueForKey:@"warningText"];
         if (!warningText)
-            warningText = @"";
+            warningText = @" ";
         NSMutableAttributedString *warningTextAttributedString = [cellView.warningText.attributedText mutableCopy];
         [warningTextAttributedString.mutableString setString:warningText];
         cellView.warningText.attributedText = warningTextAttributedString;
         NSString *addressText = [dataForRow valueForKey:@"addressText"];
         if (!addressText)
-            addressText = @"";
+            addressText = @" ";
         NSMutableAttributedString *addressTextAttributedString = [cellView.addressText.attributedText mutableCopy];
         [addressTextAttributedString.mutableString setString:addressText];
         cellView.addressText.attributedText = addressTextAttributedString;
         NSString *text = [dataForRow valueForKey:@"text"];
         if (!text)
-            text = @"";
+            text = @" ";
         NSMutableAttributedString *textAttributedString = [cellView.text.attributedText mutableCopy];
         [textAttributedString.mutableString setString:text];
         cellView.text.attributedText = textAttributedString;
@@ -235,25 +235,25 @@
         LXHInputAmountCell *cellView = (LXHInputAmountCell *)view;
         NSString *BTC = [dataForRow valueForKey:@"BTC"];
         if (!BTC)
-            BTC = @"";
+            BTC = @" ";
         NSMutableAttributedString *BTCAttributedString = [cellView.BTC.attributedText mutableCopy];
         [BTCAttributedString.mutableString setString:BTC];
         cellView.BTC.attributedText = BTCAttributedString;
         NSString *maxValue = [dataForRow valueForKey:@"maxValue"];
         if (!maxValue)
-            maxValue = @"";
+            maxValue = @" ";
         NSMutableAttributedString *maxValueAttributedString = [cellView.maxValue.attributedText mutableCopy];
         [maxValueAttributedString.mutableString setString:maxValue];
         cellView.maxValue.attributedText = maxValueAttributedString;
         NSString *text = [dataForRow valueForKey:@"text"];
         if (!text)
-            text = @"";
+            text = @" ";
         NSMutableAttributedString *textAttributedString = [cellView.text.attributedText mutableCopy];
         [textAttributedString.mutableString setString:text];
         cellView.text.attributedText = textAttributedString;
         NSString *text1 = [dataForRow valueForKey:@"text1"];
         if (!text1)
-            text1 = @"";
+            text1 = @" ";
         NSMutableAttributedString *text1AttributedString = [cellView.text1.attributedText mutableCopy];
         [text1AttributedString.mutableString setString:text1];
         cellView.text1.attributedText = text1AttributedString;
@@ -299,10 +299,23 @@
     }
 }
 
+- (NSString *)pastboardText {
+    UIPasteboard *gpBoard = [UIPasteboard generalPasteboard];
+    return gpBoard.string;
+}
+
+- (BOOL)isValidAddress:(NSString *)address {
+    return YES;//todo
+}
+
 - (void)showSettingAddressSheet {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
     UIAlertAction *pasteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"粘贴地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-       
+        NSString *pasteboardText = [self pastboardText];
+        if ([self isValidAddress:pasteboardText]) {
+            self.output.address = pasteboardText;
+            [self refreshListView];
+        }
     }];
     
     UIAlertAction *scanAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"扫描二维码", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -319,6 +332,13 @@
     [alertController addAction:selectAddressAction];
     [alertController addAction:cancleAction];
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (LXHTransactionOutput *)output {
+    if (!_output) {
+        _output = [LXHTransactionOutput new];
+    }
+    return _output;
 }
 
 @end
