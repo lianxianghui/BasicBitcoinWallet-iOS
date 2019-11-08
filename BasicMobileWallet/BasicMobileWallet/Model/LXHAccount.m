@@ -91,6 +91,8 @@
     return [[self changeLeveWithType:type] isUsedAddressWithIndex:index];
 }
 
-
+- (LXHLocalAddress *)addressModelWithWithType:(LXHAddressType)type index:(uint32_t)index {
+    return [[self changeLeveWithType:type] addressModelWithIndex:index];
+}
 
 @end

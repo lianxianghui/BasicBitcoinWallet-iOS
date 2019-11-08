@@ -98,4 +98,13 @@
     return index < [self usedAddresses].count;
 }
 
+- (LXHLocalAddress *)addressModelWithIndex:(uint32_t)index {
+    LXHLocalAddress *localAddress = [LXHLocalAddress new];
+    localAddress.addressString = [self addressStringWithIndex:index];
+    localAddress.addressPath = [self addressPathWithIndex:index];
+    localAddress.type = self.addressType;
+    localAddress.used = [self isUsedAddressWithIndex:index];
+    return localAddress;
+}
+
 @end

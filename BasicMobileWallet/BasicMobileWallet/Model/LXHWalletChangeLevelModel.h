@@ -8,13 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "LXHGlobalHeader.h"
+#import "LXHLocalAddress.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, LXHAddressType) {
-    LXHAddressTypeReceiving = 0,
-    LXHAddressTypeChange = 1,
-};
+
 
 /**
  * 代表 ”m/44'/coin_type'/account'/change/address_index“路径中 change级别的模型对象
@@ -34,6 +32,7 @@ typedef NS_ENUM(NSUInteger, LXHAddressType) {
 - (NSString *)currentAddress;
 - (NSArray *)usedAddresses;
 - (NSArray *)usedAndCurrentAddresses;
+- (LXHLocalAddress *)addressModelWithIndex:(uint32_t)index;
 @end
 
 
