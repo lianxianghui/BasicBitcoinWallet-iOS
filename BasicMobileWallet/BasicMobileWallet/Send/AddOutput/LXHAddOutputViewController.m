@@ -12,6 +12,7 @@
 #import "LXHInputAmountCell.h"
 #import "BTCQRCode.h"
 #import "LXHGlobalHeader.h"
+#import "LXHAddressListForSelectionViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -24,6 +25,7 @@
 @property (nonatomic) NSDictionary *data;
 @property (nonatomic, copy) addOutputCallback addOutputCallback;
 @property (nonatomic) LXHTransactionOutput *output;
+@property (nonatomic) NSDictionary *localAddressData;//@{@"addressType":@(addressType), @"addressIndex":@(i)};
 @property (nonatomic) NSMutableArray *cellDataListForListView;
 @property (nonatomic) UIView *scanerView;
 @end
@@ -338,7 +340,11 @@
     }];
     
     UIAlertAction *selectAddressAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"选择本地地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+        LXHAddressListForSelectionViewController *controller = [[LXHAddressListForSelectionViewController alloc] initWithAddressSelectedCallback:^(NSDictionary * _Nonnull addressData) {
+            weakSelf.localAddressData = addressData;
+            //NSString *address =
+        }];
+        [self.navigationController pushViewController:controller animated:YES];
     }];
     
     UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];

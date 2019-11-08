@@ -241,7 +241,6 @@
     NSMutableDictionary *data = cellDic[@"data"];
     UIViewController *controller = [[LXHAddressDetailViewController alloc] initWithData:data];
     [self.navigationController pushViewController:controller animated:YES];
-
 }
 
 @end
