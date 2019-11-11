@@ -90,7 +90,7 @@
 - (void)LXHFeeCellInputFeeValueButtonClicked:(UIButton *)sender {
     LXHWeakSelf
     UIViewController *controller = [[LXHInputFeeViewController alloc] initWithData:_dataForBuildingTransaction dataChangedCallback:^{
-        weakSelf.dataForBuildingTransaction[@"selectFeeRateDataItem"] = nil; //把LXHSelectFeeRateViewController数据置空
+        weakSelf.dataForBuildingTransaction[@"selectedFeeRateItem"] = nil; //把LXHSelectFeeRateViewController数据置空
     }];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 

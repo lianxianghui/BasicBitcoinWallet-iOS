@@ -1,7 +1,7 @@
 // LXHInputFeeView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-21
+//  Created by lianxianghui on 19-11-11
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -148,7 +148,6 @@
 - (UILabel *)BTC {
     if (!_BTC) {
         _BTC = [[UILabel alloc] init];
-        _BTC.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -162,7 +161,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.3376471) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" BTC", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"sat/byte", nil) attributes:textAttributes];
         _BTC.attributedText = text;
     }
     return _BTC;
@@ -176,21 +175,21 @@
         _textFieldWithPlaceHolder.layer.borderWidth = 1;
         _textFieldWithPlaceHolder.layer.borderColor = UIColorFromRGBA(0xD8D8D8FF).CGColor;
         _textFieldWithPlaceHolder.alpha = 1;
-        UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
-        if (!font) font = [UIFont systemFontOfSize:14];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
+        UIFont *placeHolderFont = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
+        if (!placeHolderFont) placeHolderFont = [UIFont systemFontOfSize:14];
+        NSMutableParagraphStyle *placeHolderParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+        placeHolderParagraphStyle.alignment = NSTextAlignmentNatural;
+        placeHolderParagraphStyle.maximumLineHeight = 0;
+        placeHolderParagraphStyle.minimumLineHeight = 0;
+        placeHolderParagraphStyle.paragraphSpacing = 0;
 
-        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x999999FF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.3376471) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"输入数量", nil) attributes:textAttributes];
-        _textFieldWithPlaceHolder.attributedPlaceholder = text;
+        NSMutableDictionary *placeHolderTextAttributes = [NSMutableDictionary dictionary];
+        [placeHolderTextAttributes setObject:UIColorFromRGBA(0x999999FF) forKey:NSForegroundColorAttributeName];
+        [placeHolderTextAttributes setObject:placeHolderFont forKey:NSFontAttributeName];
+        [placeHolderTextAttributes setObject:@(-0.3376471) forKey:NSKernAttributeName];
+        [placeHolderTextAttributes setObject:placeHolderParagraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *placeHolderText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"输入数量", nil) attributes:placeHolderTextAttributes];
+        _textFieldWithPlaceHolder.attributedPlaceholder = placeHolderText;
     }
     return _textFieldWithPlaceHolder;
 }
@@ -198,7 +197,6 @@
 - (UILabel *)text {
     if (!_text) {
         _text = [[UILabel alloc] init];
-        _text.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -243,7 +241,6 @@
 - (UILabel *)title {
     if (!_title) {
         _title = [[UILabel alloc] init];
-        _title.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Light" size:17];
         if (!font) font = [UIFont systemFontOfSize:17];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -257,7 +254,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.4099999964237213) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"手动输入手续费率", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"输入手续费率", nil) attributes:textAttributes];
         _title.attributedText = text;
     }
     return _title;
@@ -277,7 +274,6 @@
 - (UILabel *)text1 {
     if (!_text1) {
         _text1 = [[UILabel alloc] init];
-        _text1.numberOfLines = 0;
         NSMutableAttributedString *attributedText = [NSMutableAttributedString new];
         UIFont *font = nil;
         NSMutableParagraphStyle *paragraphStyle = nil;
@@ -333,7 +329,6 @@
 - (UILabel *)leftText {
     if (!_leftText) {
         _leftText = [[UILabel alloc] init];
-        _leftText.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Light" size:17];
         if (!font) font = [UIFont systemFontOfSize:17];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
