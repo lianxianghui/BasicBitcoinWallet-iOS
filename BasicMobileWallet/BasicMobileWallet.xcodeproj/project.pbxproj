@@ -51,11 +51,11 @@
 		8C45ACC723758D810038EAEA /* LXHAddressListViewController+ForSubclassing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C45ACC623758D810038EAEA /* LXHAddressListViewController+ForSubclassing.m */; };
 		8C45ACCA2375912B0038EAEA /* LXHLocalAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C45ACC92375912B0038EAEA /* LXHLocalAddress.m */; };
 		8C6ACE8D23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C6ACE8C23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m */; };
+		8C7E10F22379496500B224ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C7E10F12379496400B224ED /* Assets.xcassets */; };
 		8C9332CB235D816200FBF238 /* LXHOutputDetailTextRightIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332CA235D816200FBF238 /* LXHOutputDetailTextRightIconCell.m */; };
 		8C9332D4235D8BD600FBF238 /* LXHBalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332CE235D8BD600FBF238 /* LXHBalanceViewController.m */; };
 		8C9332D5235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332CF235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m */; };
 		8C9332D6235D8BD600FBF238 /* LXHBalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332D0235D8BD600FBF238 /* LXHBalanceView.m */; };
-		8C9333DA235DA9D100FBF238 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C9333D9235DA9D000FBF238 /* Assets.xcassets */; };
 		8C933496235DB14C00FBF238 /* LXHTopLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933461235DB14C00FBF238 /* LXHTopLineCell.m */; };
 		8C933497235DB14C00FBF238 /* LXHSelectInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933462235DB14C00FBF238 /* LXHSelectInputViewController.m */; };
 		8C933498235DB14C00FBF238 /* LXHSelectInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933463235DB14C00FBF238 /* LXHSelectInputView.m */; };
@@ -311,6 +311,7 @@
 		8C6ACE8823574EA100511D5E /* LXHBitcoinWebApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHBitcoinWebApi.h; sourceTree = "<group>"; };
 		8C6ACE8B23574F8300511D5E /* LXHBitcoinWebApiSmartbit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHBitcoinWebApiSmartbit.h; sourceTree = "<group>"; };
 		8C6ACE8C23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHBitcoinWebApiSmartbit.m; sourceTree = "<group>"; };
+		8C7E10F12379496400B224ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C9332C9235D816200FBF238 /* LXHOutputDetailTextRightIconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHOutputDetailTextRightIconCell.h; sourceTree = "<group>"; };
 		8C9332CA235D816200FBF238 /* LXHOutputDetailTextRightIconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHOutputDetailTextRightIconCell.m; sourceTree = "<group>"; };
 		8C9332CE235D8BD600FBF238 /* LXHBalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHBalanceViewController.m; sourceTree = "<group>"; };
@@ -319,7 +320,6 @@
 		8C9332D1235D8BD600FBF238 /* LXHBalanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHBalanceViewController.h; sourceTree = "<group>"; };
 		8C9332D2235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHBalanceLeftRightTextCell.h; sourceTree = "<group>"; };
 		8C9332D3235D8BD600FBF238 /* LXHBalanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHBalanceView.h; sourceTree = "<group>"; };
-		8C9333D9235DA9D000FBF238 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C93345E235DB14C00FBF238 /* LXHSelectInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectInputView.h; sourceTree = "<group>"; };
 		8C93345F235DB14C00FBF238 /* LXHSelectInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectInputViewController.h; sourceTree = "<group>"; };
 		8C933460235DB14C00FBF238 /* LXHSelectInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSelectInputCell.h; sourceTree = "<group>"; };
@@ -1684,6 +1684,7 @@
 		8CA7019B22D8713500F42814 /* BasicMobileWallet */ = {
 			isa = PBXGroup;
 			children = (
+				8C7E10F12379496400B224ED /* Assets.xcassets */,
 				8CA322AA22E1D26600CEA828 /* BasicMobileWallet.entitlements */,
 				8CA7019C22D8713600F42814 /* AppDelegate.h */,
 				8CA7019D22D8713600F42814 /* AppDelegate.m */,
@@ -1693,7 +1694,6 @@
 				8CA701A722D8713E00F42814 /* LaunchScreen.storyboard */,
 				8CA701AA22D8713E00F42814 /* Info.plist */,
 				8CA701AB22D8713E00F42814 /* main.m */,
-				8C9333D9235DA9D000FBF238 /* Assets.xcassets */,
 				8CA701C822D8747F00F42814 /* Init */,
 				8CAA6696230E468200B17222 /* Main */,
 				8C93345C235DB14C00FBF238 /* Send */,
@@ -1925,8 +1925,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CA701A922D8713E00F42814 /* LaunchScreen.storyboard in Resources */,
+				8C7E10F22379496500B224ED /* Assets.xcassets in Resources */,
 				8CA701A422D8713600F42814 /* Main.storyboard in Resources */,
-				8C9333DA235DA9D100FBF238 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
