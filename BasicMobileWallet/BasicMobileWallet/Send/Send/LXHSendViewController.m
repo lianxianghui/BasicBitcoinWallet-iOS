@@ -28,12 +28,8 @@
 @interface LXHSendViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSendView *contentView;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
-//下面几个是用来在几个页面之间传递数据的字典
-//@property (nonatomic) NSMutableDictionary *inputDataDic; //@"selectedUtxos"
-//@property (nonatomic) NSMutableDictionary *outputDataDic; //@"outputs"
-//@property (nonatomic) NSMutableDictionary *selectFeeRateData;//key selectedFeeRateItem value is like {@"fastestFee", @(30)}
-//@property (nonatomic) NSMutableDictionary *inputFeeRateData;//key @"feeRate" value 是整数 单位是sat/byte
-@property (nonatomic) NSMutableDictionary *dataForBuildingTransaction;
+//用来在几个页面之间传递构造交易数据的字典
+@property (nonatomic) NSMutableDictionary *dataForBuildingTransaction;//keys @"selectedUtxos", @"outputs", @"selectedFeeRateItem", @"inputFeeRate"
 @end
 
 @implementation LXHSendViewController
@@ -43,10 +39,6 @@
     self = [super init];
     if (self) {
         _dataForBuildingTransaction = [NSMutableDictionary dictionary];
-//        _inputDataDic = [NSMutableDictionary dictionary];
-//        _outputDataDic = [NSMutableDictionary dictionary];
-//        _selectFeeRateData = [NSMutableDictionary dictionary];
-//        _inputFeeRateData = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -99,7 +91,7 @@
 - (void)LXHFeeCellSelectFeerateButtonClicked:(UIButton *)sender {
     LXHWeakSelf
     UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithData:_dataForBuildingTransaction dataChangedCallback:^{
-        weakSelf.dataForBuildingTransaction[@"inputFeeRate"] = nil;
+        weakSelf.dataForBuildingTransaction[@"inputFeeRate"] = nil; //把LXHInputFeeViewController数据置空
     }];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
