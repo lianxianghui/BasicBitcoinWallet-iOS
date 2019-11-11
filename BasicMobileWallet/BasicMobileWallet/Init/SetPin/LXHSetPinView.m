@@ -154,7 +154,6 @@
     if (!_inputPinAgainTextFieldWithPlaceHolder) {
         _inputPinAgainTextFieldWithPlaceHolder = [[UITextField alloc] init];
         [_inputPinAgainTextFieldWithPlaceHolder setSecureTextEntry:YES];
-        _inputPinAgainTextFieldWithPlaceHolder.keyboardType = UIKeyboardTypeNumberPad;
         _inputPinAgainTextFieldWithPlaceHolder.backgroundColor = UIColorFromRGBA(0xF8F8F8FF);
         _inputPinAgainTextFieldWithPlaceHolder.layer.cornerRadius = 5;
         _inputPinAgainTextFieldWithPlaceHolder.layer.borderWidth = 1;
@@ -183,7 +182,6 @@
     if (!_inputPinTextFieldWithPlaceHolder) {
         _inputPinTextFieldWithPlaceHolder = [[UITextField alloc] init];
         _inputPinTextFieldWithPlaceHolder.secureTextEntry = YES;
-        _inputPinTextFieldWithPlaceHolder.keyboardType = UIKeyboardTypeNumberPad;
         _inputPinTextFieldWithPlaceHolder.backgroundColor = UIColorFromRGBA(0xF8F8F8FF);
         _inputPinTextFieldWithPlaceHolder.layer.cornerRadius = 5;
         _inputPinTextFieldWithPlaceHolder.layer.borderWidth = 1;

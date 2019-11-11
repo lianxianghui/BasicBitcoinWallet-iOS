@@ -39,8 +39,14 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setViewProperties];
     [self addActions];
     [self setDelegates];
+}
+
+- (void)setViewProperties {
+    self.contentView.inputPinTextFieldWithPlaceHolder.keyboardType = UIKeyboardTypeNumberPad;
+    self.contentView.inputPinAgainTextFieldWithPlaceHolder.keyboardType = UIKeyboardTypeNumberPad;
 }
 
 - (void)swipeView:(id)sender {
