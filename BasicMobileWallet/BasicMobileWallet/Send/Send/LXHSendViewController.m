@@ -29,8 +29,8 @@
 @property (nonatomic) LXHSendView *contentView;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
 //下面几个是用来在几个页面之间传递数据的字典
-@property (nonatomic) NSMutableDictionary *inputDataDic;
-@property (nonatomic) NSMutableDictionary *outputDataDic;
+@property (nonatomic) NSMutableDictionary *inputDataDic; //@"selectedUtxos"
+@property (nonatomic) NSMutableDictionary *outputDataDic; //@"outputs"
 @property (nonatomic) NSMutableDictionary *selectFeeRateData;//key selectedFeeRateItem value is like {@"fastestFee", @(30)}
 @property (nonatomic) NSMutableDictionary *inputFeeRateData;//key @"feeRate" value 是整数 单位是sat/byte
 @end

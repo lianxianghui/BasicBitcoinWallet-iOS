@@ -10,6 +10,9 @@
 #import "LXHAddOutputViewController.h"
 #import "LXHTopLineCell.h"
 #import "LXHSelectedOutputCell.h"
+#import "UILabel+LXHText.h"
+#import "UIButton+LXHText.h"
+#import "BlocksKit.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -19,10 +22,20 @@
     
 @interface LXHOutputListViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHOutputListView *contentView;
-
+@property (nonatomic) NSMutableArray *cellDataListForListView;
+@property (nonatomic) NSMutableDictionary *data;
 @end
 
 @implementation LXHOutputListViewController
+
+- (instancetype)initWithData:(NSMutableDictionary *)data
+{
+    self = [super init];
+    if (self) {
+        _data = data;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
