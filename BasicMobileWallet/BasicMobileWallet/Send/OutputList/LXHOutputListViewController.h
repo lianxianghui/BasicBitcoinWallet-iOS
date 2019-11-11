@@ -8,4 +8,5 @@
 
 @interface LXHOutputListViewController : UIViewController
 
+- (instancetype)initWithData:(NSMutableDictionary *)data;
 @end

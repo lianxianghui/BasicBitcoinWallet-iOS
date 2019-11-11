@@ -59,8 +59,8 @@
 
 - (void)setViewProperties {
     self.contentView.textFieldWithPlaceHolder.keyboardType = UIKeyboardTypeNumberPad;
-    if (self.data[@"feeRate"]) {
-        NSString *feeRateString = [NSString stringWithFormat:@"%@", self.data[@"feeRate"]];
+    if (self.data[@"inputFeeRate"]) {
+        NSString *feeRateString = [NSString stringWithFormat:@"%@", self.data[@"inputFeeRate"]];
         [self.contentView.textFieldWithPlaceHolder updateAttributedTextString:feeRateString];
     }
 }
@@ -85,7 +85,7 @@
     BOOL inputFeeRateIsValid = [self isIntegerWithString:text];
     if (inputFeeRateIsValid) {
         NSNumber *feeRate = @(text.integerValue);
-        self.data[@"feeRate"] = feeRate;
+        self.data[@"inputFeeRate"] = feeRate;
         self.dataChangedCallback();
         [self.navigationController popViewControllerAnimated:YES];
     } else {

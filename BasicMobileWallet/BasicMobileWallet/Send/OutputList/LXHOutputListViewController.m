@@ -28,8 +28,7 @@
 
 @implementation LXHOutputListViewController
 
-- (instancetype)initWithData:(NSMutableDictionary *)data
-{
+- (instancetype)initWithData:(NSMutableDictionary *)data {
     self = [super init];
     if (self) {
         _data = data;
