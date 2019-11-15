@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, LXHTransactionSendOrReceiveType) {
     LXHTransactionSendOrReceiveTypeReceive,
 };
 
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHTransaction : NSObject <NSSecureCoding>

@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LXHTransactionInputOutputCommon.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LXHTransactionInput : NSObject <NSSecureCoding>
-@property (nonatomic) NSString *address;
-@property (nonatomic) NSDecimalNumber *value;
-@property (nonatomic) NSString *txid;
+@interface LXHTransactionInput : LXHTransactionInputOutputCommon <NSSecureCoding>
+@property (nonatomic) NSString *unlockingScript;//scriptSig
+@property (nonatomic) NSArray *witness;
+@property (nonatomic) LXHLockingScriptType scriptType;
 @end
 
 NS_ASSUME_NONNULL_END

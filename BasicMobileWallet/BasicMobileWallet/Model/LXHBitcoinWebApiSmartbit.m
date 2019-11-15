@@ -69,6 +69,9 @@
             NSArray *inputAddresses = [inputDic valueForKey:@"addresses"];
             if (inputAddresses.count == 1) //目前只处理每个输入只有一个输入地址的情况
                 input.address = inputAddresses[0];
+            input.unlockingScript = [inputDic valueForKeyPath:@"script_sig.asm"];
+            input.witness = inputDic[@"witness"];
+            input.scriptType = [self scriptTypeByTypeString:inputDic[@"type"]];
             [model.inputs addObject:input];
         }
         NSArray *outputs = dic[@"outputs"];
@@ -82,7 +85,7 @@
             if (outputAddresses.count == 1) //目前只处理每个输出只有一个输出地址的情况
                 output.address = outputAddresses[0];
             output.lockingScript = [outputDic valueForKeyPath:@"script_pub_key.asm"];
-            output.scriptType = [self scriptTypeByTypeString:[outputDic valueForKeyPath:@"type"]];
+            output.scriptType = [self scriptTypeByTypeString:outputDic[@"type"]];
             output.txid = model.txid;
             [model.outputs addObject:output];
         }
@@ -96,7 +99,7 @@
         return LXHLockingScriptTypeP2PKH;
     if ([typeString isEqualToString:@"scripthash"])
         return LXHLockingScriptTypeP2SH;
-    return LXHLockingScriptTypeUnSupported;//其他暂时不支持
+    return LXHLockingScriptTypeUnSupported;//其他暂时不支持  witness_v0_keyhash  应该是  Pay-to-Witness-Public-Key-Hash
 }
 
 - (void)requestTransactionsWithUrlString:(NSString *)url

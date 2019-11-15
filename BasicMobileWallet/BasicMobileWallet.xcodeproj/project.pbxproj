@@ -50,8 +50,10 @@
 		8C45ACC4237588DC0038EAEA /* LXHAddressListForSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C45ACC3237588DC0038EAEA /* LXHAddressListForSelectionViewController.m */; };
 		8C45ACC723758D810038EAEA /* LXHAddressListViewController+ForSubclassing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C45ACC623758D810038EAEA /* LXHAddressListViewController+ForSubclassing.m */; };
 		8C45ACCA2375912B0038EAEA /* LXHLocalAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C45ACC92375912B0038EAEA /* LXHLocalAddress.m */; };
+		8C6A115C237E571E0055C9F4 /* LXHTransactionInputOutputCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C6A115B237E571E0055C9F4 /* LXHTransactionInputOutputCommon.m */; };
 		8C6ACE8D23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C6ACE8C23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m */; };
 		8C7E10F22379496500B224ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C7E10F12379496400B224ED /* Assets.xcassets */; };
+		8C7E10F823797D5A00B224ED /* LXHSendViewControllerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7E10F723797D5A00B224ED /* LXHSendViewControllerHelper.m */; };
 		8C9332CB235D816200FBF238 /* LXHOutputDetailTextRightIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332CA235D816200FBF238 /* LXHOutputDetailTextRightIconCell.m */; };
 		8C9332D4235D8BD600FBF238 /* LXHBalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332CE235D8BD600FBF238 /* LXHBalanceViewController.m */; };
 		8C9332D5235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9332CF235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m */; };
@@ -308,10 +310,14 @@
 		8C45ACC623758D810038EAEA /* LXHAddressListViewController+ForSubclassing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "LXHAddressListViewController+ForSubclassing.m"; sourceTree = "<group>"; };
 		8C45ACC82375912B0038EAEA /* LXHLocalAddress.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHLocalAddress.h; sourceTree = "<group>"; };
 		8C45ACC92375912B0038EAEA /* LXHLocalAddress.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHLocalAddress.m; sourceTree = "<group>"; };
+		8C6A115A237E571E0055C9F4 /* LXHTransactionInputOutputCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHTransactionInputOutputCommon.h; sourceTree = "<group>"; };
+		8C6A115B237E571E0055C9F4 /* LXHTransactionInputOutputCommon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHTransactionInputOutputCommon.m; sourceTree = "<group>"; };
 		8C6ACE8823574EA100511D5E /* LXHBitcoinWebApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHBitcoinWebApi.h; sourceTree = "<group>"; };
 		8C6ACE8B23574F8300511D5E /* LXHBitcoinWebApiSmartbit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHBitcoinWebApiSmartbit.h; sourceTree = "<group>"; };
 		8C6ACE8C23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHBitcoinWebApiSmartbit.m; sourceTree = "<group>"; };
 		8C7E10F12379496400B224ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8C7E10F623797D5A00B224ED /* LXHSendViewControllerHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHSendViewControllerHelper.h; sourceTree = "<group>"; };
+		8C7E10F723797D5A00B224ED /* LXHSendViewControllerHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHSendViewControllerHelper.m; sourceTree = "<group>"; };
 		8C9332C9235D816200FBF238 /* LXHOutputDetailTextRightIconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHOutputDetailTextRightIconCell.h; sourceTree = "<group>"; };
 		8C9332CA235D816200FBF238 /* LXHOutputDetailTextRightIconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHOutputDetailTextRightIconCell.m; sourceTree = "<group>"; };
 		8C9332CE235D8BD600FBF238 /* LXHBalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHBalanceViewController.m; sourceTree = "<group>"; };
@@ -927,8 +933,6 @@
 				8C2CC6CC232F679A005AA93C /* LXHTransactionDataManager.m */,
 				8C2CC6CA232F679A005AA93C /* LXHWallet.h */,
 				8C2CC6CD232F679A005AA93C /* LXHWallet.m */,
-				8C2CC6D5232F67F6005AA93C /* LXHTransaction.h */,
-				8C2CC6D6232F67F6005AA93C /* LXHTransaction.m */,
 				8C2CC6EA2334C0D8005AA93C /* LXHWalletChangeLevelModel.h */,
 				8C2CC6EB2334C0D8005AA93C /* LXHWalletChangeLevelModel.m */,
 				8C45ACC82375912B0038EAEA /* LXHLocalAddress.h */,
@@ -936,12 +940,16 @@
 				8C6ACE8823574EA100511D5E /* LXHBitcoinWebApi.h */,
 				8C6ACE8B23574F8300511D5E /* LXHBitcoinWebApiSmartbit.h */,
 				8C6ACE8C23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m */,
+				8C2CC6D5232F67F6005AA93C /* LXHTransaction.h */,
+				8C2CC6D6232F67F6005AA93C /* LXHTransaction.m */,
 				8C03E2DA235970E700936B31 /* LXHTransactionInput.h */,
 				8C03E2DB235970E700936B31 /* LXHTransactionInput.m */,
 				8C03E2DD2359710100936B31 /* LXHTransactionOutput.h */,
 				8C03E2DE2359710100936B31 /* LXHTransactionOutput.m */,
 				8C0BAA4C23609C88001D029B /* LXHBitcoinfeesNetworkRequest.h */,
 				8C0BAA4D23609C88001D029B /* LXHBitcoinfeesNetworkRequest.m */,
+				8C6A115A237E571E0055C9F4 /* LXHTransactionInputOutputCommon.h */,
+				8C6A115B237E571E0055C9F4 /* LXHTransactionInputOutputCommon.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1058,6 +1066,8 @@
 				8C93348A235DB14C00FBF238 /* LXHFeeCell.m */,
 				8C933489235DB14C00FBF238 /* LXHSendViewController.h */,
 				8C933490235DB14C00FBF238 /* LXHSendViewController.m */,
+				8C7E10F623797D5A00B224ED /* LXHSendViewControllerHelper.h */,
+				8C7E10F723797D5A00B224ED /* LXHSendViewControllerHelper.m */,
 			);
 			path = Send;
 			sourceTree = "<group>";
@@ -2022,6 +2032,7 @@
 				8CA3229122DEBE9900CEA828 /* BTCTransactionOutput.m in Sources */,
 				8CA322B7230049A000CEA828 /* RNDecryptor.m in Sources */,
 				8CA3210E22DC7C9C00CEA828 /* UIButton+LXHText.m in Sources */,
+				8C7E10F823797D5A00B224ED /* LXHSendViewControllerHelper.m in Sources */,
 				8C2CC6B6232F20E5005AA93C /* LXHEmptyWithSeparatorCell.m in Sources */,
 				8CA31FD622D9A41300CEA828 /* UIViewController+LXHAlert.m in Sources */,
 				8CA3227F22DEBE9900CEA828 /* BTCChainCom.m in Sources */,
@@ -2163,6 +2174,7 @@
 				8CA31FCB22D9A37600CEA828 /* NSDictionary+Enumerate.m in Sources */,
 				8CA3226D22DEBE9900CEA828 /* BTCTransaction+Tests.m in Sources */,
 				8CA3226222DEBE9900CEA828 /* BTCTransactionBuilder.m in Sources */,
+				8C6A115C237E571E0055C9F4 /* LXHTransactionInputOutputCommon.m in Sources */,
 				8C9334B0235DB14C00FBF238 /* LXHInputFeeView.m in Sources */,
 				8CA3229522DEBE9900CEA828 /* BTCScript.m in Sources */,
 				8C9334BB235DD15A00FBF238 /* LXHAddOutputView.m in Sources */,
