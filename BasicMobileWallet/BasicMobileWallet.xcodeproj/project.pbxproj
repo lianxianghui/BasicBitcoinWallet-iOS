@@ -192,6 +192,7 @@
 		8CA322B7230049A000CEA828 /* RNDecryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA322B3230049A000CEA828 /* RNDecryptor.m */; };
 		8CA322B8230049A000CEA828 /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA322B4230049A000CEA828 /* RNEncryptor.m */; };
 		8CA322B9230049A000CEA828 /* RNCryptorEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA322B5230049A000CEA828 /* RNCryptorEngine.m */; };
+		8CA5603F237FBC7400B80FBC /* LXHSendViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA5603E237FBC7400B80FBC /* LXHSendViewModel.m */; };
 		8CA7019E22D8713600F42814 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA7019D22D8713600F42814 /* AppDelegate.m */; };
 		8CA701A122D8713600F42814 /* LXHRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA701A022D8713600F42814 /* LXHRootViewController.m */; };
 		8CA701A422D8713600F42814 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CA701A222D8713600F42814 /* Main.storyboard */; };
@@ -754,6 +755,8 @@
 		8CA322B3230049A000CEA828 /* RNDecryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNDecryptor.m; sourceTree = "<group>"; };
 		8CA322B4230049A000CEA828 /* RNEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNEncryptor.m; sourceTree = "<group>"; };
 		8CA322B5230049A000CEA828 /* RNCryptorEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCryptorEngine.m; sourceTree = "<group>"; };
+		8CA5603D237FBC7400B80FBC /* LXHSendViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHSendViewModel.h; sourceTree = "<group>"; };
+		8CA5603E237FBC7400B80FBC /* LXHSendViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHSendViewModel.m; sourceTree = "<group>"; };
 		8CA7019922D8713500F42814 /* BasicMobileWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicMobileWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA7019C22D8713600F42814 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8CA7019D22D8713600F42814 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -1068,6 +1071,8 @@
 				8C933490235DB14C00FBF238 /* LXHSendViewController.m */,
 				8C7E10F623797D5A00B224ED /* LXHSendViewControllerHelper.h */,
 				8C7E10F723797D5A00B224ED /* LXHSendViewControllerHelper.m */,
+				8CA5603D237FBC7400B80FBC /* LXHSendViewModel.h */,
+				8CA5603E237FBC7400B80FBC /* LXHSendViewModel.m */,
 			);
 			path = Send;
 			sourceTree = "<group>";
@@ -2062,6 +2067,7 @@
 				8C2CC6AB232F20E5005AA93C /* LXHTransactionCell.m in Sources */,
 				8C933499235DB14C00FBF238 /* LXHSelectInputCell.m in Sources */,
 				8C2CC6AD232F20E5005AA93C /* LXHLineCell.m in Sources */,
+				8CA5603F237FBC7400B80FBC /* LXHSendViewModel.m in Sources */,
 				8C9332D5235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m in Sources */,
 				8CA3226722DEBE9900CEA828 /* BTCBlindSignature.m in Sources */,
 				8CA31F9922D98BAC00CEA828 /* LXHWelcomeView.m in Sources */,

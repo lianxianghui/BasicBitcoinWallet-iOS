@@ -10,7 +10,8 @@
 #import "LXHTransactionOutput.h"
 
 @interface LXHSendViewControllerHelper ()
-@property (nonatomic) NSDictionary *dataForBuildingTransaction;//keys @"selectedUtxos", @"outputs", @"selectedFeeRateItem",
+//keys @"selectedUtxos", @"outputs", @"selectedFeeRateItem",@"inputFeeRate"
+@property (nonatomic) NSDictionary *dataForBuildingTransaction;
 @end
 
 @implementation LXHSendViewControllerHelper
@@ -46,9 +47,12 @@
     return outputCount;
 }
 
-//- (NSInteger)estimatedFeeInSat {
-//    return 0;
-//}
+//继续  构造交易的过程。
+//两种发送方式
+
+- (NSInteger)estimatedFeeInSat {
+    return 0;
+}
 //
 //- (NSInteger)maxOutputsAmountExceptEstimatedFeeInSat {
 //    return 0;

@@ -15,9 +15,8 @@
 #import "LXHSelectionCell.h"
 #import "LXHInputOutputCell.h"
 #import "LXHFeeCell.h"
-#import "LXHTransactionInput.h"
-#import "LXHTransactionOutput.h"
 #import "LXHGlobalHeader.h"
+#import "LXHSendViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -27,18 +26,17 @@
     
 @interface LXHSendViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSendView *contentView;
-@property (nonatomic) NSMutableArray *cellDataListForListView;
-//用来在几个页面之间传递构造交易数据的字典
-@property (nonatomic) NSMutableDictionary *dataForBuildingTransaction;//keys @"selectedUtxos", @"outputs", @"selectedFeeRateItem", @"inputFeeRate"
+@property (nonatomic) NSArray *cellDataListForListView;
+@property (nonatomic) LXHSendViewModel *viewModel;
 @end
 
 @implementation LXHSendViewController
 
-- (instancetype)init
+- (instancetype)initWithViewModel:(id)viewModel
 {
     self = [super init];
     if (self) {
-        _dataForBuildingTransaction = [NSMutableDictionary dictionary];
+        _viewModel = viewModel;
     }
     return self;
 }
@@ -81,8 +79,8 @@
 //Actions
 - (void)LXHFeeCellInputFeeValueButtonClicked:(UIButton *)sender {
     LXHWeakSelf
-    UIViewController *controller = [[LXHInputFeeViewController alloc] initWithData:_dataForBuildingTransaction dataChangedCallback:^{
-        weakSelf.dataForBuildingTransaction[@"selectedFeeRateItem"] = nil; //把LXHSelectFeeRateViewController数据置空
+    UIViewController *controller = [[LXHInputFeeViewController alloc] initWithData:_viewModel.dataForBuildingTransaction dataChangedCallback:^{
+        weakSelf.viewModel.dataForBuildingTransaction[@"selectedFeeRateItem"] = nil; //把LXHSelectFeeRateViewController数据置空
     }];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
@@ -90,8 +88,8 @@
 
 - (void)LXHFeeCellSelectFeerateButtonClicked:(UIButton *)sender {
     LXHWeakSelf
-    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithData:_dataForBuildingTransaction dataChangedCallback:^{
-        weakSelf.dataForBuildingTransaction[@"inputFeeRate"] = nil; //把LXHInputFeeViewController数据置空
+    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithData:_viewModel.dataForBuildingTransaction dataChangedCallback:^{
+        weakSelf.viewModel.dataForBuildingTransaction[@"inputFeeRate"] = nil; //把LXHInputFeeViewController数据置空
     }];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
@@ -102,65 +100,11 @@
     [self.contentView.listView reloadData];
 }
 
-- (NSNumber *)feeRateValue {
-    NSNumber *feeRateValue = nil;
-    if (_dataForBuildingTransaction[@"inputFeeRate"])
-        feeRateValue = _dataForBuildingTransaction[@"inputFeeRate"];
-    else if (_dataForBuildingTransaction[@"selectedFeeRateItem"]) {
-        NSDictionary *selectedFeeRateItem = _dataForBuildingTransaction[@"selectedFeeRateItem"];
-        feeRateValue = selectedFeeRateItem.allValues[0];
-    } else {
-        feeRateValue = nil;
-    }
-    return feeRateValue;
-}
-
 //Delegate Methods
 - (NSArray *)cellDataListForTableView:(UITableView *)tableView {
     if (tableView == self.contentView.listView) {
         if (!_cellDataListForListView) {
-            _cellDataListForListView = [NSMutableArray array];
-            NSDictionary *dic = nil;
-            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
-            [_cellDataListForListView addObject:dic];
-            dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输入"};
-            [_cellDataListForListView addObject:dic];
-            NSArray *selectedUtxos = _dataForBuildingTransaction[@"selectedUtxos"];
-            for (NSUInteger i = 0 ; i < selectedUtxos.count; i++) {
-                LXHTransactionOutput *utxo = selectedUtxos[i];
-                NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
-                mutableDic[@"addressText"] = utxo.address;
-                mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i+1];
-                mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", utxo.value];
-                [_cellDataListForListView addObject:mutableDic];
-            }
-            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
-            [_cellDataListForListView addObject:dic];
-            //fee rate text
-            NSNumber *feeRateValue = [self feeRateValue];
-            NSString *feeRateText = nil;
-            if (feeRateValue) {
-                NSString *feeRateTextFormat = NSLocalizedString(@"手续费率: %@ sat/byte", nil);
-                feeRateText = [NSString stringWithFormat:feeRateTextFormat, feeRateValue];
-            } else {
-                feeRateText = NSLocalizedString(@"请选择或者输入手续费率", nil);
-            }
-            dic = @{@"text":feeRateText, @"isSelectable":@"0", @"cellType":@"LXHFeeCell"};
-            [_cellDataListForListView addObject:dic];
-            
-            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
-            [_cellDataListForListView addObject:dic];
-            dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输出"};
-            [_cellDataListForListView addObject:dic];
-            NSArray *outputs = _dataForBuildingTransaction[@"outputs"];
-            for (NSUInteger i = 0 ; i < outputs.count; i++) {
-                LXHTransactionOutput *output = outputs[i];
-                NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
-                mutableDic[@"addressText"] = output.address;
-                mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i+1];
-                mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", output.value];
-                [_cellDataListForListView addObject:mutableDic];
-            }
+            _cellDataListForListView = [_viewModel cellDataForListview];
         }
         return _cellDataListForListView;
     }
@@ -174,7 +118,6 @@
     else
         return nil;
 }
-
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
@@ -313,11 +256,11 @@
     NSString *type = [self tableView:tableView cellTypeAtIndexPath:indexPath];
     if ([type isEqualToString:@"LXHSelectionCell"]) {
         if (indexPath.row == 1) {
-            UIViewController *controller = [[LXHSelectInputViewController alloc] initWithData:_dataForBuildingTransaction];
+            UIViewController *controller = [[LXHSelectInputViewController alloc] initWithData:_viewModel.dataForBuildingTransaction];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         } else {
-            UIViewController *controller = [[LXHOutputListViewController alloc] initWithData:_dataForBuildingTransaction];
+            UIViewController *controller = [[LXHOutputListViewController alloc] initWithData:_viewModel.dataForBuildingTransaction];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }

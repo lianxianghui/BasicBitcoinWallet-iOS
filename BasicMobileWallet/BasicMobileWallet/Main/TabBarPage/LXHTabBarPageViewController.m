@@ -10,6 +10,7 @@
 #import "LXHCurrentReceivingAddressViewController.h"
 #import "LXHMineViewController.h"
 #import "LXHWallet.h"
+#import "LXHSendViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -36,7 +37,7 @@
     UIViewController *viewController = nil;
     UINavigationController *navigationController = nil;
 
-    viewController = [[LXHSendViewController alloc] init];
+    viewController = [[LXHSendViewController alloc] initWithViewModel:[LXHSendViewModel new]];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_unselected_icon"];
     itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_selected_icon"];
