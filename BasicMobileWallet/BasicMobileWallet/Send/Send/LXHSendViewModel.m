@@ -25,13 +25,10 @@
 #pragma mark - 加工View数据
 //把数据加工成适合View直接使用的形式
 
-- (NSArray *)cellDataForListview {
-    NSMutableArray *cellDataListForListView = [NSMutableArray array];
-    NSDictionary *dic = nil;
-    dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
-    [cellDataListForListView addObject:dic];
-    dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输入"};
-    [cellDataListForListView addObject:dic];
+- (NSArray *)inputCellDataArray {
+    NSMutableArray *ret = [NSMutableArray array];
+    NSDictionary *dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输入", @"id":@"selectInput"};
+    [ret addObject:dic];
     NSArray *selectedUtxos = self.dataForBuildingTransaction[@"selectedUtxos"];
     for (NSUInteger i = 0 ; i < selectedUtxos.count; i++) {
         LXHTransactionOutput *utxo = selectedUtxos[i];
@@ -39,10 +36,28 @@
         mutableDic[@"addressText"] = utxo.address;
         mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i+1];
         mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", utxo.value];
-        [cellDataListForListView addObject:mutableDic];
+        [ret addObject:mutableDic];
     }
-    dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
-    [cellDataListForListView addObject:dic];
+    return ret;
+}
+
+- (NSArray *)outputCellDataArray {
+    NSMutableArray *ret = [NSMutableArray array];
+    NSDictionary *dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输出", @"id":@"selectOutput"};
+    [ret addObject:dic];
+    NSArray *outputs = self.dataForBuildingTransaction[@"outputs"];
+    for (NSUInteger i = 0 ; i < outputs.count; i++) {
+        LXHTransactionOutput *output = outputs[i];
+        NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
+        mutableDic[@"addressText"] = output.address;
+        mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i+1];
+        mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", output.value];
+        [ret addObject:mutableDic];
+    }
+    return ret;
+}
+
+- (NSDictionary *)feeRateCellData {
     //fee rate text
     NSNumber *feeRateValue = [self feeRateValue];
     NSString *feeRateText = nil;
@@ -52,22 +67,41 @@
     } else {
         feeRateText = NSLocalizedString(@"请选择或者输入手续费率", nil);
     }
-    dic = @{@"text":feeRateText, @"isSelectable":@"0", @"cellType":@"LXHFeeCell"};
-    [cellDataListForListView addObject:dic];
-    
+    NSDictionary *dic = @{@"text":feeRateText, @"isSelectable":@"0", @"cellType":@"LXHFeeCell"};
+    return dic;
+}
+
+//- (NSArray *)cellDataForListview {
+//    NSMutableArray *cellDataListForListView = [NSMutableArray array];
+//    NSDictionary *dic = nil;
+//    dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
+//    [cellDataListForListView addObject:dic];
+//
+//    [cellDataListForListView addObjectsFromArray:[self inputCellDataArray]];
+//    [cellDataListForListView addObject:[self feeRateCellData]];
+//
+//    dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
+//    [cellDataListForListView addObject:dic];
+//
+//    [cellDataListForListView addObjectsFromArray:[self outputCellDataArray]];
+//    return cellDataListForListView;
+//}
+
+- (NSArray *)cellDataForListview {
+    NSMutableArray *cellDataListForListView = [NSMutableArray array];
+    NSDictionary *dic = nil;
     dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
     [cellDataListForListView addObject:dic];
-    dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输出"};
+    
+    [cellDataListForListView addObjectsFromArray:[self outputCellDataArray]];
+    dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
     [cellDataListForListView addObject:dic];
-    NSArray *outputs = self.dataForBuildingTransaction[@"outputs"];
-    for (NSUInteger i = 0 ; i < outputs.count; i++) {
-        LXHTransactionOutput *output = outputs[i];
-        NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
-        mutableDic[@"addressText"] = output.address;
-        mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i+1];
-        mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", output.value];
-        [cellDataListForListView addObject:mutableDic];
-    }
+    
+    [cellDataListForListView addObject:[self feeRateCellData]];
+    dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyCell"};
+    [cellDataListForListView addObject:dic];
+    
+    [cellDataListForListView addObjectsFromArray:[self inputCellDataArray]];
     return cellDataListForListView;
 }
 

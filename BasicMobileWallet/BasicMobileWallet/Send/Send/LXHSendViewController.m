@@ -255,11 +255,15 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSString *type = [self tableView:tableView cellTypeAtIndexPath:indexPath];
     if ([type isEqualToString:@"LXHSelectionCell"]) {
-        if (indexPath.row == 1) {
+        NSDictionary *data = [self cellDataForTableView:tableView atIndexPath:indexPath];
+        NSString *cellId = data[@"id"];
+        if (!cellId)
+            return;
+        if ([cellId isEqualToString:@"selectInput"]) {
             UIViewController *controller = [[LXHSelectInputViewController alloc] initWithData:_viewModel.dataForBuildingTransaction];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
-        } else {
+        } else if ([cellId isEqualToString:@"selectOutput"]) {
             UIViewController *controller = [[LXHOutputListViewController alloc] initWithData:_viewModel.dataForBuildingTransaction];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
