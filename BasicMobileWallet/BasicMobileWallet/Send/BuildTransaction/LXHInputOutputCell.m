@@ -1,7 +1,7 @@
 // LXHInputOutputCell.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-21
+//  Created by lianxianghui on 19-11-19
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -76,7 +76,6 @@
 - (UILabel *)btcValue {
     if (!_btcValue) {
         _btcValue = [[UILabel alloc] init];
-        _btcValue.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -90,7 +89,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.2652941) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"0.00000323 BTC", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"0.00065323 BTC", nil) attributes:textAttributes];
         _btcValue.attributedText = text;
     }
     return _btcValue;
@@ -110,7 +109,6 @@
 - (UILabel *)addressText {
     if (!_addressText) {
         _addressText = [[UILabel alloc] init];
-        _addressText.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -133,7 +131,6 @@
 - (UILabel *)text {
     if (!_text) {
         _text = [[UILabel alloc] init];
-        _text.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];

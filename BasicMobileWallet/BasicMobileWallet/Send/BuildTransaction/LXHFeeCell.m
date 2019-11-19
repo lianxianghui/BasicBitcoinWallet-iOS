@@ -1,7 +1,7 @@
 // LXHFeeCell.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-21
+//  Created by lianxianghui on 19-11-19
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -50,14 +50,14 @@
     }];
     [self.inputFeeValueButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.mas_centerY);
-        make.width.mas_equalTo(55);
         make.right.equalTo(self.mas_right).offset(-12.5);
+        make.width.mas_equalTo(55);
         make.height.mas_equalTo(32);
     }];
     [self.selectFeerateButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.mas_centerY);
-        make.width.mas_equalTo(55);
         make.right.equalTo(self.inputFeeValueButton.mas_left).offset(-17);
+        make.width.mas_equalTo(55);
         make.height.mas_equalTo(32);
     }];
 }
@@ -75,7 +75,6 @@
 - (UILabel *)text {
     if (!_text) {
         _text = [[UILabel alloc] init];
-        _text.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -89,7 +88,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.3376471) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"手续费：40sat/byte （费率）", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"手续费率：40sat/byte", nil) attributes:textAttributes];
         _text.attributedText = text;
     }
     return _text;
@@ -101,7 +100,6 @@
         _inputFeeValueButton.backgroundColor = UIColorFromRGBA(0x009688FF);
         _inputFeeValueButton.layer.cornerRadius = 2;
         _inputFeeValueButton.alpha = 1;
-        _inputFeeValueButton.titleLabel.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -128,7 +126,6 @@
         _selectFeerateButton.backgroundColor = UIColorFromRGBA(0x009688FF);
         _selectFeerateButton.layer.cornerRadius = 2;
         _selectFeerateButton.alpha = 1;
-        _selectFeerateButton.titleLabel.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];

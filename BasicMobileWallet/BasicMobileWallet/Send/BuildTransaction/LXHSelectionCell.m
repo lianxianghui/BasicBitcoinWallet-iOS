@@ -1,7 +1,7 @@
 // LXHSelectionCell.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-21
+//  Created by lianxianghui on 19-11-19
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -49,9 +49,9 @@
     }];
     [self.disclosureIndicator mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.mas_centerY);
+        make.right.equalTo(self.mas_right).offset(-15);
         make.height.mas_equalTo(13);
         make.width.mas_equalTo(8);
-        make.right.equalTo(self.mas_right).offset(-15);
     }];
 }
 
@@ -68,7 +68,6 @@
 - (UILabel *)text {
     if (!_text) {
         _text = [[UILabel alloc] init];
-        _text.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
