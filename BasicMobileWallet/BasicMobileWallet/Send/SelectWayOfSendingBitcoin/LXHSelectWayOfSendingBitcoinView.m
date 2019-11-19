@@ -163,7 +163,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请选择一种发送比特币的方式，目前支持两种方式：\n1.输出固定，手动选择输入：", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请选择一种构造比特币交易的方式，目前支持两种方式：\n1.输出固定，手动选择输入：", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
