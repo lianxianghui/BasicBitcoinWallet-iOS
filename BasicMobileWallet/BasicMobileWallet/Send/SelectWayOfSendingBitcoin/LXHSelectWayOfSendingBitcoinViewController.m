@@ -8,6 +8,8 @@
 #import "Masonry.h"
 #import "LXHSelectWayOfSendingBitcoinView.h"
 #import "LXHBuildTransactionViewController.h"
+#import "LXHBuildTransactionViewModelForFixedInput.h"
+#import "LXHBuildTransactionViewModelForFixedOutput.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -53,18 +55,22 @@
 }
 
 //Actions
-- (void)textButton2Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHBuildTransactionViewController alloc] init];
-    controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
-}
-
-
 - (void)textButton1Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHBuildTransactionViewController alloc] init];
+    LXHBuildTransactionViewModel *viewModel = [LXHBuildTransactionViewModelForFixedOutput new];
+    UIViewController *controller = [[LXHBuildTransactionViewController alloc] initWithViewModel:viewModel];
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+
+- (void)textButton2Clicked:(UIButton *)sender {
+    LXHBuildTransactionViewModel *viewModel = [LXHBuildTransactionViewModelForFixedInput new];
+    UIViewController *controller = [[LXHBuildTransactionViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
+
+
 
 
 @end

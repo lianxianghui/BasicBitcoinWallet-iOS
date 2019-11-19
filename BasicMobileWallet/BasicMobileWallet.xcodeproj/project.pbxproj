@@ -1111,12 +1111,12 @@
 				8C93348B235DB14C00FBF238 /* LXHEmptyCell.m */,
 				8C93348E235DB14C00FBF238 /* LXHSendView.h */,
 				8C933487235DB14C00FBF238 /* LXHSendView.m */,
-				8C933489235DB14C00FBF238 /* LXHSendViewController.h */,
-				8C933490235DB14C00FBF238 /* LXHSendViewController.m */,
-				8C7E10F623797D5A00B224ED /* LXHSendViewControllerHelper.h */,
-				8C7E10F723797D5A00B224ED /* LXHSendViewControllerHelper.m */,
 				8CA5603D237FBC7400B80FBC /* LXHSendViewModel.h */,
 				8CA5603E237FBC7400B80FBC /* LXHSendViewModel.m */,
+				8C7E10F623797D5A00B224ED /* LXHSendViewControllerHelper.h */,
+				8C7E10F723797D5A00B224ED /* LXHSendViewControllerHelper.m */,
+				8C933489235DB14C00FBF238 /* LXHSendViewController.h */,
+				8C933490235DB14C00FBF238 /* LXHSendViewController.m */,
 			);
 			path = Send;
 			sourceTree = "<group>";
@@ -1869,14 +1869,14 @@
 				8CEAECA92383D507005754B3 /* LXHFeeCell.m */,
 				8CEAECAD2383D507005754B3 /* LXHBuildTransactionView.h */,
 				8CEAECA72383D507005754B3 /* LXHBuildTransactionView.m */,
-				8CEAECA62383D507005754B3 /* LXHBuildTransactionViewController.h */,
-				8CEAECAE2383D507005754B3 /* LXHBuildTransactionViewController.m */,
-				8CEAECD42383D996005754B3 /* LXHBuildTransactionViewModelForFixedOutput.h */,
-				8CEAECD52383D996005754B3 /* LXHBuildTransactionViewModelForFixedOutput.m */,
 				8CEAECD72383D9AA005754B3 /* LXHBuildTransactionViewModel.h */,
 				8CEAECD82383D9AA005754B3 /* LXHBuildTransactionViewModel.m */,
+				8CEAECD42383D996005754B3 /* LXHBuildTransactionViewModelForFixedOutput.h */,
+				8CEAECD52383D996005754B3 /* LXHBuildTransactionViewModelForFixedOutput.m */,
 				8CEAECDA2383D9B9005754B3 /* LXHBuildTransactionViewModelForFixedInput.h */,
 				8CEAECDB2383D9B9005754B3 /* LXHBuildTransactionViewModelForFixedInput.m */,
+				8CEAECA62383D507005754B3 /* LXHBuildTransactionViewController.h */,
+				8CEAECAE2383D507005754B3 /* LXHBuildTransactionViewController.m */,
 			);
 			path = BuildTransaction;
 			sourceTree = "<group>";

@@ -17,6 +17,8 @@
 #import "LXHInputOutputCell.h"
 #import "LXHTitleCell2.h"
 #import "LXHFeeCell.h"
+#import "LXHBuildTransactionViewModel.h"
+#import "LXHGlobalHeader.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -26,10 +28,19 @@
     
 @interface LXHBuildTransactionViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHBuildTransactionView *contentView;
-
+@property (nonatomic) LXHBuildTransactionViewModel *viewModel;
+@property (nonatomic) NSArray *cellDataListForListView;
 @end
 
 @implementation LXHBuildTransactionViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -86,54 +97,43 @@
 }
 
 
+//Actions
 - (void)LXHFeeCellInputFeeValueButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHInputFeeViewController alloc] init];
+    LXHWeakSelf
+    UIViewController *controller = [[LXHInputFeeViewController alloc] initWithData:_viewModel.dataForBuildingTransaction dataChangedCallback:^{
+        weakSelf.viewModel.dataForBuildingTransaction[@"selectedFeeRateItem"] = nil; //把LXHSelectFeeRateViewController数据置空
+    }];
     controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
+    [self.navigationController pushViewController:controller animated:YES];
 }
-
 
 - (void)LXHFeeCellSelectFeerateButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] init];
+    LXHWeakSelf
+    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithData:_viewModel.dataForBuildingTransaction dataChangedCallback:^{
+        weakSelf.viewModel.dataForBuildingTransaction[@"inputFeeRate"] = nil; //把LXHInputFeeViewController数据置空
+    }];
     controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (void)refreshListView {
+    _cellDataListForListView = nil;
+    [self.contentView.listView reloadData];
+}
 
 //Delegate Methods
-- (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            dic = @{@"title":@"输入 0.00075646BTC", @"isSelectable":@"0", @"cellType":@"LXHTitleCell1"};
-            [dataForCells addObject:dic];
-            dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输入"};
-            [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx ", @"text":@"1. ", @"isSelectable":@"1", @"btcValue":@"0.00065323 BTC", @"cellType":@"LXHInputOutputCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"text":@"2.", @"isSelectable":@"1", @"btcValue":@"0.00010323 BTC", @"cellType":@"LXHInputOutputCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"title":@"手续费 0.0000912BTC", @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"手续费率：40sat/byte", @"isSelectable":@"0", @"cellType":@"LXHFeeCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"title":@"输出 0.0000912BTC", @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
-            [dataForCells addObject:dic];
-            dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输出"};
-            [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx ", @"text":@"1. ", @"isSelectable":@"1", @"btcValue":@"0.00003023 BTC", @"cellType":@"LXHInputOutputCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"text":@"2.", @"isSelectable":@"1", @"btcValue":@"0.00000023 BTC", @"cellType":@"LXHInputOutputCell"};
-            [dataForCells addObject:dic];
+- (NSArray *)cellDataListForTableView:(UITableView *)tableView {
+    if (tableView == self.contentView.listView) {
+        if (!_cellDataListForListView) {
+            _cellDataListForListView = [_viewModel cellDataForListview];
         }
+        return _cellDataListForListView;
     }
-    return dataForCells;
+    return nil;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    NSArray *dataForTableView = [self dataForTableView:tableView];
+    NSArray *dataForTableView = [self cellDataListForTableView:tableView];
     if (indexPath.row < dataForTableView.count)
         return [dataForTableView objectAtIndex:indexPath.row];
     else
@@ -143,7 +143,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
-        NSArray *data = [self dataForTableView:tableView];
+        NSArray *data = [self cellDataListForTableView:tableView];
         if (indexPath.row < data.count) {
             NSDictionary *cellData = [data objectAtIndex:indexPath.row];
             return [cellData valueForKey:@"cellType"];
@@ -174,7 +174,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self dataForTableView:tableView].count;
+    return [self cellDataListForTableView:tableView].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -297,55 +297,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch(indexPath.row) {
-        case 0:
-            {
-            }
-            break;
-        case 1:
-            {
-            UIViewController *controller = [[LXHSelectInputViewController alloc] init];
+    NSString *type = [self tableView:tableView cellTypeAtIndexPath:indexPath];
+    if ([type isEqualToString:@"LXHSelectionCell"]) {
+        NSDictionary *data = [self cellDataForTableView:tableView atIndexPath:indexPath];
+        NSString *cellId = data[@"id"];
+        if (!cellId)
+            return;
+        if ([cellId isEqualToString:@"selectInput"]) {
+            UIViewController *controller = [[LXHSelectInputViewController alloc] initWithData:_viewModel.dataForBuildingTransaction];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
-            }
-            break;
-        case 2:
-            {
-            }
-            break;
-        case 3:
-            {
-            }
-            break;
-        case 4:
-            {
-            }
-            break;
-        case 5:
-            {
-            }
-            break;
-        case 6:
-            {
-            }
-            break;
-        case 7:
-            {
-            UIViewController *controller = [[LXHOutputListViewController alloc] init];
+        } else if ([cellId isEqualToString:@"selectOutput"]) {
+            UIViewController *controller = [[LXHOutputListViewController alloc] initWithData:_viewModel.dataForBuildingTransaction];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
-            }
-            break;
-        case 8:
-            {
-            }
-            break;
-        case 9:
-            {
-            }
-            break;
-        default:
-            break;
+        }
     }
 }
 

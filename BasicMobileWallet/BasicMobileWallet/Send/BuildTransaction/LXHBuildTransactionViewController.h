@@ -8,4 +8,5 @@
 
 @interface LXHBuildTransactionViewController : UIViewController
 
+- (instancetype)initWithViewModel:(id)viewModel;
 @end
