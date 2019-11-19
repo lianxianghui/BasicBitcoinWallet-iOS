@@ -28,7 +28,7 @@
 }
 
 - (NSDictionary *)titleCell1DataForGroup1 {
-    NSDecimalNumber *sum = [self sumForInputsOrOutputsWithArray:self.dataForBuildingTransaction[@"outputs"]];
+    NSDecimalNumber *sum = [self sumForInputsOrOutputsWithArray:[self outputs]];
     NSString *title = [NSString stringWithFormat:NSLocalizedString(@"输出 %@BTC", nil), sum];
     NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell1"};
     return dic;
@@ -36,7 +36,7 @@
 
 
 - (NSDictionary *)titleCell2DataForGroup3 {
-    NSDecimalNumber *sum = [self sumForInputsOrOutputsWithArray:self.dataForBuildingTransaction[@"inputs"]];
+    NSDecimalNumber *sum = [self sumForInputsOrOutputsWithArray:[self inputs]];
     NSString *title = [NSString stringWithFormat:NSLocalizedString(@"输入 %@BTC", nil), sum];
     NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
     return dic;

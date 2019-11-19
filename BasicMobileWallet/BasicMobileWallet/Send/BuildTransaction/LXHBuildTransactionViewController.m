@@ -60,6 +60,11 @@
     [self setDelegates];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self refreshListView];
+}
+
 - (void)swipeView:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }

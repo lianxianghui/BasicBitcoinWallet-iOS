@@ -85,6 +85,27 @@
     return feeRateValue;
 }
 
+- (NSArray<LXHTransactionInputOutputCommon *> *)inputs { //utxos
+    return _dataForBuildingTransaction[@"selectedUtxos"];
+}
+
+- (NSArray<LXHTransactionInputOutputCommon *> *)outputs {
+    return _dataForBuildingTransaction[@"outputs"];
+}
+
+//参考 https://bitcoin.stackexchange.com/questions/1195/how-to-calculate-transaction-size-before-sending-legacy-non-segwit-p2pkh-p2sh
+- (NSDecimalNumber *)feeValueInBTC {
+    NSUInteger inputCount = [self inputs].count;
+    NSUInteger outputCount = [self outputs].count;
+    if (inputCount == 0 || outputCount == 0)
+        return nil;
+    NSUInteger feeRateInSat = [[self feeRateValue] unsignedIntegerValue];
+    NSUInteger byteCount = inputCount * 148 + outputCount * 34 + 10;
+    unsigned long long feeInSat = byteCount * feeRateInSat;
+    NSDecimalNumber *ret = [NSDecimalNumber decimalNumberWithMantissa:feeInSat exponent:-8 isNegative:NO];
+    return ret;
+}
+
 - (NSDecimalNumber *)sumForInputsOrOutputsWithArray:(NSArray *)array {
     if (!array)
         return [NSDecimalNumber zero];
@@ -95,8 +116,10 @@
 }
 
 - (NSDictionary *)titleCell2DataForGroup2 {
-    NSDictionary *dic = nil;
-    dic = @{@"title":@"手续费 0.0000912BTC", @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
+    NSDecimalNumber *feeValueInBTC = [self feeValueInBTC];
+    feeValueInBTC = feeValueInBTC ?: [NSDecimalNumber zero];//无意义时显示0
+    NSString *title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), feeValueInBTC];
+    NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
     return dic;
 }
 
