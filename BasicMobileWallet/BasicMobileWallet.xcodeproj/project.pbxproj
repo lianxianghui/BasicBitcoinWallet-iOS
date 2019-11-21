@@ -78,6 +78,7 @@
 		8C9334BB235DD15A00FBF238 /* LXHAddOutputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9334B3235DD15A00FBF238 /* LXHAddOutputView.m */; };
 		8C9334BC235DD15A00FBF238 /* LXHInputAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9334B8235DD15A00FBF238 /* LXHInputAddressCell.m */; };
 		8C9334BD235DD15A00FBF238 /* LXHInputAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9334B9235DD15A00FBF238 /* LXHInputAmountCell.m */; };
+		8C9F115323867D52004F408E /* LXHAddOutputViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9F115223867D52004F408E /* LXHAddOutputViewModel.m */; };
 		8CA31F5C22D9872A00CEA828 /* LXHInputMnemonicWordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */; };
 		8CA31F5D22D9872A00CEA828 /* LXHInputMnemonicWordsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5A22D9872900CEA828 /* LXHInputMnemonicWordsView.m */; };
 		8CA31F5E22D9872A00CEA828 /* LXHWordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CA31F5B22D9872900CEA828 /* LXHWordCell.m */; };
@@ -384,6 +385,8 @@
 		8C9334B7235DD15A00FBF238 /* LXHAddOutputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHAddOutputView.h; sourceTree = "<group>"; };
 		8C9334B8235DD15A00FBF238 /* LXHInputAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputAddressCell.m; sourceTree = "<group>"; };
 		8C9334B9235DD15A00FBF238 /* LXHInputAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputAmountCell.m; sourceTree = "<group>"; };
+		8C9F115123867D52004F408E /* LXHAddOutputViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHAddOutputViewModel.h; sourceTree = "<group>"; };
+		8C9F115223867D52004F408E /* LXHAddOutputViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHAddOutputViewModel.m; sourceTree = "<group>"; };
 		8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputMnemonicWordsViewController.m; sourceTree = "<group>"; };
 		8CA31F5722D9872900CEA828 /* LXHInputMnemonicWordsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputMnemonicWordsView.h; sourceTree = "<group>"; };
 		8CA31F5822D9872900CEA828 /* LXHWordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWordCell.h; sourceTree = "<group>"; };
@@ -1151,6 +1154,8 @@
 				8C9334B8235DD15A00FBF238 /* LXHInputAddressCell.m */,
 				8C9334B5235DD15A00FBF238 /* LXHInputAmountCell.h */,
 				8C9334B9235DD15A00FBF238 /* LXHInputAmountCell.m */,
+				8C9F115123867D52004F408E /* LXHAddOutputViewModel.h */,
+				8C9F115223867D52004F408E /* LXHAddOutputViewModel.m */,
 				8C9334B6235DD15A00FBF238 /* LXHAddOutputViewController.h */,
 				8C9334B2235DD15A00FBF238 /* LXHAddOutputViewController.m */,
 			);
@@ -2245,6 +2250,7 @@
 				8CA31F8D22D98BAC00CEA828 /* LXHSetPassphraseViewController.m in Sources */,
 				8C45ACC723758D810038EAEA /* LXHAddressListViewController+ForSubclassing.m in Sources */,
 				8C933498235DB14C00FBF238 /* LXHSelectInputView.m in Sources */,
+				8C9F115323867D52004F408E /* LXHAddOutputViewModel.m in Sources */,
 				8CA3227E22DEBE9900CEA828 /* BTCEncryptedMessage+Tests.m in Sources */,
 				8CA31F9422D98BAC00CEA828 /* LXHWalletMnemonicWordsViewController.m in Sources */,
 				8CA3212522DDE61900CEA828 /* LXHSetPinViewController.m in Sources */,

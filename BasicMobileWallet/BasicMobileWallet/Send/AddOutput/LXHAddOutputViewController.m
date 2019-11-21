@@ -14,8 +14,7 @@
 #import "LXHGlobalHeader.h"
 #import "LXHAddressListForSelectionViewController.h"
 #import "Toast.h"
-#import "NSString+Base.h"
-#import "BTCAddress.h"
+#import "LXHAddOutputViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -25,11 +24,8 @@
     
 @interface LXHAddOutputViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHAddOutputView *contentView;
-@property (nonatomic) NSDictionary *data;
 @property (nonatomic, copy) addOutputCallback addOutputCallback;
-@property (nonatomic) LXHTransactionOutput *output;
-@property (nonatomic) LXHLocalAddress *localAddress;
-@property (nonatomic) NSMutableArray *cellDataListForListView;
+@property (nonatomic) LXHAddOutputViewModel *viewModel;
 @property (nonatomic) UIView *scanerView;
 @end
 
@@ -38,7 +34,6 @@
 - (instancetype)initWithData:(NSDictionary *)data addOutputCallback:(addOutputCallback)addOutputCallback {
     self = [super init];
     if (self) {
-        _data = data;
         _addOutputCallback = addOutputCallback;
     }
     return self;
@@ -120,44 +115,13 @@
 }
 
 - (void)refreshListView {
-    _cellDataListForListView = nil;
+    [_viewModel resetCellDataArrayForListView];
     [self.contentView.listView reloadData];
 }
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    if (!_cellDataListForListView) {
-        _cellDataListForListView = [NSMutableArray array];
-        NSDictionary *dic = nil;
-        dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
-        [_cellDataListForListView addObject:dic];
-        
-        NSString *text, *warningText, *addressText;
-        if (_output.address) {
-            text = NSLocalizedString(@"地址: ", nil);
-            addressText = self.output.address ?: @" ";
-        } else {
-            text = NSLocalizedString(@"地址: 点击添加", nil);
-            addressText = @" ";
-        }
-        warningText = [self warningText];
-        dic = @{@"text":text, @"warningText":warningText, @"isSelectable":@"1", @"cellType":@"LXHInputAddressCell", @"addressText":addressText};
-        [_cellDataListForListView addObject:dic];
-        dic = @{@"maxValue":@"可输入最大值: 0.00000001 ", @"text1":@"数量:", @"isSelectable":@"0", @"text":@"输入最大值", @"cellType":@"LXHInputAmountCell", @"BTC":@" BTC"};
-        [_cellDataListForListView addObject:dic];
-    }
-    return _cellDataListForListView;
-}
-
-- (NSString *)warningText {
-    if (_localAddress) {
-        NSString *format = NSLocalizedString(@"%@本地%@地址", nil); //例如 "用过的本地找零地址"
-        NSString *string1 = _localAddress.used ? NSLocalizedString(@"用过的", nil) : @"";
-        NSString *string2 = _localAddress.type == LXHAddressTypeChange ? NSLocalizedString(@"找零", nil) : NSLocalizedString(@"接收", nil);
-        NSString *text = [NSString stringWithFormat:format, string1, string2];
-        return text;
-    } else
-        return @" ";
+    return _viewModel.cellDataArrayForListView;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -167,7 +131,6 @@
     else
         return nil;
 }
-
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
@@ -314,32 +277,12 @@
     }
 }
 
-- (NSString *)pastboardText {
-    UIPasteboard *gpBoard = [UIPasteboard generalPasteboard];
-    return gpBoard.string;
-}
-
-
-/**
- 返回有效的地址，如果无效返回nil
- */
-- (NSString *)validAddress:(NSString *)address {
-    address = [address stringByTrimmingWhiteSpace];
-    address = [address stringByReplacingOccurrencesOfString:@"bitcoin:" withString:@""];
-    if ([BTCAddress addressWithString:address]) //有效
-        return address;
-    else
-        return nil;
-}
-
 - (void)showSettingAddressSheet {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
     LXHWeakSelf
     UIAlertAction *pasteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"粘贴地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *text = [weakSelf pastboardText];
-        NSString *validAddress = [weakSelf validAddress:text];
-        if (validAddress) {
-            weakSelf.output.address = validAddress;
+        NSString *text = [UIPasteboard generalPasteboard].string;
+        if ([weakSelf.viewModel setAddress:text]) {
             [weakSelf refreshListView];
         } else {
             [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址", nil)];
@@ -349,9 +292,7 @@
     UIAlertAction *scanAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"扫描二维码", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 #if !(TARGET_IPHONE_SIMULATOR)
         weakSelf.scanerView = [BTCQRCode scannerViewWithBlock:^(NSString *text) {
-            NSString *validAddress = [weakSelf validAddress:text];
-            if (validAddress) {
-                weakSelf.output.address = validAddress;
+            if ([weakSelf.viewModel setAddress:text]) {
                 [weakSelf refreshListView];
             } else {
                 [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址", nil)];
@@ -366,8 +307,7 @@
     
     UIAlertAction *selectAddressAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"选择本地地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         LXHAddressListForSelectionViewController *controller = [[LXHAddressListForSelectionViewController alloc] initWithAddressSelectedCallback:^(LXHLocalAddress *localAddress) {
-            weakSelf.localAddress = localAddress;
-            weakSelf.output.address = localAddress.addressString;
+            weakSelf.viewModel.localAddress = localAddress;
             [weakSelf refreshListView];
         }];
         [self.navigationController pushViewController:controller animated:YES];
@@ -381,11 +321,6 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (LXHTransactionOutput *)output {
-    if (!_output) {
-        _output = [LXHTransactionOutput new];
-    }
-    return _output;
-}
+
 
 @end
