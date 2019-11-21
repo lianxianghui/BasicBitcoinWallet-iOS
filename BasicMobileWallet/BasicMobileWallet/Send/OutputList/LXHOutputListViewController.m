@@ -13,6 +13,7 @@
 #import "UILabel+LXHText.h"
 #import "UIButton+LXHText.h"
 #import "BlocksKit.h"
+#import "LXHOutputListViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -23,15 +24,15 @@
 @interface LXHOutputListViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHOutputListView *contentView;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
-@property (nonatomic) NSMutableDictionary *data;
+@property (nonatomic) LXHOutputListViewModel *viewModel;
 @end
 
 @implementation LXHOutputListViewController
 
-- (instancetype)initWithData:(NSMutableDictionary *)data {
+- (instancetype)initWithViewModel:(id)viewModel {
     self = [super init];
     if (self) {
-        _data = data;
+        _viewModel = viewModel;
     }
     return self;
 }
@@ -74,17 +75,28 @@
     self.contentView.listView.delegate = self;
 }
 
-//Actions
-- (void)modifyOrderButtonClicked:(UIButton *)sender {
+- (void)setViewProperties {
+    [self refreshValueText];
 }
 
+- (void)refreshValueText {
+    NSString *text = [_viewModel headerInfoText];
+    [self.contentView.value updateAttributedTextString:text];
+}
+
+//Actions
+- (void)modifyOrderButtonClicked:(UIButton *)sender { //调整顺序按钮
+    UITableView *listView = self.contentView.listView;
+    [listView setEditing:!listView.editing animated:YES];
+    NSString *text = listView.editing ? NSLocalizedString(@"完成", nil) : NSLocalizedString(@"调整顺序", nil);
+    [sender updateAttributedTitleString:text forState:UIControlStateNormal];
+}
 
 - (void)addOutputButtonClicked:(UIButton *)sender {
     UIViewController *controller = [[LXHAddOutputViewController alloc] init];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
-
 
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
@@ -114,6 +126,8 @@
 
 - (void)LXHSelectedOutputCellButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    NSInteger index = sender.tag;
+    [_viewModel deleteRowAtIndex:index];
 }
 
 - (void)LXHSelectedOutputCellButtonTouchDown:(UIButton *)sender {
@@ -205,9 +219,6 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     UIView *view = [cell.contentView viewWithTag:tag];
-    if ([cellType isEqualToString:@"LXHTopLineCell"]) {
-        LXHTopLineCell *cellView = (LXHTopLineCell *)view;
-    }
     if ([cellType isEqualToString:@"LXHSelectedOutputCell"]) {
         LXHSelectedOutputCell *cellView = (LXHSelectedOutputCell *)view;
         NSString *btcValue = [dataForRow valueForKey:@"btcValue"];
@@ -237,7 +248,7 @@
         NSString *deleteImageImageName = [dataForRow valueForKey:@"deleteImage"];
         if (deleteImageImageName)
             cellView.deleteImage.image = [UIImage imageNamed:deleteImageImageName];
-        cellView.button.tag = indexPath.row;
+        cellView.button.tag = [dataForRow[@"index"] integerValue];
         [cellView.button addTarget:self action:@selector(LXHSelectedOutputCellButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [cellView.button addTarget:self action:@selector(LXHSelectedOutputCellButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
         [cellView.button addTarget:self action:@selector(LXHSelectedOutputCellButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
@@ -268,22 +279,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch(indexPath.row) {
-        case 0:
-            {
-            }
-            break;
-        case 1:
-            {
-            }
-            break;
-        case 2:
-            {
-            }
-            break;
-        default:
-            break;
-    }
+}
+
+//以下代码使得Tableview cell 可以通过被拖动改变顺序
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleNone;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
+    if ([cellType isEqualToString:@"LXHSelectedOutputCell"])
+        return YES;
+    else
+        return NO;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    [_viewModel moveRowAtIndex:sourceIndexPath.row toIndex:destinationIndexPath.row];
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
 @end

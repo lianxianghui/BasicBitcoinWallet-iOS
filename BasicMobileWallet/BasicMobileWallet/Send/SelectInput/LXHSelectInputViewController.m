@@ -120,7 +120,7 @@
     NSUInteger index = (NSUInteger)sender.tag;
     if (index >= _viewModel.cellDataArrayForListview.count)
         return;
-    NSDictionary *cellData = _viewModel.cellDataArrayForListview[index];
+    NSDictionary *cellData = _viewModel.cellDataArrayForListview[index]; //todo index ?
     LXHTransactionOutput *output = cellData[@"model"];
     if (!output)
         return;
@@ -293,21 +293,5 @@
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
 }
-
-//- (NSInteger)selectInputCellIndexWithTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
-//    NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
-//    if (![cellType isEqualToString:@"LXHSelectInputCell"])
-//        return NSNotFound;
-//    else {
-//        NSInteger ret = -1;
-//        for (NSInteger i = 0; i <= indexPath.row; i++) {
-//            NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-//            NSString *currentCellType = [self tableView:tableView cellTypeAtIndexPath:currentIndexPath];
-//            if ([currentCellType isEqualToString:@"LXHSelectInputCell"])
-//                ret++;
-//        }
-//        return ret;
-//    }
-//}
 
 @end

@@ -11,10 +11,12 @@
 #import "LXHTransactionOutput.h"
 #import "BlocksKit.h"
 #import "LXHSelectInputViewModel.h"
+#import "LXHOutputListViewModel.h"
 
 @interface LXHBuildTransactionViewModel ()
 @property (nonatomic, readwrite) NSMutableDictionary *dataForBuildingTransaction;
 @property (nonatomic, readwrite) LXHSelectInputViewModel *selectInputViewModel;
+@property (nonatomic, readwrite) LXHOutputListViewModel *outputListViewModel;
 @end
 
 @implementation LXHBuildTransactionViewModel
@@ -143,6 +145,13 @@
     if (!_selectInputViewModel)
         _selectInputViewModel = [[LXHSelectInputViewModel alloc] init];
     return _selectInputViewModel;
+}
+
+- (LXHOutputListViewModel *)outputListViewModel {
+    if (!_outputListViewModel) {
+        _outputListViewModel = [[LXHOutputListViewModel alloc] init];
+    }
+    return _outputListViewModel;
 }
 
 @end

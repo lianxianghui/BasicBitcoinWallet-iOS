@@ -9,4 +9,5 @@
 @interface LXHOutputListViewController : UIViewController
 
 - (instancetype)initWithData:(NSMutableDictionary *)data;
+- (instancetype)initWithViewModel:(id)viewModel;
 @end
