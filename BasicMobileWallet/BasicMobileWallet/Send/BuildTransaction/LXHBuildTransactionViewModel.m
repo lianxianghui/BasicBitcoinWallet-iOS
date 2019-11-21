@@ -10,9 +10,11 @@
 #import "LXHTransactionInput.h"
 #import "LXHTransactionOutput.h"
 #import "BlocksKit.h"
+#import "LXHSelectInputViewModel.h"
 
 @interface LXHBuildTransactionViewModel ()
 @property (nonatomic, readwrite) NSMutableDictionary *dataForBuildingTransaction;
+@property (nonatomic, readwrite) LXHSelectInputViewModel *selectInputViewModel;
 @end
 
 @implementation LXHBuildTransactionViewModel
@@ -30,7 +32,7 @@
     NSMutableArray *ret = [NSMutableArray array];
     NSDictionary *dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输入", @"id":@"selectInput"};
     [ret addObject:dic];
-    NSArray *selectedUtxos = self.dataForBuildingTransaction[@"selectedUtxos"];
+    NSArray *selectedUtxos = self.selectInputViewModel.selectedUtxos;
     for (NSUInteger i = 0 ; i < selectedUtxos.count; i++) {
         LXHTransactionOutput *utxo = selectedUtxos[i];
         NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
@@ -134,6 +136,13 @@
 
 - (NSDictionary *)titleCell2DataForGroup3 {
     return nil;
+}
+
+#pragma mark - other related viewModels
+- (LXHSelectInputViewModel *)selectInputViewModel {
+    if (!_selectInputViewModel)
+        _selectInputViewModel = [[LXHSelectInputViewModel alloc] init];
+    return _selectInputViewModel;
 }
 
 @end

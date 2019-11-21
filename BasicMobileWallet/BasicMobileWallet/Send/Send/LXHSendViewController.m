@@ -260,9 +260,9 @@
         if (!cellId)
             return;
         if ([cellId isEqualToString:@"selectInput"]) {
-            UIViewController *controller = [[LXHSelectInputViewController alloc] initWithData:_viewModel.dataForBuildingTransaction];
-            controller.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:controller animated:YES];
+//            UIViewController *controller = [[LXHSelectInputViewController alloc] initWithData:_viewModel.dataForBuildingTransaction];
+//            controller.hidesBottomBarWhenPushed = YES;
+//            [self.navigationController pushViewController:controller animated:YES];
         } else if ([cellId isEqualToString:@"selectOutput"]) {
             UIViewController *controller = [[LXHOutputListViewController alloc] initWithData:_viewModel.dataForBuildingTransaction];
             controller.hidesBottomBarWhenPushed = YES;

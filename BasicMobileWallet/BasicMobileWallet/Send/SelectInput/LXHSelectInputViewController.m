@@ -10,10 +10,9 @@
 #import "LXHOutputDetailViewController.h"
 #import "LXHTopLineCell.h"
 #import "LXHSelectInputCell.h"
-#import "LXHTransactionDataManager.h"
 #import "UILabel+LXHText.h"
 #import "UIButton+LXHText.h"
-#import "BlocksKit.h"
+#import "LXHSelectInputViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -23,20 +22,15 @@
     
 @interface LXHSelectInputViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSelectInputView *contentView;
-@property (nonatomic) NSMutableArray *cellDataListForListView;
-@property (nonatomic) NSMutableDictionary *data;
-@property (nonatomic) NSMutableArray *selectedUtxosAtInit;
-@property (nonatomic) NSMutableArray *utxosForListView;
+@property (nonatomic) LXHSelectInputViewModel *viewModel;
 @end
 
 @implementation LXHSelectInputViewController
 
-- (instancetype)initWithData:(NSMutableDictionary *)data
-{
+- (instancetype)initWithViewModel:(id)viewModel {
     self = [super init];
     if (self) {
-        _data = data;
-        _selectedUtxosAtInit = [_data[@"selectedUtxos"] mutableCopy];
+        _viewModel = viewModel;
     }
     return self;
 }
@@ -83,21 +77,9 @@
     [self refreshValueText];
 }
 
-- (NSArray *)selectedUtxos {
-    return [self.utxosForListView bk_select:^BOOL(LXHTransactionOutput *utxo) {
-        return [utxo.tempData[@"isChecked"] boolValue];
-    }];
-}
-
 - (void)refreshValueText {
-    NSDecimalNumber *seletedUtxosValueSum = [LXHTransactionOutput valueSumOfOutputs:[self selectedUtxos]];
-    NSString *text = [NSString stringWithFormat:@"%@ BTC", seletedUtxosValueSum];
+    NSString *text = [_viewModel valueText];
     [self.contentView.value updateAttributedTextString:text];
-}
-
-- (void)reloadListView {
-    self.cellDataListForListView = nil;
-    [self.contentView.listView reloadData];
 }
 
 //Actions
@@ -110,7 +92,6 @@
 
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
-    _data[@"selectedUtxos"] = [self selectedUtxos];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -137,9 +118,9 @@
 
 - (void)LXHSelectInputCellButtonClicked:(UIButton *)sender {
     NSUInteger index = (NSUInteger)sender.tag;
-    if (index >= self.cellDataListForListView.count)
+    if (index >= _viewModel.cellDataArrayForListview.count)
         return;
-    NSDictionary *cellData = self.cellDataListForListView[index];
+    NSDictionary *cellData = _viewModel.cellDataArrayForListview[index];
     LXHTransactionOutput *output = cellData[@"model"];
     if (!output)
         return;
@@ -148,67 +129,10 @@
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
-//按value从大到小排序
-- (NSMutableArray<LXHTransactionOutput *> *)utxosForListView {
-    if (!_utxosForListView) {
-        NSMutableArray<LXHTransactionOutput *> *utxos = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
-        [utxos sortUsingComparator:^NSComparisonResult(LXHTransactionOutput *  _Nonnull obj1, LXHTransactionOutput *  _Nonnull obj2) {
-            return -[obj1.value compare:obj2.value];
-        }];
-        
-        if (_selectedUtxosAtInit) { //把从外面传进来的已经选中的utxos放前面
-            _utxosForListView = [NSMutableArray arrayWithCapacity:utxos.count];
-            [utxos removeObjectsInArray:_selectedUtxosAtInit];
-            [_utxosForListView addObjectsFromArray:_selectedUtxosAtInit];
-            [_utxosForListView addObjectsFromArray:utxos];
-        } else {
-            _utxosForListView = utxos;
-        }
-    }
-    return _utxosForListView;
-}
-
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
     if (tableView == self.contentView.listView) {
-        if (!_cellDataListForListView) {
-            _cellDataListForListView = [NSMutableArray array];
-            NSDictionary *dic = nil;
-            dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
-            [_cellDataListForListView addObject:dic];
-            for (LXHTransactionOutput *utxo in [self utxosForListView]) {
-                NSString *valueText = [NSString stringWithFormat:@"%@ BTC", utxo.value];
-                
-                static NSDateFormatter *formatter = nil;
-                if (!formatter) {
-                    formatter = [[NSDateFormatter alloc] init];
-                    formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
-                }
-                LXHTransaction *transaction = [[LXHTransactionDataManager sharedInstance] transactionByTxid:utxo.txid];
-                
-                NSString *transactionTime = nil;
-                if (!transaction.time) { //还没有打进包
-                    transactionTime = @" ";
-                } else {
-                    NSInteger time = [transaction.time integerValue];
-                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
-                    transactionTime = [formatter stringFromDate:date];
-                }
-                NSMutableDictionary *dic = @{@"circleImage":@"check_circle",
-                                             @"cellType":@"LXHSelectInputCell",
-                                             @"time": NSLocalizedString(@"交易时间:", nil),
-                                             @"btcValue":@"0.00000004 BTC",
-                                             @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ",
-                                             @"checkedImage":@"checked_circle", @"isSelectable":@"1",
-                                             @"timeValue":@"2019-09-01 12:36"}.mutableCopy;
-                dic[@"btcValue"] = valueText;
-                dic[@"addressText"] = utxo.address ?: @"";
-                dic[@"timeValue"] = transactionTime;
-                dic[@"model"] = utxo;
-                [_cellDataListForListView addObject:dic];
-            }
-        }
-        return _cellDataListForListView;
+        return _viewModel.cellDataArrayForListview;
     } else {
         return nil;
     }
@@ -308,8 +232,7 @@
         NSString *checkedImageImageName = [dataForRow valueForKey:@"checkedImage"];
         if (checkedImageImageName)
             cellView.checkedImage.image = [UIImage imageNamed:checkedImageImageName];
-        LXHTransactionOutput *model = [dataForRow valueForKey:@"model"];
-        BOOL isChecked = [[model.tempData valueForKey:@"isChecked"] boolValue];
+        BOOL isChecked = [[dataForRow valueForKey:@"isChecked"] boolValue];
         cellView.checkedImage.hidden = !isChecked;
         cellView.circleImage.hidden = isChecked;
         cellView.button.tag = indexPath.row;
@@ -345,10 +268,7 @@
     NSString *cellType = cellData[@"cellType"];
     if (![cellType isEqualToString:@"LXHSelectInputCell"])
         return;
-    LXHTransactionOutput *output = cellData[@"model"];
-    BOOL isChecked =  [output.tempData[@"isChecked"] boolValue];
-    isChecked = !isChecked;
-    output.tempData[@"isChecked"] = @(isChecked);
+    [_viewModel toggleCheckedStateOfRow:indexPath.row];
     [self refreshValueText];
     [self.contentView.listView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
@@ -367,30 +287,27 @@
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    [self.cellDataListForListView exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
-    NSInteger sourceIndexForUtxoList = [self selectInputCellIndexWithTableView:tableView indexPath:sourceIndexPath];
-    NSInteger destinationIndexForUtxoList = [self selectInputCellIndexWithTableView:tableView indexPath:destinationIndexPath];
-    [self.utxosForListView exchangeObjectAtIndex:sourceIndexForUtxoList withObjectAtIndex:destinationIndexForUtxoList];
+    [_viewModel moveRowAtIndex:sourceIndexPath.row toIndex:destinationIndexPath.row];
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
 }
 
-- (NSInteger)selectInputCellIndexWithTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
-    NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
-    if (![cellType isEqualToString:@"LXHSelectInputCell"])
-        return NSNotFound;
-    else {
-        NSInteger ret = -1;
-        for (NSInteger i = 0; i <= indexPath.row; i++) {
-            NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            NSString *currentCellType = [self tableView:tableView cellTypeAtIndexPath:currentIndexPath];
-            if ([currentCellType isEqualToString:@"LXHSelectInputCell"])
-                ret++;
-        }
-        return ret;
-    }
-}
+//- (NSInteger)selectInputCellIndexWithTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
+//    NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
+//    if (![cellType isEqualToString:@"LXHSelectInputCell"])
+//        return NSNotFound;
+//    else {
+//        NSInteger ret = -1;
+//        for (NSInteger i = 0; i <= indexPath.row; i++) {
+//            NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+//            NSString *currentCellType = [self tableView:tableView cellTypeAtIndexPath:currentIndexPath];
+//            if ([currentCellType isEqualToString:@"LXHSelectInputCell"])
+//                ret++;
+//        }
+//        return ret;
+//    }
+//}
 
 @end

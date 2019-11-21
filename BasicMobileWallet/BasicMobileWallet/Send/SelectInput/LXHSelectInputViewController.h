@@ -7,5 +7,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LXHSelectInputViewController : UIViewController
-- (instancetype)initWithData:(NSMutableDictionary *)data;
+- (instancetype)initWithViewModel:(id)viewModel;
 @end
