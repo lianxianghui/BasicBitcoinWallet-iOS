@@ -17,9 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSMutableArray *cellDataArrayForListView;
 @property (nonatomic) LXHLocalAddress *localAddress;
 @property (nonatomic, readonly) LXHTransactionOutput *output;
+@property (nonatomic) BOOL isEditing;
 
+- (NSString *)naviBarTitle;
 - (void)resetCellDataArrayForListView;
 - (BOOL)setAddress:(NSString *)address;
+- (BOOL)setValueString:(NSString *)valueString;
 @end
 
 NS_ASSUME_NONNULL_END

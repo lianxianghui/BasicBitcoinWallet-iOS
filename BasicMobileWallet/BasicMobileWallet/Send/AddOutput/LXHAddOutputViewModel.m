@@ -28,6 +28,10 @@
     return self;
 }
 
+- (NSString *)naviBarTitle {
+    return _isEditing ? NSLocalizedString(@"编辑输出", nil) : NSLocalizedString(@"添加输出", nil);
+}
+
 - (NSMutableArray *)cellDataArrayForListView {
     if (!_cellDataArrayForListView) {
         _cellDataArrayForListView = [NSMutableArray array];
@@ -72,6 +76,17 @@
     NSString *validAddress = [LXHAddOutputViewModel validAddress:address];
     if (validAddress) {
         _output.address = validAddress;
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL)setValueString:(NSString *)valueString {
+    //todo check
+    BOOL valueIsValid = YES;
+    if (valueIsValid) {
+        _output.value = [[NSDecimalNumber alloc] initWithString:valueString];
         return YES;
     } else {
         return NO;

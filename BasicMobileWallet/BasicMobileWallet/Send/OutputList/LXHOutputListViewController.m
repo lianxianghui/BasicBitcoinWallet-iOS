@@ -14,6 +14,7 @@
 #import "UIButton+LXHText.h"
 #import "LXHOutputListViewModel.h"
 #import "LXHGlobalHeader.h"
+#import "LXHAddOutputViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -289,6 +290,7 @@
     id dataForRow = [self cellDataForTableView:tableView atIndexPath:indexPath];
     NSInteger index = [dataForRow[@"index"] integerValue];
     LXHAddOutputViewModel *outputViewModel = [_viewModel outputViewModels][index];
+    outputViewModel.isEditing = YES;
     UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:outputViewModel addOutputCallback:^() {
         [self refreshView];
     }];

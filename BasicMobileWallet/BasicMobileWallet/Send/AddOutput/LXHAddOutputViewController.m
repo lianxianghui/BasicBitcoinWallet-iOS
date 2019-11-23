@@ -15,6 +15,7 @@
 #import "LXHAddressListForSelectionViewController.h"
 #import "Toast.h"
 #import "LXHAddOutputViewModel.h"
+#import "UILabel+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -27,6 +28,7 @@
 @property (nonatomic, copy) addOutputCallback addOutputCallback;
 @property (nonatomic) LXHAddOutputViewModel *viewModel;
 @property (nonatomic) UIView *scanerView;
+@property (nonatomic) UITextField *textField;
 @end
 
 @implementation LXHAddOutputViewController
@@ -56,6 +58,7 @@
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
     [self setDelegates];
+    [self setViewProperties];
 }
 
 - (void)swipeView:(id)sender {
@@ -76,10 +79,14 @@
     self.contentView.listView.delegate = self;
 }
 
+- (void)setViewProperties {
+    [self.contentView.title updateAttributedTextString:[_viewModel naviBarTitle]];
+}
+
 //Actions
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
-    //todo 检查
+    [_viewModel setValueString:_textField.text];
     _addOutputCallback();
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -242,6 +249,7 @@
         [cellView.textButton addTarget:self action:@selector(LXHInputAmountCellTextButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [cellView.textButton addTarget:self action:@selector(LXHInputAmountCellTextButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
         [cellView.textButton addTarget:self action:@selector(LXHInputAmountCellTextButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+        _textField = cellView.textFieldWithPlaceHolder;
     }
     return cell;
 }
