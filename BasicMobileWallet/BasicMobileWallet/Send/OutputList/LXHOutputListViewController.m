@@ -13,6 +13,7 @@
 #import "UILabel+LXHText.h"
 #import "UIButton+LXHText.h"
 #import "LXHOutputListViewModel.h"
+#import "LXHGlobalHeader.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -107,7 +108,10 @@
 }
 
 - (void)addOutputButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:_viewModel.addOutputViewModel addOutputCallback:^(LXHAddOutputViewControllerType type, LXHTransactionOutput *output) {
+    LXHWeakSelf
+    LXHAddOutputViewModel *outputViewModel = [_viewModel getNewOutputViewModel];
+    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:outputViewModel addOutputCallback:^() {
+        [weakSelf.viewModel addOutputViewModel:outputViewModel];
         [self refreshView];
     }];
     controller.hidesBottomBarWhenPushed = YES;
@@ -281,6 +285,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //edit exist output
+    id dataForRow = [self cellDataForTableView:tableView atIndexPath:indexPath];
+    NSInteger index = [dataForRow[@"index"] integerValue];
+    LXHAddOutputViewModel *outputViewModel = [_viewModel outputViewModels][index];
+    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:outputViewModel addOutputCallback:^() {
+        [self refreshView];
+    }];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 //以下代码使得Tableview cell 可以通过被拖动改变顺序

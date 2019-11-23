@@ -13,7 +13,7 @@ typedef NS_ENUM(NSUInteger, LXHAddOutputViewControllerType) {
     LXHAddOutputViewControllerTypeEdit,
 };
 
-typedef void(^addOutputCallback)(LXHAddOutputViewControllerType type, LXHTransactionOutput *output);
+typedef void(^addOutputCallback)(void);
 
 @interface LXHAddOutputViewController : UIViewController
 - (instancetype)initWithViewModel:(id)viewModel addOutputCallback:(addOutputCallback)addOutputCallback;

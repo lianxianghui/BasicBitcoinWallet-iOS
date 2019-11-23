@@ -9,8 +9,10 @@
 #import "LXHOutputListViewModel.h"
 #import "LXHTransactionOutput.h"
 #import "LXHAddOutputViewModel.h"
+#import "BlocksKit.h"
 
 @interface LXHOutputListViewModel ()
+@property (nonatomic, readwrite) NSMutableArray<LXHAddOutputViewModel *> *outputViewModels;
 @property (nonatomic, readwrite) NSMutableArray *outputs;
 @property (nonatomic, readwrite) NSMutableArray *cellDataArrayForListview;
 @end
@@ -21,9 +23,17 @@
 {
     self = [super init];
     if (self) {
-        _outputs = nil;
+        _outputViewModels = [NSMutableArray array];
     }
     return self;
+}
+
+- (NSArray *)outputs {
+    if (!_outputs)
+        _outputs = [[_outputViewModels bk_map:^id(LXHAddOutputViewModel *model) {
+            return model.output;
+        }] mutableCopy];
+    return _outputs;
 }
 
 - (NSString *)headerInfoTitle {
@@ -49,8 +59,8 @@
         NSDictionary *dic = nil;
         dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
         [cellDataArrayForListView addObject:dic];
-        for (NSInteger i = 0; i < _outputs.count; i++) {
-            LXHTransactionOutput *output = _outputs[i];
+        for (NSInteger i = 0; i < self.outputs.count; i++) {
+            LXHTransactionOutput *output = self.outputs[i];
             NSMutableDictionary *dic = @{@"cellType":@"LXHSelectedOutputCell", @"deleteImage":@"send_outputlist_delete_image", @"address":@"地址:", @"isSelectable":@"1"}.mutableCopy;
             
             NSString *valueText = [NSString stringWithFormat:@"%@ BTC", output.value];
@@ -81,8 +91,21 @@
     [self.outputs removeObjectAtIndex:index];
 }
 
-- (LXHAddOutputViewModel *)addOutputViewModel {
+- (LXHAddOutputViewModel *)getNewOutputViewModel {
     return [[LXHAddOutputViewModel alloc] init];
+}
+
+- (NSArray<LXHAddOutputViewModel *> *)outputViewModels {
+    return _outputViewModels;
+}
+
+- (void)addOutputViewModel:(LXHAddOutputViewModel *)model {
+    [_outputViewModels addObject:model];
+    [self resetOutputs];
+}
+
+- (void)resetOutputs {
+    _outputs = nil;
 }
 
 @end

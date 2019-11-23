@@ -79,6 +79,8 @@
 //Actions
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    //todo 检查
+    _addOutputCallback();
     [self.navigationController popViewControllerAnimated:YES];
 }
 
