@@ -12,7 +12,6 @@
 #import "LXHSelectedOutputCell.h"
 #import "UILabel+LXHText.h"
 #import "UIButton+LXHText.h"
-#import "BlocksKit.h"
 #import "LXHOutputListViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -23,7 +22,6 @@
     
 @interface LXHOutputListViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHOutputListView *contentView;
-@property (nonatomic) NSMutableArray *cellDataListForListView;
 @property (nonatomic) LXHOutputListViewModel *viewModel;
 @end
 
@@ -55,6 +53,12 @@
     [self setDelegates];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self refreshHeaderInfo];
+    [self refreshListView];
+}
+
 - (void)swipeView:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -76,12 +80,17 @@
 }
 
 - (void)setViewProperties {
-    [self refreshValueText];
+    [self refreshHeaderInfo];
 }
 
-- (void)refreshValueText {
-    NSString *text = [_viewModel headerInfoText];
-    [self.contentView.value updateAttributedTextString:text];
+- (void)refreshHeaderInfo {
+    [self.contentView.text updateAttributedTextString:[_viewModel headerInfoTitle]];
+    [self.contentView.value updateAttributedTextString:[_viewModel headerInfoText]];
+}
+
+- (void)refreshListView {
+    [_viewModel resetCellDataArrayForListview];
+    [self.contentView.listView reloadData];
 }
 
 //Actions
@@ -140,20 +149,7 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"cellType":@"LXHSelectedOutputCell", @"deleteImage":@"send_outputlist_delete_image", @"address":@"地址:", @"btcValue":@"0.00000004 BTC", @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"isSelectable":@"1", @"addressAttributes":@"外部地址"};
-            [dataForCells addObject:dic];
-            dic = @{@"cellType":@"LXHSelectedOutputCell", @"deleteImage":@"send_outputlist_delete_image", @"address":@"地址:", @"btcValue":@"0.00000004 BTC", @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ", @"isSelectable":@"1", @"addressAttributes":@"用过的本地接收地址"};
-            [dataForCells addObject:dic];
-        }
-    }
-    return dataForCells;
+    return _viewModel.cellDataArrayForListview;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -163,7 +159,6 @@
     else
         return nil;
 }
-
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {

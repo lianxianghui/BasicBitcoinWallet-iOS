@@ -14,8 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSMutableArray *outputs;
 @property (nonatomic, readonly) NSMutableArray *cellDataArrayForListview;
 
+- (NSString *)headerInfoTitle;
 - (NSString *)headerInfoText;
 
+- (void)resetCellDataArrayForListview;
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex;
 - (void)deleteRowAtIndex:(NSInteger)index;
 @end

@@ -313,7 +313,7 @@
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         } else if ([cellId isEqualToString:@"selectOutput"]) {
-            UIViewController *controller = [[LXHOutputListViewController alloc] initWithData:_viewModel.dataForBuildingTransaction];
+            UIViewController *controller = [[LXHOutputListViewController alloc] initWithViewModel:_viewModel.outputListViewModel];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }

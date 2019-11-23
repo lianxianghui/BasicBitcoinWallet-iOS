@@ -71,7 +71,6 @@
 		8C9334A4235DB14C00FBF238 /* LXHSelectedOutputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933477235DB14C00FBF238 /* LXHSelectedOutputCell.m */; };
 		8C9334A9235DB14C00FBF238 /* LXHSendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933487235DB14C00FBF238 /* LXHSendView.m */; };
 		8C9334AB235DB14C00FBF238 /* LXHEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C93348B235DB14C00FBF238 /* LXHEmptyCell.m */; };
-		8C9334AE235DB14C00FBF238 /* LXHSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933490235DB14C00FBF238 /* LXHSendViewController.m */; };
 		8C9334AF235DB14C00FBF238 /* LXHInputFeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933492235DB14C00FBF238 /* LXHInputFeeViewController.m */; };
 		8C9334B0235DB14C00FBF238 /* LXHInputFeeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C933495235DB14C00FBF238 /* LXHInputFeeView.m */; };
 		8C9334BA235DD15A00FBF238 /* LXHAddOutputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9334B2235DD15A00FBF238 /* LXHAddOutputViewController.m */; };
@@ -369,10 +368,8 @@
 		8C93347A235DB14C00FBF238 /* LXHOutputListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHOutputListView.h; sourceTree = "<group>"; };
 		8C933486235DB14C00FBF238 /* LXHEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHEmptyCell.h; sourceTree = "<group>"; };
 		8C933487235DB14C00FBF238 /* LXHSendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSendView.m; sourceTree = "<group>"; };
-		8C933489235DB14C00FBF238 /* LXHSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSendViewController.h; sourceTree = "<group>"; };
 		8C93348B235DB14C00FBF238 /* LXHEmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHEmptyCell.m; sourceTree = "<group>"; };
 		8C93348E235DB14C00FBF238 /* LXHSendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSendView.h; sourceTree = "<group>"; };
-		8C933490235DB14C00FBF238 /* LXHSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSendViewController.m; sourceTree = "<group>"; };
 		8C933492235DB14C00FBF238 /* LXHInputFeeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHInputFeeViewController.m; sourceTree = "<group>"; };
 		8C933493235DB14C00FBF238 /* LXHInputFeeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputFeeView.h; sourceTree = "<group>"; };
 		8C933494235DB14C00FBF238 /* LXHInputFeeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHInputFeeViewController.h; sourceTree = "<group>"; };
@@ -1128,8 +1125,6 @@
 				8CA5603E237FBC7400B80FBC /* LXHSendViewModel.m */,
 				8C7E10F623797D5A00B224ED /* LXHSendViewControllerHelper.h */,
 				8C7E10F723797D5A00B224ED /* LXHSendViewControllerHelper.m */,
-				8C933489235DB14C00FBF238 /* LXHSendViewController.h */,
-				8C933490235DB14C00FBF238 /* LXHSendViewController.m */,
 			);
 			path = Send;
 			sourceTree = "<group>";
@@ -2255,7 +2250,6 @@
 				8CA31F9422D98BAC00CEA828 /* LXHWalletMnemonicWordsViewController.m in Sources */,
 				8CA3212522DDE61900CEA828 /* LXHSetPinViewController.m in Sources */,
 				8CA3227D22DEBE9900CEA828 /* BTCPriceSource+Tests.m in Sources */,
-				8C9334AE235DB14C00FBF238 /* LXHSendViewController.m in Sources */,
 				8CA322A022DEBE9900CEA828 /* BTCData+Tests.m in Sources */,
 				8CA322A122DEBE9900CEA828 /* BTCFancyEncryptedMessage+Tests.m in Sources */,
 				8C9334A4235DB14C00FBF238 /* LXHSelectedOutputCell.m in Sources */,

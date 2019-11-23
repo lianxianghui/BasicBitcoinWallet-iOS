@@ -25,6 +25,18 @@
     return self;
 }
 
+- (NSString *)headerInfoTitle {
+    return @"输出总值";
+}
+
+- (NSString *)headerInfoText {
+    return @"0.0000002BTC";
+}
+
+- (void)resetCellDataArrayForListview {
+    _cellDataArrayForListview = nil;
+}
+
 - (NSMutableArray *)cellDataArrayForListview {
     if (!_cellDataArrayForListview) {
         NSMutableArray *cellDataArrayForListView = [NSMutableArray array];
@@ -56,10 +68,6 @@
 
 - (NSString *)addressAttributesAtIndex:(NSInteger)index {//todo 颜色
     return @"用过的本地接收地址";
-}
-
-- (NSString *)headerInfoText {
-    return nil;
 }
 
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex {

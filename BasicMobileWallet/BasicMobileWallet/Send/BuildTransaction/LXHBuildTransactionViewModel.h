@@ -10,12 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class LXHTransactionInputOutputCommon, LXHSelectInputViewModel;
+@class LXHTransactionInputOutputCommon, LXHSelectInputViewModel, LXHOutputListViewModel;
 @interface LXHBuildTransactionViewModel : NSObject
 
 //用来在几个页面之间传递构造交易数据的字典
 @property (nonatomic, readonly) NSMutableDictionary *dataForBuildingTransaction;//keys @"selectedUtxos", @"outputs", @"selectedFeeRateItem", @"inputFeeRate"
 @property (nonatomic, readonly) LXHSelectInputViewModel *selectInputViewModel;
+@property (nonatomic, readonly) LXHOutputListViewModel *outputListViewModel;
 
 - (NSArray<LXHTransactionInputOutputCommon *> *)inputs;
 - (NSArray<LXHTransactionInputOutputCommon *> *)outputs;
