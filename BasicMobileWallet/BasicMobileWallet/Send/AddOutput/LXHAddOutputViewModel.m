@@ -19,6 +19,15 @@
 
 @implementation LXHAddOutputViewModel
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _output = [[LXHTransactionOutput alloc] init];
+    }
+    return self;
+}
+
 - (NSMutableArray *)cellDataArrayForListView {
     if (!_cellDataArrayForListView) {
         _cellDataArrayForListView = [NSMutableArray array];
@@ -37,7 +46,9 @@
         warningText = [self warningText];
         dic = @{@"text":text, @"warningText":warningText, @"isSelectable":@"1", @"cellType":@"LXHInputAddressCell", @"addressText":addressText};
         [_cellDataArrayForListView addObject:dic];
+        
         dic = @{@"maxValue":@"可输入最大值: 0.00000001 ", @"text1":@"数量:", @"isSelectable":@"0", @"text":@"输入最大值", @"cellType":@"LXHInputAmountCell", @"BTC":@" BTC"};
+        [_cellDataArrayForListView addObject:dic];
     }
     return _cellDataArrayForListView;
 }
@@ -53,13 +64,6 @@
         return @" ";
 }
 
-- (LXHTransactionOutput *)output {
-    if (!_output) {
-        _output = [LXHTransactionOutput new];
-    }
-    return _output;
-}
-
 - (void)resetCellDataArrayForListView {
     _cellDataArrayForListView = nil;
 }
@@ -73,7 +77,6 @@
         return NO;
     }
 }
-
 
 /**
  返回有效的地址，如果无效返回nil

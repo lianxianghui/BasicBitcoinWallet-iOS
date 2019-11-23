@@ -8,6 +8,7 @@
 
 #import "LXHOutputListViewModel.h"
 #import "LXHTransactionOutput.h"
+#import "LXHAddOutputViewModel.h"
 
 @interface LXHOutputListViewModel ()
 @property (nonatomic, readwrite) NSMutableArray *outputs;
@@ -78,6 +79,10 @@
 - (void)deleteRowAtIndex:(NSInteger)index {
     [self.cellDataArrayForListview removeObjectAtIndex:index];
     [self.outputs removeObjectAtIndex:index];
+}
+
+- (LXHAddOutputViewModel *)addOutputViewModel {
+    return [[LXHAddOutputViewModel alloc] init];
 }
 
 @end

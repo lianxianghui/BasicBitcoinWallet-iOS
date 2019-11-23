@@ -10,6 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class LXHAddOutputViewModel;
 @interface LXHOutputListViewModel : NSObject
 @property (nonatomic, readonly) NSMutableArray *outputs;
 @property (nonatomic, readonly) NSMutableArray *cellDataArrayForListview;
@@ -20,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)resetCellDataArrayForListview;
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex;
 - (void)deleteRowAtIndex:(NSInteger)index;
+
+- (LXHAddOutputViewModel *)addOutputViewModel;
 @end
 
 NS_ASSUME_NONNULL_END

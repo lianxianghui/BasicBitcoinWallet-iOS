@@ -53,11 +53,11 @@
     [self setDelegates];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self refreshHeaderInfo];
-    [self refreshListView];
-}
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    [self refreshHeaderInfo];
+//    [self refreshListView];
+//}
 
 - (void)swipeView:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -83,6 +83,11 @@
     [self refreshHeaderInfo];
 }
 
+- (void)refreshView {
+    [self refreshHeaderInfo];
+    [self refreshListView];
+}
+
 - (void)refreshHeaderInfo {
     [self.contentView.text updateAttributedTextString:[_viewModel headerInfoTitle]];
     [self.contentView.value updateAttributedTextString:[_viewModel headerInfoText]];
@@ -102,7 +107,9 @@
 }
 
 - (void)addOutputButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHAddOutputViewController alloc] init];
+    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:_viewModel.addOutputViewModel addOutputCallback:^(LXHAddOutputViewControllerType type, LXHTransactionOutput *output) {
+        [self refreshView];
+    }];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }

@@ -31,9 +31,10 @@
 
 @implementation LXHAddOutputViewController
 
-- (instancetype)initWithData:(NSDictionary *)data addOutputCallback:(addOutputCallback)addOutputCallback {
+- (instancetype)initWithViewModel:(id)viewModel addOutputCallback:(addOutputCallback)addOutputCallback {
     self = [super init];
     if (self) {
+        _viewModel = viewModel;
         _addOutputCallback = addOutputCallback;
     }
     return self;
