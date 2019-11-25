@@ -100,7 +100,7 @@
 
 - (void)deleteRowAtIndex:(NSInteger)index {
     [self.cellDataArrayForListview removeObjectAtIndex:index];
-    [self.outputs removeObjectAtIndex:index];
+    [self.outputs removeObjectAtIndex:[self outputIndexForRowIndex:index]];
 }
 
 - (LXHAddOutputViewModel *)getNewOutputViewModel {
