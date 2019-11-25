@@ -110,9 +110,9 @@
 
 - (void)addOutputButtonClicked:(UIButton *)sender {
     LXHWeakSelf
-    LXHAddOutputViewModel *outputViewModel = [_viewModel getNewOutputViewModel];
-    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:outputViewModel addOutputCallback:^() {
-        [weakSelf.viewModel addOutputViewModel:outputViewModel];
+    LXHAddOutputViewModel *newOutputViewModel = [_viewModel getNewOutputViewModel];
+    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:newOutputViewModel addOrEditOutputCallback:^() {
+        [weakSelf.viewModel addOutputViewModel:newOutputViewModel];
         [self refreshView];
     }];
     controller.hidesBottomBarWhenPushed = YES;
@@ -289,9 +289,9 @@
     //edit exist output
     id dataForRow = [self cellDataForTableView:tableView atIndexPath:indexPath];
     NSInteger index = [dataForRow[@"index"] integerValue];
-    LXHAddOutputViewModel *outputViewModel = [_viewModel outputViewModels][index];
-    outputViewModel.isEditing = YES;
-    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:outputViewModel addOutputCallback:^() {
+    LXHAddOutputViewModel *existOutputViewModel = [_viewModel outputViewModels][index];
+    existOutputViewModel.isEditing = YES;
+    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:existOutputViewModel addOrEditOutputCallback:^() {
         [self refreshView];
     }];
     [self.navigationController pushViewController:controller animated:YES];

@@ -25,7 +25,7 @@
     
 @interface LXHAddOutputViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHAddOutputView *contentView;
-@property (nonatomic, copy) addOutputCallback addOutputCallback;
+@property (nonatomic, copy) addOrEditOutputCallback addOutputCallback;
 @property (nonatomic) LXHAddOutputViewModel *viewModel;
 @property (nonatomic) UIView *scanerView;
 @property (nonatomic) UITextField *textField;
@@ -33,7 +33,7 @@
 
 @implementation LXHAddOutputViewController
 
-- (instancetype)initWithViewModel:(id)viewModel addOutputCallback:(addOutputCallback)addOutputCallback {
+- (instancetype)initWithViewModel:(id)viewModel addOrEditOutputCallback:(addOrEditOutputCallback)addOutputCallback {
     self = [super init];
     if (self) {
         _viewModel = viewModel;
