@@ -83,7 +83,13 @@
 
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex {
     [self.cellDataArrayForListview exchangeObjectAtIndex:sourceIndex withObjectAtIndex:destinationIndex];
-    [self.outputs exchangeObjectAtIndex:sourceIndex withObjectAtIndex:destinationIndex];
+    [self.outputs exchangeObjectAtIndex:[self outputIndexForRowIndex:sourceIndex] withObjectAtIndex:[self outputIndexForRowIndex:destinationIndex]];
+}
+
+- (NSInteger)outputIndexForRowIndex:(NSInteger)rowIndex {
+    NSDictionary *cellData = _cellDataArrayForListview[rowIndex];
+    NSNumber *index = cellData[@"index"];
+    return index.integerValue;
 }
 
 - (void)deleteRowAtIndex:(NSInteger)index {

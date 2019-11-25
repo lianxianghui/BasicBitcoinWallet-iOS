@@ -214,10 +214,8 @@
         view.tag = tag;
         [cell.contentView addSubview:view];
         //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
-        //cell.contentView.backgroundColor = view.backgroundColor;
-        //cell.backgroundColor = view.backgroundColor;
-        cell.contentView.backgroundColor = [UIColor clearColor];
-        cell.backgroundColor = [UIColor clearColor];
+        cell.contentView.backgroundColor = view.backgroundColor;
+        cell.backgroundColor = view.backgroundColor;
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(cell.contentView);
         }];
