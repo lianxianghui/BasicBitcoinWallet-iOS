@@ -51,7 +51,7 @@
         dic = @{@"text":text, @"warningText":warningText, @"isSelectable":@"1", @"cellType":@"LXHInputAddressCell", @"addressText":addressText};
         [_cellDataArrayForListView addObject:dic];
         
-        dic = @{@"maxValue":@"可输入最大值: 0.00000001 ", @"text1":@"数量:", @"isSelectable":@"0", @"text":@"输入最大值", @"cellType":@"LXHInputAmountCell", @"BTC":@" BTC"};
+        dic = @{@"maxValue":@"可输入最大值: 0.00000001 ", @"text1":@"数量:", @"isSelectable":@"0", @"text":@"输入最大值", @"cellType":@"LXHInputAmountCell", @"BTC":@" BTC", @"textFieldText":[self valueString]};
         [_cellDataArrayForListView addObject:dic];
     }
     return _cellDataArrayForListView;
@@ -82,11 +82,19 @@
     }
 }
 
+- (NSString *)valueString {
+    if (_output.value)
+        return [NSString stringWithFormat:@"%@", _output.value];
+    else
+        return @"";
+}
+
 - (BOOL)setValueString:(NSString *)valueString {
     //todo check
     BOOL valueIsValid = YES;
     if (valueIsValid) {
         _output.value = [[NSDecimalNumber alloc] initWithString:valueString];
+        [self resetCellDataArrayForListView];
         return YES;
     } else {
         return NO;

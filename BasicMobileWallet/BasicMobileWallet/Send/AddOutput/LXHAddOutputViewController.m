@@ -250,6 +250,7 @@
         [cellView.textButton addTarget:self action:@selector(LXHInputAmountCellTextButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
         [cellView.textButton addTarget:self action:@selector(LXHInputAmountCellTextButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
         _textField = cellView.textFieldWithPlaceHolder;
+        _textField.text = [dataForRow valueForKey:@"textFieldText"];
     }
     return cell;
 }
