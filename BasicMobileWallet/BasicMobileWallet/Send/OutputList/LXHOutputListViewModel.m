@@ -67,7 +67,9 @@
             dic[@"btcValue"] = valueText;
             
             dic[@"addressText"] = output.address ?: @"";
-            dic[@"addressAttributes"] = [self addressAttributesAtIndex:i];
+            dic[@"addressWarningDesc"] = [self addressWarningDescAtIndex:i];
+            dic[@"addressWarningDescHidden"] = @([self addressWarningDescHiddenAtIndex:i]);
+            dic[@"addressDesc"] =  NSLocalizedString(@"外部地址", nil);
             dic[@"model"] = output;
             dic[@"index"] = @(i);
             [cellDataArrayForListView addObject:dic];
@@ -77,8 +79,12 @@
     return _cellDataArrayForListview;
 }
 
-- (NSString *)addressAttributesAtIndex:(NSInteger)index {//todo 颜色
-    return @"用过的本地接收地址";
+- (NSString *)addressWarningDescAtIndex:(NSInteger)index {
+    return [_outputViewModels[index] warningText];
+}
+
+- (BOOL)addressWarningDescHiddenAtIndex:(NSInteger)index {
+    return (_outputViewModels[index].localAddress == nil);
 }
 
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex {

@@ -1,7 +1,7 @@
 // LXHSelectedOutputCell.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-11-11
+//  Created by lianxianghui on 19-11-25
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -61,7 +61,11 @@
         make.left.equalTo(self.group.mas_left);
         make.top.equalTo(self.group.mas_top);
     }];
-    [self.addressAttributes mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.addressWarningDesc mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.group.mas_left);
+        make.bottom.equalTo(self.group.mas_bottom);
+    }];
+    [self.addressDesc mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.group.mas_left);
         make.bottom.equalTo(self.group.mas_bottom);
     }];
@@ -97,7 +101,8 @@
         [_group addSubview:self.btcValue];
         [_group addSubview:self.addressText];
         [_group addSubview:self.address];
-        [_group addSubview:self.addressAttributes];
+        [_group addSubview:self.addressWarningDesc];
+        [_group addSubview:self.addressDesc];
     }
     return _group;
 }
@@ -168,9 +173,9 @@
     return _address;
 }
 
-- (UILabel *)addressAttributes {
-    if (!_addressAttributes) {
-        _addressAttributes = [[UILabel alloc] init];
+- (UILabel *)addressWarningDesc {
+    if (!_addressWarningDesc) {
+        _addressWarningDesc = [[UILabel alloc] init];
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -185,9 +190,31 @@
         [textAttributes setObject:@(-0.2652941) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"用过的本地接收地址", nil) attributes:textAttributes];
-        _addressAttributes.attributedText = text;
+        _addressWarningDesc.attributedText = text;
     }
-    return _addressAttributes;
+    return _addressWarningDesc;
+}
+
+- (UILabel *)addressDesc {
+    if (!_addressDesc) {
+        _addressDesc = [[UILabel alloc] init];
+        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
+        if (!font) font = [UIFont systemFontOfSize:11];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentNatural;
+        paragraphStyle.maximumLineHeight = 0;
+        paragraphStyle.minimumLineHeight = 0;
+        paragraphStyle.paragraphSpacing = 0;
+
+        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
+        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
+        [textAttributes setObject:font forKey:NSFontAttributeName];
+        [textAttributes setObject:@(-0.2652941) forKey:NSKernAttributeName];
+        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"外部地址", nil) attributes:textAttributes];
+        _addressDesc.attributedText = text;
+    }
+    return _addressDesc;
 }
 
 - (UIButton *)button {

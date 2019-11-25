@@ -244,12 +244,21 @@
         NSMutableAttributedString *addressAttributedString = [cellView.address.attributedText mutableCopy];
         [addressAttributedString.mutableString setString:address];
         cellView.address.attributedText = addressAttributedString;
-        NSString *addressAttributes = [dataForRow valueForKey:@"addressAttributes"];
-        if (!addressAttributes)
-            addressAttributes = @"";
-        NSMutableAttributedString *addressAttributesAttributedString = [cellView.addressAttributes.attributedText mutableCopy];
-        [addressAttributesAttributedString.mutableString setString:addressAttributes];
-        cellView.addressAttributes.attributedText = addressAttributesAttributedString;
+        NSString *addressWarningDesc = [dataForRow valueForKey:@"addressWarningDesc"];
+        NSMutableAttributedString *addressAttributesAttributedString = [cellView.addressWarningDesc.attributedText mutableCopy];
+        [addressAttributesAttributedString.mutableString setString:addressWarningDesc];
+        cellView.addressWarningDesc.attributedText = addressAttributesAttributedString;
+        NSNumber *addressWarningDescHidden = [dataForRow valueForKey:@"addressWarningDescHidden"];
+        cellView.addressWarningDesc.hidden = addressWarningDescHidden.boolValue;
+        
+        NSString *addressDesc = [dataForRow valueForKey:@"addressDesc"];
+        if (!addressDesc)
+            addressDesc = @"";
+        NSMutableAttributedString *addressDescAttributedString = [cellView.addressDesc.attributedText mutableCopy];
+        [addressDescAttributedString.mutableString setString:addressDesc];
+        cellView.addressDesc.attributedText = addressDescAttributedString;
+        cellView.addressDesc.hidden = !cellView.addressWarningDesc.hidden;
+        
         NSString *deleteImageImageName = [dataForRow valueForKey:@"deleteImage"];
         if (deleteImageImageName)
             cellView.deleteImage.image = [UIImage imageNamed:deleteImageImageName];

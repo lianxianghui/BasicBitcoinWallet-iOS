@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isEditing;
 
 - (NSString *)naviBarTitle;
+- (NSString *)warningText;
 - (void)resetCellDataArrayForListView;
 - (BOOL)setAddress:(NSString *)address;
 - (BOOL)setValueString:(NSString *)valueString;
