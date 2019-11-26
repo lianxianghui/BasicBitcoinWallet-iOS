@@ -37,6 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)clickSelectInputPrompt;
 - (nullable NSString *)clickSelectOutputPrompt;
+
+- (NSString *)navigationBarTitle;
 @end
 
 NS_ASSUME_NONNULL_END

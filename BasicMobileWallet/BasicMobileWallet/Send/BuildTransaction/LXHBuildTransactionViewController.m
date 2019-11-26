@@ -20,6 +20,7 @@
 #import "LXHBuildTransactionViewModel.h"
 #import "LXHGlobalHeader.h"
 #import "UIViewController+LXHAlert.h"
+#import "UILabel+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -66,6 +67,10 @@
     [self refreshListView];
 }
 
+- (void)setViewProperties {
+    [self.contentView.title updateAttributedTextString:[_viewModel navigationBarTitle]];
+}
+
 - (void)swipeView:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -101,7 +106,6 @@
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
-
 
 //Actions
 - (void)LXHFeeCellInputFeeValueButtonClicked:(UIButton *)sender {

@@ -145,6 +145,10 @@
     return nil;
 }
 
+- (NSString *)navigationBarTitle {
+    return nil;
+}
+
 #pragma mark - other related viewModels
 - (LXHSelectInputViewModel *)selectInputViewModel {
     if (!_selectInputViewModel)

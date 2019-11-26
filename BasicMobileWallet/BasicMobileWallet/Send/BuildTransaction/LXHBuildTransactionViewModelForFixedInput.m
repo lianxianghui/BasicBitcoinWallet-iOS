@@ -55,4 +55,9 @@
     return nil;
 }
 
+- (NSString *)navigationBarTitle {
+    return NSLocalizedString(@"构建固定输入交易", nil);
+}
+
+
 @end
