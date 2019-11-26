@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)inputCellDataArray;
 - (NSArray *)outputCellDataArray;
 - (NSDictionary *)feeRateCellData;
+- (NSNumber *)feeRateValue;
 - (NSDecimalNumber *)sumForInputsOrOutputsWithArray:(NSArray *)array;
 
 - (void)resetSelectFeeRateViewModel;
@@ -34,8 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)titleCell2DataForGroup2;//费率的title
 - (NSDictionary *)titleCell2DataForGroup3;//第三个title
 
-- (NSString *)clickSelectInputPrompt;
-- (NSString *)clickSelectOutpuPrompt;
+- (nullable NSString *)clickSelectInputPrompt;
+- (nullable NSString *)clickSelectOutputPrompt;
 @end
 
 NS_ASSUME_NONNULL_END

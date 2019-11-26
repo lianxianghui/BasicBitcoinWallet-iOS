@@ -7,6 +7,11 @@
 //
 
 #import "LXHBuildTransactionViewModelForFixedInput.h"
+#import "LXHSelectInputViewModel.h"
+#import "LXHOutputListViewModel.h"
+#import "LXHSelectFeeRateViewModel.h"
+#import "LXHInputFeeViewModel.h"
+#import "LXHAddOutputViewModel.h"
 
 @implementation LXHBuildTransactionViewModelForFixedInput
 
@@ -36,6 +41,18 @@
     NSString *title = [NSString stringWithFormat:NSLocalizedString(@"输入 %@BTC", nil), sum];
     NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
     return dic;
+}
+
+- (nullable NSString *)clickSelectInputPrompt {
+    return nil;
+}
+
+- (nullable NSString *)clickSelectOutputPrompt {
+    if (self.selectInputViewModel.selectedUtxos.count == 0)
+        return NSLocalizedString(@"请先选择输入", nil);
+    else if (![self feeRateValue])
+        return NSLocalizedString(@"请先选择或输入费率", nil);
+    return nil;
 }
 
 @end

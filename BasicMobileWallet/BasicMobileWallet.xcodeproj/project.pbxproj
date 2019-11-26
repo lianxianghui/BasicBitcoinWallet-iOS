@@ -1099,10 +1099,10 @@
 				8C93346A235DB14C00FBF238 /* LXHSelectFeeRateView.m */,
 				8C933468235DB14C00FBF238 /* LXHFeeOptionCell.h */,
 				8C93346C235DB14C00FBF238 /* LXHFeeOptionCell.m */,
-				8C93346B235DB14C00FBF238 /* LXHSelectFeeRateViewController.h */,
-				8C933469235DB14C00FBF238 /* LXHSelectFeeRateViewController.m */,
 				8C563A5E238CD014009BD8EF /* LXHSelectFeeRateViewModel.h */,
 				8C563A5F238CD014009BD8EF /* LXHSelectFeeRateViewModel.m */,
+				8C93346B235DB14C00FBF238 /* LXHSelectFeeRateViewController.h */,
+				8C933469235DB14C00FBF238 /* LXHSelectFeeRateViewController.m */,
 			);
 			path = SelectFeeRate;
 			sourceTree = "<group>";
@@ -1142,10 +1142,10 @@
 			children = (
 				8C933493235DB14C00FBF238 /* LXHInputFeeView.h */,
 				8C933495235DB14C00FBF238 /* LXHInputFeeView.m */,
-				8C933494235DB14C00FBF238 /* LXHInputFeeViewController.h */,
-				8C933492235DB14C00FBF238 /* LXHInputFeeViewController.m */,
 				8C563A61238CD9E8009BD8EF /* LXHInputFeeViewModel.h */,
 				8C563A62238CD9E8009BD8EF /* LXHInputFeeViewModel.m */,
+				8C933494235DB14C00FBF238 /* LXHInputFeeViewController.h */,
+				8C933492235DB14C00FBF238 /* LXHInputFeeViewController.m */,
 			);
 			path = InputFee;
 			sourceTree = "<group>";

@@ -10,6 +10,11 @@
 #import "BlocksKit.h"
 #import "LXHTransactionInput.h"
 #import "LXHTransactionOutput.h"
+#import "LXHSelectInputViewModel.h"
+#import "LXHOutputListViewModel.h"
+#import "LXHSelectFeeRateViewModel.h"
+#import "LXHInputFeeViewModel.h"
+#import "LXHAddOutputViewModel.h"
 
 @implementation LXHBuildTransactionViewModelForFixedOutput
 
@@ -42,12 +47,18 @@
     return dic;
 }
 
-- (NSString *)clickSelectInputPrompt {
+- (nullable NSString *)clickSelectOutputPrompt {
     return nil;
 }
 
-- (NSString *)clickSelectOutpuPrompt {
+- (nullable NSString *)clickSelectInputPrompt {
+    if ([self.outputListViewModel outputCount] == 0)
+        return NSLocalizedString(@"请先添加输出", nil);
+    else if (![self feeRateValue])
+        return NSLocalizedString(@"请先选择或输入费率", nil);
     return nil;
 }
+
+
 
 @end

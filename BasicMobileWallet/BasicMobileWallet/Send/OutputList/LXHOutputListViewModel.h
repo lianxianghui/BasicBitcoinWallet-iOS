@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addOutputViewModel:(LXHAddOutputViewModel *)model;
 
 - (NSArray *)outputs;
+- (NSInteger)outputCount;
 @end
 
 NS_ASSUME_NONNULL_END

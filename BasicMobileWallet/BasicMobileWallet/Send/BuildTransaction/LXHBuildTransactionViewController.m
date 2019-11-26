@@ -19,6 +19,7 @@
 #import "LXHFeeCell.h"
 #import "LXHBuildTransactionViewModel.h"
 #import "LXHGlobalHeader.h"
+#import "UIViewController+LXHAlert.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -309,10 +310,22 @@
         if (!cellId)
             return;
         if ([cellId isEqualToString:@"selectInput"]) {
+            NSString *prompt = [_viewModel clickSelectInputPrompt];
+            if (prompt) {
+                [self showOkAlertViewWithMessage:prompt handler:nil];
+                return;
+            }
+            
             UIViewController *controller = [[LXHSelectInputViewController alloc] initWithViewModel:[_viewModel selectInputViewModel]];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         } else if ([cellId isEqualToString:@"selectOutput"]) {
+            NSString *prompt = [_viewModel clickSelectOutputPrompt];
+            if (prompt) {
+                [self showOkAlertViewWithMessage:prompt handler:nil];
+                return;
+            }
+            
             UIViewController *controller = [[LXHOutputListViewController alloc] initWithViewModel:_viewModel.outputListViewModel];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];

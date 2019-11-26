@@ -113,4 +113,8 @@
     }];
     return outputs;
 }
+
+- (NSInteger)outputCount {
+    return _outputViewModels.count;
+}
 @end

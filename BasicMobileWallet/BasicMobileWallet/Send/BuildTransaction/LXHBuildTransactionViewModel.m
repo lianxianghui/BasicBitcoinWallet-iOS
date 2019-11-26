@@ -141,7 +141,7 @@
     return nil;
 }
 
-- (NSString *)clickSelectOutpuPrompt {
+- (NSString *)clickSelectOutputPrompt {
     return nil;
 }
 
