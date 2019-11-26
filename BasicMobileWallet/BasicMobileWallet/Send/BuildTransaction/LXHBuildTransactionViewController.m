@@ -105,8 +105,8 @@
 //Actions
 - (void)LXHFeeCellInputFeeValueButtonClicked:(UIButton *)sender {
     LXHWeakSelf
-    UIViewController *controller = [[LXHInputFeeViewController alloc] initWithData:_viewModel.dataForBuildingTransaction dataChangedCallback:^{
-        weakSelf.viewModel.dataForBuildingTransaction[@"selectedFeeRateItem"] = nil; //把LXHSelectFeeRateViewController数据置空
+    UIViewController *controller = [[LXHInputFeeViewController alloc] initWithViewModel:_viewModel.inputFeeViewModel dataChangedCallback:^{
+        [weakSelf.viewModel resetSelectFeeRateViewModel];//把LXHSelectFeeRateViewController数据置空
     }];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
@@ -114,8 +114,8 @@
 
 - (void)LXHFeeCellSelectFeerateButtonClicked:(UIButton *)sender {
     LXHWeakSelf
-    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithData:_viewModel.dataForBuildingTransaction dataChangedCallback:^{
-        weakSelf.viewModel.dataForBuildingTransaction[@"inputFeeRate"] = nil; //把LXHInputFeeViewController数据置空
+    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithViewModel:_viewModel.selectFeeRateViewModel dataChangedCallback:^{
+        [weakSelf.viewModel resetInputFeeViewModel]; //把LXHInputFeeViewController数据置空
     }];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];

@@ -9,12 +9,11 @@
 #import "LXHSelectFeeRateView.h"
 #import "LXHFeeOptionCell.h"
 #import "UIViewController+LXHAlert.h"
-#import "NSString+Base.h"
 #import "LXHBitcoinfeesNetworkRequest.h"
 #import "MJRefresh.h"
 #import "LXHGlobalHeader.h"
 #import "UIView+Toast.h"
-#import "LXHGlobalHeader.h"
+#import "LXHSelectFeeRateViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -24,20 +23,17 @@
     
 @interface LXHSelectFeeRateViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSelectFeeRateView *contentView;
-@property (nonatomic) NSDictionary *feeRateOptionsDic;// keys = @[@"fastestFee", @"halfHourFee", @"hourFee"];
-@property (nonatomic) NSDate *feeRateUpdatedTime;
-@property (nonatomic) NSMutableArray *cellDataListForListView;
-@property (nonatomic) NSMutableDictionary *data;
+@property (nonatomic) LXHSelectFeeRateViewModel *viewModel;
 @property (nonatomic, copy) dataChangedCallback dataChangedCallback;
 @end
 
 @implementation LXHSelectFeeRateViewController
 
-- (instancetype)initWithData:(NSMutableDictionary *)data 
-         dataChangedCallback:(dataChangedCallback)dataChangedCallback {
+- (instancetype)initWithViewModel:(id)viewModel
+              dataChangedCallback:(dataChangedCallback)dataChangedCallback {
     self = [super init];
     if (self) {
-        _data = data;
+        _viewModel = viewModel;
         _dataChangedCallback = dataChangedCallback;
     }
     return self;
@@ -67,18 +63,7 @@
     LXHWeakSelf
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(requestFeeRate)];
     header.lastUpdatedTimeText = ^(NSDate *lastUpdatedTime) {
-        NSDate *updatedTime = weakSelf.feeRateUpdatedTime;
-        if (updatedTime) {
-            static NSDateFormatter *formatter = nil;
-            if (!formatter) {
-                formatter = [[NSDateFormatter alloc] init];
-                formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
-            }
-            NSString *dateString = [formatter stringFromDate:updatedTime];
-            return [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
-        } else {
-            return @"";
-        }
+        return [weakSelf.viewModel updateTimeText];
     };
     self.contentView.listView.mj_header = header;
 }
@@ -99,7 +84,7 @@
 }
 
 - (void)refreshListView {
-    _cellDataListForListView = nil;
+    [_viewModel resetCellDataListForListView];
     [self.contentView.listView reloadData];
 }
 
@@ -110,35 +95,19 @@
 - (void)requestFeeRate {
     [self.contentView.indicatorView startAnimating];
     __weak __typeof(self)weakSelf = self;
-    [[LXHBitcoinfeesNetworkRequest sharedInstance] requestWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+    [_viewModel requestFeeRateWithSuccessBlock:^{
         [weakSelf.contentView.indicatorView stopAnimating];
         [weakSelf.contentView.listView.mj_header endRefreshing];
-        weakSelf.feeRateOptionsDic = resultDic[@"responseData"];
-        weakSelf.feeRateUpdatedTime = resultDic[@"responseTime"];
         [weakSelf setDelegates];
         [weakSelf refreshListView];
         [weakSelf showPromptLabel];
-    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+    } failureBlock:^(NSString * _Nonnull errorPrompt) {
         [weakSelf.contentView.indicatorView stopAnimating];
         [weakSelf.contentView.listView.mj_header endRefreshing];
-        if (resultDic) {
-            NSDictionary *cachedResult = resultDic[@"cachedResult"];
-            weakSelf.feeRateOptionsDic = cachedResult[@"responseData"];
-            weakSelf.feeRateUpdatedTime = resultDic[@"responseTime"];
-            [weakSelf setDelegates];
-            [weakSelf refreshListView];
-            [weakSelf showPromptLabel];
-            
-            NSError *error = resultDic[@"error"];
-            NSString *format = NSLocalizedString(@"由于%@请求费率失败，目前的显示费率有可能是过时的.", nil);
-            NSString *errorPrompt = [NSString stringWithFormat:format, error.localizedDescription];
-            [weakSelf.view makeToast:errorPrompt];
-        } else {
-            NSError *error = resultDic[@"error"];
-            NSString *format = NSLocalizedString(@"由于%@请求费率失败.", nil);
-            NSString *errorPrompt = [NSString stringWithFormat:format, error.localizedDescription];
-            [weakSelf.view makeToast:errorPrompt];
-        }
+        [weakSelf setDelegates];
+        [weakSelf refreshListView];
+        [weakSelf showPromptLabel];
+        [weakSelf.view makeToast:errorPrompt];
     }];
 }
 
@@ -159,30 +128,7 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    if (tableView == self.contentView.listView) {
-        if (!_cellDataListForListView) {
-            if (_feeRateOptionsDic) {
-                _cellDataListForListView = [NSMutableArray array];
-                NSArray *keys = @[@"fastestFee", @"halfHourFee", @"hourFee"];
-                for (NSString *key in keys) {
-                    NSString *feeRateTitle = [key firstLetterCapitalized];
-                    id value = _feeRateOptionsDic[key];
-                    if (!value)
-                        continue;
-                    NSString *feeRateValueText = [NSString stringWithFormat:@"%@ sat/byte", value];
-                    NSMutableDictionary *dic = @{@"feeRate":feeRateValueText, @"isSelectable":@"1", @"title":feeRateTitle, @"circleImage":@"check_circle", @"cellType":@"LXHFeeOptionCell", @"checkedImage":@"checked_circle"}.mutableCopy;
-                    NSDictionary *feeRateItem = @{key : value};
-                    if (_data[@"selectedFeeRateItem"])
-                        dic[@"isChecked"] = @([feeRateItem isEqual:_data[@"selectedFeeRateItem"]]);
-                    dic[@"feeRateItemData"] = feeRateItem;
-                    [_cellDataListForListView addObject:dic];
-                }
-            }
-        }
-        return _cellDataListForListView;
-    } else {
-        return nil;
-    }
+    return _viewModel.cellDataListForListView;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -192,7 +138,6 @@
     else
         return nil;
 }
-
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
@@ -281,7 +226,6 @@
     return 0;
 }
 
-
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     id dataForRow = [self cellDataForTableView:tableView atIndexPath:indexPath];
     NSString *isSelectable = [dataForRow valueForKey:@"isSelectable"];
@@ -293,34 +237,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSMutableDictionary *cellData = [self cellDataForTableView:tableView atIndexPath:indexPath];
-    [self clearIsChecked];
-    cellData[@"isChecked"] = @(YES);
+    [_viewModel checkRowAtIndex:indexPath.row];
     [tableView reloadData];
-    [self changeData];
+    _dataChangedCallback();
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.navigationController popViewControllerAnimated:YES];
     });
-}
-
-- (void)clearIsChecked {
-    for (NSMutableDictionary *cellData in _cellDataListForListView) {
-        cellData[@"isChecked"] = @(NO);
-    }
-}
-
-- (void)changeData {
-    _data[@"selectedFeeRateItem"] = [self currentSelectedFeeRateItemData];
-    _dataChangedCallback();
-}
-
-- (id)currentSelectedFeeRateItemData {
-    for (NSDictionary *cellData in _cellDataListForListView) {
-        if ([cellData[@"isChecked"] isEqual:@(YES)]) {
-            return cellData[@"feeRateItemData"];
-        }
-    }
-    return nil;
 }
 
 @end

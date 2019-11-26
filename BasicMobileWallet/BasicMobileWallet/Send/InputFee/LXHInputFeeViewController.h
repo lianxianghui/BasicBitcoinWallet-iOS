@@ -11,4 +11,6 @@ typedef void(^dataChangedCallback)(void);
 @interface LXHInputFeeViewController : UIViewController
 - (instancetype)initWithData:(NSMutableDictionary *)data
          dataChangedCallback:(dataChangedCallback)dataChangedCallback;
+- (instancetype)initWithViewModel:(id)viewModel
+              dataChangedCallback:(dataChangedCallback)dataChangedCallback;
 @end

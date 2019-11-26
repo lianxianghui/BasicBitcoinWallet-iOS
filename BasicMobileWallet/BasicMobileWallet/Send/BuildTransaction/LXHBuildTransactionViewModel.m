@@ -12,11 +12,15 @@
 #import "BlocksKit.h"
 #import "LXHSelectInputViewModel.h"
 #import "LXHOutputListViewModel.h"
+#import "LXHSelectFeeRateViewModel.h"
+#import "LXHInputFeeViewModel.h"
 
 @interface LXHBuildTransactionViewModel ()
 @property (nonatomic, readwrite) NSMutableDictionary *dataForBuildingTransaction;
 @property (nonatomic, readwrite) LXHSelectInputViewModel *selectInputViewModel;
 @property (nonatomic, readwrite) LXHOutputListViewModel *outputListViewModel;
+@property (nonatomic, readwrite) LXHSelectFeeRateViewModel *selectFeeRateViewModel;
+@property (nonatomic, readwrite) LXHInputFeeViewModel *inputFeeViewModel;
 @end
 
 @implementation LXHBuildTransactionViewModel
@@ -80,9 +84,8 @@
     NSNumber *feeRateValue = nil;
     if (self.dataForBuildingTransaction[@"inputFeeRate"])
         feeRateValue = self.dataForBuildingTransaction[@"inputFeeRate"];
-    else if (self.dataForBuildingTransaction[@"selectedFeeRateItem"]) {
-        NSDictionary *selectedFeeRateItem = self.dataForBuildingTransaction[@"selectedFeeRateItem"];
-        feeRateValue = selectedFeeRateItem.allValues[0];
+    else if (self.selectFeeRateViewModel.selectedFeeRateItem) {
+        feeRateValue = self.selectFeeRateViewModel.selectedFeeRateItem.allValues[0];
     } else {
         feeRateValue = nil;
     }
@@ -160,6 +163,26 @@
         _outputListViewModel = [[LXHOutputListViewModel alloc] init];
     }
     return _outputListViewModel;
+}
+
+- (LXHSelectFeeRateViewModel *)selectFeeRateViewModel {
+    if (!_selectFeeRateViewModel)
+        _selectFeeRateViewModel = [[LXHSelectFeeRateViewModel alloc] init];
+    return _selectFeeRateViewModel;
+}
+
+- (void)resetSelectFeeRateViewModel {
+    _selectFeeRateViewModel = nil;
+}
+
+- (LXHInputFeeViewModel *)inputFeeViewModel {
+    if (!_inputFeeViewModel)
+        _inputFeeViewModel = [[LXHInputFeeViewModel alloc] init];
+    return _inputFeeViewModel;
+}
+
+- (void)resetInputFeeViewModel {
+    _inputFeeViewModel = nil;
 }
 
 @end

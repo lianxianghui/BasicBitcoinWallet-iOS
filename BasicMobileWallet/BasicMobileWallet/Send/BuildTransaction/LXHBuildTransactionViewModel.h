@@ -10,13 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class LXHTransactionInputOutputCommon, LXHSelectInputViewModel, LXHOutputListViewModel;
+@class LXHTransactionInputOutputCommon, LXHSelectInputViewModel, LXHOutputListViewModel,LXHSelectFeeRateViewModel, LXHInputFeeViewModel;
 @interface LXHBuildTransactionViewModel : NSObject
 
 //用来在几个页面之间传递构造交易数据的字典
 @property (nonatomic, readonly) NSMutableDictionary *dataForBuildingTransaction;//keys @"selectedUtxos", @"outputs", @"selectedFeeRateItem", @"inputFeeRate"
 @property (nonatomic, readonly) LXHSelectInputViewModel *selectInputViewModel;
 @property (nonatomic, readonly) LXHOutputListViewModel *outputListViewModel;
+@property (nonatomic, readonly) LXHSelectFeeRateViewModel *selectFeeRateViewModel;
+@property (nonatomic, readonly) LXHInputFeeViewModel *inputFeeViewModel;
 
 - (NSArray<LXHTransactionInputOutputCommon *> *)inputs;
 - (NSArray<LXHTransactionInputOutputCommon *> *)outputs;
@@ -25,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)feeRateCellData;
 - (NSDecimalNumber *)sumForInputsOrOutputsWithArray:(NSArray *)array;
 
+- (void)resetSelectFeeRateViewModel;
+- (void)resetInputFeeViewModel;
 //子类覆盖
 - (NSArray *)cellDataForListview;
 - (NSDictionary *)titleCell1DataForGroup1;//第一个title

@@ -9,6 +9,7 @@
 #import "LXHInputFeeView.h"
 #import "UIViewController+LXHAlert.h"
 #import "UITextField+LXHText.h"
+#import "LXHInputFeeViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -19,6 +20,7 @@
 @interface LXHInputFeeViewController()
 @property (nonatomic) LXHInputFeeView *contentView;
 @property (nonatomic) NSMutableDictionary *data;
+@property (nonatomic) LXHInputFeeViewModel *viewModel;
 @property (nonatomic, copy) dataChangedCallback dataChangedCallback;
 @end
 
@@ -33,6 +35,17 @@
     }
     return self;
 }
+
+- (instancetype)initWithViewModel:(id)viewModel
+              dataChangedCallback:(dataChangedCallback)dataChangedCallback {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+        _dataChangedCallback = dataChangedCallback;
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
