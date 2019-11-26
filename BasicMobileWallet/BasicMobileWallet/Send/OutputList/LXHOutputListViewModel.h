@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class LXHAddOutputViewModel;
 @interface LXHOutputListViewModel : NSObject
-@property (nonatomic, readonly) NSMutableArray *outputs;
 @property (nonatomic, readonly) NSMutableArray *cellDataArrayForListview;
 
 - (NSString *)headerInfoTitle;

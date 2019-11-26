@@ -12,9 +12,8 @@
 #import "BlocksKit.h"
 
 @interface LXHOutputListViewModel ()
-@property (nonatomic, readwrite) NSMutableArray<LXHAddOutputViewModel *> *outputViewModels;
-@property (nonatomic, readwrite) NSMutableArray *outputs;
-@property (nonatomic, readwrite) NSMutableArray *cellDataArrayForListview;
+@property (nonatomic) NSMutableArray<LXHAddOutputViewModel *> *outputViewModels;
+@property (nonatomic, readwrite) NSMutableArray *cellDataArrayForListview;//生成自outputViewModels
 @end
 
 @implementation LXHOutputListViewModel
@@ -26,14 +25,6 @@
         _outputViewModels = [NSMutableArray array];
     }
     return self;
-}
-
-- (NSArray *)outputs {
-    if (!_outputs)
-        _outputs = [[_outputViewModels bk_map:^id(LXHAddOutputViewModel *model) {
-            return model.output;
-        }] mutableCopy];
-    return _outputs;
 }
 
 - (NSString *)headerInfoTitle {
@@ -49,13 +40,13 @@
 }
 
 - (NSMutableArray *)cellDataArrayForListview {
-    if (!_cellDataArrayForListview) {
+    if (!_cellDataArrayForListview) { //缓存，不至于每次调用都生成
         NSMutableArray *cellDataArrayForListView = [NSMutableArray array];
         NSDictionary *dic = nil;
         dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
         [cellDataArrayForListView addObject:dic];
-        for (NSInteger i = 0; i < self.outputs.count; i++) {
-            LXHTransactionOutput *output = self.outputs[i];
+        for (NSInteger i = 0; i < self.outputViewModels.count; i++) {
+            LXHTransactionOutput *output = self.outputViewModels[i].output;
             NSMutableDictionary *dic = @{@"cellType":@"LXHSelectedOutputCell", @"deleteImage":@"send_outputlist_delete_image", @"address":@"地址:", @"isSelectable":@"1"}.mutableCopy;
             
             NSString *valueText = [NSString stringWithFormat:@"%@ BTC", output.value];
@@ -82,9 +73,9 @@
     return (_outputViewModels[index].localAddress == nil);
 }
 
-- (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex {
-    [self.cellDataArrayForListview exchangeObjectAtIndex:sourceIndex withObjectAtIndex:destinationIndex];
-    [self.outputs exchangeObjectAtIndex:[self outputIndexForRowIndex:sourceIndex] withObjectAtIndex:[self outputIndexForRowIndex:destinationIndex]];
+- (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex {//传入的是cell的index
+    [self.cellDataArrayForListview exchangeObjectAtIndex:sourceIndex withObjectAtIndex:destinationIndex];//cell Data
+    [_outputViewModels exchangeObjectAtIndex:[self outputIndexForRowIndex:sourceIndex] withObjectAtIndex:[self outputIndexForRowIndex:destinationIndex]]; //对应的cell Data的来源
 }
 
 - (NSInteger)outputIndexForRowIndex:(NSInteger)rowIndex {
@@ -93,9 +84,10 @@
     return index.integerValue;
 }
 
-- (void)deleteRowAtIndex:(NSInteger)index {
-    [self.cellDataArrayForListview removeObjectAtIndex:index];
-    [self.outputs removeObjectAtIndex:[self outputIndexForRowIndex:index]];
+- (void)deleteRowAtIndex:(NSInteger)index { //传入的是cell的index
+    NSInteger outputIndex = [self outputIndexForRowIndex:index];
+    [self.cellDataArrayForListview removeObjectAtIndex:index]; //cell Data
+    [_outputViewModels removeObjectAtIndex:outputIndex]; //对应的cell Data的来源
 }
 
 - (LXHAddOutputViewModel *)getNewOutputViewModel {
@@ -108,11 +100,10 @@
 
 - (void)addOutputViewModel:(LXHAddOutputViewModel *)model {
     [_outputViewModels addObject:model];
-    [self resetOutputs];
 }
 
-- (void)resetOutputs {
-    _outputs = nil;
+- (void)deleteOutputViewModelAtIndex:(NSInteger)index {
+    [_outputViewModels removeObjectAtIndex:index];
 }
 
 @end

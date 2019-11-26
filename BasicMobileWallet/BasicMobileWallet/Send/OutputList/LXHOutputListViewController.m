@@ -149,6 +149,7 @@
     sender.alpha = 1;
     NSInteger index = sender.tag;
     [_viewModel deleteRowAtIndex:index];
+    [self.contentView.listView reloadData];
 }
 
 - (void)LXHSelectedOutputCellButtonTouchDown:(UIButton *)sender {
@@ -262,7 +263,7 @@
         NSString *deleteImageImageName = [dataForRow valueForKey:@"deleteImage"];
         if (deleteImageImageName)
             cellView.deleteImage.image = [UIImage imageNamed:deleteImageImageName];
-        cellView.button.tag = [dataForRow[@"index"] integerValue];
+        cellView.button.tag = indexPath.row;
         [cellView.button addTarget:self action:@selector(LXHSelectedOutputCellButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [cellView.button addTarget:self action:@selector(LXHSelectedOutputCellButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
         [cellView.button addTarget:self action:@selector(LXHSelectedOutputCellButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
