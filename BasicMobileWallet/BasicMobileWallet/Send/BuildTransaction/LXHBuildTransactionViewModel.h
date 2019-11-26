@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)titleCell2DataForGroup2;//费率的title
 - (NSDictionary *)titleCell2DataForGroup3;//第三个title
 
+- (NSString *)clickSelectInputPrompt;
+- (NSString *)clickSelectOutpuPrompt;
 @end
 
 NS_ASSUME_NONNULL_END

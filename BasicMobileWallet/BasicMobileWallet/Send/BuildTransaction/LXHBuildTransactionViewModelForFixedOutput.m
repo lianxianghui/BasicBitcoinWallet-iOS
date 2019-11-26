@@ -42,4 +42,12 @@
     return dic;
 }
 
+- (NSString *)clickSelectInputPrompt {
+    return nil;
+}
+
+- (NSString *)clickSelectOutpuPrompt {
+    return nil;
+}
+
 @end

@@ -140,6 +140,14 @@
     return nil;
 }
 
+- (NSString *)clickSelectInputPrompt {
+    return nil;
+}
+
+- (NSString *)clickSelectOutpuPrompt {
+    return nil;
+}
+
 #pragma mark - other related viewModels
 - (LXHSelectInputViewModel *)selectInputViewModel {
     if (!_selectInputViewModel)
