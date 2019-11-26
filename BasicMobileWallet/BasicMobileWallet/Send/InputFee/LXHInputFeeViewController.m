@@ -19,22 +19,11 @@
     
 @interface LXHInputFeeViewController()
 @property (nonatomic) LXHInputFeeView *contentView;
-@property (nonatomic) NSMutableDictionary *data;
 @property (nonatomic) LXHInputFeeViewModel *viewModel;
 @property (nonatomic, copy) dataChangedCallback dataChangedCallback;
 @end
 
 @implementation LXHInputFeeViewController
-
-- (instancetype)initWithData:(NSMutableDictionary *)data
-         dataChangedCallback:(dataChangedCallback)dataChangedCallback {
-    self = [super init];
-    if (self) {
-        _data = data;
-        _dataChangedCallback = dataChangedCallback;
-    }
-    return self;
-}
 
 - (instancetype)initWithViewModel:(id)viewModel
               dataChangedCallback:(dataChangedCallback)dataChangedCallback {
@@ -45,7 +34,6 @@
     }
     return self;
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -72,10 +60,9 @@
 
 - (void)setViewProperties {
     self.contentView.textFieldWithPlaceHolder.keyboardType = UIKeyboardTypeNumberPad;
-    if (self.data[@"inputFeeRate"]) {
-        NSString *feeRateString = [NSString stringWithFormat:@"%@", self.data[@"inputFeeRate"]];
+    NSString *feeRateString = [_viewModel inputFeeRateString];
+    if (feeRateString)
         [self.contentView.textFieldWithPlaceHolder updateAttributedTextString:feeRateString];
-    }
 }
 
 - (void)addActions {
@@ -95,14 +82,12 @@
     sender.alpha = 1;
     
     NSString *text = self.contentView.textFieldWithPlaceHolder.text;
-    BOOL inputFeeRateIsValid = [self isIntegerWithString:text];
-    if (inputFeeRateIsValid) {
-        NSNumber *feeRate = @(text.integerValue);
-        self.data[@"inputFeeRate"] = feeRate;
+    NSString *errorDesc;
+    if ([_viewModel setInputFeeRateString:text errorDesc:&errorDesc]) {
         self.dataChangedCallback();
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        [self showOkAlertViewWithMessage:NSLocalizedString(@"请输入有效形式的费率(非负整数)", nil) handler:nil];
+        [self showOkAlertViewWithMessage:errorDesc handler:nil];
     }
 }
 

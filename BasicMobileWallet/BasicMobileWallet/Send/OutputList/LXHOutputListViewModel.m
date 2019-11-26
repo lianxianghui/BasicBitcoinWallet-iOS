@@ -106,4 +106,11 @@
     [_outputViewModels removeObjectAtIndex:index];
 }
 
+
+- (NSArray *)outputs {
+    NSArray *outputs = [self.outputViewModels bk_map:^id(LXHAddOutputViewModel *viewModel) {
+        return viewModel.output;
+    }];
+    return outputs;
+}
 @end

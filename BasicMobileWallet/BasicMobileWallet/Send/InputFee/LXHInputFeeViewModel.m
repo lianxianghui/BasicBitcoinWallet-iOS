@@ -8,6 +8,35 @@
 
 #import "LXHInputFeeViewModel.h"
 
+@interface LXHInputFeeViewModel ()
+@property (nonatomic, readwrite) NSNumber *inputFeeRateSat;
+@end
+
 @implementation LXHInputFeeViewModel
+
+- (BOOL)setInputFeeRateString:(NSString *)inputFeeRateString errorDesc:(NSString **)errorDesc {
+    BOOL inputFeeRateIsValid = [LXHInputFeeViewModel isIntegerWithString:inputFeeRateString];
+    if (inputFeeRateIsValid) {
+        _inputFeeRateSat = @(inputFeeRateString.integerValue);
+        *errorDesc = nil;
+        return YES;
+    } else {
+        *errorDesc = NSLocalizedString(@"请输入有效形式的费率(非负整数)", nil);
+        return NO;
+    }
+}
+
+- (NSString *)inputFeeRateString {
+    if (!_inputFeeRateSat)
+        return nil;
+    else
+        return [NSString stringWithFormat:@"%@", _inputFeeRateSat];
+}
+
++ (BOOL)isIntegerWithString:(NSString *)string {
+    NSScanner* scanner = [NSScanner scannerWithString:string];
+    return [scanner scanInt:nil] && [scanner isAtEnd];
+}
+
 
 @end

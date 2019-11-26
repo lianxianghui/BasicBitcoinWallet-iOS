@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHInputFeeViewModel : NSObject
 
+@property (nonatomic, readonly) NSNumber *inputFeeRateSat;
+
+- (BOOL)setInputFeeRateString:(NSString *)inputFeeRateString errorDesc:(NSString **)errorDesc;
+- (NSString *)inputFeeRateString;
 @end
 
 NS_ASSUME_NONNULL_END

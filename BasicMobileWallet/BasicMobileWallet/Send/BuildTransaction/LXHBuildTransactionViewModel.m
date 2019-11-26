@@ -14,9 +14,9 @@
 #import "LXHOutputListViewModel.h"
 #import "LXHSelectFeeRateViewModel.h"
 #import "LXHInputFeeViewModel.h"
+#import "LXHAddOutputViewModel.h"
 
 @interface LXHBuildTransactionViewModel ()
-@property (nonatomic, readwrite) NSMutableDictionary *dataForBuildingTransaction;
 @property (nonatomic, readwrite) LXHSelectInputViewModel *selectInputViewModel;
 @property (nonatomic, readwrite) LXHOutputListViewModel *outputListViewModel;
 @property (nonatomic, readwrite) LXHSelectFeeRateViewModel *selectFeeRateViewModel;
@@ -24,12 +24,6 @@
 @end
 
 @implementation LXHBuildTransactionViewModel
-
-- (NSMutableDictionary *)dataForBuildingTransaction {
-    if (!_dataForBuildingTransaction)
-        _dataForBuildingTransaction = [NSMutableDictionary dictionary];
-    return _dataForBuildingTransaction;
-}
 
 #pragma mark - 加工View数据
 //把数据加工成适合View直接使用的形式
@@ -54,7 +48,7 @@
     NSMutableArray *ret = [NSMutableArray array];
     NSDictionary *dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输出", @"id":@"selectOutput"};
     [ret addObject:dic];
-    NSArray *outputs = self.dataForBuildingTransaction[@"outputs"];
+    NSArray *outputs = [self.outputListViewModel outputs];
     for (NSUInteger i = 0 ; i < outputs.count; i++) {
         LXHTransactionOutput *output = outputs[i];
         NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
@@ -82,8 +76,8 @@
 
 - (NSNumber *)feeRateValue {
     NSNumber *feeRateValue = nil;
-    if (self.dataForBuildingTransaction[@"inputFeeRate"])
-        feeRateValue = self.dataForBuildingTransaction[@"inputFeeRate"];
+    if (self.inputFeeViewModel.inputFeeRateSat)
+        feeRateValue = self.inputFeeViewModel.inputFeeRateSat;
     else if (self.selectFeeRateViewModel.selectedFeeRateItem) {
         feeRateValue = self.selectFeeRateViewModel.selectedFeeRateItem.allValues[0];
     } else {
@@ -93,11 +87,11 @@
 }
 
 - (NSArray<LXHTransactionInputOutputCommon *> *)inputs { //utxos
-    return _dataForBuildingTransaction[@"selectedUtxos"];
+    return self.selectInputViewModel.selectedUtxos;
 }
 
 - (NSArray<LXHTransactionInputOutputCommon *> *)outputs {
-    return _dataForBuildingTransaction[@"outputs"];
+    return self.outputListViewModel.outputs;
 }
 
 //参考 https://bitcoin.stackexchange.com/questions/1195/how-to-calculate-transaction-size-before-sending-legacy-non-segwit-p2pkh-p2sh
