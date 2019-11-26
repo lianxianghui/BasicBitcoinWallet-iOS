@@ -294,7 +294,7 @@
     LXHWeakSelf
     UIAlertAction *pasteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"粘贴地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSString *text = [UIPasteboard generalPasteboard].string;
-        if ([weakSelf.viewModel setAddress:text]) {
+        if ([weakSelf.viewModel setAddress:text]) {//todo 判断text是否本地地址。如果是本地地址。进行设置
             [weakSelf refreshListView];
         } else {
             [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址", nil)];
@@ -302,7 +302,9 @@
     }];
     
     UIAlertAction *scanAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"扫描二维码", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-#if !(TARGET_IPHONE_SIMULATOR)
+#if TARGET_IPHONE_SIMULATOR
+        [weakSelf.view makeToast:NSLocalizedString(@"模拟器上无法使用该功能", nil)];
+#else
         weakSelf.scanerView = [BTCQRCode scannerViewWithBlock:^(NSString *text) {
             if ([weakSelf.viewModel setAddress:text]) {
                 [weakSelf refreshListView];
@@ -311,9 +313,8 @@
             }
             [self.scanerView removeFromSuperview];
         }];
-        [weakSelf.contentView.window addSubview:weakSelf.scanerView];
-#else
-        [weakSelf.view makeToast:NSLocalizedString(@"模拟器上无法使用该功能", nil)];
+        [weakSelf.contentView.window addSubview:weakSelf.scanerView];//todo 加入返回按钮
+
 #endif
     }];
     
