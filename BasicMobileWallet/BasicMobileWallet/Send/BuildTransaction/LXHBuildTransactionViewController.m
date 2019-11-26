@@ -58,6 +58,7 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setViewProperties];
     [self addActions];
     [self setDelegates];
 }
