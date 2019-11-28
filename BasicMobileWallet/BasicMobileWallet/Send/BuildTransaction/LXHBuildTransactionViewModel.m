@@ -109,8 +109,7 @@
 
 - (NSDictionary *)titleCell2DataForGroup2 {
     NSDecimalNumber *feeValueInBTC = [self feeValueInBTC];
-    feeValueInBTC = feeValueInBTC ?: [NSDecimalNumber zero];//无意义时显示0
-    NSString *title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), feeValueInBTC];
+    NSString *title = feeValueInBTC ? [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), feeValueInBTC] : NSLocalizedString(@"手续费", nil); //feeValueInBTC 为nil时代表无意义，不显示具体数值
     NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
     return dic;
 }
