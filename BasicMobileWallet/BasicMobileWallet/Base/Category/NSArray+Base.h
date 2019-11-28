@@ -11,7 +11,7 @@
 @interface NSArray (Base)
 
 - (NSArray *)intersectionWithArray:(NSArray *)array;
-
+- (NSArray *)minusWithArray:(NSArray *)array;
 /**
  返回去重后的数组
 

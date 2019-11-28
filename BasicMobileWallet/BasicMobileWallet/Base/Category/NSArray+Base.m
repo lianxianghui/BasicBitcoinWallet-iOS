@@ -17,6 +17,13 @@
     return ret;
 }
 
+- (NSArray *)minusWithArray:(NSArray *)array {
+    NSMutableSet *set = [NSMutableSet setWithArray:self];
+    [set minusSet:[NSSet setWithArray:array]];
+    NSArray *ret = [set allObjects];
+    return ret;
+}
+
 - (NSMutableArray *)duplicatedElementsRemovedArray {
     NSMutableSet *set = [NSMutableSet setWithArray:self];
     return [set allObjects].mutableCopy;
