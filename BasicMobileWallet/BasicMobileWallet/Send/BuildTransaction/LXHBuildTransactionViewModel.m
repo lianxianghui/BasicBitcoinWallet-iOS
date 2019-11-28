@@ -15,6 +15,7 @@
 #import "LXHSelectFeeRateViewModel.h"
 #import "LXHInputFeeViewModel.h"
 #import "LXHAddOutputViewModel.h"
+#import "LXHFeeUtils.h"
 
 @interface LXHBuildTransactionViewModel ()
 @property (nonatomic, readwrite) LXHSelectInputViewModel *selectInputViewModel;
@@ -94,26 +95,16 @@
     return self.outputListViewModel.outputs;
 }
 
-//参考 https://bitcoin.stackexchange.com/questions/1195/how-to-calculate-transaction-size-before-sending-legacy-non-segwit-p2pkh-p2sh
 - (NSDecimalNumber *)feeValueInBTC {
     NSUInteger inputCount = [self inputs].count;
     NSUInteger outputCount = [self outputs].count;
     if (inputCount == 0 || outputCount == 0)
         return nil;
-    NSUInteger feeRateInSat = [[self feeRateValue] unsignedIntegerValue];
-    NSUInteger byteCount = inputCount * 148 + outputCount * 34 + 10;
-    unsigned long long feeInSat = byteCount * feeRateInSat;
-    NSDecimalNumber *ret = [NSDecimalNumber decimalNumberWithMantissa:feeInSat exponent:-8 isNegative:NO];
-    return ret;
-}
-
-- (NSDecimalNumber *)sumForInputsOrOutputsWithArray:(NSArray *)array {
-    if (!array)
-        return [NSDecimalNumber zero];
-    NSDecimalNumber *ret = [array bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionInputOutputCommon *obj) {
-        return [sum decimalNumberByAdding:obj.value];
-    }];
-    return ret;
+    NSDecimalNumber *difference = [LXHFeeUtils differenceBetweenInputs:[self inputs] outputs:[self outputs]];
+    if ([difference compare:[NSDecimalNumber zero]] == NSOrderedDescending) {//输入和大于输出和
+        return difference;
+    }
+    return nil;
 }
 
 - (NSDictionary *)titleCell2DataForGroup2 {

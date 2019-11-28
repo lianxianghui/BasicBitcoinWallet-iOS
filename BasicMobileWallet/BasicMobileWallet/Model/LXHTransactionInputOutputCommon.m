@@ -7,7 +7,18 @@
 //
 
 #import "LXHTransactionInputOutputCommon.h"
+#import "BlocksKit.h"
 
 @implementation LXHTransactionInputOutputCommon
+
+
++ (NSDecimalNumber *)valueSumOfInputsOrOutputs:(NSArray<LXHTransactionInputOutputCommon *> *)inputsOrOutputs {
+    if (inputsOrOutputs.count == 0)
+        return [NSDecimalNumber zero];
+    else
+        return [inputsOrOutputs bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionInputOutputCommon *inputOrOutput) {
+            return [sum decimalNumberByAdding:inputOrOutput.value];
+        }];
+}
 
 @end

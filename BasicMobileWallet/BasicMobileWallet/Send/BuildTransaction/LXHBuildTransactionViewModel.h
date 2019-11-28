@@ -25,7 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)outputCellDataArray;
 - (NSDictionary *)feeRateCellData;
 - (NSNumber *)feeRateValue;
-- (NSDecimalNumber *)sumForInputsOrOutputsWithArray:(NSArray *)array;
 
 - (void)resetSelectFeeRateViewModel;
 - (void)resetInputFeeViewModel;
