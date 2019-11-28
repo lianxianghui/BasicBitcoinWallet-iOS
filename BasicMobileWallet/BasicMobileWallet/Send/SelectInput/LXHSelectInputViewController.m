@@ -74,12 +74,11 @@
 }
 
 - (void)setViewProperties {
-    [self refreshValueText];
+    [self refreshInfoText];
 }
 
-- (void)refreshValueText {
-    NSString *text = [_viewModel valueText];
-    [self.contentView.value updateAttributedTextString:text];
+- (void)refreshInfoText {
+    [self.contentView.text updateAttributedTextString:[_viewModel infoText]];
 }
 
 //Actions
@@ -269,7 +268,7 @@
     if (![cellType isEqualToString:@"LXHSelectInputCell"])
         return;
     [_viewModel toggleCheckedStateOfRow:indexPath.row];
-    [self refreshValueText];
+    [self refreshInfoText];
     [self.contentView.listView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 

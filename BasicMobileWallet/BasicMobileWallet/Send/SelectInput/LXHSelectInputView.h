@@ -9,9 +9,8 @@
 @interface LXHSelectInputView : UIView
 
 @property (nonatomic) UITableView *listView;
-@property (nonatomic) UIView *infomation;
+@property (nonatomic) UIView *information;
 @property (nonatomic) UILabel *text;
-@property (nonatomic) UILabel *value;
 @property (nonatomic) UIButton *button;
 @property (nonatomic) UIView *customNavigationBar;
 @property (nonatomic) UIView *bottomLine;

@@ -15,9 +15,9 @@
 #import "LXHSelectFeeRateViewModel.h"
 #import "LXHInputFeeViewModel.h"
 #import "LXHAddOutputViewModel.h"
+#import "LXHFeeEstimator.h"
 
 @implementation LXHBuildTransactionViewModelForFixedOutput
-
 
 - (NSArray *)cellDataForListview {
     NSMutableArray *cellDataListForListView = [NSMutableArray array];
@@ -61,6 +61,18 @@
 
 - (NSString *)navigationBarTitle {
     return NSLocalizedString(@"构建固定输出交易", nil);
+}
+
+- (LXHSelectInputViewModel *)selectInputViewModel {
+    LXHSelectInputViewModel *ret = [super selectInputViewModel];
+    ret.isConstrainted = YES;
+    ret.fixedOutputValueSum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:[self outputs]];
+    
+    LXHFeeEstimator *feeEstimator = [[LXHFeeEstimator alloc] init];
+    feeEstimator.outputCount = [self outputs].count;
+    feeEstimator.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
+    ret.feeEstimator = feeEstimator;
+    return ret;
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "LXHSelectInputViewModel.h"
 #import "LXHTransactionDataManager.h"
 #import "BlocksKit.h"
+#import "LXHFeeEstimator.h"
 
 @interface LXHSelectInputViewModel ()
 @property (nonatomic, readwrite) NSArray *selectedUtxos;
@@ -76,10 +77,69 @@
     return _cellDataArrayForListview;
 }
 
-- (NSString *)valueText {
-    NSDecimalNumber *seletedUtxosValueSum = [LXHTransactionOutput valueSumOfOutputs:self.selectedUtxos];
-    NSString *text = [NSString stringWithFormat:@"%@ BTC", seletedUtxosValueSum];
-    return text;
+- (NSDecimalNumber *)currentEstimatedFee {
+    NSUInteger inputCount = self.selectedUtxos.count;
+    if (inputCount == 0)
+        inputCount = 1;//估计时要按着至少有一个输入来估计
+    _feeEstimator.inputCount = inputCount;
+    NSDecimalNumber *currentEstimatedFee = [_feeEstimator estimatedFeeInBTC];
+    return currentEstimatedFee;
+}
+
+- (NSDecimalNumber *)currentEstimatedFeeWithInputCount:(NSUInteger)inputCount {
+    _feeEstimator.inputCount = inputCount;
+    NSDecimalNumber *currentEstimatedFee = [_feeEstimator estimatedFeeInBTC];
+    return currentEstimatedFee;
+}
+
+- (BOOL)allUtxosIsNotEnoughWithCurrentEstimatedFee:(NSDecimalNumber *)currentEstimatedFee {
+    NSDecimalNumber *sumOfOutputsAndFee = [_fixedOutputValueSum decimalNumberByAdding:currentEstimatedFee];
+    NSDecimalNumber *allUtxosSum = [self allUtxosSum];
+    return [allUtxosSum compare:sumOfOutputsAndFee] == NSOrderedAscending;//小于
+}
+
+- (NSDecimalNumber *)differenceWithCurrentEstimatedFee:(NSDecimalNumber *)currentEstimatedFee {
+    NSDecimalNumber *sumOfOutputsAndFee = [_fixedOutputValueSum decimalNumberByAdding:currentEstimatedFee];
+    NSDecimalNumber *seletedInputValueSum = [LXHTransactionOutput valueSumOfOutputs:self.selectedUtxos];
+    return [sumOfOutputsAndFee decimalNumberBySubtracting:seletedInputValueSum];
+}
+
+- (NSDecimalNumber *)allUtxosSum {
+    NSMutableArray<LXHTransactionOutput *> *allUtxos = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
+    NSDecimalNumber *allUtxosSum = [LXHTransactionOutput valueSumOfOutputs:allUtxos];
+    return allUtxosSum;
+}
+
+//可选择的输入总值小于当前输出与手续费的总值
+//至少需要选择总值为  BTC的输入
+//至少还需要选择总值为  BTC的输入
+//所选总值为  BTC，已满足当前输出
+- (NSString *)infoText {
+    if (_isConstrainted) {
+        NSDecimalNumber *currentEstimatedFee = [self currentEstimatedFee];
+        if (!currentEstimatedFee) //应该不会发生
+            return @" ";
+       if ([self allUtxosIsNotEnoughWithCurrentEstimatedFee:currentEstimatedFee])
+           return NSLocalizedString(@"余额不足(可选择的输入总和小于当前输出与手续费的总和)", nil);
+        NSDecimalNumber *difference = [self differenceWithCurrentEstimatedFee:currentEstimatedFee];
+        if ([difference compare:[NSDecimalNumber zero]] == NSOrderedDescending) { // 大于0
+            NSString *format = nil;
+            if (self.selectedUtxos.count == 0)
+                format = @"至少需要选择总和为  %@BTC的输入";
+            else
+                format = @"至少还需要选择总和为  %@BTC的输入";
+            format = NSLocalizedString(format, nil);
+            return [NSString stringWithFormat:format, difference];
+        } else { //小于等于0，说明够了
+            NSDecimalNumber *seletedInputValueSum = [LXHTransactionOutput valueSumOfOutputs:self.selectedUtxos];
+            NSString *format = NSLocalizedString(@"所选总和为  %@BTC，已满足当前输出与手续费", nil);
+            return [NSString stringWithFormat:format, seletedInputValueSum];
+        }
+    } else {
+        NSDecimalNumber *seletedInputValueSum = [LXHTransactionOutput valueSumOfOutputs:self.selectedUtxos];
+        NSString *format = NSLocalizedString(@"所选总值为  %@BTC", nil);
+        return [NSString stringWithFormat:format, seletedInputValueSum];
+    }
 }
 
 - (void)toggleCheckedStateOfRow:(NSInteger)row {

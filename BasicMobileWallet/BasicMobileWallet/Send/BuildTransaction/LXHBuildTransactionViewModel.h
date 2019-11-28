@@ -14,8 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LXHBuildTransactionViewModel : NSObject
 
 //ViewModell可以用来在几个页面之间传递构造交易数据
-@property (nonatomic, readonly) LXHSelectInputViewModel *selectInputViewModel;
-@property (nonatomic, readonly) LXHOutputListViewModel *outputListViewModel;
+@property (nonatomic, readonly) LXHSelectInputViewModel *selectInputViewModel;//可能会被子类覆盖
+@property (nonatomic, readonly) LXHOutputListViewModel *outputListViewModel;//可能会被子类覆盖
 @property (nonatomic, readonly) LXHSelectFeeRateViewModel *selectFeeRateViewModel;
 @property (nonatomic, readonly) LXHInputFeeViewModel *inputFeeViewModel;
 

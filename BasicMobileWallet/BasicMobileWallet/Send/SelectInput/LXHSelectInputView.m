@@ -32,7 +32,7 @@
 
 - (void)addSubviews {
     [self addSubview:self.listView];
-    [self addSubview:self.infomation];
+    [self addSubview:self.information];
     [self addSubview:self.customNavigationBar];
 }
 
@@ -41,25 +41,21 @@
         make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
         make.bottom.equalTo(self.mas_bottom);
-        make.top.equalTo(self.infomation.mas_bottom);
+        make.top.equalTo(self.information.mas_bottom);
     }];
-    [self.infomation mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.information mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
         make.top.equalTo(self.customNavigationBar.mas_bottom).offset(0.5);
         make.height.mas_equalTo(48);
     }];
     [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.infomation.mas_centerY);
-        make.left.equalTo(self.infomation.mas_left).offset(6);
-    }];
-    [self.value mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.text.mas_right).offset(10);
-        make.centerY.equalTo(self.text.mas_centerY);
+        make.centerY.equalTo(self.information.mas_centerY);
+        make.left.equalTo(self.information.mas_left).offset(6);
     }];
     [self.button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.infomation.mas_centerY);
-        make.right.equalTo(self.infomation.mas_right).offset(-12);
+        make.centerY.equalTo(self.information.mas_centerY);
+        make.right.equalTo(self.information.mas_right).offset(-12);
         make.width.mas_equalTo(58);
         make.height.mas_equalTo(29);
     }];
@@ -119,16 +115,15 @@
     return _listView;
 }
 
-- (UIView *)infomation {
-    if (!_infomation) {
-        _infomation = [[UIView alloc] init];
-        _infomation.backgroundColor = UIColorFromRGBA(0xFFFFFF00);
-        _infomation.alpha = 1;
-        [_infomation addSubview:self.text];
-        [_infomation addSubview:self.value];
-        [_infomation addSubview:self.button];
+- (UIView *)information {
+    if (!_information) {
+        _information = [[UIView alloc] init];
+        _information.backgroundColor = UIColorFromRGBA(0xFFFFFF00);
+        _information.alpha = 1;
+        [_information addSubview:self.text];
+        [_information addSubview:self.button];
     }
-    return _infomation;
+    return _information;
 }
 
 - (UILabel *)text {
@@ -153,7 +148,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.5788235) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"所选输入(UTXO)总值", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"所选输入总值", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         font = [UIFont fontWithName:@"" size:13];
@@ -174,29 +169,6 @@
         _text.attributedText = attributedText;
     }
     return _text;
-}
-
-- (UILabel *)value {
-    if (!_value) {
-        _value = [[UILabel alloc] init];
-        _value.numberOfLines = 0;
-        UIFont *font = [UIFont fontWithName:@"" size:13];
-        if (!font) font = [UIFont systemFontOfSize:13];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-
-        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.5788235) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"0.0000002BTC ", nil) attributes:textAttributes];
-        _value.attributedText = text;
-    }
-    return _value;
 }
 
 - (UIButton *)button {
@@ -265,7 +237,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.4099999964237213) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"选择输入", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"选择输入(UTXO)", nil) attributes:textAttributes];
         _title.attributedText = text;
     }
     return _title;
