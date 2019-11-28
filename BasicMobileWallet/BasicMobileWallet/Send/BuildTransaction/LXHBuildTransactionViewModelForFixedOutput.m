@@ -15,7 +15,7 @@
 #import "LXHSelectFeeRateViewModel.h"
 #import "LXHInputFeeViewModel.h"
 #import "LXHAddOutputViewModel.h"
-#import "LXHFeeEstimator.h"
+#import "LXHFeeCalculator.h"
 
 @implementation LXHBuildTransactionViewModelForFixedOutput
 
@@ -68,10 +68,10 @@
     ret.isConstrainted = YES;
     ret.fixedOutputValueSum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:[self outputs]];
     
-    LXHFeeEstimator *feeEstimator = [[LXHFeeEstimator alloc] init];
-    feeEstimator.outputCount = [self outputs].count;
-    feeEstimator.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
-    ret.feeEstimator = feeEstimator;
+    LXHFeeCalculator *feeCalculator = [[LXHFeeCalculator alloc] init];
+    feeCalculator.outputCount = [self outputs].count;
+    feeCalculator.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
+    ret.feeCalculator = feeCalculator;
     return ret;
 }
 

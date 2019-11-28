@@ -10,11 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class LXHFeeEstimator;
+@class LXHFeeCalculator;
 @interface LXHSelectInputViewModel : NSObject
 @property (nonatomic) BOOL isConstrainted;
-//如果isConstrainted为YES，feeEstimator和fixedOutputValueSum需要有值
-@property (nonatomic) LXHFeeEstimator *feeEstimator;
+//如果isConstrainted为YES，feeCalculator和fixedOutputValueSum需要有值
+@property (nonatomic) LXHFeeCalculator *feeCalculator;
 @property (nonatomic) NSDecimalNumber *fixedOutputValueSum;
 
 @property (nonatomic, readonly) NSArray *selectedUtxos;

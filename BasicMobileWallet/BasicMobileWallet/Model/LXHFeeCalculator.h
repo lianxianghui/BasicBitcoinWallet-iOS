@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LXHFeeEstimator : NSObject
+@interface LXHFeeCalculator : NSObject
 
 @property (nonatomic) NSUInteger inputCount;
 @property (nonatomic) NSUInteger feeRateInSat;

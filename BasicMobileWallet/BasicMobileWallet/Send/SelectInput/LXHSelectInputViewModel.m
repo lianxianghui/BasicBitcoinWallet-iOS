@@ -9,7 +9,7 @@
 #import "LXHSelectInputViewModel.h"
 #import "LXHTransactionDataManager.h"
 #import "BlocksKit.h"
-#import "LXHFeeEstimator.h"
+#import "LXHFeeCalculator.h"
 
 @interface LXHSelectInputViewModel ()
 @property (nonatomic, readwrite) NSArray *selectedUtxos;
@@ -81,14 +81,14 @@
     NSUInteger inputCount = self.selectedUtxos.count;
     if (inputCount == 0)
         inputCount = 1;//估计时要按着至少有一个输入来估计
-    _feeEstimator.inputCount = inputCount;
-    NSDecimalNumber *currentEstimatedFee = [_feeEstimator estimatedFeeInBTC];
+    _feeCalculator.inputCount = inputCount;
+    NSDecimalNumber *currentEstimatedFee = [_feeCalculator estimatedFeeInBTC];
     return currentEstimatedFee;
 }
 
 - (NSDecimalNumber *)currentEstimatedFeeWithInputCount:(NSUInteger)inputCount {
-    _feeEstimator.inputCount = inputCount;
-    NSDecimalNumber *currentEstimatedFee = [_feeEstimator estimatedFeeInBTC];
+    _feeCalculator.inputCount = inputCount;
+    NSDecimalNumber *currentEstimatedFee = [_feeCalculator estimatedFeeInBTC];
     return currentEstimatedFee;
 }
 
