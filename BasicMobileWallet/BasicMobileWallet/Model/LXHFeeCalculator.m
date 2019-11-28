@@ -7,6 +7,7 @@
 //
 
 #import "LXHFeeCalculator.h"
+#import "LXHTransactionInputOutputCommon.h"
 
 @implementation LXHFeeCalculator
 
@@ -14,17 +15,27 @@
 {
     self = [super init];
     if (self) {
-        _inputCount = 0;
-        _outputCount = 0;
         _feeRateInSat = 0;
     }
     return self;
 }
 
 - (nullable NSDecimalNumber *)estimatedFeeInBTC {
-    if (_inputCount == 0 || _outputCount == 0 || _feeRateInSat == 0)
+    if (_inputs.count == 0 || _outputs.count == 0 || _feeRateInSat == 0)
         return nil;
-    return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRateInSat inputCount:_inputCount outputCount:_outputCount];
+    return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRateInSat inputCount:_inputs.count outputCount:_outputs.count];
+}
+
+- (BOOL)feeGreaterThanValueWithInput:(LXHTransactionInputOutputCommon *)input {
+    NSUInteger feePerInputInSat = 148 * _feeRateInSat;
+    NSDecimalNumber *feePerInputInBTC = [NSDecimalNumber decimalNumberWithMantissa:feePerInputInSat exponent:-8 isNegative:NO];
+    return [feePerInputInBTC compare:input.value] == NSOrderedDescending;
+}
+
+- (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output {
+    NSUInteger feePerOutputInSat = 148 * _feeRateInSat;
+    NSDecimalNumber *feePerOutputInBTC = [NSDecimalNumber decimalNumberWithMantissa:feePerOutputInSat exponent:-8 isNegative:NO];
+    return [feePerOutputInBTC compare:output.value] == NSOrderedDescending;
 }
 
 //参考 https://bitcoin.stackexchange.com/questions/1195/how-to-calculate-transaction-size-before-sending-legacy-non-segwit-p2pkh-p2sh

@@ -81,20 +81,21 @@
     NSUInteger inputCount = self.selectedUtxos.count;
     if (inputCount == 0)
         inputCount = 1;//估计时要按着至少有一个输入来估计
-    _feeCalculator.inputCount = inputCount;
+    _feeCalculator.inputs = self.selectedUtxos;
     NSDecimalNumber *currentEstimatedFee = [_feeCalculator estimatedFeeInBTC];
     return currentEstimatedFee;
 }
 
-- (NSDecimalNumber *)currentEstimatedFeeWithInputCount:(NSUInteger)inputCount {
-    _feeCalculator.inputCount = inputCount;
-    NSDecimalNumber *currentEstimatedFee = [_feeCalculator estimatedFeeInBTC];
-    return currentEstimatedFee;
-}
+//- (NSDecimalNumber *)currentEstimatedFeeWithNewUTXO:(LXHTransactionOutput *)utxo {
+//    NSMutableArray *utxos = self.selectedUtxos
+//    _feeCalculator.inputCount = inputCount;
+//    NSDecimalNumber *currentEstimatedFee = [_feeCalculator estimatedFeeInBTC];
+//    return currentEstimatedFee;
+//}
 
 - (BOOL)allUtxosIsNotEnoughWithCurrentEstimatedFee:(NSDecimalNumber *)currentEstimatedFee {
     NSDecimalNumber *sumOfOutputsAndFee = [_fixedOutputValueSum decimalNumberByAdding:currentEstimatedFee];
-    NSDecimalNumber *allUtxosSum = [self allUtxosSum];
+    NSDecimalNumber *allUtxosSum = [self allUsableUtxosSum];
     return [allUtxosSum compare:sumOfOutputsAndFee] == NSOrderedAscending;//小于
 }
 
@@ -104,10 +105,15 @@
     return [sumOfOutputsAndFee decimalNumberBySubtracting:seletedInputValueSum];
 }
 
-- (NSDecimalNumber *)allUtxosSum {
-    NSMutableArray<LXHTransactionOutput *> *allUtxos = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
-    NSDecimalNumber *allUtxosSum = [LXHTransactionOutput valueSumOfOutputs:allUtxos];
-    return allUtxosSum;
+//会滤掉值过小的
+- (NSDecimalNumber *)allUsableUtxosSum {
+    LXHWeakSelf
+    NSArray *allUtxos = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
+    NSArray<LXHTransactionOutput *> *allUsableUtxos = [allUtxos bk_reject:^BOOL(LXHTransactionOutput *obj) {
+        return [weakSelf.feeCalculator feeGreaterThanValueWithInput:obj];//把消耗的Fee比它的值还大的滤掉
+    }];
+    NSDecimalNumber *sum = [LXHTransactionOutput valueSumOfOutputs:allUsableUtxos];
+    return sum;
 }
 
 //可选择的输入总值小于当前输出与手续费的总值

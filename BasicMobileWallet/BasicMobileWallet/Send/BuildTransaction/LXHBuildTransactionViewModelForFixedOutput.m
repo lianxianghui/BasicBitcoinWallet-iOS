@@ -69,7 +69,7 @@
     ret.fixedOutputValueSum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:[self outputs]];
     
     LXHFeeCalculator *feeCalculator = [[LXHFeeCalculator alloc] init];
-    feeCalculator.outputCount = [self outputs].count;
+    feeCalculator.outputs = [self outputs];
     feeCalculator.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
     ret.feeCalculator = feeCalculator;
     return ret;
