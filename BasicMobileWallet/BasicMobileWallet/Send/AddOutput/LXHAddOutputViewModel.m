@@ -24,6 +24,9 @@
     self = [super init];
     if (self) {
         _output = [[LXHTransactionOutput alloc] init];
+        //TODO 临时的
+        [self setAddress:@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx"];
+        [self setValueString:@"0.005"];
     }
     return self;
 }
@@ -35,8 +38,7 @@
 - (NSMutableArray *)cellDataArrayForListView {
     if (!_cellDataArrayForListView) {
         _cellDataArrayForListView = [NSMutableArray array];
-        NSDictionary *dic = nil;
-        dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
+        NSDictionary *dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
         [_cellDataArrayForListView addObject:dic];
         
         NSString *text, *warningText, *addressText;
@@ -51,7 +53,19 @@
         dic = @{@"text":text, @"warningText":warningText, @"isSelectable":@"1", @"cellType":@"LXHInputAddressCell", @"addressText":addressText};
         [_cellDataArrayForListView addObject:dic];
         
-        dic = @{@"maxValue":@"可输入最大值: 0.00000001 ", @"text1":@"数量:", @"isSelectable":@"0", @"text":@"输入最大值", @"cellType":@"LXHInputAmountCell", @"BTC":@" BTC", @"textFieldText":[self valueString]};
+        NSString *maxValueString = _maxValue ? [NSString stringWithFormat:NSLocalizedString(@"可输入最大值: %@", nil), _maxValue] : @" ";
+        BOOL maxValueHidden = [self maxValuePromptLabelHidden];
+        BOOL textButtonHidden = [self maxValueButtonHidden];
+        dic = @{@"maxValue":maxValueString,
+                @"text1":@"数量:",
+                @"isSelectable":@"0",
+                @"text":@"输入最大值",
+                @"cellType":@"LXHInputAmountCell",
+                @"BTC":@" BTC",
+                @"textFieldText":[self valueString],
+                @"maxValueHidden":@(maxValueHidden),
+                @"textButtonHidden":@(textButtonHidden),
+                };
         [_cellDataArrayForListView addObject:dic];
     }
     return _cellDataArrayForListView;
@@ -70,6 +84,14 @@
 
 - (void)resetCellDataArrayForListView {
     _cellDataArrayForListView = nil;
+}
+
+- (BOOL)maxValuePromptLabelHidden {
+    return _maxValue == nil;
+}
+
+- (BOOL)maxValueButtonHidden {
+    return _maxValue == nil;
 }
 
 - (BOOL)setAddress:(NSString *)address {

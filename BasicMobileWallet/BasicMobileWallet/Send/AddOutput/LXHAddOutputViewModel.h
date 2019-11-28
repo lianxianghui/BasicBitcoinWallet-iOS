@@ -18,12 +18,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) LXHLocalAddress *localAddress;
 @property (nonatomic, readonly) LXHTransactionOutput *output;
 @property (nonatomic) BOOL isEditing;
+@property (nonatomic) NSDecimalNumber *maxValue;//最大值约束
 
 - (NSString *)naviBarTitle;
 - (NSString *)warningText;
+
 - (void)resetCellDataArrayForListView;
 - (BOOL)setAddress:(NSString *)address;
 - (BOOL)setValueString:(NSString *)valueString;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

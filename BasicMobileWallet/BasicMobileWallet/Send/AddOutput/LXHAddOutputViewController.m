@@ -233,6 +233,8 @@
         NSMutableAttributedString *maxValueAttributedString = [cellView.maxValue.attributedText mutableCopy];
         [maxValueAttributedString.mutableString setString:maxValue];
         cellView.maxValue.attributedText = maxValueAttributedString;
+        cellView.maxValue.hidden = [[dataForRow valueForKey:@"maxValueHidden"] boolValue];
+        
         NSString *text = [dataForRow valueForKey:@"text"];
         if (!text)
             text = @" ";
@@ -249,6 +251,8 @@
         [cellView.textButton addTarget:self action:@selector(LXHInputAmountCellTextButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [cellView.textButton addTarget:self action:@selector(LXHInputAmountCellTextButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
         [cellView.textButton addTarget:self action:@selector(LXHInputAmountCellTextButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+        cellView.textButton.hidden = [[dataForRow valueForKey:@"textButtonHidden"] boolValue];
+        
         _textField = cellView.textFieldWithPlaceHolder;
         _textField.text = [dataForRow valueForKey:@"textFieldText"];
     }
