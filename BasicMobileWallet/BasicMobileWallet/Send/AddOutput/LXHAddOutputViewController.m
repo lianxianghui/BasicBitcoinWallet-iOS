@@ -298,7 +298,7 @@
     LXHWeakSelf
     UIAlertAction *pasteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"粘贴地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSString *text = [UIPasteboard generalPasteboard].string;
-        if ([weakSelf.viewModel setAddress:text]) {//todo 判断text是否本地地址。如果是本地地址。进行设置
+        if ([weakSelf.viewModel setAddress:text]) {
             [weakSelf refreshListView];
         } else {
             [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址", nil)];

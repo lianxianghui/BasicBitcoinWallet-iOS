@@ -11,6 +11,7 @@
 #import "LXHLocalAddress.h"
 #import "NSString+Base.h"
 #import "BTCAddress.h"
+#import "LXHWallet.h"
 
 @interface LXHAddOutputViewModel ()
 @property (nonatomic, readwrite) LXHTransactionOutput *output;
@@ -97,7 +98,11 @@
 - (BOOL)setAddress:(NSString *)address {
     NSString *validAddress = [LXHAddOutputViewModel validAddress:address];
     if (validAddress) {
-        _output.address = validAddress;
+        LXHLocalAddress *localAddress = [LXHWallet.mainAccount localAddressWithBase58Address:validAddress];
+        if (localAddress)
+            [self setLocalAddress:localAddress];
+        else
+            _output.address = validAddress;
         return YES;
     } else {
         return NO;
