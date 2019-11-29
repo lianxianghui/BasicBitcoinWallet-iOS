@@ -118,12 +118,8 @@
     NSUInteger randomInt;
     NSData *randomData = BTCRandomDataWithLength(sizeof(randomInt));
     [randomData getBytes:&randomInt length:sizeof(randomInt)];
-    NSUInteger allPostionCount = [self outputCount] + 1;
-    return randomInt % allPostionCount;
-}
-
-- (void)deleteOutputViewModelAtIndex:(NSInteger)index {
-    [_outputViewModels removeObjectAtIndex:index];
+    NSUInteger allPositionsCount = [self outputCount] + 1;
+    return randomInt % allPositionsCount;
 }
 
 - (NSArray *)outputs {
