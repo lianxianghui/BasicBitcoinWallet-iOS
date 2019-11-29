@@ -12,6 +12,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+/**
+ 地址分接收地址和找零地址
+ 地址分用过的地址和未用过的。currentAddresses指目前第一个还未被用过的地址
+ */
 @interface LXHAccount : NSObject
 
 @property (nonatomic, readonly) LXHBitcoinNetworkType currentNetworkType;
@@ -37,8 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)usedAndCurrentAddressesWithType:(LXHAddressType)type;
 - (BOOL)isUsedAddressWithType:(LXHAddressType)type index:(NSUInteger)index;
 
+
 - (LXHLocalAddress *)localAddressWithWithType:(LXHAddressType)type index:(uint32_t)index;
 - (LXHLocalAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address;
+- (LXHLocalAddress *)currentChangeAddress;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -16,6 +16,7 @@
 #import "LXHInputFeeViewModel.h"
 #import "LXHAddOutputViewModel.h"
 #import "LXHFeeCalculator.h"
+#import "LXHWallet.h"
 
 @interface LXHBuildTransactionViewModel ()
 @property (nonatomic, readwrite) LXHOutputListViewModel *outputListViewModel;
@@ -187,7 +188,7 @@
     NSDecimalNumber *value = [differenceBetweenInputsAndOutputs decimalNumberBySubtracting:feeOfChangeOutput];
     if ([value compare:[NSDecimalNumber zero]] == NSOrderedDescending) {
         changeOutput.value = value;
-        //changeOutput.address =
+        changeOutput.address = [LXHWallet.mainAccount currentChangeAddress].addressString;
     }
     return changeOutput;
 }

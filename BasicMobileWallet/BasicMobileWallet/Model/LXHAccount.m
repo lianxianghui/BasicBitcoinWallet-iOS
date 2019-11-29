@@ -103,4 +103,8 @@
     return ret;
 }
 
+- (LXHLocalAddress *)currentChangeAddress {
+    return [[self changeLeveWithType:LXHAddressTypeChange] currentLocalAddress];
+}
+
 @end

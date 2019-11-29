@@ -94,6 +94,10 @@
     return [self addressStringWithIndex:_currentAddressIndex];
 }
 
+- (LXHLocalAddress *)currentLocalAddress {
+    return [self localAddressWithIndex:_currentAddressIndex];
+}
+
 - (BOOL)isUsedAddressWithIndex:(NSUInteger)index {
     return index < [self usedAddresses].count;
 }
