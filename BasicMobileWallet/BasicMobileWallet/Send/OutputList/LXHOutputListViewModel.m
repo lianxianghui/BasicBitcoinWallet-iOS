@@ -101,6 +101,7 @@
 
 - (void)addOutputViewModel:(LXHAddOutputViewModel *)model {
     [_outputViewModels addObject:model];
+    [self resetCellDataArrayForListview];
 }
 
 - (void)addNewChangeOutputAtRandomPositionWithOutput:(LXHTransactionOutput *)output {
@@ -110,6 +111,7 @@
     [viewModel setOutput:output];
     NSUInteger randomPosition = [self randomPosition];
     [_outputViewModels insertObject:viewModel atIndex:randomPosition];
+    [self resetCellDataArrayForListview];
 }
 
 - (NSUInteger)randomPosition {
@@ -117,7 +119,7 @@
     NSData *randomData = BTCRandomDataWithLength(sizeof(randomInt));
     [randomData getBytes:&randomInt length:sizeof(randomInt)];
     NSUInteger allPostionCount = [self outputCount] + 1;
-    return randomInt % (allPostionCount + 1);
+    return randomInt % allPostionCount;
 }
 
 - (void)deleteOutputViewModelAtIndex:(NSInteger)index {
