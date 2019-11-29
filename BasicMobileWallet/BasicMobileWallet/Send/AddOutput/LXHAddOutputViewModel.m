@@ -93,15 +93,16 @@
     return _maxValue == nil;
 }
 
-
 - (BOOL)setAddress:(NSString *)address {
     NSString *validAddress = [LXHAddOutputViewModel validAddress:address];
     if (validAddress) {
         LXHLocalAddress *localAddress = [LXHWallet.mainAccount localAddressWithBase58Address:validAddress];
-        if (localAddress)
+        if (localAddress) {
             [self setLocalAddress:localAddress];
-        else
+        } else {
+            [self setLocalAddress:nil];
             self.output.address = validAddress;
+        }
         return YES;
     } else {
         return NO;
