@@ -10,19 +10,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class LXHFeeCalculator;
+/**
+ 抽象类
+ */
 @interface LXHSelectInputViewModel : NSObject
-@property (nonatomic) BOOL isConstrainted;
-//如果isConstrainted为YES，feeCalculator和fixedOutputValueSum需要有值
-@property (nonatomic) LXHFeeCalculator *feeCalculator;
-@property (nonatomic) NSDecimalNumber *fixedOutputValueSum;
-
 @property (nonatomic, readonly) NSArray *selectedUtxos;
 @property (nonatomic, readonly) NSMutableArray *cellDataArrayForListview;
 
-- (NSString *)infoText;
 - (void)toggleCheckedStateOfRow:(NSInteger)row;
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex;
+
+- (NSString *)infoText;//for overriding
 @end
 
 NS_ASSUME_NONNULL_END

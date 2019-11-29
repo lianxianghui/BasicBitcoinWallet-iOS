@@ -18,7 +18,6 @@
 #import "LXHFeeUtils.h"
 
 @interface LXHBuildTransactionViewModel ()
-@property (nonatomic, readwrite) LXHSelectInputViewModel *selectInputViewModel;
 @property (nonatomic, readwrite) LXHOutputListViewModel *outputListViewModel;
 @property (nonatomic, readwrite) LXHSelectFeeRateViewModel *selectFeeRateViewModel;
 @property (nonatomic, readwrite) LXHInputFeeViewModel *inputFeeViewModel;
@@ -33,7 +32,7 @@
     NSMutableArray *ret = [NSMutableArray array];
     NSDictionary *dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输入", @"id":@"selectInput"};
     [ret addObject:dic];
-    NSArray *selectedUtxos = self.selectInputViewModel.selectedUtxos;
+    NSArray *selectedUtxos = _selectInputViewModel.selectedUtxos;
     for (NSUInteger i = 0 ; i < selectedUtxos.count; i++) {
         LXHTransactionOutput *utxo = selectedUtxos[i];
         NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
@@ -88,7 +87,7 @@
 }
 
 - (NSArray<LXHTransactionInputOutputCommon *> *)inputs { //utxos
-    return self.selectInputViewModel.selectedUtxos;
+    return _selectInputViewModel.selectedUtxos;
 }
 
 - (NSArray<LXHTransactionInputOutputCommon *> *)outputs {
@@ -140,10 +139,9 @@
 }
 
 #pragma mark - other related viewModels
+
 - (LXHSelectInputViewModel *)selectInputViewModel {
-    if (!_selectInputViewModel)
-        _selectInputViewModel = [[LXHSelectInputViewModel alloc] init];
-    return _selectInputViewModel;
+    return nil;
 }
 
 - (LXHOutputListViewModel *)outputListViewModel {

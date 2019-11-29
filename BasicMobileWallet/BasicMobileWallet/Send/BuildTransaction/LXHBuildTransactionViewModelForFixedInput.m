@@ -12,6 +12,7 @@
 #import "LXHSelectFeeRateViewModel.h"
 #import "LXHInputFeeViewModel.h"
 #import "LXHAddOutputViewModel.h"
+#import "LXHSelectInputViewModelForFixedInput.h"
 
 @implementation LXHBuildTransactionViewModelForFixedInput
 
@@ -48,7 +49,7 @@
 }
 
 - (nullable NSString *)clickSelectOutputPrompt {
-    if (self.selectInputViewModel.selectedUtxos.count == 0)
+    if (_selectInputViewModel.selectedUtxos.count == 0)
         return NSLocalizedString(@"请先选择输入", nil);
     else if (![self feeRateValue])
         return NSLocalizedString(@"请先选择或输入费率", nil);
@@ -59,5 +60,12 @@
     return NSLocalizedString(@"构建固定输入交易", nil);
 }
 
+- (LXHSelectInputViewModel *)selectInputViewModel {
+    if (!_selectInputViewModel) {
+        LXHSelectInputViewModelForFixedInput *selectInputViewModel = [[LXHSelectInputViewModelForFixedInput alloc] init];
+        _selectInputViewModel = selectInputViewModel;
+    }
+    return _selectInputViewModel;
+}
 
 @end

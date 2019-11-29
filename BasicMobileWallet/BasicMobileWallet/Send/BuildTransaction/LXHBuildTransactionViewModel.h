@@ -11,10 +11,17 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class LXHTransactionInputOutputCommon, LXHSelectInputViewModel, LXHOutputListViewModel,LXHSelectFeeRateViewModel, LXHInputFeeViewModel;
-@interface LXHBuildTransactionViewModel : NSObject
+
+
+/**
+ 抽象类，有一些方法在子类里实现
+ */
+@interface LXHBuildTransactionViewModel : NSObject {
+    @protected
+    LXHSelectInputViewModel *_selectInputViewModel;
+}
 
 //ViewModell可以用来在几个页面之间传递构造交易数据
-@property (nonatomic, readonly) LXHSelectInputViewModel *selectInputViewModel;//可能会被子类覆盖
 @property (nonatomic, readonly) LXHOutputListViewModel *outputListViewModel;//可能会被子类覆盖
 @property (nonatomic, readonly) LXHSelectFeeRateViewModel *selectFeeRateViewModel;
 @property (nonatomic, readonly) LXHInputFeeViewModel *inputFeeViewModel;
@@ -29,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)resetSelectFeeRateViewModel;
 - (void)resetInputFeeViewModel;
 //子类覆盖
+- (LXHSelectInputViewModel *)selectInputViewModel;
+
 - (NSArray *)cellDataForListview;
 - (NSDictionary *)titleCell1DataForGroup1;//第一个title
 - (NSDictionary *)titleCell2DataForGroup2;//费率的title
