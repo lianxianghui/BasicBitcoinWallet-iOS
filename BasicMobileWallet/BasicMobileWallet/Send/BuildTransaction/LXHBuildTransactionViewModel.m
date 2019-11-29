@@ -38,7 +38,7 @@
         LXHTransactionOutput *utxo = selectedUtxos[i];
         NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
         mutableDic[@"addressText"] = utxo.address;
-        mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i+1];
+        mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i];
         mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", utxo.value];
         [ret addObject:mutableDic];
     }
@@ -54,7 +54,7 @@
         LXHTransactionOutput *output = outputs[i];
         NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
         mutableDic[@"addressText"] = output.address;
-        mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i+1];
+        mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i];
         mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", output.value];
         [ret addObject:mutableDic];
     }
