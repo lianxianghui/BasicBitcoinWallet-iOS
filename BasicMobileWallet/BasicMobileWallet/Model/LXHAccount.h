@@ -37,7 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)usedAndCurrentAddressesWithType:(LXHAddressType)type;
 - (BOOL)isUsedAddressWithType:(LXHAddressType)type index:(NSUInteger)index;
 
-- (LXHLocalAddress *)addressModelWithWithType:(LXHAddressType)type index:(uint32_t)index;
+- (LXHLocalAddress *)localAddressWithWithType:(LXHAddressType)type index:(uint32_t)index;
+- (LXHLocalAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address;
 @end
 
 NS_ASSUME_NONNULL_END

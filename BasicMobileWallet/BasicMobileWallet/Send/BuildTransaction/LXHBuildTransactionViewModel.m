@@ -177,6 +177,7 @@
     //random int
 //    int theInteger;
 //    [completeData getBytes:&theInteger length:sizeof(theInteger)];
+//    先把LocalAddress处理好
 }
 
 - (LXHTransactionOutput *)currentChangeOutput {

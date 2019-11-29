@@ -98,13 +98,26 @@
     return index < [self usedAddresses].count;
 }
 
-- (LXHLocalAddress *)addressModelWithIndex:(uint32_t)index {
+- (LXHLocalAddress *)localAddressWithIndex:(uint32_t)index {
     LXHLocalAddress *localAddress = [LXHLocalAddress new];
     localAddress.addressString = [self addressStringWithIndex:index];
     localAddress.addressPath = [self addressPathWithIndex:index];
     localAddress.type = self.addressType;
     localAddress.used = [self isUsedAddressWithIndex:index];
     return localAddress;
+}
+
+- (NSUInteger)localAddressIndexOfBase58Address:(nonnull NSString *)base58Address {
+    NSArray *usedAndCurrentAddresses = [self usedAndCurrentAddresses];
+    return [usedAndCurrentAddresses indexOfObject:base58Address];
+}
+
+- (LXHLocalAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address {
+    NSUInteger index = [self localAddressIndexOfBase58Address:base58Address];
+    if (index != NSNotFound)
+        return [self localAddressWithIndex:(uint32_t)index];
+    else
+        return nil;
 }
 
 @end

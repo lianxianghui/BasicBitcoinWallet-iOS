@@ -91,8 +91,16 @@
     return [[self changeLeveWithType:type] isUsedAddressWithIndex:index];
 }
 
-- (LXHLocalAddress *)addressModelWithWithType:(LXHAddressType)type index:(uint32_t)index {
-    return [[self changeLeveWithType:type] addressModelWithIndex:index];
+- (LXHLocalAddress *)localAddressWithWithType:(LXHAddressType)type index:(uint32_t)index {
+    return [[self changeLeveWithType:type] localAddressWithIndex:index];
+}
+
+- (LXHLocalAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address {
+    LXHLocalAddress *ret = nil;
+    ret = [[self changeLeveWithType:LXHAddressTypeChange] localAddressWithBase58Address:base58Address];
+    if (!ret)
+        ret = [[self changeLeveWithType:LXHAddressTypeReceiving] localAddressWithBase58Address:base58Address];
+    return ret;
 }
 
 @end

@@ -48,7 +48,7 @@
     LXHAccount *account = [LXHWallet mainAccount];
     LXHAddressType type = [data[@"addressType"] integerValue];
     uint32_t index = [data[@"addressIndex"] unsignedIntValue];
-    LXHLocalAddress *address = [account addressModelWithWithType:type index:index];
+    LXHLocalAddress *address = [account localAddressWithWithType:type index:index];
     _addressSelectedCallback(address);
     [self.navigationController popViewControllerAnimated:YES];
 }
