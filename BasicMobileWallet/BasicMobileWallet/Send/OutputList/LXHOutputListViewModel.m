@@ -87,8 +87,8 @@
 
 - (void)deleteRowAtIndex:(NSInteger)index { //传入的是cell的index
     NSInteger outputIndex = [self outputIndexForRowIndex:index];
-    [self.cellDataArrayForListview removeObjectAtIndex:index]; //cell Data
     [_outputViewModels removeObjectAtIndex:outputIndex]; //对应的cell Data的来源
+    [self resetCellDataArrayForListview];
 }
 
 - (LXHAddOutputViewModel *)getNewOutputViewModel {
