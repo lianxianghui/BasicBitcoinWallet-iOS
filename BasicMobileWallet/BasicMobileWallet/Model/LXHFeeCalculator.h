@@ -21,6 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 //判断某个输入或输出，是不是消耗的Fee比它的值还大
 - (BOOL)feeGreaterThanValueWithInput:(LXHTransactionInputOutputCommon *)input;
 - (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output;
+
++ (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output feeRateInSat:(NSUInteger)feeRateInSat;
+
++ (NSDecimalNumber *)feeInBTCWithOutput:(LXHTransactionInputOutputCommon *)output feeRateInSat:(NSUInteger)feeRateInSat;//该输出带来的手续费
++ (NSDecimalNumber *)differenceBetweenInputs:(NSArray<LXHTransactionInputOutputCommon *> *)inputs outputs:(NSArray<LXHTransactionInputOutputCommon *> *)outputs;
 @end
 
 NS_ASSUME_NONNULL_END

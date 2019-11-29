@@ -35,6 +35,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)resetSelectFeeRateViewModel;
 - (void)resetInputFeeViewModel;
+//把一个找零输出加到outputs数组(位置随机)
+- (void)addChangeOutputAtRandomPosition;
+
+/**
+ 关于是否需要添加找零的信息
+ 两种情况
+ 如果剩余的值 值得添加一个找零。提示用户是否添加找零输出。
+ 如果不值得，提示用户。（会被包含到手续费里）
+ @return 字典 key1 worth : value YES or No. key2 info
+ */
+- (NSDictionary *)infoForAddingChange;
+
 //子类覆盖
 - (LXHSelectInputViewModel *)selectInputViewModel;
 
@@ -46,7 +58,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)clickSelectInputPrompt;
 - (nullable NSString *)clickSelectOutputPrompt;
 
+
+
+
 - (NSString *)navigationBarTitle;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

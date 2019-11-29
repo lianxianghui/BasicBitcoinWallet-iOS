@@ -15,7 +15,7 @@
 #import "LXHSelectFeeRateViewModel.h"
 #import "LXHInputFeeViewModel.h"
 #import "LXHAddOutputViewModel.h"
-#import "LXHFeeUtils.h"
+#import "LXHFeeCalculator.h"
 
 @interface LXHBuildTransactionViewModel ()
 @property (nonatomic, readwrite) LXHOutputListViewModel *outputListViewModel;
@@ -99,7 +99,7 @@
     NSUInteger outputCount = [self outputs].count;
     if (inputCount == 0 || outputCount == 0)
         return nil;
-    NSDecimalNumber *difference = [LXHFeeUtils differenceBetweenInputs:[self inputs] outputs:[self outputs]];
+    NSDecimalNumber *difference = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
     if ([difference compare:[NSDecimalNumber zero]] == NSOrderedDescending) {//输入和大于输出和
         return difference;
     }
@@ -169,6 +169,55 @@
 
 - (void)resetInputFeeViewModel {
     _inputFeeViewModel = nil;
+}
+
+- (void)addChangeOutputAtRandomPosition {
+     //get view model
+    //put changeOutput
+    //random int
+//    int theInteger;
+//    [completeData getBytes:&theInteger length:sizeof(theInteger)];
+}
+
+- (LXHTransactionOutput *)currentChangeOutput {
+    NSDecimalNumber *differenceBetweenInputsAndOutputs = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
+    LXHTransactionOutput *changeOutput = [[LXHTransactionOutput alloc] init];
+    NSDecimalNumber *feeOfChangeOutput = [LXHFeeCalculator feeInBTCWithOutput:changeOutput feeRateInSat:[self feeRateValue].unsignedIntegerValue];
+    NSDecimalNumber *value = [differenceBetweenInputsAndOutputs decimalNumberBySubtracting:feeOfChangeOutput];
+    if ([value compare:[NSDecimalNumber zero]] == NSOrderedDescending) {
+        changeOutput.value = value;
+        //changeOutput.address =
+    }
+    return changeOutput;
+}
+
+/**
+ 关于是否需要添加找零的信息
+ 两种情况
+ 如果剩余的值 值得添加一个找零。提示用户是否添加找零输出。
+ 如果不值得，提示用户。（会被包含到手续费里）
+ @return 字典 key0 showInfo value YES or No, key1 worth : value YES or No, key2 info
+ */
+- (NSDictionary *)infoForAddingChange {
+    NSDecimalNumber *differenceBetweenInputsAndOutputs = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
+    NSDictionary *ret = nil;
+    if ([differenceBetweenInputsAndOutputs compare:[NSDecimalNumber zero]] == NSOrderedDescending) {//输入和大于输出和
+        BOOL worth;
+        NSString *info;
+        LXHTransactionOutput *output = [LXHTransactionOutput new];
+        output.value = differenceBetweenInputsAndOutputs;
+        if ([LXHFeeCalculator feeGreaterThanValueWithOutput:output feeRateInSat:[self feeRateValue].unsignedIntegerValue]) {
+            worth = NO;
+            info = NSLocalizedString(@"因为找零过小，带来的手续费比它的值还大，已经被归到手续费里", nil);
+        } else {
+            worth = YES;
+            info = NSLocalizedString(@"是否添加找零?", nil);
+        }
+        ret = @{@"showInfo":@(YES), @"worth":@(worth), @"info":info};
+    } else {
+        ret = @{@"showInfo":@(NO)};
+    }
+    return ret;
 }
 
 @end

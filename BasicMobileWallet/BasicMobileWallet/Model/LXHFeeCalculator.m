@@ -27,15 +27,24 @@
 }
 
 - (BOOL)feeGreaterThanValueWithInput:(LXHTransactionInputOutputCommon *)input {
-    NSUInteger feePerInputInSat = 148 * _feeRateInSat;
+    NSUInteger feePerInputInSat = 148 * _feeRateInSat;//目前不支持隔离见证输入输出
     NSDecimalNumber *feePerInputInBTC = [NSDecimalNumber decimalNumberWithMantissa:feePerInputInSat exponent:-8 isNegative:NO];
     return [feePerInputInBTC compare:input.value] == NSOrderedDescending;
 }
 
 - (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output {
-    NSUInteger feePerOutputInSat = 148 * _feeRateInSat;
-    NSDecimalNumber *feePerOutputInBTC = [NSDecimalNumber decimalNumberWithMantissa:feePerOutputInSat exponent:-8 isNegative:NO];
-    return [feePerOutputInBTC compare:output.value] == NSOrderedDescending;
+    return [LXHFeeCalculator feeGreaterThanValueWithOutput:output feeRateInSat:_feeRateInSat];
+}
+
++ (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output feeRateInSat:(NSUInteger)feeRateInSat {
+    NSDecimalNumber *feeInBTC = [self feeInBTCWithOutput:output feeRateInSat:feeRateInSat];
+    return [feeInBTC compare:output.value] == NSOrderedDescending;
+}
+
++ (NSDecimalNumber *)feeInBTCWithOutput:(LXHTransactionInputOutputCommon *)output feeRateInSat:(NSUInteger)feeRateInSat {
+    NSUInteger feeInSat = 34 * feeRateInSat;//目前不支持隔离见证输入输出
+    NSDecimalNumber *feeInBTC = [NSDecimalNumber decimalNumberWithMantissa:feeInSat exponent:-8 isNegative:NO];
+    return feeInBTC;
 }
 
 //参考 https://bitcoin.stackexchange.com/questions/1195/how-to-calculate-transaction-size-before-sending-legacy-non-segwit-p2pkh-p2sh
@@ -49,5 +58,11 @@
     unsigned long long estimatedFeeInSat = [self estimatedFeeInSatWithFeeRate:feeRateInSat inputCount:inputCount outputCount:outputCount];
     NSDecimalNumber *ret = [NSDecimalNumber decimalNumberWithMantissa:estimatedFeeInSat exponent:-8 isNegative:NO];
     return ret;
+}
+
++ (NSDecimalNumber *)differenceBetweenInputs:(NSArray<LXHTransactionInputOutputCommon *> *)inputs outputs:(NSArray<LXHTransactionInputOutputCommon *> *)outputs {
+    NSDecimalNumber *inputsValueSum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:inputs];
+    NSDecimalNumber *outputsValueSum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:outputs];
+    return [inputsValueSum decimalNumberBySubtracting:outputsValueSum];
 }
 @end
