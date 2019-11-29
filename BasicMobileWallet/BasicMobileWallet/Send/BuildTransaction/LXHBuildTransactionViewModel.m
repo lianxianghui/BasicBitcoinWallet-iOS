@@ -173,12 +173,9 @@
 }
 
 - (void)addChangeOutputAtRandomPosition {
-     //get view model
-    //put changeOutput
-    //random int
-//    int theInteger;
-//    [completeData getBytes:&theInteger length:sizeof(theInteger)];
-//    先把LocalAddress处理好
+    LXHTransactionOutput *currentChangeOutput = [self currentChangeOutput];
+    if (currentChangeOutput)
+        [self.outputListViewModel addNewChangeOutputAtRandomPositionWithOutput:currentChangeOutput];
 }
 
 - (LXHTransactionOutput *)currentChangeOutput {
@@ -189,18 +186,31 @@
     if ([value compare:[NSDecimalNumber zero]] == NSOrderedDescending) {
         changeOutput.value = value;
         changeOutput.address = [LXHWallet.mainAccount currentChangeAddress].addressString;
+        return changeOutput;
+    } else {
+        return nil;
     }
-    return changeOutput;
+}
+
+- (BOOL)hasInputsAndFeeRateAndOutputs {
+    return _selectInputViewModel.selectedUtxos.count > 0 && [self feeRateValue] && [self.outputListViewModel outputCount] > 0;
 }
 
 /**
  关于是否需要添加找零的信息
- 两种情况
- 如果剩余的值 值得添加一个找零。提示用户是否添加找零输出。
- 如果不值得，提示用户。（会被包含到手续费里）
+ 两种情况显示或不显示
+ 如果显示分两种情况
+ 1.如果剩余的值 值得添加一个找零。提示用户是否添加找零输出。
+ 2.如果不值得，提示用户。（会被包含到手续费里）
  @return 字典 key0 showInfo value YES or No, key1 worth : value YES or No, key2 info
  */
 - (NSDictionary *)infoForAddingChange {
+    NSDictionary *doNotShowInfo = @{@"showInfo":@(NO)};
+    if (![self hasInputsAndFeeRateAndOutputs])
+        return doNotShowInfo;
+    if ([self.outputListViewModel hasChangeOutput])
+        return doNotShowInfo;
+    
     NSDecimalNumber *differenceBetweenInputsAndOutputs = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
     NSDictionary *ret = nil;
     if ([differenceBetweenInputsAndOutputs compare:[NSDecimalNumber zero]] == NSOrderedDescending) {//输入和大于输出和
@@ -217,7 +227,7 @@
         }
         ret = @{@"showInfo":@(YES), @"worth":@(worth), @"info":info};
     } else {
-        ret = @{@"showInfo":@(NO)};
+        ret = doNotShowInfo;
     }
     return ret;
 }

@@ -18,13 +18,17 @@
 
 - (void)showOkAlertViewWithMessage:(NSString *)message handler:(void (^ __nullable)(UIAlertAction *action))handler {
     NSString *title = NSLocalizedString(@"提醒", @"Warning");
-    UIAlertController *alert = [UIUtils okAlertViewWithTitle:title message:message handler:handler];
-    [self presentViewController:alert animated:YES completion:nil];
+    [self showOkAlertViewWithTitle:title message:message handler:handler];
 }
 
 - (void)showOkCancelAlertViewWithTitle:(NSString *)title message:(NSString *)message okHandler:(void (^ __nullable)(UIAlertAction *action))okHandler cancelHandler:(void (^ __nullable)(UIAlertAction *action))cancelHandler {
     UIAlertController *alert = [UIUtils okCancelAlertViewWithTitle:title message:message okHandler:okHandler cancelHandler:cancelHandler];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)showOkCancelAlertViewWithMessage:(NSString *)message okHandler:(void (^ __nullable)(UIAlertAction *action))okHandler cancelHandler:(void (^ __nullable)(UIAlertAction *action))cancelHandler {
+    NSString *title = NSLocalizedString(@"提醒", @"Warning");
+    [self showOkCancelAlertViewWithTitle:title message:message okHandler:okHandler cancelHandler:cancelHandler];
 }
 
 

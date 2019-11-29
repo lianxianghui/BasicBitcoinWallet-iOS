@@ -66,6 +66,26 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self refreshListView];
+    [self showPromptIfNeeded];
+}
+
+- (void)showPromptIfNeeded {
+    NSDictionary *infoForAddingChange = [_viewModel infoForAddingChange];
+    BOOL showInfo = [infoForAddingChange[@"showInfo"] boolValue];
+    if (showInfo) {
+        BOOL isWorthAdding = [infoForAddingChange[@"worth"] boolValue];
+        if (isWorthAdding) {
+            NSString *info = infoForAddingChange[@"info"];
+            LXHWeakSelf
+            [self showOkCancelAlertViewWithMessage:info okHandler:^(UIAlertAction * _Nonnull action) {
+                [weakSelf.viewModel addChangeOutputAtRandomPosition];
+                [weakSelf refreshListView];
+            } cancelHandler:nil];
+        } else {
+            NSString *info = infoForAddingChange[@"info"];
+            [self showOkAlertViewWithMessage:info handler:nil];
+        }
+    }
 }
 
 - (void)setViewProperties {

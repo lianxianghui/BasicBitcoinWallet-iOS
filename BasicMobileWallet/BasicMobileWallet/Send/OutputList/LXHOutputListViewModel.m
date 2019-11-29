@@ -10,6 +10,7 @@
 #import "LXHTransactionOutput.h"
 #import "LXHAddOutputViewModel.h"
 #import "BlocksKit.h"
+#import "BTCData.h"
 
 @interface LXHOutputListViewModel ()
 @property (nonatomic) NSMutableArray<LXHAddOutputViewModel *> *outputViewModels;
@@ -102,10 +103,26 @@
     [_outputViewModels addObject:model];
 }
 
+- (void)addNewChangeOutputAtRandomPositionWithOutput:(LXHTransactionOutput *)output {
+    if (!output)
+        return;
+    LXHAddOutputViewModel *viewModel = [self getNewOutputViewModel];
+    [viewModel setOutput:output];
+    NSUInteger randomPosition = [self randomPosition];
+    [_outputViewModels insertObject:viewModel atIndex:randomPosition];
+}
+
+- (NSUInteger)randomPosition {
+    NSUInteger randomInt;
+    NSData *randomData = BTCRandomDataWithLength(sizeof(randomInt));
+    [randomData getBytes:&randomInt length:sizeof(randomInt)];
+    NSUInteger allPostionCount = [self outputCount] + 1;
+    return randomInt % (allPostionCount + 1);
+}
+
 - (void)deleteOutputViewModelAtIndex:(NSInteger)index {
     [_outputViewModels removeObjectAtIndex:index];
 }
-
 
 - (NSArray *)outputs {
     NSArray *outputs = [self.outputViewModels bk_map:^id(LXHAddOutputViewModel *viewModel) {
@@ -116,5 +133,11 @@
 
 - (NSInteger)outputCount {
     return _outputViewModels.count;
+}
+
+- (BOOL)hasChangeOutput {
+    return [self.outputViewModels bk_any:^BOOL(LXHAddOutputViewModel *viewModel) {
+        return [viewModel isChangeOutput];
+    }];
 }
 @end

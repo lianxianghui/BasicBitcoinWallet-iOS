@@ -14,7 +14,6 @@
 #import "LXHWallet.h"
 
 @interface LXHAddOutputViewModel ()
-@property (nonatomic, readwrite) LXHTransactionOutput *output;
 @property (nonatomic, readwrite) NSMutableArray *cellDataArrayForListView;
 @end
 
@@ -24,7 +23,6 @@
 {
     self = [super init];
     if (self) {
-        _output = [[LXHTransactionOutput alloc] init];
         //TODO 临时的
         [self setAddress:@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx"];
         [self setValueString:@"0.005"];
@@ -43,7 +41,7 @@
         [_cellDataArrayForListView addObject:dic];
         
         NSString *text, *warningText, *addressText;
-        if (_output.address) {
+        if (self.output.address) {
             text = NSLocalizedString(@"地址: ", nil);
             addressText = self.output.address ?: @" ";
         } else {
@@ -95,6 +93,7 @@
     return _maxValue == nil;
 }
 
+
 - (BOOL)setAddress:(NSString *)address {
     NSString *validAddress = [LXHAddOutputViewModel validAddress:address];
     if (validAddress) {
@@ -102,7 +101,7 @@
         if (localAddress)
             [self setLocalAddress:localAddress];
         else
-            _output.address = validAddress;
+            self.output.address = validAddress;
         return YES;
     } else {
         return NO;
@@ -110,8 +109,8 @@
 }
 
 - (NSString *)valueString {
-    if (_output.value)
-        return [NSString stringWithFormat:@"%@", _output.value];
+    if (self.output.value)
+        return [NSString stringWithFormat:@"%@", self.output.value];
     else
         return @"";
 }
@@ -120,7 +119,7 @@
     //todo check
     BOOL valueIsValid = YES;
     if (valueIsValid) {
-        _output.value = [[NSDecimalNumber alloc] initWithString:valueString];
+        self.output.value = [[NSDecimalNumber alloc] initWithString:valueString];
         [self resetCellDataArrayForListView];
         return YES;
     } else {
@@ -142,7 +141,24 @@
 
 - (void)setLocalAddress:(LXHLocalAddress *)localAddress {
     _localAddress = localAddress;
-    _output.address = localAddress.addressString;
+    self.output.address = localAddress.addressString;
+}
+
+- (void)setOutput:(LXHTransactionOutput *)output {
+    _output = output;
+    _localAddress = [LXHWallet.mainAccount localAddressWithBase58Address:output.address];
+    
+}
+- (LXHTransactionOutput *)output {
+    if (!_output)
+        _output = [LXHTransactionOutput new];
+    return _output;
+}
+
+- (BOOL)isChangeOutput {
+    if (_localAddress)
+        return _localAddress.type == LXHAddressTypeChange;
+    return NO;
 }
 
 @end
