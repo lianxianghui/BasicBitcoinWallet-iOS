@@ -95,7 +95,7 @@
     return self.outputListViewModel.outputs;
 }
 
-- (NSDecimalNumber *)feeValueInBTC {
+- (NSDecimalNumber *)actualFeeValueInBTC {
     NSUInteger inputCount = [self inputs].count;
     NSUInteger outputCount = [self outputs].count;
     if (inputCount == 0 || outputCount == 0)
@@ -108,8 +108,28 @@
 }
 
 - (NSDictionary *)titleCell2DataForGroup2 {
-    NSDecimalNumber *feeValueInBTC = [self feeValueInBTC];
-    NSString *title = feeValueInBTC ? [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), feeValueInBTC] : NSLocalizedString(@"手续费", nil); //feeValueInBTC 为nil时代表无意义，不显示具体数值
+    LXHFeeCalculator *feeCalculator = [LXHFeeCalculator new];
+    feeCalculator.inputs = [self inputs];
+    feeCalculator.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
+    feeCalculator.outputs = [self outputs];
+    NSDecimalNumber *estimatedFeeValueInBTC = [feeCalculator estimatedFeeInBTC];//从费率和估计的字节数算出的手续费
+    NSDecimalNumber *actualFeeValueInBTC = [self actualFeeValueInBTC];
+    NSString *title = nil;
+    if (!estimatedFeeValueInBTC || !actualFeeValueInBTC) {
+        title = NSLocalizedString(@"手续费", nil); //为nil时代表无意义，不显示具体数值
+    } else {
+        NSComparisonResult comparisonResult = [actualFeeValueInBTC compare:estimatedFeeValueInBTC];
+        if (comparisonResult == NSOrderedSame)
+            title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), actualFeeValueInBTC];
+        else if (comparisonResult == NSOrderedDescending) { //actualFeeValueInBTC > estimatedFeeValueInBTC
+            if ([self changeTooSmall]) //找零太小，归到手续费里的情况
+                title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), actualFeeValueInBTC];
+            else //实际手续费过多，有可能造成浪费。起到提醒作用
+                title = [NSString stringWithFormat:NSLocalizedString(@"估计的手续费 %@BTC  实际的手续费 %@", nil), estimatedFeeValueInBTC, actualFeeValueInBTC];
+        } else { //actualFeeValueInBTC < estimatedFeeValueInBTC。实际手续费过少，有可能影响到账时间。起到提醒作用
+            title = [NSString stringWithFormat:NSLocalizedString(@"估计的手续费 %@BTC  实际的手续费 %@", nil), estimatedFeeValueInBTC, actualFeeValueInBTC];
+        }
+    }
     NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
     return dic;
 }
@@ -178,20 +198,6 @@
         [self.outputListViewModel addNewChangeOutputAtRandomPositionWithOutput:currentChangeOutput];
 }
 
-- (LXHTransactionOutput *)currentChangeOutput {
-    NSDecimalNumber *differenceBetweenInputsAndOutputs = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
-    LXHTransactionOutput *changeOutput = [[LXHTransactionOutput alloc] init];
-    NSDecimalNumber *feeOfChangeOutput = [LXHFeeCalculator feeInBTCWithOutput:changeOutput feeRateInSat:[self feeRateValue].unsignedIntegerValue];
-    NSDecimalNumber *value = [differenceBetweenInputsAndOutputs decimalNumberBySubtracting:feeOfChangeOutput];
-    if ([value compare:[NSDecimalNumber zero]] == NSOrderedDescending) {
-        changeOutput.value = value;
-        changeOutput.address = [LXHWallet.mainAccount currentChangeAddress];
-        return changeOutput;
-    } else {
-        return nil;
-    }
-}
-
 - (BOOL)hasInputsAndFeeRateAndOutputs {
     return _selectInputViewModel.selectedUtxos.count > 0 && [self feeRateValue] && [self.outputListViewModel outputCount] > 0;
 }
@@ -216,9 +222,7 @@
     if ([differenceBetweenInputsAndOutputs compare:[NSDecimalNumber zero]] == NSOrderedDescending) {//输入和大于输出和
         BOOL worth;
         NSString *info;
-        LXHTransactionOutput *output = [LXHTransactionOutput new];
-        output.value = differenceBetweenInputsAndOutputs;
-        if ([LXHFeeCalculator feeGreaterThanValueWithOutput:output feeRateInSat:[self feeRateValue].unsignedIntegerValue]) {
+        if ([self changeTooSmall]) {
             worth = NO;
             info = NSLocalizedString(@"因为找零过小，带来的手续费比它的值还大，已经被归到手续费里", nil);
         } else {
@@ -230,6 +234,38 @@
         ret = doNotShowInfo;
     }
     return ret;
+}
+
+- (BOOL)changeTooSmall {
+    NSDecimalNumber *differenceBetweenInputsAndOutputs = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
+    LXHTransactionOutput *output = [LXHTransactionOutput new];
+    output.value = differenceBetweenInputsAndOutputs;
+    return [LXHFeeCalculator feeGreaterThanValueWithOutput:output feeRateInSat:[self feeRateValue].unsignedIntegerValue];
+}
+
+- (LXHTransactionOutput *)currentChangeOutput {
+    NSDecimalNumber *differenceBetweenInputsAndOutputs = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
+    NSDecimalNumber *feeWithANewChangeOutput = [self feeWithANewChangeOutput];
+    NSDecimalNumber *value = [differenceBetweenInputsAndOutputs decimalNumberBySubtracting:feeWithANewChangeOutput];
+    if ([value compare:[NSDecimalNumber zero]] == NSOrderedDescending) {
+        LXHTransactionOutput *changeOutput = [LXHTransactionOutput new];
+        changeOutput.value = value;
+        changeOutput.address = [LXHWallet.mainAccount currentChangeAddress];
+        return changeOutput;
+    } else {
+        return nil;
+    }
+}
+
+- (NSDecimalNumber *)feeWithANewChangeOutput {
+    LXHFeeCalculator *feeCalculator = [LXHFeeCalculator new];
+    feeCalculator.inputs = [self inputs];
+    feeCalculator.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
+    LXHTransactionOutput *newChangeOutput = [LXHTransactionOutput new];
+    NSMutableArray *outputs = [self outputs].mutableCopy;
+    [outputs addObject:newChangeOutput];
+    feeCalculator.outputs = outputs;
+    return [feeCalculator estimatedFeeInBTC];
 }
 
 @end

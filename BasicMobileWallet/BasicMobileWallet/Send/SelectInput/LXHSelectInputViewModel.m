@@ -65,7 +65,7 @@
                                          @"checkedImage":@"checked_circle", @"isSelectable":@"1",
                                          @"timeValue":@"2019-09-01 12:36"}.mutableCopy;
             dic[@"btcValue"] = valueText;
-            dic[@"addressText"] = utxo.address ?: @"";
+            dic[@"addressText"] = utxo.address.base58String ?: @"";
             dic[@"timeValue"] = transactionTime;
             dic[@"model"] = utxo;
             dic[@"isChecked"] = @([self.selectedUtxos containsObject:utxo]);
