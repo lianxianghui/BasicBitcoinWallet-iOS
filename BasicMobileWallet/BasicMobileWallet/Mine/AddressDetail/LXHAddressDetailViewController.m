@@ -90,7 +90,7 @@
     if (!_cellDataArray) {
         _cellDataArray = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
-            LXHAddressType type = [_data[@"addressType"] integerValue];
+            LXHLocalAddressType type = [_data[@"addressType"] integerValue];
             uint32_t index = [_data[@"addressIndex"] unsignedIntValue];
             LXHAccount *account = LXHWallet.mainAccount;
             //@{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE"};
@@ -118,7 +118,7 @@
             
             dic = addressDetailCellDic.mutableCopy;
             dic[@"title"] = NSLocalizedString(@"地址用途", nil);
-            dic[@"text"] = type == LXHAddressTypeReceiving ? NSLocalizedString(@"接收", nil) : NSLocalizedString(@"找零", nil);
+            dic[@"text"] = type == LXHLocalAddressTypeReceiving ? NSLocalizedString(@"接收", nil) : NSLocalizedString(@"找零", nil);
             [_cellDataArray addObject:dic];
             
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"}.mutableCopy;
@@ -252,7 +252,7 @@
     switch(indexPath.row) {
         case 6:
         {
-            LXHAddressType type = [_data[@"addressType"] integerValue];
+            LXHLocalAddressType type = [_data[@"addressType"] integerValue];
             uint32_t index = [_data[@"addressIndex"] unsignedIntValue];
             NSString *address = [LXHWallet.mainAccount addressWithType:type index:index];
             //显示地址相关的交易

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "LXHGlobalHeader.h"
-#import "LXHLocalAddress.h"
+#import "LXHAddress.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface LXHWalletChangeLevelModel : NSObject
 - (instancetype)initWithBitcoinNetworkType:(LXHBitcoinNetworkType)currentNetworkType
-                               addressType:(LXHAddressType)addressType
+                               addressType:(LXHLocalAddressType)addressType
                            accountKeychain:(id)accountKeychain
                        currentAddressIndex:(uint32_t)currentAddressIndex;
 
@@ -32,9 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)currentAddress;
 - (NSArray *)usedAddresses;
 - (NSArray *)usedAndCurrentAddresses;
-- (LXHLocalAddress *)localAddressWithIndex:(uint32_t)index;
-- (LXHLocalAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address;
-- (LXHLocalAddress *)currentLocalAddress;
+- (LXHAddress *)localAddressWithIndex:(uint32_t)index;
+- (LXHAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address;
+- (LXHAddress *)currentLocalAddress;
 @end
 
 

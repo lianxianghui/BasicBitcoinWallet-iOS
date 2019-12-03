@@ -8,7 +8,7 @@
 
 #import "LXHAddressListForSelectionViewController.h"
 #import "LXHLocalAddressCell.h"
-#import "LXHLocalAddress.h"
+#import "LXHAddress.h"
 #import "LXHWallet.h"
 
 @interface LXHAddressListForSelectionViewController ()
@@ -46,9 +46,9 @@
     if (!data) //应该不会发生
         return;
     LXHAccount *account = [LXHWallet mainAccount];
-    LXHAddressType type = [data[@"addressType"] integerValue];
+    LXHLocalAddressType type = [data[@"addressType"] integerValue];
     uint32_t index = [data[@"addressIndex"] unsignedIntValue];
-    LXHLocalAddress *address = [account localAddressWithWithType:type index:index];
+    LXHAddress *address = [account localAddressWithWithType:type index:index];
     _addressSelectedCallback(address);
     [self.navigationController popViewControllerAnimated:YES];
 }

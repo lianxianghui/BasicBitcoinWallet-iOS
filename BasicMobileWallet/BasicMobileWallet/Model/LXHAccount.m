@@ -29,8 +29,8 @@
     if (self) {
         _masterKeychain = [[BTCKeychain alloc] initWithSeed:rootSeed];
         _currentNetworkType = currentNetworkType;
-        _receiving = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHAddressTypeReceiving accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)currentReceivingAddressIndex];
-        _change = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHAddressTypeChange accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)currentChangeAddressIndex];
+        _receiving = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHLocalAddressTypeReceiving accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)currentReceivingAddressIndex];
+        _change = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHLocalAddressTypeChange accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)currentChangeAddressIndex];
     }
     return self;
 }
@@ -57,54 +57,54 @@
 
 - (NSArray *)usedAndCurrentAddresses {
     NSMutableArray *ret = [[self usedAddresses] mutableCopy];
-    [ret addObjectIfNotNil:[self currentAddressWithType:LXHAddressTypeReceiving]];
-    [ret addObjectIfNotNil:[self currentAddressWithType:LXHAddressTypeChange]];
+    [ret addObjectIfNotNil:[self currentAddressWithType:LXHLocalAddressTypeReceiving]];
+    [ret addObjectIfNotNil:[self currentAddressWithType:LXHLocalAddressTypeChange]];
     return ret;
 }
 
-- (NSInteger)currentAddressIndexWithType:(LXHAddressType)type {
+- (NSInteger)currentAddressIndexWithType:(LXHLocalAddressType)type {
     return [self changeLeveWithType:type].currentAddressIndex;
 }
 
-- (NSString *)currentAddressWithType:(LXHAddressType)type {
+- (NSString *)currentAddressWithType:(LXHLocalAddressType)type {
     return [[self changeLeveWithType:type] currentAddress];
 }
 
-- (NSString *)addressWithType:(LXHAddressType)type index:(uint32_t)index {
+- (NSString *)addressWithType:(LXHLocalAddressType)type index:(uint32_t)index {
     return [[self changeLeveWithType:type] addressStringWithIndex:index];
 }
 
-- (NSString *)addressPathWithType:(LXHAddressType)type index:(uint32_t)index {
+- (NSString *)addressPathWithType:(LXHLocalAddressType)type index:(uint32_t)index {
     return [[self changeLeveWithType:type] addressPathWithIndex:index]; 
 }
 
-- (NSArray *)usedAndCurrentAddressesWithType:(LXHAddressType)type {
+- (NSArray *)usedAndCurrentAddressesWithType:(LXHLocalAddressType)type {
     return [[self changeLeveWithType:type] usedAndCurrentAddresses];
 }
 
-- (LXHWalletChangeLevelModel *)changeLeveWithType:(LXHAddressType)type {
-    LXHWalletChangeLevelModel *changeLevel = (type == LXHAddressTypeReceiving) ? self.receiving : self.change;
+- (LXHWalletChangeLevelModel *)changeLeveWithType:(LXHLocalAddressType)type {
+    LXHWalletChangeLevelModel *changeLevel = (type == LXHLocalAddressTypeReceiving) ? self.receiving : self.change;
     return changeLevel;
 }
 
-- (BOOL)isUsedAddressWithType:(LXHAddressType)type index:(NSUInteger)index {
+- (BOOL)isUsedAddressWithType:(LXHLocalAddressType)type index:(NSUInteger)index {
     return [[self changeLeveWithType:type] isUsedAddressWithIndex:index];
 }
 
-- (LXHLocalAddress *)localAddressWithWithType:(LXHAddressType)type index:(uint32_t)index {
+- (LXHAddress *)localAddressWithWithType:(LXHLocalAddressType)type index:(uint32_t)index {
     return [[self changeLeveWithType:type] localAddressWithIndex:index];
 }
 
-- (LXHLocalAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address {
-    LXHLocalAddress *ret = nil;
-    ret = [[self changeLeveWithType:LXHAddressTypeChange] localAddressWithBase58Address:base58Address];
+- (LXHAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address {
+    LXHAddress *ret = nil;
+    ret = [[self changeLeveWithType:LXHLocalAddressTypeChange] localAddressWithBase58Address:base58Address];
     if (!ret)
-        ret = [[self changeLeveWithType:LXHAddressTypeReceiving] localAddressWithBase58Address:base58Address];
+        ret = [[self changeLeveWithType:LXHLocalAddressTypeReceiving] localAddressWithBase58Address:base58Address];
     return ret;
 }
 
-- (LXHLocalAddress *)currentChangeAddress {
-    return [[self changeLeveWithType:LXHAddressTypeChange] currentLocalAddress];
+- (LXHAddress *)currentChangeAddress {
+    return [[self changeLeveWithType:LXHLocalAddressTypeChange] currentLocalAddress];
 }
 
 @end

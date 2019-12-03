@@ -57,7 +57,7 @@
     if (!data)
         return;
     _data = data;
-    LXHAddressType type = [_data[@"addressType"] integerValue];
+    LXHLocalAddressType type = [_data[@"addressType"] integerValue];
     uint32_t index = [_data[@"addressIndex"] unsignedIntValue];
     
     NSString *address = [[LXHWallet mainAccount] addressWithType:type index:index];

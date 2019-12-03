@@ -12,7 +12,7 @@
 
 @interface LXHWalletChangeLevelModel ()
 @property (nonatomic) LXHBitcoinNetworkType currentNetworkType;
-@property (nonatomic) LXHAddressType addressType;
+@property (nonatomic) LXHLocalAddressType addressType;
 @property (nonatomic) BTCKeychain *accountKeychain;
 @property (nonatomic, readwrite) uint32_t currentAddressIndex;
 
@@ -22,7 +22,7 @@
 @implementation LXHWalletChangeLevelModel
 
 - (instancetype)initWithBitcoinNetworkType:(LXHBitcoinNetworkType)currentNetworkType
-                               addressType:(LXHAddressType)addressType
+                               addressType:(LXHLocalAddressType)addressType
                            accountKeychain:(id)accountKeychain
                        currentAddressIndex:(uint32_t)currentAddressIndex {
     self = [super init];
@@ -94,7 +94,7 @@
     return [self addressStringWithIndex:_currentAddressIndex];
 }
 
-- (LXHLocalAddress *)currentLocalAddress {
+- (LXHAddress *)currentLocalAddress {
     return [self localAddressWithIndex:_currentAddressIndex];
 }
 
@@ -102,12 +102,12 @@
     return index < [self usedAddresses].count;
 }
 
-- (LXHLocalAddress *)localAddressWithIndex:(uint32_t)index {
-    LXHLocalAddress *localAddress = [LXHLocalAddress new];
-    localAddress.addressString = [self addressStringWithIndex:index];
-    localAddress.addressPath = [self addressPathWithIndex:index];
-    localAddress.type = self.addressType;
-    localAddress.used = [self isUsedAddressWithIndex:index];
+- (LXHAddress *)localAddressWithIndex:(uint32_t)index {
+    LXHAddress *localAddress = [LXHAddress new];
+    localAddress.base58String = [self addressStringWithIndex:index];
+    localAddress.localAddressPath = [self addressPathWithIndex:index];
+    localAddress.localAddressType = self.addressType;
+    localAddress.localAddressUsed = [self isUsedAddressWithIndex:index];
     return localAddress;
 }
 
@@ -116,7 +116,7 @@
     return [usedAndCurrentAddresses indexOfObject:base58Address];
 }
 
-- (LXHLocalAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address {
+- (LXHAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address {
     NSUInteger index = [self localAddressIndexOfBase58Address:base58Address];
     if (index != NSNotFound)
         return [self localAddressWithIndex:(uint32_t)index];

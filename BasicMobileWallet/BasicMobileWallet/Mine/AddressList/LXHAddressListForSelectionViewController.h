@@ -7,11 +7,11 @@
 //
 
 #import "LXHAddressListViewController+ForSubclassing.h"
-#import "LXHLocalAddress.h"
+#import "LXHAddress.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^addressSelectedCallback)(LXHLocalAddress *localAddress);
+typedef void(^addressSelectedCallback)(LXHAddress *localAddress);
 
 
 /**

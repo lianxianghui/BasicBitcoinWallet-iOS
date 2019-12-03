@@ -8,7 +8,7 @@
 
 #import "LXHAddOutputViewModel.h"
 #import "LXHTransactionOutput.h"
-#import "LXHLocalAddress.h"
+#import "LXHAddress.h"
 #import "NSString+Base.h"
 #import "BTCAddress.h"
 #import "LXHWallet.h"
@@ -73,8 +73,8 @@
 - (NSString *)warningText {
     if (_localAddress) {
         NSString *format = NSLocalizedString(@"%@本地%@地址", nil); //例如 "用过的本地找零地址"
-        NSString *string1 = _localAddress.used ? NSLocalizedString(@"用过的", nil) : @"";
-        NSString *string2 = _localAddress.type == LXHAddressTypeChange ? NSLocalizedString(@"找零", nil) : NSLocalizedString(@"接收", nil);
+        NSString *string1 = _localAddress.localAddressUsed ? NSLocalizedString(@"用过的", nil) : @"";
+        NSString *string2 = _localAddress.localAddressType == LXHLocalAddressTypeChange ? NSLocalizedString(@"找零", nil) : NSLocalizedString(@"接收", nil);
         NSString *text = [NSString stringWithFormat:format, string1, string2];
         return text;
     } else
@@ -96,7 +96,7 @@
 - (BOOL)setAddress:(NSString *)address {
     NSString *validAddress = [LXHAddOutputViewModel validAddress:address];
     if (validAddress) {
-        LXHLocalAddress *localAddress = [LXHWallet.mainAccount localAddressWithBase58Address:validAddress];
+        LXHAddress *localAddress = [LXHWallet.mainAccount localAddressWithBase58Address:validAddress];
         if (localAddress) {
             [self setLocalAddress:localAddress];
         } else {
@@ -140,9 +140,9 @@
         return nil;
 }
 
-- (void)setLocalAddress:(LXHLocalAddress *)localAddress {
+- (void)setLocalAddress:(LXHAddress *)localAddress {
     _localAddress = localAddress;
-    self.output.address = localAddress.addressString;
+    self.output.address = localAddress.base58String;
 }
 
 - (void)setOutput:(LXHTransactionOutput *)output {
@@ -158,7 +158,7 @@
 
 - (BOOL)isChangeOutput {
     if (_localAddress)
-        return _localAddress.type == LXHAddressTypeChange;
+        return _localAddress.localAddressType == LXHLocalAddressTypeChange;
     return NO;
 }
 

@@ -35,17 +35,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)usedAddresses;
 - (NSArray *)usedAndCurrentAddresses;
 
-- (NSInteger)currentAddressIndexWithType:(LXHAddressType)type;
-- (NSString *)currentAddressWithType:(LXHAddressType)type;
-- (NSString *)addressWithType:(LXHAddressType)type index:(uint32_t)index;
-- (NSString *)addressPathWithType:(LXHAddressType)typ index:(uint32_t)index;
-- (NSArray *)usedAndCurrentAddressesWithType:(LXHAddressType)type;
-- (BOOL)isUsedAddressWithType:(LXHAddressType)type index:(NSUInteger)index;
+- (NSInteger)currentAddressIndexWithType:(LXHLocalAddressType)type;
+- (NSString *)currentAddressWithType:(LXHLocalAddressType)type;
+- (NSString *)addressWithType:(LXHLocalAddressType)type index:(uint32_t)index;
+- (NSString *)addressPathWithType:(LXHLocalAddressType)typ index:(uint32_t)index;
+- (NSArray *)usedAndCurrentAddressesWithType:(LXHLocalAddressType)type;
+- (BOOL)isUsedAddressWithType:(LXHLocalAddressType)type index:(NSUInteger)index;
 
 
-- (LXHLocalAddress *)localAddressWithWithType:(LXHAddressType)type index:(uint32_t)index;
-- (LXHLocalAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address;
-- (LXHLocalAddress *)currentChangeAddress;
+- (LXHAddress *)localAddressWithWithType:(LXHLocalAddressType)type index:(uint32_t)index;
+- (LXHAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address;
+- (LXHAddress *)currentChangeAddress;
 @end
 
 NS_ASSUME_NONNULL_END

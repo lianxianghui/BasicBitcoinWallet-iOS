@@ -74,7 +74,7 @@
 
 //Delegate Methods
 
-- (NSArray *)localAddressCellDicArrayWithAddressType:(LXHAddressType)addressType {
+- (NSArray *)localAddressCellDicArrayWithAddressType:(LXHLocalAddressType)addressType {
     NSMutableArray *ret = [NSMutableArray array];
     LXHAccount *account = LXHWallet.mainAccount;
     NSArray *usedAndCurrentAddresses = [account usedAndCurrentAddressesWithType:addressType];
@@ -101,12 +101,12 @@
             dic = @{@"title":@"接收地址", @"isSelectable":@"0", @"cellType":@"LXHTitleCell"};
             [_dataForCells addObject:dic];
             //receiving addresses info cells
-            [_dataForCells addObjectsFromArray:[self localAddressCellDicArrayWithAddressType:LXHAddressTypeReceiving]];
+            [_dataForCells addObjectsFromArray:[self localAddressCellDicArrayWithAddressType:LXHLocalAddressTypeReceiving]];
             //change addresses title
             dic = @{@"title":@"找零地址", @"isSelectable":@"0", @"cellType":@"LXHTitleCell"};
             [_dataForCells addObject:dic];
             //change addresses info cells
-            [_dataForCells addObjectsFromArray:[self localAddressCellDicArrayWithAddressType:LXHAddressTypeChange]];
+            [_dataForCells addObjectsFromArray:[self localAddressCellDicArrayWithAddressType:LXHLocalAddressTypeChange]];
         }
     }
     return _dataForCells;
