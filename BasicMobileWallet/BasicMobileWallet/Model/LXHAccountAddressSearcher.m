@@ -12,6 +12,7 @@
 #import "CoreBitcoin.h"
 #import "LXHTransactionDataManager.h"
 #import "LXHTransaction.h"
+#import "BlocksKit.h"
 
 @interface LXHAccountAddressSearcher ()
 @property (nonatomic) LXHAccount *account;
@@ -65,7 +66,7 @@
         } else {
             [allTransactions addObjectsFromArray:transactions];
             //查找从哪里开始进行下一次搜索
-            NSSet *allInAddressesSet = [self inAddressesWithTransactions:transactions];//所有可能的接收地址
+            NSSet *allInAddressesSet = [self outAddressesWithTransactions:transactions];//所有可能的接收地址
             //总共20个请求地址。现在从后往前查，找到第一个用过的地址index，然后以这个index+1为fromIndex递归调用
             for (NSInteger i = addressesForRequesting.count-1; i >= 0; i--) {
                 NSString *address = addressesForRequesting[i];
@@ -83,23 +84,12 @@
     }];
 }
 
-- (NSMutableSet *)inAddressesWithTransactions:(NSArray *)transactions {
-    NSMutableSet *ret = [NSMutableSet set];
-    for (LXHTransaction *transaction in transactions) {
-        for (LXHTransactionInput *input in transaction.inputs) {
-            if (input.address)
-                [ret addObject:input.address];
-        }
-    }
-    return ret;
-}
-
 - (NSMutableSet *)outAddressesWithTransactions:(NSArray *)transactions {
     NSMutableSet *ret = [NSMutableSet set];
     for (LXHTransaction *transaction in transactions) {
         for (LXHTransactionOutput *output in transaction.outputs) {
-            if (output.address)
-                [ret addObject:output.address];
+            if (output.address.base58String)
+                [ret addObject:output.address.base58String];
         }
     }
     return ret;

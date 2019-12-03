@@ -125,8 +125,11 @@
             [_cellDataArray addObject:dic];
             dic = @{@"text":NSLocalizedString(@"相关交易", nil), @"isSelectable":@"1", @"cellType":@"LXHAddressDetailTextRightIconCell"}.mutableCopy;
             [_cellDataArray addObject:dic];
-            dic = @{@"text":NSLocalizedString(@"地址二维码", nil), @"isSelectable":@"1", @"cellType":@"LXHAddressDetailTextRightIconCell"}.mutableCopy;
-            [_cellDataArray addObject:dic];
+            
+            if (type == LXHLocalAddressTypeReceiving) { //找零地址不用于接送比特币，所以不显示二维码
+                dic = @{@"text":NSLocalizedString(@"地址二维码", nil), @"isSelectable":@"1", @"cellType":@"LXHAddressDetailTextRightIconCell"}.mutableCopy;
+                [_cellDataArray addObject:dic];
+            }
         }
     }
     return _cellDataArray;

@@ -24,12 +24,22 @@
     LXHEncodeObjectStament(base58String);
 }
 
-- (NSString *)description {
-    return [NSString stringWithFormat:@"%@", _base58String];
+- (BOOL)isEqual:(id)object {
+    if (object == self)
+        return YES;
+    if (![object isMemberOfClass:[LXHAddress class]])
+        return NO;
+    LXHAddress *address = (LXHAddress *)object;
+    return [self.base58String isEqualToString:address.base58String];
 }
 
 + (BOOL)supportsSecureCoding {
     return YES;
 }
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@", _base58String];
+}
+
 
 @end
