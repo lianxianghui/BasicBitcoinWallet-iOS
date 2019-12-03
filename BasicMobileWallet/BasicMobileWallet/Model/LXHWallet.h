@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
 /**
  * 按着BIP44标准管理地址钱包对象 
  * 目前只支持一个账号，也就是按着”m/44'/coin_type'/account'/change/address_index“路径 account为0的账户
+ * 目前仅支持符合BIP44的地址，不支持49：SegWit compatible(P2SH)和84：SegWit native(Bech32)
  * BIP44标准请参考 https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki
  
  * 职责也包括管理钱包数据
@@ -33,14 +34,11 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
 - (instancetype)initWithMainAccount:(LXHAccount *)mainAccount;
 
 
-
-
 + (BOOL)generateNewWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                 mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                            netType:(LXHBitcoinNetworkType)netType;
 /**
-  * 目前仅支持符合BIP44的地址，不支持49 SegWit compatible(P2SH)和84 SegWit native(Bech32)
-  * 如果正在恢复的钱包包含了49和84类型的地址，只与这些地址相关的交易将不会显示。
+  * 目前仅支持符合BIP44的地址，如果正在恢复的钱包包含了49和84类型的地址，只与这些地址相关的交易将不会显示。
   */
 + (void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                  mnemonicPassphrase:(nullable NSString *)mnemonicPassphrase

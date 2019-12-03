@@ -53,7 +53,7 @@
             NSString *valueText = [NSString stringWithFormat:@"%@ BTC", output.value];
             dic[@"btcValue"] = valueText;
             
-            dic[@"addressText"] = output.address ?: @"";
+            dic[@"addressText"] = output.address.base58String ?: @"";
             dic[@"addressWarningDesc"] = [self addressWarningDescAtIndex:i];
             dic[@"addressWarningDescHidden"] = @([self addressWarningDescHiddenAtIndex:i]);
             dic[@"addressDesc"] =  NSLocalizedString(@"外部地址", nil);
