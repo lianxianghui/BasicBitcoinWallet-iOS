@@ -53,8 +53,15 @@
     for (NSUInteger i = 0 ; i < outputs.count; i++) {
         LXHTransactionOutput *output = outputs[i];
         NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
-        mutableDic[@"addressText"] = output.address.base58String;
-        mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i];
+        mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i]; //index
+        
+        NSString *address = nil;
+        if (output.address.isLocalAddress && output.address.localAddressType == LXHLocalAddressTypeChange)
+            address = [NSString stringWithFormat:NSLocalizedString(@"%@(找零)", nil), output.address.base58String];
+        else
+            address = output.address.base58String;
+        mutableDic[@"addressText"] = address;
+        
         mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", output.value];
         [ret addObject:mutableDic];
     }
