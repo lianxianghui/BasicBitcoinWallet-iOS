@@ -73,7 +73,7 @@
     NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
     //用Reduce累加
     _sentValueSumFromLocalAddress = [self.inputs bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionInput *input) {
-        NSString *address = input.address;
+        NSString *address = input.address.base58String;
         if (!address) //不应该发生
             return sum;
         if (![usedAndCurrentAddresses containsObject:address])
@@ -94,7 +94,7 @@
     NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
     //用Reduce累加
     _receivedValueSumFromLocalAddress = [self.outputs bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionOutput *output) {
-        NSString *address = output.address;
+        NSString *address = output.address.base58String;
         if (!address) //不应该发生
             return sum;
         if (![usedAndCurrentAddresses containsObject:address])
@@ -123,7 +123,7 @@
 - (NSArray<LXHTransactionOutput *> *)myUtxos {
     return [self.outputs bk_select:^BOOL(LXHTransactionOutput *obj) {
         NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
-        return [usedAndCurrentAddresses containsObject:obj.address] && [obj isUnspent];
+        return [usedAndCurrentAddresses containsObject:obj.address.base58String] && [obj isUnspent];
     }];
 }
 

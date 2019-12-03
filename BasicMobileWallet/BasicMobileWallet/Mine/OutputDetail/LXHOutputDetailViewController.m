@@ -91,7 +91,7 @@
         _dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
             NSDictionary *dic = nil;
-            dic = @{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": _model.address ?: @""};
+            dic = @{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": _model.address.base58String ?: @""};
             [_dataForCells addObject:dic];
             NSString *valueText = _model.value ? [NSString stringWithFormat:@"%@ BTC", _model.value] : @"";
             dic = @{@"title":@"输出数量 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": valueText};

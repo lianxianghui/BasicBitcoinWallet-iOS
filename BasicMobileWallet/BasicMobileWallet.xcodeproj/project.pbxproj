@@ -1063,12 +1063,12 @@
 		8C9332CD235D8BD600FBF238 /* Balance */ = {
 			isa = PBXGroup;
 			children = (
-				8C9332D1235D8BD600FBF238 /* LXHBalanceViewController.h */,
-				8C9332CE235D8BD600FBF238 /* LXHBalanceViewController.m */,
 				8C9332D2235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.h */,
 				8C9332CF235D8BD600FBF238 /* LXHBalanceLeftRightTextCell.m */,
 				8C9332D3235D8BD600FBF238 /* LXHBalanceView.h */,
 				8C9332D0235D8BD600FBF238 /* LXHBalanceView.m */,
+				8C9332D1235D8BD600FBF238 /* LXHBalanceViewController.h */,
+				8C9332CE235D8BD600FBF238 /* LXHBalanceViewController.m */,
 			);
 			path = Balance;
 			sourceTree = "<group>";

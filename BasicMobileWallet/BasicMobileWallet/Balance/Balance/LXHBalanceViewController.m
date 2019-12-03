@@ -138,7 +138,7 @@
             [_cellDataListForListView addObject:dic];
             for (LXHTransactionOutput *utxo in [self utxos]) {
                 NSString *valueText = [NSString stringWithFormat:@"%@ BTC", utxo.value];
-                dic = @{@"text1": utxo.address ?: @"", @"isSelectable":@"1", @"text2": valueText, @"cellType":@"LXHBalanceLeftRightTextCell", @"data": utxo};
+                dic = @{@"text1": utxo.address.base58String ?: @"", @"isSelectable":@"1", @"text2": valueText, @"cellType":@"LXHBalanceLeftRightTextCell", @"data": utxo};
                 [_cellDataListForListView addObject:dic];
             }
         }
