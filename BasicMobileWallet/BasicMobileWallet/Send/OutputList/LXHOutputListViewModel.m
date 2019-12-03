@@ -71,7 +71,7 @@
 }
 
 - (BOOL)addressWarningDescHiddenAtIndex:(NSInteger)index {
-    return (_outputViewModels[index].localAddress == nil);
+    return !_outputViewModels[index].output.address.isLocalAddress;
 }
 
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex {//传入的是cell的index

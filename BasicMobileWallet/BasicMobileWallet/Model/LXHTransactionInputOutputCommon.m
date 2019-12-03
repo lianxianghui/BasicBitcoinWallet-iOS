@@ -8,9 +8,15 @@
 
 #import "LXHTransactionInputOutputCommon.h"
 #import "BlocksKit.h"
+#import "LXHAddress.h"
 
 @implementation LXHTransactionInputOutputCommon
 
+- (LXHAddress *)address {
+    if (!_address)
+        _address = [LXHAddress new];
+    return _address;
+}
 
 + (NSDecimalNumber *)valueSumOfInputsOrOutputs:(NSArray<LXHTransactionInputOutputCommon *> *)inputsOrOutputs {
     if (inputsOrOutputs.count == 0)

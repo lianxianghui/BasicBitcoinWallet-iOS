@@ -298,7 +298,7 @@
     LXHWeakSelf
     UIAlertAction *pasteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"粘贴地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSString *text = [UIPasteboard generalPasteboard].string;
-        if ([weakSelf.viewModel setAddress:text]) {
+        if ([weakSelf.viewModel setBase58Address:text]) {
             [weakSelf refreshListView];
         } else {
             [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址", nil)];
@@ -324,7 +324,7 @@
     
     UIAlertAction *selectAddressAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"选择本地地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         LXHAddressListForSelectionViewController *controller = [[LXHAddressListForSelectionViewController alloc] initWithAddressSelectedCallback:^(LXHAddress *localAddress) {
-            weakSelf.viewModel.localAddress = localAddress;
+            [weakSelf.viewModel setAddress:localAddress];
             [weakSelf refreshListView];
         }];
         [self.navigationController pushViewController:controller animated:YES];

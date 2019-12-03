@@ -24,7 +24,7 @@
     self = [super init];
     if (self) {
         //TODO 临时的
-        [self setAddress:@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx"];
+        [self setBase58Address:@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx"];
         [self setValueString:@"0.005"];
     }
     return self;
@@ -43,7 +43,7 @@
         NSString *text, *warningText, *addressText;
         if (self.output.address) {
             text = NSLocalizedString(@"地址: ", nil);
-            addressText = self.output.address ?: @" ";
+            addressText = self.output.address.base58String ?: @" ";
         } else {
             text = NSLocalizedString(@"地址: 点击添加", nil);
             addressText = @" ";
@@ -71,10 +71,10 @@
 }
 
 - (NSString *)warningText {
-    if (_localAddress) {
+    if (self.output.address.isLocalAddress) {
         NSString *format = NSLocalizedString(@"%@本地%@地址", nil); //例如 "用过的本地找零地址"
-        NSString *string1 = _localAddress.localAddressUsed ? NSLocalizedString(@"用过的", nil) : @"";
-        NSString *string2 = _localAddress.localAddressType == LXHLocalAddressTypeChange ? NSLocalizedString(@"找零", nil) : NSLocalizedString(@"接收", nil);
+        NSString *string1 = self.output.address.localAddressUsed ? NSLocalizedString(@"用过的", nil) : @"";
+        NSString *string2 = self.output.address.localAddressType == LXHLocalAddressTypeChange ? NSLocalizedString(@"找零", nil) : NSLocalizedString(@"接收", nil);
         NSString *text = [NSString stringWithFormat:format, string1, string2];
         return text;
     } else
@@ -93,20 +93,23 @@
     return _maxValue == nil;
 }
 
-- (BOOL)setAddress:(NSString *)address {
+- (BOOL)setBase58Address:(NSString *)address {
     NSString *validAddress = [LXHAddOutputViewModel validAddress:address];
     if (validAddress) {
         LXHAddress *localAddress = [LXHWallet.mainAccount localAddressWithBase58Address:validAddress];
         if (localAddress) {
-            [self setLocalAddress:localAddress];
+            self.output.address = localAddress;
         } else {
-            [self setLocalAddress:nil];
-            self.output.address = validAddress;
+            self.output.address.base58String = validAddress;
         }
         return YES;
     } else {
         return NO;
     }
+}
+
+- (void)setAddress:(LXHAddress *)address {
+    self.output.address = address;
 }
 
 - (NSString *)valueString {
@@ -140,16 +143,6 @@
         return nil;
 }
 
-- (void)setLocalAddress:(LXHAddress *)localAddress {
-    _localAddress = localAddress;
-    self.output.address = localAddress.base58String;
-}
-
-- (void)setOutput:(LXHTransactionOutput *)output {
-    _output = output;
-    _localAddress = [LXHWallet.mainAccount localAddressWithBase58Address:output.address];
-    
-}
 - (LXHTransactionOutput *)output {
     if (!_output)
         _output = [LXHTransactionOutput new];
@@ -157,8 +150,8 @@
 }
 
 - (BOOL)isChangeOutput {
-    if (_localAddress)
-        return _localAddress.localAddressType == LXHLocalAddressTypeChange;
+    if (self.output.address.isLocalAddress)
+        return self.output.address.localAddressType == LXHLocalAddressTypeChange;
     return NO;
 }
 

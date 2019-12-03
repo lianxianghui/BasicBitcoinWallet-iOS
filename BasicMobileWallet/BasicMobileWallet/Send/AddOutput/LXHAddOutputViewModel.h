@@ -16,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
     LXHTransactionOutput *_output;
 }
 
-@property (nonatomic, nullable) LXHAddress *localAddress;
 @property (nonatomic, readonly) NSMutableArray *cellDataArrayForListView;
 @property (nonatomic) BOOL isEditing;
 @property (nonatomic) NSDecimalNumber *maxValue;//最大值约束
@@ -25,7 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)warningText;
 
 - (void)resetCellDataArrayForListView;
-- (BOOL)setAddress:(NSString *)address;
+- (BOOL)setBase58Address:(NSString *)address;
+- (void)setAddress:(LXHAddress *)address;
 - (BOOL)setValueString:(NSString *)valueString;
 
 - (void)setOutput:(LXHTransactionOutput *)output;

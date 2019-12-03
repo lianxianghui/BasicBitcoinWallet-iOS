@@ -144,9 +144,9 @@ static NSString *const aesPassword = LXHAESPassword;
 - (NSArray *)transactionListByAddress:(NSString *)address {
     return [self.transactionList bk_select:^BOOL(LXHTransaction *transaction) {
         return [transaction.inputs bk_any:^BOOL(LXHTransactionInput *input) {
-            return [input.address isEqualToString:address];
+            return [input.address.base58String isEqualToString:address];
         }] || [transaction.outputs bk_any:^BOOL(LXHTransactionOutput *output) {
-            return [output.address isEqualToString:address];
+            return [output.address.base58String isEqualToString:address];
         }];
     }];
 }

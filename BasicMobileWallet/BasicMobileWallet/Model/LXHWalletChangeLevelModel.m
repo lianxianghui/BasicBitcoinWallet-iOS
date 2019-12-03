@@ -105,6 +105,7 @@
 - (LXHAddress *)localAddressWithIndex:(uint32_t)index {
     LXHAddress *localAddress = [LXHAddress new];
     localAddress.base58String = [self addressStringWithIndex:index];
+    localAddress.isLocalAddress = YES;
     localAddress.localAddressPath = [self addressPathWithIndex:index];
     localAddress.localAddressType = self.addressType;
     localAddress.localAddressUsed = [self isUsedAddressWithIndex:index];
