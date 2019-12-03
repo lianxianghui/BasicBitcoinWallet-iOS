@@ -143,6 +143,10 @@
         return nil;
 }
 
+- (void)setOutput:(LXHTransactionOutput *)output {
+    _output = output;
+}
+
 - (LXHTransactionOutput *)output {
     if (!_output)
         _output = [LXHTransactionOutput new];

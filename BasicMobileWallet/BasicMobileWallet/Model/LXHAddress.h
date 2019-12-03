@@ -15,7 +15,7 @@ typedef NS_ENUM(NSUInteger, LXHLocalAddressType) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LXHAddress : NSObject
+@interface LXHAddress : NSObject <NSSecureCoding>
 @property (nonatomic) NSString *base58String;
 
 @property (nonatomic) BOOL isLocalAddress;

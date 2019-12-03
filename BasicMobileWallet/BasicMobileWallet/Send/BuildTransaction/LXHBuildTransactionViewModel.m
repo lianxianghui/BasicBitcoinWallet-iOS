@@ -185,7 +185,7 @@
     NSDecimalNumber *value = [differenceBetweenInputsAndOutputs decimalNumberBySubtracting:feeOfChangeOutput];
     if ([value compare:[NSDecimalNumber zero]] == NSOrderedDescending) {
         changeOutput.value = value;
-        changeOutput.address = [LXHWallet.mainAccount currentChangeAddress].base58String;
+        changeOutput.address = [LXHWallet.mainAccount currentChangeAddress];
         return changeOutput;
     } else {
         return nil;

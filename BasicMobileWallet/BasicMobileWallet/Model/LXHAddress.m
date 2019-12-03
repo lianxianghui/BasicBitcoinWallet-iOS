@@ -7,7 +7,29 @@
 //
 
 #import "LXHAddress.h"
+#import "LXHGlobalHeader.h"
 
 @implementation LXHAddress
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    LXHDecodeObjectOfStringClassStament(base58String);
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    LXHEncodeObjectStament(base58String);
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@", _base58String];
+}
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 @end

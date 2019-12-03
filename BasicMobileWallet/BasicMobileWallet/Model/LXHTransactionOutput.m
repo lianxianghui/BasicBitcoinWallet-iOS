@@ -9,6 +9,7 @@
 #import "LXHTransactionOutput.h"
 #import "LXHGlobalHeader.h"
 #import "BlocksKit.h"
+#import "LXHAddress.h"
 
 @implementation LXHTransactionOutput
 
@@ -21,6 +22,7 @@
     if (!self) {
         return nil;
     }
+    self.address = [decoder decodeObjectOfClass:[LXHAddress class] forKey:@"address"];
     LXHDecodeObjectOfStringClassStament(address);
     LXHDecodeObjectOfDecimalNumberClassStament(value);
     LXHDecodeObjectOfStringClassStament(lockingScript);

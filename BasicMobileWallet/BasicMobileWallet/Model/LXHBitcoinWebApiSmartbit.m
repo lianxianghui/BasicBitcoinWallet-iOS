@@ -10,6 +10,7 @@
 #import "LXHNetworkRequest.h"
 #import "LXHTransaction.h"
 #import "NSMutableDictionary+Base.h"
+#import "LXHAddress+LXHAccount.h"
 
 @interface LXHBitcoinWebApiSmartbit ()
 @property (nonatomic) LXHBitcoinNetworkType type;
@@ -68,7 +69,7 @@
             input.txid = inputDic[@"txid"];
             NSArray *inputAddresses = [inputDic valueForKey:@"addresses"];
             if (inputAddresses.count == 1) //目前只处理每个输入只有一个输入地址的情况
-                input.address = inputAddresses[0];
+                input.address = [LXHAddress addressWithBase58String:inputAddresses[0]];
             input.unlockingScript = [inputDic valueForKeyPath:@"script_sig.asm"];
             input.witness = inputDic[@"witness"];
             input.scriptType = [self scriptTypeByTypeString:inputDic[@"type"]];
@@ -83,7 +84,7 @@
             output.spendTxid = outputDic[@"spend_txid"];
             NSArray *outputAddresses = [outputDic valueForKey:@"addresses"];
             if (outputAddresses.count == 1) //目前只处理每个输出只有一个输出地址的情况
-                output.address = outputAddresses[0];
+                output.address = [LXHAddress addressWithBase58String:outputAddresses[0]];
             output.lockingScript = [outputDic valueForKeyPath:@"script_pub_key.asm"];
             output.scriptType = [self scriptTypeByTypeString:outputDic[@"type"]];
             output.txid = model.txid;

@@ -11,11 +11,16 @@
 #import "LXHAddress.h"
 
 @implementation LXHTransactionInputOutputCommon
+@synthesize address = _address;
 
 - (LXHAddress *)address {
     if (!_address)
         _address = [LXHAddress new];
     return _address;
+}
+
+- (void)setAddress:(LXHAddress *)address {
+    _address = address;
 }
 
 + (NSDecimalNumber *)valueSumOfInputsOrOutputs:(NSArray<LXHTransactionInputOutputCommon *> *)inputsOrOutputs {
