@@ -38,7 +38,10 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
 + (BOOL)generateNewWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                 mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                            netType:(LXHBitcoinNetworkType)netType;
-
+/**
+  * 目前仅支持符合BIP44的地址，不支持49 SegWit compatible(P2SH)和84 SegWit native(Bech32)
+  * 如果正在恢复的钱包包含了49和84类型的地址，只与这些地址相关的交易将不会显示。
+  */
 + (void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                  mnemonicPassphrase:(nullable NSString *)mnemonicPassphrase
                                             netType:(LXHBitcoinNetworkType)netType
