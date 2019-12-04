@@ -114,12 +114,18 @@
     return nil;
 }
 
-- (NSDictionary *)titleCell2DataForGroup2 {
+- (NSDecimalNumber *)estimatedFeeValueInBTC {
     LXHFeeCalculator *feeCalculator = [LXHFeeCalculator new];
     feeCalculator.inputs = [self inputs];
     feeCalculator.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
     feeCalculator.outputs = [self outputs];
     NSDecimalNumber *estimatedFeeValueInBTC = [feeCalculator estimatedFeeInBTC];//从费率和估计的字节数算出的手续费
+    return estimatedFeeValueInBTC;
+}
+
+
+- (NSDictionary *)titleCell2DataForGroup2 {
+    NSDecimalNumber *estimatedFeeValueInBTC = [self estimatedFeeValueInBTC];
     NSDecimalNumber *actualFeeValueInBTC = [self actualFeeValueInBTC];
     NSString *title = nil;
     if (!estimatedFeeValueInBTC || !actualFeeValueInBTC) {
@@ -132,9 +138,9 @@
             if ([self changeTooSmall]) //找零太小，归到手续费里的情况
                 title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), actualFeeValueInBTC];
             else //实际手续费过多，有可能造成浪费。起到提醒作用
-                title = [NSString stringWithFormat:NSLocalizedString(@"估计的手续费 %@BTC  实际的手续费 %@", nil), estimatedFeeValueInBTC, actualFeeValueInBTC];
+                title = [NSString stringWithFormat:NSLocalizedString(@"估计的手续费 %@BTC  实际的手续费 %@BTC", nil), estimatedFeeValueInBTC, actualFeeValueInBTC];
         } else { //actualFeeValueInBTC < estimatedFeeValueInBTC。实际手续费过少，有可能影响到账时间。起到提醒作用
-            title = [NSString stringWithFormat:NSLocalizedString(@"估计的手续费 %@BTC  实际的手续费 %@", nil), estimatedFeeValueInBTC, actualFeeValueInBTC];
+            title = [NSString stringWithFormat:NSLocalizedString(@"估计的手续费 %@BTC  实际的手续费 %@BTC", nil), estimatedFeeValueInBTC, actualFeeValueInBTC];
         }
     }
     NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
@@ -241,6 +247,49 @@
         ret = doNotShowInfo;
     }
     return ret;
+}
+
+- (BOOL)hasChangeOutput {
+    return [self.outputListViewModel hasChangeOutput];
+}
+
+/**
+ 点击下一步时判断输入、输出、手续费是否正常，返回代表该情况的code
+输入、输出或费率未正确选择或填写 code -4
+ 1.输入大于等于输出
+ 1) 实际手续费与估计的手续费一样，理想状态 不需要显示提示 code 0
+ 2) 实际手续费大于估计的手续费，但是加一个找零又不值得（带来的手续费比其值还大）不需要显示提示 code 1
+ 2) 实际手续费过多，有可能造成浪费的情况。提醒是否加一个找零 code -1
+ 3) 实际手续费过少，有可能影响到账时间。 code -2
+ 2.输入小于输出
+ 提示 输入无法满足输出 code -3
+ @return code
+ */
+- (NSInteger)codeForClickingNextStep {
+    if (_selectInputViewModel.selectedUtxos.count == 0)
+        return -4;
+    if ([self.outputListViewModel outputCount] == 0)
+        return -4;
+    if (![self feeRateValue])
+        return -4;
+    
+    NSDecimalNumber *differenceBetweenInputsAndOutputs = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
+    if ([differenceBetweenInputsAndOutputs compare:[NSDecimalNumber zero]] == NSOrderedAscending) {//输入小于输出
+        return -3;
+    } else { ///输入大于等于输出
+        NSDecimalNumber *estimatedFeeValueInBTC = [self estimatedFeeValueInBTC];
+        NSDecimalNumber *actualFeeValueInBTC = [self actualFeeValueInBTC];
+        if ([actualFeeValueInBTC compare:estimatedFeeValueInBTC] == NSOrderedSame) {
+            return 0;
+        } else if ([actualFeeValueInBTC compare:estimatedFeeValueInBTC] == NSOrderedDescending) {//actualFeeValueInBTC > estimatedFeeValueInBTC
+            if ([self changeTooSmall])
+                return 1;
+            else
+                return -1;
+        } else { //actualFeeValueInBTC < estimatedFeeValueInBTC
+            return -2;
+        }
+    }
 }
 
 - (BOOL)changeTooSmall {

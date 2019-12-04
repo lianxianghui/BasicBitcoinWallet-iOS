@@ -21,6 +21,7 @@
 #import "LXHGlobalHeader.h"
 #import "UIViewController+LXHAlert.h"
 #import "UILabel+LXHText.h"
+#import "Toast.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -123,9 +124,57 @@
 }
 
 - (void)rightTextButtonClicked:(UIButton *)sender {
+    NSInteger code = [_viewModel codeForClickingNextStep];
+    if (code >= 0) { //没问题
+        [self pushLXHTransactionInfoViewController];
+    } else {
+        switch (code) {
+            case -1:
+            {
+                LXHWeakSelf
+                NSString *prompt = NSLocalizedString(@"实际手续费过多，有可能造成浪费，是否调整？", nil);
+                [self showOkCancelAlertViewWithMessage:prompt okHandler:^(UIAlertAction * _Nonnull action) {
+//                    NSString *toast = [weakSelf.viewModel hasChangeOutput] ? NSLocalizedString(@"您可以通过修改或重新添加找零的方式进行调整", nil) :
+//                    NSLocalizedString(@"您可以通过添加找零的方式进行调整", nil);
+//                    [weakSelf.view makeToast:toast];
+                } cancelHandler:^(UIAlertAction * _Nonnull action) {
+                    [weakSelf pushLXHTransactionInfoViewController];
+                }];
+                break;
+            }
+            case -2:
+            {
+                LXHWeakSelf
+                NSString *prompt = NSLocalizedString(@"实际手续费小于根据费率估算的手续费，有可能影响到账时间，是否调整？", nil);
+                [self showOkCancelAlertViewWithMessage:prompt okHandler:^(UIAlertAction * _Nonnull action) {
+                    //do nothing
+                } cancelHandler:^(UIAlertAction * _Nonnull action) {
+                    [weakSelf pushLXHTransactionInfoViewController];
+                }];
+                break;
+            }
+            case -3:
+            {
+                NSString *prompt = NSLocalizedString(@"输入无法满足输出", nil);
+                [self showOkAlertViewWithMessage:prompt handler:nil];
+                break;
+            }
+            case -4:
+            {
+                NSString *prompt = NSLocalizedString(@"输入、输出或费率未正确选择或填写", nil);
+                [self showOkAlertViewWithMessage:prompt handler:nil];
+                break;
+            }
+            default:
+                break;
+        }
+    }
+}
+
+- (void)pushLXHTransactionInfoViewController {
     UIViewController *controller = [[LXHTransactionInfoViewController alloc] init];
     controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 //Actions
