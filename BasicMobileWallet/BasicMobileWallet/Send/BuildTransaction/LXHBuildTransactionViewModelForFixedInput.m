@@ -13,6 +13,7 @@
 #import "LXHInputFeeViewModel.h"
 #import "LXHAddOutputViewModel.h"
 #import "LXHSelectInputViewModelForFixedInput.h"
+#import "LXHOutputListViewModelForFixedInput.h"
 
 @implementation LXHBuildTransactionViewModelForFixedInput
 
@@ -66,6 +67,15 @@
         _selectInputViewModel = selectInputViewModel;
     }
     return _selectInputViewModel;
+}
+
+- (LXHOutputListViewModel *)outputListViewModel {
+    if (!_outputListViewModel)
+        _outputListViewModel = [[LXHOutputListViewModelForFixedInput alloc] init];
+    LXHOutputListViewModelForFixedInput *outputListViewModelForFixedInput = (LXHOutputListViewModelForFixedInput *)_outputListViewModel;
+    outputListViewModelForFixedInput.inputs = [self inputs];
+    outputListViewModelForFixedInput.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
+    return _outputListViewModel;
 }
 
 @end

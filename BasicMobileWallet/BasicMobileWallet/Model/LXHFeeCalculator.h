@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSUInteger feeRateInSat;
 
 - (nullable NSDecimalNumber *)estimatedFeeInBTC;
+- (nullable NSDecimalNumber *)estimatedFeeInBTCWithOutputs:(NSArray *)outputs;
 //判断某个输入或输出，是不是消耗的Fee比它的值还大
 - (BOOL)feeGreaterThanValueWithInput:(LXHTransactionInputOutputCommon *)input;
 - (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output;

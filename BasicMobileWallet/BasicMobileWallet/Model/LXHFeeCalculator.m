@@ -26,6 +26,18 @@
     return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRateInSat inputCount:_inputs.count outputCount:_outputs.count];
 }
 
+- (nullable NSDecimalNumber *)estimatedFeeInBTCWithInputs:(NSArray *)inputs {
+    if (inputs.count == 0 || _outputs.count == 0 || _feeRateInSat == 0)
+        return nil;
+    return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRateInSat inputCount:inputs.count outputCount:_outputs.count];
+}
+
+- (nullable NSDecimalNumber *)estimatedFeeInBTCWithOutputs:(NSArray *)outputs {
+    if (_inputs.count == 0 || outputs.count == 0 || _feeRateInSat == 0)
+        return nil;
+    return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRateInSat inputCount:_inputs.count outputCount:outputs.count];
+}
+
 - (BOOL)feeGreaterThanValueWithInput:(LXHTransactionInputOutputCommon *)input {
     NSUInteger feePerInputInSat = 148 * _feeRateInSat;//目前不支持隔离见证输入输出
     NSDecimalNumber *feePerInputInBTC = [NSDecimalNumber decimalNumberWithMantissa:feePerInputInSat exponent:-8 isNegative:NO];

@@ -12,10 +12,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LXHAddOutputViewModel : NSObject {
-    LXHTransactionOutput *_output;
-}
+@interface LXHAddOutputViewModel : NSObject
 
+@property (nonatomic) LXHTransactionOutput *output;
 @property (nonatomic, readonly) NSMutableArray *cellDataArrayForListView;
 @property (nonatomic) BOOL isEditing;
 @property (nonatomic) NSDecimalNumber *maxValue;//最大值约束
@@ -27,9 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)setBase58Address:(NSString *)address;
 - (void)setAddress:(LXHAddress *)address;
 - (BOOL)setValueString:(NSString *)valueString;
-
-- (void)setOutput:(LXHTransactionOutput *)output;
-- (LXHTransactionOutput *)output;
 - (BOOL)isChangeOutput;
 @end
 

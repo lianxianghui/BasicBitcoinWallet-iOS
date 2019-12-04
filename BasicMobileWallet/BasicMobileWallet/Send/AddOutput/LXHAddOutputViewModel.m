@@ -18,6 +18,7 @@
 @end
 
 @implementation LXHAddOutputViewModel
+@synthesize output = _output;
 
 - (instancetype)init
 {
