@@ -182,7 +182,7 @@
         [placeHolderTextAttributes setObject:font forKey:NSFontAttributeName];
         [placeHolderTextAttributes setObject:@(-0.2894118) forKey:NSKernAttributeName];
         [placeHolderTextAttributes setObject:placeHolderParagraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *placeHolderText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"输入数量", nil) attributes:placeHolderTextAttributes];
+        NSAttributedString *placeHolderText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请输入数量", nil) attributes:placeHolderTextAttributes];
         _textFieldWithPlaceHolder.attributedPlaceholder = placeHolderText;
     }
     return _textFieldWithPlaceHolder;
