@@ -135,7 +135,7 @@
         if (comparisonResult == NSOrderedSame)
             title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), actualFeeValueInBTC];
         else if (comparisonResult == NSOrderedDescending) { //actualFeeValueInBTC > estimatedFeeValueInBTC
-            if ([self changeTooSmall]) //找零太小，归到手续费里的情况
+            if ([self changeTooSmallToAdd]) //找零太小，归到手续费里的情况
                 title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), actualFeeValueInBTC];
             else //实际手续费过多，有可能造成浪费。起到提醒作用
                 title = [NSString stringWithFormat:NSLocalizedString(@"估计的手续费 %@BTC  实际的手续费 %@BTC", nil), estimatedFeeValueInBTC, actualFeeValueInBTC];
@@ -203,9 +203,9 @@
 }
 
 - (void)addChangeOutputAtRandomPosition {
-    LXHTransactionOutput *currentChangeOutput = [self currentChangeOutput];
-    if (currentChangeOutput)
-        [self.outputListViewModel addNewChangeOutputAtRandomPositionWithOutput:currentChangeOutput];
+    LXHTransactionOutput *aNewChangeOutput = [self getANewChangeOutput];
+    if (aNewChangeOutput)
+        [self.outputListViewModel addNewChangeOutputAtRandomPositionWithOutput:aNewChangeOutput];
 }
 
 - (BOOL)hasInputsAndFeeRateAndOutputs {
@@ -227,12 +227,11 @@
     if ([self.outputListViewModel hasChangeOutput])
         return doNotShowInfo;
     
-    NSDecimalNumber *differenceBetweenInputsAndOutputs = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
     NSDictionary *ret = nil;
-    if ([differenceBetweenInputsAndOutputs compare:[NSDecimalNumber zero]] == NSOrderedDescending) {//输入和大于输出和
+    if ([self hasUnallocatedValue]) {
         BOOL worth;
         NSString *info;
-        if ([self changeTooSmall]) {
+        if ([self changeTooSmallToAdd]) {
             worth = NO;
             info = NSLocalizedString(@"因为找零过小，带来的手续费比它的值还大，已经被归到手续费里", nil);
         } else {
@@ -279,7 +278,7 @@
         if ([actualFeeValueInBTC compare:estimatedFeeValueInBTC] == NSOrderedSame) {
             return 0;
         } else if ([actualFeeValueInBTC compare:estimatedFeeValueInBTC] == NSOrderedDescending) {//actualFeeValueInBTC > estimatedFeeValueInBTC
-            if ([self changeTooSmall])
+            if ([self changeTooSmallToAdd])
                 return 1;
             else
                 return -1;
@@ -289,14 +288,24 @@
     }
 }
 
-- (BOOL)changeTooSmall {
-    NSDecimalNumber *differenceBetweenInputsAndOutputs = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
-    LXHTransactionOutput *output = [LXHTransactionOutput new];
-    output.value = differenceBetweenInputsAndOutputs;
-    return [LXHFeeCalculator feeGreaterThanValueWithOutput:output feeRateInSat:[self feeRateValue].unsignedIntegerValue];
+- (BOOL)changeTooSmallToAdd {
+    LXHTransactionOutput *changeOutput = [self getANewChangeOutput];
+    return changeOutput == nil;
 }
 
-- (LXHTransactionOutput *)currentChangeOutput {
+- (BOOL)hasUnallocatedValue {
+    NSDecimalNumber *differenceBetweenInputsAndOutputs = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
+    NSDecimalNumber *estimatedFeeValueInBTC = [self estimatedFeeValueInBTC];
+    NSDecimalNumber *value = [differenceBetweenInputsAndOutputs decimalNumberBySubtracting:estimatedFeeValueInBTC];
+    return [value compare:[NSDecimalNumber zero]] == NSOrderedDescending;
+}
+
+
+/**
+ 按着目前的的情况返回一个找零LXHTransactionOutput
+ 如果计算得到的值大于零，返回找零对象，否则返回nil
+ */
+- (LXHTransactionOutput *)getANewChangeOutput {
     NSDecimalNumber *differenceBetweenInputsAndOutputs = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
     NSDecimalNumber *feeWithANewChangeOutput = [self feeWithANewChangeOutput];
     NSDecimalNumber *value = [differenceBetweenInputsAndOutputs decimalNumberBySubtracting:feeWithANewChangeOutput];

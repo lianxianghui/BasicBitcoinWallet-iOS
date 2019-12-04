@@ -140,7 +140,7 @@
         NSDecimalNumber *decimalNumber = [valueString decimalValue];
         if (!decimalNumber)
             return NO;
-        if ([decimalNumber compare:[NSDecimalNumber zero]] == NSOrderedDescending) //小于或等于0时无效
+        if (!([decimalNumber compare:[NSDecimalNumber zero]] == NSOrderedDescending)) //不大于，即小于或等于0时无效
             return NO;
         return !([decimalNumber compare:_maxValue] == NSOrderedDescending);//不大于，即小于或等于
     } else {
