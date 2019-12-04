@@ -138,7 +138,11 @@
 - (BOOL)valueIsValid:(NSString *)valueString {
     if (_maxValue) {
         NSDecimalNumber *decimalNumber = [valueString decimalValue];
-        return decimalNumber && !([decimalNumber compare:_maxValue] == NSOrderedDescending);//不大于，即小于或等于
+        if (!decimalNumber)
+            return NO;
+        if ([decimalNumber compare:[NSDecimalNumber zero]] == NSOrderedDescending) //小于或等于0时无效
+            return NO;
+        return !([decimalNumber compare:_maxValue] == NSOrderedDescending);//不大于，即小于或等于
     } else {
         return YES;
     }
