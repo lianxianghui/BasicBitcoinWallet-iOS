@@ -33,7 +33,8 @@
 }
 
 - (NSString *)headerInfoText {
-    return @"0.0000002BTC";
+    NSDecimalNumber *sum = [LXHTransactionOutput valueSumOfOutputs:[self outputs]];
+    return  [NSString stringWithFormat:@"%@BTC", sum];
 }
 
 - (void)resetCellDataArrayForListview {

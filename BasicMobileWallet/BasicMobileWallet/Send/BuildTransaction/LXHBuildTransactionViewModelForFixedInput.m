@@ -39,7 +39,7 @@
 
 - (NSDictionary *)titleCell2DataForGroup3 {
     NSDecimalNumber *sum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:[self outputs]];
-    NSString *title = [NSString stringWithFormat:NSLocalizedString(@"输入 %@BTC", nil), sum];
+    NSString *title = [NSString stringWithFormat:NSLocalizedString(@"输出 %@BTC", nil), sum];
     NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
     return dic;
 }
