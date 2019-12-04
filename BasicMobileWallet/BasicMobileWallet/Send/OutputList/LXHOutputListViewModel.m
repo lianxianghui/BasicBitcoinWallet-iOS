@@ -93,12 +93,17 @@
 }
 
 - (LXHAddOutputViewModel *)getNewOutputViewModel {
-    return [[LXHAddOutputViewModel alloc] init];
+    return nil;
 }
+
+- (void)refreshViewModelAtIndex:(NSUInteger)index {
+}
+
 
 - (NSArray<LXHAddOutputViewModel *> *)outputViewModels {
     return _outputViewModels;
 }
+
 
 - (void)addOutputViewModel:(LXHAddOutputViewModel *)model {
     [_outputViewModels addObject:model];

@@ -18,18 +18,40 @@
 @implementation LXHOutputListViewModelForFixedInput
 
 - (LXHAddOutputViewModel *)getNewOutputViewModel {
+    //计算可输入的最大值
     NSDecimalNumber *differenceBetweenInputsAndOuputs = [LXHFeeCalculator differenceBetweenInputs:self.inputs outputs:self.outputs];
     
     LXHTransactionOutput *output = [LXHTransactionOutput new];
     NSMutableArray *outputs = [self.outputs mutableCopy] ?: [NSMutableArray array];
     [outputs addObject:output];
-    self.feeCalculator.outputs = outputs;
-    NSDecimalNumber *estimatedFeeInBTC = [self.feeCalculator estimatedFeeInBTC];
+    NSDecimalNumber *estimatedFeeInBTC = [self.feeCalculator estimatedFeeInBTCWithOutputs:outputs];
     
     NSDecimalNumber *maxValueOfNewOutput = [differenceBetweenInputsAndOuputs decimalNumberBySubtracting:estimatedFeeInBTC];
+    
+    //返回viewModel
     LXHAddOutputViewModel *ret = [LXHAddOutputViewModel new];
     ret.maxValue = maxValueOfNewOutput;
     return ret;
+}
+
+- (void)refreshViewModelAtIndex:(NSUInteger)index {
+    [self refreshViewModeMaxValueAtIndex:index];
+}
+
+- (void)refreshViewModeMaxValueAtIndex:(NSUInteger)index {
+    if (index < self.outputViewModels.count) {
+        LXHAddOutputViewModel *viewModel = self.outputViewModels[index];
+        NSDecimalNumber *inputsValueSum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:self.inputs];
+        NSDecimalNumber *estimatedFeeInBTC = [self.feeCalculator estimatedFeeInBTCWithOutputs:self.outputs];
+        
+        NSMutableArray *otherOutputs = [self.outputs mutableCopy];
+        [otherOutputs removeObject:viewModel.output];
+        NSDecimalNumber *otherOutputsValueSum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:otherOutputs];
+
+        
+        NSDecimalNumber *maxValueOfCurrentOutput = [[inputsValueSum decimalNumberBySubtracting:estimatedFeeInBTC] decimalNumberBySubtracting:otherOutputsValueSum];
+        viewModel.maxValue = maxValueOfCurrentOutput;
+    }
 }
 
 - (LXHFeeCalculator *)feeCalculator {

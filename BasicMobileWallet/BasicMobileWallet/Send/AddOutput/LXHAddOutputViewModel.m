@@ -121,14 +121,21 @@
 }
 
 - (BOOL)setValueString:(NSString *)valueString {
-    //todo check
-    BOOL valueIsValid = YES;
-    if (valueIsValid) {
+    if ([self valueIsValid:valueString]) {
         self.output.value = [[NSDecimalNumber alloc] initWithString:valueString];
         [self resetCellDataArrayForListView];
         return YES;
     } else {
         return NO;
+    }
+}
+
+- (BOOL)valueIsValid:(NSString *)valueString {
+    if (_maxValue) {
+        NSDecimalNumber *decimalNumber = [valueString decimalValue];
+        return decimalNumber && !([decimalNumber compare:_maxValue] == NSOrderedDescending);//不大于，即小于或等于
+    } else {
+        return YES;
     }
 }
 

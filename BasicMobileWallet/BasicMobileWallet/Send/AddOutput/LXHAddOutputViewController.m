@@ -16,6 +16,7 @@
 #import "Toast.h"
 #import "LXHAddOutputViewModel.h"
 #import "UILabel+LXHText.h"
+#import "UIViewController+LXHAlert.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -86,9 +87,12 @@
 //Actions
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
-    [_viewModel setValueString:_textField.text];
-    _addOutputCallback();
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([_viewModel setValueString:_textField.text]) {
+        _addOutputCallback();
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self showOkAlertViewWithMessage:NSLocalizedString(@"您所输入的值无效，请检查后重新输入", nil) handler:nil];
+    }
 }
 
 - (void)rightTextButtonTouchDown:(UIButton *)sender {
@@ -113,6 +117,7 @@
 }
 
 - (void)LXHInputAmountCellTextButtonClicked:(UIButton *)sender {
+    _textField.text = [_viewModel.maxValue description];
     sender.alpha = 1;
 }
 

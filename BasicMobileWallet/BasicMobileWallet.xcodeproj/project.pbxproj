@@ -209,6 +209,7 @@
 		8CD26925230A452B001B9300 /* LXHGenerateWalletView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD26921230A452A001B9300 /* LXHGenerateWalletView.m */; };
 		8CDF912B239637350004A229 /* LXHAddress+LXHAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDF912A239637350004A229 /* LXHAddress+LXHAccount.m */; };
 		8CDF912E239781470004A229 /* LXHOutputListViewModelForFixedInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDF912D239781470004A229 /* LXHOutputListViewModelForFixedInput.m */; };
+		8CDF91312397A3C30004A229 /* LXHOutputListViewModelForFixedOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDF91302397A3C30004A229 /* LXHOutputListViewModelForFixedOutput.m */; };
 		8CEAECC32383D508005754B3 /* LXHTransactionInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEAEC9F2383D507005754B3 /* LXHTransactionInfoView.m */; };
 		8CEAECC42383D508005754B3 /* LXHTransactionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEAECA02383D507005754B3 /* LXHTransactionInfoViewController.m */; };
 		8CEAECC52383D508005754B3 /* LXHBuildTransactionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEAECA72383D507005754B3 /* LXHBuildTransactionView.m */; };
@@ -814,6 +815,8 @@
 		8CDF912A239637350004A229 /* LXHAddress+LXHAccount.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "LXHAddress+LXHAccount.m"; sourceTree = "<group>"; };
 		8CDF912C239781470004A229 /* LXHOutputListViewModelForFixedInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHOutputListViewModelForFixedInput.h; sourceTree = "<group>"; };
 		8CDF912D239781470004A229 /* LXHOutputListViewModelForFixedInput.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHOutputListViewModelForFixedInput.m; sourceTree = "<group>"; };
+		8CDF912F2397A3C30004A229 /* LXHOutputListViewModelForFixedOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHOutputListViewModelForFixedOutput.h; sourceTree = "<group>"; };
+		8CDF91302397A3C30004A229 /* LXHOutputListViewModelForFixedOutput.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHOutputListViewModelForFixedOutput.m; sourceTree = "<group>"; };
 		8CEAEC9E2383D507005754B3 /* LXHTransactionInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHTransactionInfoViewController.h; sourceTree = "<group>"; };
 		8CEAEC9F2383D507005754B3 /* LXHTransactionInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHTransactionInfoView.m; sourceTree = "<group>"; };
 		8CEAECA02383D507005754B3 /* LXHTransactionInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHTransactionInfoViewController.m; sourceTree = "<group>"; };
@@ -1141,6 +1144,8 @@
 				8CF67FEE23866DEC0077263E /* LXHOutputListViewModel.m */,
 				8CDF912C239781470004A229 /* LXHOutputListViewModelForFixedInput.h */,
 				8CDF912D239781470004A229 /* LXHOutputListViewModelForFixedInput.m */,
+				8CDF912F2397A3C30004A229 /* LXHOutputListViewModelForFixedOutput.h */,
+				8CDF91302397A3C30004A229 /* LXHOutputListViewModelForFixedOutput.m */,
 				8C933478235DB14C00FBF238 /* LXHOutputListViewController.h */,
 				8C93346F235DB14C00FBF238 /* LXHOutputListViewController.m */,
 			);
@@ -1916,10 +1921,10 @@
 				8CEAECA72383D507005754B3 /* LXHBuildTransactionView.m */,
 				8CEAECD72383D9AA005754B3 /* LXHBuildTransactionViewModel.h */,
 				8CEAECD82383D9AA005754B3 /* LXHBuildTransactionViewModel.m */,
-				8CEAECD42383D996005754B3 /* LXHBuildTransactionViewModelForFixedOutput.h */,
-				8CEAECD52383D996005754B3 /* LXHBuildTransactionViewModelForFixedOutput.m */,
 				8CEAECDA2383D9B9005754B3 /* LXHBuildTransactionViewModelForFixedInput.h */,
 				8CEAECDB2383D9B9005754B3 /* LXHBuildTransactionViewModelForFixedInput.m */,
+				8CEAECD42383D996005754B3 /* LXHBuildTransactionViewModelForFixedOutput.h */,
+				8CEAECD52383D996005754B3 /* LXHBuildTransactionViewModelForFixedOutput.m */,
 				8CEAECA62383D507005754B3 /* LXHBuildTransactionViewController.h */,
 				8CEAECAE2383D507005754B3 /* LXHBuildTransactionViewController.m */,
 			);
@@ -2243,6 +2248,7 @@
 				8CA3228422DEBE9900CEA828 /* BTCCurrencyConverter+Tests.m in Sources */,
 				8C2CC6EC2334C0D8005AA93C /* LXHWalletChangeLevelModel.m in Sources */,
 				8CA3226E22DEBE9900CEA828 /* BTCBigNumber.m in Sources */,
+				8CDF91312397A3C30004A229 /* LXHOutputListViewModelForFixedOutput.m in Sources */,
 				8CA322B9230049A000CEA828 /* RNCryptorEngine.m in Sources */,
 				8C2CC6A9232F20E5005AA93C /* LXHTitleCell.m in Sources */,
 				8C93349E235DB14C00FBF238 /* LXHOutputListView.m in Sources */,

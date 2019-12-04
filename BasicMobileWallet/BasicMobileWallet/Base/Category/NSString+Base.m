@@ -46,7 +46,9 @@
 }
 
 - (NSDecimalNumber *)decimalValue {
-    return [NSDecimalNumber decimalNumberWithString:self];
+    NSNumberFormatter *formatter = [NSNumberFormatter new];
+    formatter.generatesDecimalNumbers = YES;
+    return [formatter numberFromString:self];
 }
 
 @end

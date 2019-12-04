@@ -179,10 +179,7 @@
 }
 
 - (LXHOutputListViewModel *)outputListViewModel {
-    if (!_outputListViewModel) {
-        _outputListViewModel = [[LXHOutputListViewModel alloc] init];
-    }
-    return _outputListViewModel;
+    return nil;
 }
 
 - (LXHSelectFeeRateViewModel *)selectFeeRateViewModel {

@@ -299,6 +299,7 @@
     id dataForRow = [self cellDataForTableView:tableView atIndexPath:indexPath];
     NSInteger index = [dataForRow[@"index"] integerValue];
     LXHAddOutputViewModel *existOutputViewModel = [_viewModel outputViewModels][index];
+    [_viewModel refreshViewModelAtIndex:index];
     existOutputViewModel.isEditing = YES;
     UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:existOutputViewModel addOrEditOutputCallback:^() {
         [self refreshView];

@@ -17,6 +17,7 @@
 #import "LXHAddOutputViewModel.h"
 #import "LXHFeeCalculator.h"
 #import "LXHSelectInputViewModelForFixedOutput.h"
+#import "LXHOutputListViewModelForFixedOutput.h"
 
 @implementation LXHBuildTransactionViewModelForFixedOutput
 
@@ -78,6 +79,12 @@
     ret.fixedOutputValueSum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:[self outputs]];
     ret.feeCalculator = [self feeCalculator];
     return ret;
+}
+
+- (LXHOutputListViewModel *)outputListViewModel {
+    if (!_outputListViewModel)
+        _outputListViewModel = [[LXHOutputListViewModelForFixedOutput alloc] init];
+    return _outputListViewModel;
 }
 
 @end

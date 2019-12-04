@@ -7,7 +7,12 @@
 //
 
 #import "LXHOutputListViewModelForFixedOutput.h"
+#import "LXHAddOutputViewModel.h"
 
 @implementation LXHOutputListViewModelForFixedOutput
+
+- (LXHAddOutputViewModel *)getNewOutputViewModel {
+    return [[LXHAddOutputViewModel alloc] init];
+}
 
 @end

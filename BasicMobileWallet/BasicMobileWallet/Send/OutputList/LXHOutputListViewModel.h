@@ -21,13 +21,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex;
 - (void)deleteRowAtIndex:(NSInteger)index;
 
-- (LXHAddOutputViewModel *)getNewOutputViewModel;
-- (NSArray<LXHAddOutputViewModel *> *)outputViewModels;
+
+
 - (void)addOutputViewModel:(LXHAddOutputViewModel *)model;
 - (void)addNewChangeOutputAtRandomPositionWithOutput:(LXHTransactionOutput *)output;
 - (BOOL)hasChangeOutput;
 - (NSArray *)outputs;
 - (NSInteger)outputCount;
+
+- (NSArray<LXHAddOutputViewModel *> *)outputViewModels;
+
+- (LXHAddOutputViewModel *)getNewOutputViewModel;//子类覆盖
+- (void)refreshViewModelAtIndex:(NSUInteger)index;//子类覆盖
 @end
 
 NS_ASSUME_NONNULL_END
