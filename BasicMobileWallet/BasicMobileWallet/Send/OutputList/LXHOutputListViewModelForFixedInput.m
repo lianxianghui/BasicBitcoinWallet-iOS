@@ -17,7 +17,18 @@
 
 @implementation LXHOutputListViewModelForFixedInput
 
-- (LXHAddOutputViewModel *)getNewOutputViewModel {
+- (NSString *)headerInfoTitle {
+    if (self.outputCount == 0)
+        return NSLocalizedString(@"允许添加的最大值", nil);
+    else
+        return NSLocalizedString(@"还允许添加的值", nil);
+}
+
+- (NSString *)headerInfoText {
+    return  [NSString stringWithFormat:@"%@BTC", [self maxValueForNewOutput]];
+}
+
+- (nullable NSDecimalNumber *)maxValueForNewOutput {
     //计算可输入的最大值
     NSDecimalNumber *differenceBetweenInputsAndOuputs = [LXHFeeCalculator differenceBetweenInputs:self.inputs outputs:self.outputs];
     
@@ -29,6 +40,15 @@
     NSDecimalNumber *maxValueOfNewOutput = [differenceBetweenInputsAndOuputs decimalNumberBySubtracting:estimatedFeeInBTC];
     
     if ([maxValueOfNewOutput compare:[NSDecimalNumber zero]] == NSOrderedDescending) {
+        return maxValueOfNewOutput;
+    } else {
+        return [NSDecimalNumber zero];
+    }
+}
+
+- (LXHAddOutputViewModel *)getNewOutputViewModel {
+    NSDecimalNumber *maxValueOfNewOutput = [self maxValueForNewOutput];
+    if ([maxValueOfNewOutput compare:[NSDecimalNumber zero]] == NSOrderedDescending) {
         //返回viewModel
         LXHAddOutputViewModel *ret = [LXHAddOutputViewModel new];
         ret.maxValue = maxValueOfNewOutput;
@@ -37,6 +57,8 @@
         return nil;
     }
 }
+
+
 
 - (void)refreshViewModelAtIndex:(NSUInteger)index {
     [self refreshViewModeMaxValueAtIndex:index];

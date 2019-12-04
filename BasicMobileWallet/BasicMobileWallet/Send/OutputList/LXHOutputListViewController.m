@@ -157,7 +157,7 @@
     sender.alpha = 1;
     NSInteger index = sender.tag;
     [_viewModel deleteRowAtIndex:index];
-    [self.contentView.listView reloadData];
+    [self refreshView];
 }
 
 - (void)LXHSelectedOutputCellButtonTouchDown:(UIButton *)sender {
