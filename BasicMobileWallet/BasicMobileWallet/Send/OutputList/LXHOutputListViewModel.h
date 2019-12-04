@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray<LXHAddOutputViewModel *> *)outputViewModels;
 
-- (LXHAddOutputViewModel *)getNewOutputViewModel;//子类覆盖
+- (nullable LXHAddOutputViewModel *)getNewOutputViewModel;//子类覆盖
 - (void)refreshViewModelAtIndex:(NSUInteger)index;//子类覆盖
 @end
 

@@ -130,6 +130,11 @@
     }
 }
 
+- (BOOL)valueIsZero:(NSString *)valueString {
+    NSDecimalNumber *decimalNumber = [valueString decimalValue];
+    return decimalNumber && ([decimalNumber compare:[NSDecimalNumber zero]] == NSOrderedSame);
+}
+
 - (BOOL)valueIsValid:(NSString *)valueString {
     if (_maxValue) {
         NSDecimalNumber *decimalNumber = [valueString decimalValue];

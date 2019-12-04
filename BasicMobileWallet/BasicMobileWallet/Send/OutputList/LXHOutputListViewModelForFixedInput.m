@@ -28,10 +28,14 @@
     
     NSDecimalNumber *maxValueOfNewOutput = [differenceBetweenInputsAndOuputs decimalNumberBySubtracting:estimatedFeeInBTC];
     
-    //返回viewModel
-    LXHAddOutputViewModel *ret = [LXHAddOutputViewModel new];
-    ret.maxValue = maxValueOfNewOutput;
-    return ret;
+    if ([maxValueOfNewOutput compare:[NSDecimalNumber zero]] == NSOrderedDescending) {
+        //返回viewModel
+        LXHAddOutputViewModel *ret = [LXHAddOutputViewModel new];
+        ret.maxValue = maxValueOfNewOutput;
+        return ret;
+    } else {
+        return nil;
+    }
 }
 
 - (void)refreshViewModelAtIndex:(NSUInteger)index {
@@ -48,8 +52,9 @@
         [otherOutputs removeObject:viewModel.output];
         NSDecimalNumber *otherOutputsValueSum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:otherOutputs];
 
-        
         NSDecimalNumber *maxValueOfCurrentOutput = [[inputsValueSum decimalNumberBySubtracting:estimatedFeeInBTC] decimalNumberBySubtracting:otherOutputsValueSum];
+        if ([maxValueOfCurrentOutput compare:[NSDecimalNumber zero]] == NSOrderedAscending)
+            maxValueOfCurrentOutput = [NSDecimalNumber zero];
         viewModel.maxValue = maxValueOfCurrentOutput;
     }
 }

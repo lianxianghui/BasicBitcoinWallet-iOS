@@ -26,7 +26,7 @@
     
 @interface LXHAddOutputViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHAddOutputView *contentView;
-@property (nonatomic, copy) addOrEditOutputCallback addOutputCallback;
+@property (nonatomic, copy) addOrEditOutputCallback addOrEditOutputCallback;
 @property (nonatomic) LXHAddOutputViewModel *viewModel;
 @property (nonatomic) UIView *scanerView;
 @property (nonatomic) UITextField *textField;
@@ -34,11 +34,11 @@
 
 @implementation LXHAddOutputViewController
 
-- (instancetype)initWithViewModel:(id)viewModel addOrEditOutputCallback:(addOrEditOutputCallback)addOutputCallback {
+- (instancetype)initWithViewModel:(id)viewModel addOrEditOutputCallback:(addOrEditOutputCallback)addOrEditOutputCallback {
     self = [super init];
     if (self) {
         _viewModel = viewModel;
-        _addOutputCallback = addOutputCallback;
+        _addOrEditOutputCallback = addOrEditOutputCallback;
     }
     return self;
 }
@@ -87,8 +87,17 @@
 //Actions
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
-    if ([_viewModel setValueString:_textField.text]) {
-        _addOutputCallback();
+    NSString *value = _textField.text;
+    if (_viewModel.isEditing && [_viewModel valueIsZero:value]) {
+        LXHWeakSelf
+        [self showOkCancelAlertViewWithMessage:NSLocalizedString(@"您所输入的值为0，你是否要删除该输出？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
+            weakSelf.addOrEditOutputCallback(YES);
+            [self.navigationController popViewControllerAnimated:YES];
+        } cancelHandler:nil];
+        return;
+    }
+    if ([_viewModel setValueString:value]) {
+        _addOrEditOutputCallback(NO);
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self showOkAlertViewWithMessage:NSLocalizedString(@"您所输入的值无效，请检查后重新输入", nil) handler:nil];

@@ -15,6 +15,7 @@
 #import "LXHOutputListViewModel.h"
 #import "LXHGlobalHeader.h"
 #import "LXHAddOutputViewModel.h"
+#import "UIViewController+LXHAlert.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -110,9 +111,15 @@
 }
 
 - (void)addOutputButtonClicked:(UIButton *)sender {
-    LXHWeakSelf
     LXHAddOutputViewModel *newOutputViewModel = [_viewModel getNewOutputViewModel];
-    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:newOutputViewModel addOrEditOutputCallback:^() {
+    if (!newOutputViewModel) {
+        [self showOkAlertViewWithMessage:NSLocalizedString(@"无法添加输出", nil) handler:nil];
+        return;
+    }
+    LXHWeakSelf
+    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:newOutputViewModel addOrEditOutputCallback:^(BOOL needDeleteWhenEditing) {
+        if (needDeleteWhenEditing) //应该不会发生
+            return;
         [weakSelf.viewModel addOutputViewModel:newOutputViewModel];
         [self refreshView];
     }];
@@ -301,7 +308,10 @@
     LXHAddOutputViewModel *existOutputViewModel = [_viewModel outputViewModels][index];
     [_viewModel refreshViewModelAtIndex:index];
     existOutputViewModel.isEditing = YES;
-    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:existOutputViewModel addOrEditOutputCallback:^() {
+    LXHWeakSelf
+    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:existOutputViewModel addOrEditOutputCallback:^(BOOL needDelete) {
+        if (needDelete)
+            [weakSelf.viewModel deleteRowAtIndex:indexPath.row];
         [self refreshView];
     }];
     [self.navigationController pushViewController:controller animated:YES];
