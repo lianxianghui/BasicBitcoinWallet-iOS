@@ -1,5 +1,5 @@
 //
-//  LXHTransactionInfoViewViewModel.h
+//  LXHTransactionInfoViewModel.h
 //  BasicMobileWallet
 //
 //  Created by lian on 2019/12/5.
@@ -10,14 +10,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class LXHTransactionOutput;
-@interface LXHTransactionInfoViewViewModel : NSObject
+@class LXHTransactionOutput, LXHTransactionTextViewModel;
+@interface LXHTransactionInfoViewModel : NSObject
 
 - (instancetype)initWithInputs:(NSArray<LXHTransactionOutput *> *)inputs outputs:(NSArray<LXHTransactionOutput *> *)outputs;
 
 
 - (NSString *)infoDescription;
 - (void)pushSignedTransaction;
+
+- (LXHTransactionTextViewModel *)unsignedTransactionTextViewModel;
+- (LXHTransactionTextViewModel *)signedTransactionTextViewModel;
 @end
 
 NS_ASSUME_NONNULL_END

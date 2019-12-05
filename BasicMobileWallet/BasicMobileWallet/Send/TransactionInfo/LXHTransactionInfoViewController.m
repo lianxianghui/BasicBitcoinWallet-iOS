@@ -9,6 +9,8 @@
 #import "LXHTransactionInfoView.h"
 #import "LXHTransactionTextViewController.h"
 #import "LXHBuildTransactionViewController.h"
+#import "LXHTransactionInfoViewModel.h"
+#import "UILabel+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -18,10 +20,18 @@
     
 @interface LXHTransactionInfoViewController()
 @property (nonatomic) LXHTransactionInfoView *contentView;
-
+@property (nonatomic) LXHTransactionInfoViewModel *viewModel;
 @end
 
 @implementation LXHTransactionInfoViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,6 +47,7 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setViewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -57,11 +68,13 @@
 - (void)setDelegates {
 }
 
+- (void)setViewProperties {
+    [self.contentView.desc updateAttributedTextString:[_viewModel infoDescription]];
+}
+
 //Actions
-- (void)textButton3Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHBuildTransactionViewController alloc] init];
-    controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
+- (void)textButton3Clicked:(UIButton *)sender {//签名并发送
+    
 }
 
 

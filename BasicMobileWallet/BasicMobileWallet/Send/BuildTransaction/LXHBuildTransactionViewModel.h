@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class LXHTransactionInputOutputCommon, LXHSelectInputViewModel, LXHOutputListViewModel,LXHSelectFeeRateViewModel, LXHInputFeeViewModel;
+@class LXHTransactionInputOutputCommon, LXHSelectInputViewModel, LXHOutputListViewModel,LXHSelectFeeRateViewModel, LXHInputFeeViewModel, LXHTransactionInfoViewModel;
 
 
 /**
@@ -25,9 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 //ViewModell可以用来在几个页面之间传递构造交易数据
 @property (nonatomic, readonly) LXHSelectFeeRateViewModel *selectFeeRateViewModel;
 @property (nonatomic, readonly) LXHInputFeeViewModel *inputFeeViewModel;
+@property (nonatomic, readonly) LXHTransactionInfoViewModel *transactionInfoViewModel;
 
-- (NSArray<LXHTransactionInputOutputCommon *> *)inputs;
-- (NSArray<LXHTransactionInputOutputCommon *> *)outputs;
+- (NSArray *)inputs;
+- (NSArray *)outputs;
 - (NSArray *)inputCellDataArray;
 - (NSArray *)outputCellDataArray;
 - (NSDictionary *)feeRateCellData;
@@ -74,9 +75,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)clickSelectInputPrompt;
 - (nullable NSString *)clickSelectOutputPrompt;
-
-
-
 
 - (NSString *)navigationBarTitle;
 

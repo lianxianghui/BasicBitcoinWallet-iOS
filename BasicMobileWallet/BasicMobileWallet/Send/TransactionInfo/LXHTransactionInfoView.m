@@ -163,7 +163,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.449999988079071) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"查看未签名交易文本", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"查看签名交易文本", nil) attributes:textAttributes];
         [_textButton2 setAttributedTitle:text forState:UIControlStateNormal];
         _textButton2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     }
@@ -189,7 +189,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.449999988079071) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"查看签名交易文本", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"查看未签名交易文本", nil) attributes:textAttributes];
         [_textButton1 setAttributedTitle:text forState:UIControlStateNormal];
         _textButton1.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     }

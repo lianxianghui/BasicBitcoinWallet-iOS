@@ -172,7 +172,7 @@
 }
 
 - (void)pushLXHTransactionInfoViewController {
-    UIViewController *controller = [[LXHTransactionInfoViewController alloc] init];
+    UIViewController *controller = [[LXHTransactionInfoViewController alloc] initWithViewModel:_viewModel.transactionInfoViewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }

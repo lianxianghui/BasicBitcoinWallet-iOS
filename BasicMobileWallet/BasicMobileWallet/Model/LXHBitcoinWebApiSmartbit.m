@@ -61,10 +61,11 @@
         model.outputAmount = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", dic[@"output_amount"]]];
         model.fees = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", dic[@"fee"]]];
         NSArray *inputs = dic[@"inputs"];
-        for (NSDictionary *originalInputDic in inputs) {
+        [inputs enumerateObjectsUsingBlock:^(NSDictionary *originalInputDic, NSUInteger idx, BOOL * _Nonnull stop) {
             NSMutableDictionary *inputDic = [originalInputDic mutableCopy];
             [inputDic eliminateAllNullObjectValues];
             LXHTransactionInput *input = [LXHTransactionInput new];
+            input.index = idx;
             input.value =  [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", inputDic[@"value"]]];
             input.txid = inputDic[@"txid"];
             NSArray *inputAddresses = [inputDic valueForKey:@"addresses"];
@@ -73,13 +74,15 @@
             input.unlockingScript = [inputDic valueForKeyPath:@"script_sig.asm"];
             input.witness = inputDic[@"witness"];
             input.scriptType = [self scriptTypeByTypeString:inputDic[@"type"]];
+            
             [model.inputs addObject:input];
-        }
+        }];
         NSArray *outputs = dic[@"outputs"];
-        for (NSDictionary *originalOutputDic in outputs) {
+        [outputs enumerateObjectsUsingBlock:^(NSDictionary *originalOutputDic, NSUInteger idx, BOOL * _Nonnull stop) {
             NSMutableDictionary *outputDic = [originalOutputDic mutableCopy];
             [outputDic eliminateAllNullObjectValues];
             LXHTransactionOutput *output = [LXHTransactionOutput new];
+            output.index = idx;
             output.value = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", outputDic[@"value"]]];
             output.spendTxid = outputDic[@"spend_txid"];
             NSArray *outputAddresses = [outputDic valueForKey:@"addresses"];
@@ -89,7 +92,7 @@
             output.scriptType = [self scriptTypeByTypeString:outputDic[@"type"]];
             output.txid = model.txid;
             [model.outputs addObject:output];
-        }
+        }];
         [ret addObject:model];
     }
     return ret;

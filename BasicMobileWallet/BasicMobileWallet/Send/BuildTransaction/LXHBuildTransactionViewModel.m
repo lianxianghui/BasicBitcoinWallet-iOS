@@ -17,6 +17,7 @@
 #import "LXHAddOutputViewModel.h"
 #import "LXHFeeCalculator.h"
 #import "LXHWallet.h"
+#import "LXHTransactionInfoViewModel.h"
 
 @interface LXHBuildTransactionViewModel ()
 @property (nonatomic, readwrite) LXHOutputListViewModel *outputListViewModel;
@@ -196,6 +197,10 @@
     if (!_inputFeeViewModel)
         _inputFeeViewModel = [[LXHInputFeeViewModel alloc] init];
     return _inputFeeViewModel;
+}
+
+- (LXHTransactionInfoViewModel *)transactionInfoViewModel {
+    return [[LXHTransactionInfoViewModel alloc] initWithInputs:self.inputs outputs:self.outputs];
 }
 
 - (void)resetInputFeeViewModel {
