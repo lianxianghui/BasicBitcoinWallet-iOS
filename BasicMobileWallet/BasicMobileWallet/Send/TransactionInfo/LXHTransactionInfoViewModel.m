@@ -47,7 +47,7 @@
         return NO;
     }];
     NSString *changeInfo = changeOutputs.count > 0 ? [NSString stringWithFormat:NSLocalizedString(@"（包含%ld个找零）", nil), changeOutputs.count] : @"";
-    [info appendFormat:NSLocalizedString(@"输出：%ld个输入%@，共%@BTC\n", nil), _inputs.count, changeInfo, outputValueSum];
+    [info appendFormat:NSLocalizedString(@"输出：%ld个输出%@，共%@BTC\n", nil), _outputs.count, changeInfo, outputValueSum];
     //手续费
     NSDecimalNumber *fee = [inputValueSum decimalNumberBySubtracting:outputValueSum];
     [info appendFormat:NSLocalizedString(@"交易手续费：%@BTC\n", nil), fee];
