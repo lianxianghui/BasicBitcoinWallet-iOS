@@ -7,6 +7,7 @@
 //
 
 #import "LXHTransactionTextViewModel.h"
+#import "NSJSONSerialization+VLBase.h"
 
 @interface LXHTransactionTextViewModel ()
 @property (nonatomic) NSDictionary *data;
@@ -18,14 +19,14 @@
 - (instancetype)initWithData:(NSDictionary *)data {
     self = [super init];
     if (self) {
-        
+        _data = data;
     }
     return self;
 }
 
 
 - (NSString *)text {
-    return nil;
+    return [NSJSONSerialization jsonStringWithObject:_data] ?: @" ";
 }
 
 @end

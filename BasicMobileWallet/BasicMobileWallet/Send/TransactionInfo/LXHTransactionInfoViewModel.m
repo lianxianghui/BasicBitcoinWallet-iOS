@@ -64,7 +64,7 @@
 
 - (BTCTransaction *)signedBTCTransaction {
     if (_signedBTCTransaction) {
-        _signedBTCTransaction = self.unsignedBTCTransaction;
+        _signedBTCTransaction = [self.unsignedBTCTransaction copy];
         //todo sign
     }
     return _signedBTCTransaction;
@@ -96,7 +96,7 @@
     return viewModel;
 }
 - (LXHTransactionTextViewModel *)signedTransactionTextViewModel {
-    LXHTransactionTextViewModel *viewModel = [[LXHTransactionTextViewModel alloc] initWithData:[self unsignedTransactionDictionary]];
+    LXHTransactionTextViewModel *viewModel = [[LXHTransactionTextViewModel alloc] initWithData:[self signedBTCTransaction]];
     return viewModel;
 }
 

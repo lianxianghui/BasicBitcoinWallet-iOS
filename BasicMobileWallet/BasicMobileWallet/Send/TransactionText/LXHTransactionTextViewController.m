@@ -8,6 +8,8 @@
 #import "Masonry.h"
 #import "LXHTransactionTextView.h"
 #import "LXHQRCodeViewController.h"
+#import "LXHTransactionTextViewModel.h"
+#import "UILabel+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -17,10 +19,18 @@
     
 @interface LXHTransactionTextViewController()
 @property (nonatomic) LXHTransactionTextView *contentView;
-
+@property (nonatomic) LXHTransactionTextViewModel *viewModel;
 @end
 
 @implementation LXHTransactionTextViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,6 +46,7 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setViewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -52,6 +63,10 @@
 }
 
 - (void)setDelegates {
+}
+
+- (void)setViewProperties {
+    [self.contentView.text updateAttributedTextString:[_viewModel text]];
 }
 
 //Actions
