@@ -9,7 +9,7 @@
 #import "LXHTransactionTextView.h"
 #import "LXHQRCodeViewController.h"
 #import "LXHTransactionTextViewModel.h"
-#import "UILabel+LXHText.h"
+#import "UITextView+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \

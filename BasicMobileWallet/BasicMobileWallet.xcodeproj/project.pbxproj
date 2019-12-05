@@ -49,6 +49,7 @@
 		8C2CC6E8233236A9005AA93C /* LXHShowWalletMnemonicWordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC6E4233236A9005AA93C /* LXHShowWalletMnemonicWordsViewController.m */; };
 		8C2CC6E9233236A9005AA93C /* LXHShowWalletMnemonicWordsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC6E5233236A9005AA93C /* LXHShowWalletMnemonicWordsView.m */; };
 		8C2CC6EC2334C0D8005AA93C /* LXHWalletChangeLevelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC6EB2334C0D8005AA93C /* LXHWalletChangeLevelModel.m */; };
+		8C420C0C2398F117009D02E7 /* UITextView+LXHText.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C420C0B2398F117009D02E7 /* UITextView+LXHText.m */; };
 		8C45ACC4237588DC0038EAEA /* LXHAddressListForSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C45ACC3237588DC0038EAEA /* LXHAddressListForSelectionViewController.m */; };
 		8C45ACC723758D810038EAEA /* LXHAddressListViewController+ForSubclassing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C45ACC623758D810038EAEA /* LXHAddressListViewController+ForSubclassing.m */; };
 		8C45ACCA2375912B0038EAEA /* LXHAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C45ACC92375912B0038EAEA /* LXHAddress.m */; };
@@ -337,6 +338,8 @@
 		8C2CC6E7233236A9005AA93C /* LXHShowWalletMnemonicWordsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHShowWalletMnemonicWordsView.h; sourceTree = "<group>"; };
 		8C2CC6EA2334C0D8005AA93C /* LXHWalletChangeLevelModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHWalletChangeLevelModel.h; sourceTree = "<group>"; };
 		8C2CC6EB2334C0D8005AA93C /* LXHWalletChangeLevelModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHWalletChangeLevelModel.m; sourceTree = "<group>"; };
+		8C420C0A2398F116009D02E7 /* UITextView+LXHText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+LXHText.h"; sourceTree = "<group>"; };
+		8C420C0B2398F117009D02E7 /* UITextView+LXHText.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+LXHText.m"; sourceTree = "<group>"; };
 		8C45ACC2237588DC0038EAEA /* LXHAddressListForSelectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHAddressListForSelectionViewController.h; sourceTree = "<group>"; };
 		8C45ACC3237588DC0038EAEA /* LXHAddressListForSelectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHAddressListForSelectionViewController.m; sourceTree = "<group>"; };
 		8C45ACC523758D810038EAEA /* LXHAddressListViewController+ForSubclassing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LXHAddressListViewController+ForSubclassing.h"; sourceTree = "<group>"; };
@@ -1336,9 +1339,9 @@
 		8CA31FC822D9A37600CEA828 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8CA31FD322D9A3B000CEA828 /* Category */,
 				8CA31FC922D9A37600CEA828 /* UIUtils.h */,
 				8CA31FCA22D9A37600CEA828 /* UIUtils.m */,
-				8CA31FD322D9A3B000CEA828 /* Category */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1354,6 +1357,8 @@
 				8CA3210D22DC7C9C00CEA828 /* UIButton+LXHText.m */,
 				8CA3210F22DCB17500CEA828 /* UITextField+LXHText.h */,
 				8CA3211022DCB17500CEA828 /* UITextField+LXHText.m */,
+				8C420C0A2398F116009D02E7 /* UITextView+LXHText.h */,
+				8C420C0B2398F117009D02E7 /* UITextView+LXHText.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -2392,6 +2397,7 @@
 				8C2CC6AC232F20E5005AA93C /* LXHTextRightIconCell.m in Sources */,
 				8C2CC6B9232F20E5005AA93C /* LXHAddressDetailTextRightIconCell.m in Sources */,
 				8C2CC6DF233214EF005AA93C /* LXHUITools.m in Sources */,
+				8C420C0C2398F117009D02E7 /* UITextView+LXHText.m in Sources */,
 				8CA31FCC22D9A37600CEA828 /* NSMutableArray+Base.m in Sources */,
 				8CA3226122DEBE9900CEA828 /* BTCKeychain.m in Sources */,
 				8CA3227522DEBE9900CEA828 /* BTCNetwork.m in Sources */,
