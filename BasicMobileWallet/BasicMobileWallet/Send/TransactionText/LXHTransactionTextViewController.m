@@ -10,6 +10,7 @@
 #import "LXHQRCodeViewController.h"
 #import "LXHTransactionTextViewModel.h"
 #import "UITextView+LXHText.h"
+#import "LXHQRCodeViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -71,7 +72,10 @@
 
 //Actions
 - (void)textButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHQRCodeViewController alloc] init];
+    id viewModel = [_viewModel qrCodeViewModel];
+    if (!viewModel)
+        return;
+    UIViewController *controller = [[LXHQRCodeViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }

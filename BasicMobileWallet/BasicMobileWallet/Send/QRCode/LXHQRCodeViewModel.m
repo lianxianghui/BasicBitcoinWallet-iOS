@@ -7,9 +7,11 @@
 //
 
 #import "LXHQRCodeViewModel.h"
+#import "BTCQRCode.h"
 
 @interface LXHQRCodeViewModel ()
 @property (nonatomic) NSString *string;
+@property (nonatomic) UIImage *image;
 @end
 
 @implementation LXHQRCodeViewModel
@@ -23,7 +25,11 @@
 }
 
 - (UIImage *)image {
-    return nil;
+    if (!_image) {
+        CGSize imageSize = {280, 280};
+        _image = [BTCQRCode imageForString:_string size:imageSize scale:1];
+    }
+    return _image;
 }
 
 @end

@@ -7,6 +7,7 @@
 #import "LXHQRCodeViewController.h"
 #import "Masonry.h"
 #import "LXHQRCodeView.h"
+#import "LXHQRCodeViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -16,10 +17,19 @@
     
 @interface LXHQRCodeViewController()
 @property (nonatomic) LXHQRCodeView *contentView;
-
+@property (nonatomic) LXHQRCodeViewModel *viewModel;
 @end
 
 @implementation LXHQRCodeViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,6 +45,7 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setViewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -50,6 +61,10 @@
 }
 
 - (void)setDelegates {
+}
+
+- (void)setViewProperties {
+    self.contentView.qrImage.image = [_viewModel image];
 }
 
 //Actions

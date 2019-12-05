@@ -1954,8 +1954,8 @@
 				8CEAECB82383D507005754B3 /* LXHQRCodeView.m */,
 				8C01F2882398A25200D51F77 /* LXHQRCodeViewModel.h */,
 				8C01F2892398A25200D51F77 /* LXHQRCodeViewModel.m */,
-				8CEAECB72383D507005754B3 /* LXHQRCodeViewController.m */,
 				8CEAECB22383D507005754B3 /* LXHQRCodeViewController.h */,
+				8CEAECB72383D507005754B3 /* LXHQRCodeViewController.m */,
 			);
 			path = QRCode;
 			sourceTree = "<group>";

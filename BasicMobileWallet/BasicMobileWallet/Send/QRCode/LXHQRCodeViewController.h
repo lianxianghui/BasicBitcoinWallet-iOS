@@ -7,5 +7,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LXHQRCodeViewController : UIViewController
-
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

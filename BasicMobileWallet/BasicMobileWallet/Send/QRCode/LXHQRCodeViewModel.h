@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHQRCodeViewModel : NSObject
 
+- (instancetype)initWithString:(NSString *)string;
+
 - (UIImage *)image;
 @end
 

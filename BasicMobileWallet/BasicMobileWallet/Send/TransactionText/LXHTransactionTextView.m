@@ -41,6 +41,7 @@
         make.left.equalTo(self.mas_left).offset(12);
         make.right.equalTo(self.mas_right).offset(-12);
         make.top.equalTo(self.customNavigationBar.mas_bottom).offset(2);
+        make.bottom.equalTo(self.textButton.mas_top).offset(-20);
     }];
     [self.textButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(19);
@@ -101,6 +102,7 @@
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"{\n  \"version\": 1,\n  \"locktime\": 0,\n  \"vin\": [\n    {\n      \"txid\": \"7957a35fe64f80d234d76d83a2a8f1a0d8149a41d81de548f0a65a8a999f6f18\",\n      \"vout\": 0,\n      \"sequence\": 4294967295\n    }\n  ],\n  \"vout\": [\n    {\n      \"value\": 0.01500000,\n      \"scriptPubKey\": \"OP_DUP OP_HASH160 ab68025513c3dbd2f7b92a94e0581f5d50f654e7 OP_EQUALVERIFY OP_CHECKSIG\"\n    },\n    {\n      \"value\": 0.08450000,\n      \"scriptPubKey\": \"OP_DUP OP_HASH160 7f9b1a7fb68d60c536c2fd8aeaa53a8f3cc025a8 OP_EQUALVERIFY OP_CHECKSIG\",\n    }\n  ]\n}\n", nil) attributes:textAttributes];
         _text.attributedText = text;
+        _text.backgroundColor = [UIColor clearColor];
     }
     return _text;
 }

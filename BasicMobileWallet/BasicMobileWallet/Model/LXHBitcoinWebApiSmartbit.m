@@ -82,7 +82,7 @@
             NSMutableDictionary *outputDic = [originalOutputDic mutableCopy];
             [outputDic eliminateAllNullObjectValues];
             LXHTransactionOutput *output = [LXHTransactionOutput new];
-            output.index = idx;
+            output.index = [outputDic[@"n"] unsignedIntegerValue];
             output.value = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", outputDic[@"value"]]];
             output.spendTxid = outputDic[@"spend_txid"];
             NSArray *outputAddresses = [outputDic valueForKey:@"addresses"];

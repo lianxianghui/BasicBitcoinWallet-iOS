@@ -10,11 +10,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class LXHQRCodeViewModel;
 @interface LXHTransactionTextViewModel : NSObject
 
 - (instancetype)initWithData:(NSDictionary *)data;
 
 - (NSString *)text;
+
+- (nullable LXHQRCodeViewModel *)qrCodeViewModel;
 @end
 
 NS_ASSUME_NONNULL_END

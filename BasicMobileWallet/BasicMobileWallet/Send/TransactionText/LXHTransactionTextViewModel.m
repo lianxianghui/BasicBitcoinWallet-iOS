@@ -8,6 +8,7 @@
 
 #import "LXHTransactionTextViewModel.h"
 #import "NSJSONSerialization+VLBase.h"
+#import "LXHQRCodeViewModel.h"
 
 @interface LXHTransactionTextViewModel ()
 @property (nonatomic) NSDictionary *data;
@@ -26,7 +27,23 @@
 
 
 - (NSString *)text {
-    return [NSJSONSerialization jsonStringWithObject:_data] ?: @" ";
+    NSString *jsonString = [self jsonString];
+    if (jsonString)
+        return jsonString;
+    else
+        return @" ";
+}
+
+- (NSString *)jsonString {
+    return [NSJSONSerialization jsonStringWithObject:_data];
+}
+
+- (LXHQRCodeViewModel *)qrCodeViewModel {
+    NSString *jsonString = [self jsonString];
+    if (jsonString)
+        return [[LXHQRCodeViewModel alloc] initWithString:jsonString];
+    else
+        return nil;
 }
 
 @end

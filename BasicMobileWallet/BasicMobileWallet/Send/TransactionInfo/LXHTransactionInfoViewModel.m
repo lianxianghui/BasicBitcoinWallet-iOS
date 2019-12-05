@@ -96,7 +96,7 @@
     return viewModel;
 }
 - (LXHTransactionTextViewModel *)signedTransactionTextViewModel {
-    LXHTransactionTextViewModel *viewModel = [[LXHTransactionTextViewModel alloc] initWithData:[self signedBTCTransaction]];
+    LXHTransactionTextViewModel *viewModel = [[LXHTransactionTextViewModel alloc] initWithData:[self signedTransactionDictionary]];
     return viewModel;
 }
 
