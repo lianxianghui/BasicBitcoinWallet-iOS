@@ -25,7 +25,6 @@ typedef NS_ENUM(NSInteger, LXHLockingScriptType) {
 @class LXHAddress;
 @interface LXHTransactionInputOutputCommon : NSObject
 @property (nonatomic) LXHAddress *address;
-//@property (nonatomic) NSString *address;
 @property (nonatomic) NSDecimalNumber *value;
 @property (nonatomic) NSString *txid;//所在交易的Id
 @property (nonatomic) NSUInteger index;

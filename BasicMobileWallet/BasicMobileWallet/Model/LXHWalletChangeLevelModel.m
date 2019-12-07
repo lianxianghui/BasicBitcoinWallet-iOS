@@ -125,4 +125,14 @@
         return nil;
 }
 
+- (NSData *)signatureWithIndex:(uint32_t)index hash:(NSData *)hash {
+    BTCKeychain *keychain = [self.keychain derivedKeychainAtIndex:(uint32_t)index];
+    return [keychain.key signatureForHash:hash hashType:BTCSignatureHashTypeAll];
+}
+
+- (NSData *)publicKeyWithIndex:(uint32_t)index {
+    BTCKeychain *keychain = [self.keychain derivedKeychainAtIndex:(uint32_t)index];
+    return keychain.key.publicKey;
+}
+
 @end

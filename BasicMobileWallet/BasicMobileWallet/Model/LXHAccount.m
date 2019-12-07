@@ -103,6 +103,18 @@
     return ret;
 }
 
+- (NSData *)signatureWithLocalAddress:(LXHAddress *)localAddress hash:(NSData *)hash {
+    LXHWalletChangeLevelModel *changeLevel = [self changeLeveWithType:localAddress.localAddressType];
+    NSString *index = [localAddress.localAddressPath lastPathComponent];
+    return [changeLevel signatureWithIndex:(uint32_t)index.integerValue hash:hash];
+}
+
+- (NSData *)publicKeyWithLocalAddress:(LXHAddress *)localAddress {
+    LXHWalletChangeLevelModel *changeLevel = [self changeLeveWithType:localAddress.localAddressType];
+    NSString *index = [localAddress.localAddressPath lastPathComponent];
+    return [changeLevel publicKeyWithIndex:(uint32_t)index.integerValue];
+}
+
 - (LXHAddress *)currentChangeAddress {
     return [[self changeLeveWithType:LXHLocalAddressTypeChange] currentLocalAddress];
 }
