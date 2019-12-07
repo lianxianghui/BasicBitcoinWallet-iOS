@@ -11,6 +11,7 @@
 #import "LXHBuildTransactionViewController.h"
 #import "LXHTransactionInfoViewModel.h"
 #import "UILabel+LXHText.h"
+#import "LXHTransactionDataManager.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -74,7 +75,14 @@
 
 //Actions
 - (void)textButton3Clicked:(UIButton *)sender {//签名并发送
-    
+    //todo 转圈
+    [_viewModel pushSignedTransactionWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+        //停止转圈
+        //提示
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        //停止转圈
+        //提示
+    }];
 }
 
 

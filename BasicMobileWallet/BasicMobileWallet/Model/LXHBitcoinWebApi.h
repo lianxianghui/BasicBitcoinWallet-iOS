@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
                                successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
                                failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 
+- (void)pushTransactionWithHex:(NSString *)hex
+                  successBlock:(void (^)(NSDictionary *resultDic))successBlock
+                  failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 @end
 
 NS_ASSUME_NONNULL_END

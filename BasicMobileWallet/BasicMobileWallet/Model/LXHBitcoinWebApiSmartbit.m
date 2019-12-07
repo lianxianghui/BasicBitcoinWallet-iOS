@@ -30,7 +30,7 @@
                                successBlock:(void (^)(NSDictionary *resultDic))successBlock
                                failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     NSString *addressesString = [addresses componentsJoinedByString:@","];
-    NSString *url = [NSString stringWithFormat:[self urlFormat], addressesString];
+    NSString *url = [NSString stringWithFormat:[self transactionByAddressesUrlFormat], addressesString];
     NSDictionary *parameters = @{@"limit" : @(100)};
     NSMutableArray *allTransactionDics = [NSMutableArray array];
     [self requestTransactionsWithUrlString:url
@@ -145,9 +145,22 @@
     
 }
 
-- (NSString *)urlFormat {
+- (NSString *)transactionByAddressesUrlFormat {
+    return [[self bashUrl] stringByAppendingString:@"address/%@/wallet"];
+}
+
+- (NSString *)bashUrl {
     return _type == LXHBitcoinNetworkTypeTestnet ?
-    @"https://testnet-api.smartbit.com.au/v1/blockchain/address/%@/wallet" :  @"https://api.smartbit.com.au/v1/blockchain/address/%@/wallet";
+    @"https://testnet-api.smartbit.com.au/v1/blockchain/" :  @"https://api.smartbit.com.au/v1/blockchain/";
+}
+
+- (void)pushTransactionWithHex:(NSString *)hex
+                  successBlock:(void (^)(NSDictionary *resultDic))successBlock
+                  failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+    if (!hex)
+        return;
+    NSString *url = [[self bashUrl] stringByAppendingString:@"pushtx"];
+    [LXHNetworkRequest POSTWithUrlString:url parameters:@{@"hex":hex} successCallback:successBlock failureCallback:failureBlock];
 }
 
 @end

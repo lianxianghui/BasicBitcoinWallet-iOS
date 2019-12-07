@@ -13,6 +13,7 @@
 #import "CoreBitcoin.h"
 #import "LXHTransactionTextViewModel.h"
 #import "LXHWallet.h"
+#import "LXHTransactionDataManager.h"
 
 @interface LXHTransactionInfoViewModel ()
 @property (nonatomic) NSArray<LXHTransactionOutput *> *inputs;
@@ -137,8 +138,10 @@
     return viewModel;
 }
 
-- (void)pushSignedTransaction {
-    //todo self.signedBTCTransaction.hex
+- (void)pushSignedTransactionWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock
+                                 failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+    
+    [LXHTransactionDataManager pushTransactionsWithHex:self.signedBTCTransaction.hex successBlock:successBlock failureBlock:failureBlock];
 }
 
 @end

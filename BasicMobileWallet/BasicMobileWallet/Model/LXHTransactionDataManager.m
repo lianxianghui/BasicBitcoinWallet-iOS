@@ -112,6 +112,13 @@ static NSString *const aesPassword = LXHAESPassword;
     }];
 }
 
++ (void)pushTransactionsWithHex:(NSString *)hex
+                              successBlock:(void (^)(NSDictionary *resultDic))successBlock
+                              failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+    id<LXHBitcoinWebApi> webApi = [LXHTransactionDataManager webApiWithType:LXHWallet.mainAccount.currentNetworkType];
+    [webApi pushTransactionWithHex:hex successBlock:successBlock failureBlock:failureBlock];
+}
+
 //bitpay insight code
 //+ (void)requestTransactionsWithNetworkType:(LXHBitcoinNetworkType)type
 //                                 addresses:(NSArray *)addresses
