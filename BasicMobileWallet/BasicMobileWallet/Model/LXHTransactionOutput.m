@@ -26,6 +26,7 @@
     LXHDecodeObjectOfStringClassStament(address);
     LXHDecodeObjectOfDecimalNumberClassStament(value);
     LXHDecodeObjectOfStringClassStament(lockingScript);
+    LXHDecodeObjectOfStringClassStament(lockingScriptHex);
     LXHDecodeIntegerTypeStament(scriptType);
     LXHDecodeObjectOfStringClassStament(spendTxid);
     LXHDecodeObjectOfStringClassStament(txid);
@@ -36,6 +37,7 @@
     LXHEncodeObjectStament(address);
     LXHEncodeObjectStament(value);
     LXHEncodeObjectStament(lockingScript);
+    LXHEncodeObjectStament(lockingScriptHex);
     LXHEncodeIntegerStament(scriptType);
     LXHEncodeObjectStament(spendTxid);
     LXHEncodeObjectStament(txid);

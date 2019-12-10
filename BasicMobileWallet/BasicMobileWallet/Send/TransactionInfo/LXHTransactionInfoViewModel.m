@@ -66,43 +66,29 @@
 
 - (BTCTransaction *)signedBTCTransaction {
     if (!_signedBTCTransaction) {
-        BTCTransaction *transaction = [[BTCTransaction alloc] init];
+        BTCTransaction *transaction = [[self unsignedBTCTransaction] copy];
+        //sign inputs
         __block BOOL hasError = NO;
         [_inputs enumerateObjectsUsingBlock:^(LXHTransactionOutput * _Nonnull utxo, NSUInteger idx, BOOL * _Nonnull stop) {
-            BTCTransactionInput *input = [[BTCTransactionInput alloc] init];
-            input.previousTransactionID = utxo.txid;
-            input.previousIndex = (uint32_t)utxo.index;
-            [transaction addInput:input];
-            
             uint32_t index = (uint32_t)idx;
-            
-            //sign it
-            BTCScript *hashScript = [[BTCScript alloc] initWithHex:utxo.lockingScript];
-            NSData *hash = [transaction signatureHashForScript:hashScript inputIndex:index hashType:BTCSignatureHashTypeAll error:nil];
+            BTCScript *lockingScript = [[BTCScript alloc] initWithHex:utxo.lockingScriptHex];
+            NSData *hash = [transaction signatureHashForScript:lockingScript inputIndex:index hashType:BTCSignatureHashTypeAll error:nil];
             if (hash) {
                 LXHAddress *localAddress = [LXHWallet.mainAccount localAddressWithBase58Address:utxo.address.base58String];
                 NSData *signature = [LXHWallet.mainAccount signatureWithLocalAddress:localAddress hash:hash];
-                NSData *redeemScript = [LXHWallet.mainAccount publicKeyWithLocalAddress:localAddress];
-                BTCScript *signatureScript = [[BTCScript alloc] init];
-                [signatureScript appendData:signature];
-                [signatureScript appendData:redeemScript];
-                input.signatureScript = signatureScript;
-                BTCScriptMachine *scriptMachine = [[BTCScriptMachine alloc] initWithTransaction:transaction inputIndex:index];
-                if (![scriptMachine verifyWithOutputScript:hashScript error:nil]) {
-                    *stop = YES;
-                    hasError = YES;
-                }
+                NSData *publicKey = [LXHWallet.mainAccount publicKeyWithLocalAddress:localAddress];
+                BTCScript *unlockingScript = [[BTCScript alloc] init];
+                [unlockingScript appendData:signature];
+                [unlockingScript appendData:publicKey];
+                BTCTransactionInput *input = transaction.inputs[idx];
+                input.signatureScript = unlockingScript;
+            } else {
+                hasError = YES;
+                *stop = YES;
             }
         }];
         if (hasError)
             return nil;
-        [_outputs enumerateObjectsUsingBlock:^(LXHTransactionOutput * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            BTCAddress *address = [BTCAddress addressWithString:obj.address.base58String];
-            NSDecimalNumber *valueInSat = [obj.value decimalNumberByMultiplyingByPowerOf10:8];
-            BTCAmount value = BTCAmountFromDecimalNumber(valueInSat);
-            BTCTransactionOutput *output = [[BTCTransactionOutput alloc] initWithValue:value address:address];
-            [transaction addOutput:output];
-        }];
         _signedBTCTransaction = transaction;
     }
     return _signedBTCTransaction;

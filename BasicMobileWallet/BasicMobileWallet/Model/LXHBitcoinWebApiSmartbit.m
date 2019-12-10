@@ -89,6 +89,7 @@
             if (outputAddresses.count == 1) //目前只处理每个输出只有一个输出地址的情况
                 output.address = [LXHAddress addressWithBase58String:outputAddresses[0]];
             output.lockingScript = [outputDic valueForKeyPath:@"script_pub_key.asm"];
+            output.lockingScriptHex = [outputDic valueForKeyPath:@"script_pub_key.hex"];
             output.scriptType = [self scriptTypeByTypeString:outputDic[@"type"]];
             output.txid = model.txid;
             [model.outputs addObject:output];
