@@ -52,6 +52,8 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
 + (LXHAccount *)mainAccount;
 
 + (NSArray *)mnemonicCodeWordsWithErrorPointer:(NSError **)error;
+
++ (BOOL)saveCurrentAddressIndexes;
 @end
 
 NS_ASSUME_NONNULL_END

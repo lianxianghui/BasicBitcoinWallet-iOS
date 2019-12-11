@@ -9,6 +9,7 @@
 #import "LXHWalletChangeLevelModel.h"
 #import "CoreBitcoin.h"
 #import "NSMutableArray+Base.h"
+#import "BlocksKit.h"
 
 @interface LXHWalletChangeLevelModel ()
 @property (nonatomic) LXHBitcoinNetworkType currentNetworkType;
@@ -134,5 +135,21 @@
     BTCKeychain *keychain = [self.keychain derivedKeychainAtIndex:(uint32_t)index];
     return keychain.key.publicKey;
 }
+
+- (void)incrementCurrentAddressIndex {
+    _currentAddressIndex = _currentAddressIndex + 1;
+}
+
+//目前只考虑当前地址
+- (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet {
+    LXHAddress *currentAddress = [self currentLocalAddress];
+    if ([usedBase58AddressesSet containsObject:currentAddress.base58String]) {
+        [self incrementCurrentAddressIndex];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 
 @end

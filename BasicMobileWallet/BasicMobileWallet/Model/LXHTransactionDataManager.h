@@ -21,8 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * 请求成功后会把事务数据保存到文件，同时放到transactionList里
  */
-- (void)requestDataWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock 
-                       failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
+- (void)requestDataWithSuccessBlock:(nullable void (^)(NSDictionary *resultDic))successBlock
+                       failureBlock:(nullable void (^)(NSDictionary *resultDic))failureBlock;
 
 - (void)clearCachedData;
 + (instancetype)sharedInstance;

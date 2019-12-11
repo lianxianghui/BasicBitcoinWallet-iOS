@@ -9,9 +9,33 @@
 #import "LXHTransactionInputOutputCommon.h"
 #import "BlocksKit.h"
 #import "LXHAddress.h"
+#import "LXHGlobalHeader.h"
 
 @implementation LXHTransactionInputOutputCommon
 @synthesize address = _address;
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    LXHDecodeObjectOfStringClassStament(address);
+    LXHDecodeObjectOfDecimalNumberClassStament(value);
+    LXHDecodeObjectOfStringClassStament(txid);
+    LXHDecodeUnsignedIntegerTypeStament(index);
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    LXHEncodeObjectStament(address);
+    LXHEncodeObjectStament(value);
+    LXHEncodeObjectStament(txid);
+    LXHEncodeIntegerStament(index);
+}
 
 - (LXHAddress *)address {
     if (!_address)

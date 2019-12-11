@@ -48,6 +48,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSData *)signatureWithLocalAddress:(LXHAddress *)localAddress hash:(NSData *)hash;
 - (NSData *)publicKeyWithLocalAddress:(LXHAddress *)localAddress;
+
+- (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, LXHLockingScriptType) {
  只是用来继承，放置一些共有的数据字段在这个类里
  */
 @class LXHAddress;
-@interface LXHTransactionInputOutputCommon : NSObject
+@interface LXHTransactionInputOutputCommon : NSObject <NSSecureCoding>
 @property (nonatomic) LXHAddress *address;
 @property (nonatomic) NSDecimalNumber *value;
 @property (nonatomic) NSString *txid;//所在交易的Id

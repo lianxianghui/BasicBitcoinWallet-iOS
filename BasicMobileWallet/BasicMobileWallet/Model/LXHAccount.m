@@ -119,4 +119,18 @@
     return [[self changeLeveWithType:LXHLocalAddressTypeChange] currentLocalAddress];
 }
 
+- (LXHAddress *)currentReceingAddress {
+    return [[self changeLeveWithType:LXHLocalAddressTypeReceiving] currentLocalAddress];
+}
+
+- (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet {
+    __block BOOL ret = NO;
+    NSArray *types = @[@(LXHLocalAddressTypeReceiving), @(LXHLocalAddressTypeChange)];
+    [types enumerateObjectsUsingBlock:^(NSNumber  * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSUInteger type = obj.unsignedIntegerValue;
+        ret = ret || [[self changeLeveWithType:type] updateUsedBase58AddressesIfNeeded:usedBase58AddressesSet];
+    }];
+    return ret;
+}
+
 @end

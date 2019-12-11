@@ -65,7 +65,21 @@ static NSString *const aesPassword = LXHAESPassword;
     dic[@"transactions"] = transactionList;
     _transactionData = dic;
     [self saveTransactionListToCacheFileWithDic:dic];
-    
+}
+
++ (NSMutableSet *)allBase58AddressesWithTransactions:(NSArray *)transactions {
+    NSMutableSet *ret = [NSMutableSet set];
+    for (LXHTransaction *transaction in transactions) {
+        for (LXHTransactionOutput *output in transaction.outputs) {
+            if (output.address.base58String)
+                [ret addObject:output.address.base58String];
+        }
+        for (LXHTransactionInput *input in transaction.inputs) {
+            if (input.address.base58String)
+                [ret addObject:input.address.base58String];
+        }
+    }
+    return ret;
 }
 
 - (NSDictionary *)transactionDataFromCacheFile {
@@ -88,15 +102,21 @@ static NSString *const aesPassword = LXHAESPassword;
         [encryptedData writeToFile:LXHTransactionDataManagerCacheFilePath atomically:YES];
 }
 
-- (void)requestDataWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock 
-                       failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+- (void)requestDataWithSuccessBlock:(nullable void (^)(NSDictionary *resultDic))successBlock
+                       failureBlock:(nullable void (^)(NSDictionary *resultDic))failureBlock {
     NSArray *addresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
     [LXHTransactionDataManager requestTransactionsWithNetworkType:LXHWallet.mainAccount.currentNetworkType addresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
         NSArray *transactions = resultDic[@"transactions"];
         [self setTransactionList:transactions];
-        successBlock(resultDic);
+        //更新钱包的当前地址
+        NSSet *allUsedBase58Addresses = [LXHTransactionDataManager allBase58AddressesWithTransactions:transactions];
+        if ([LXHWallet.mainAccount updateUsedBase58AddressesIfNeeded:allUsedBase58Addresses])
+            [LXHWallet saveCurrentAddressIndexes];
+        if (successBlock)
+            successBlock(resultDic);
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
-        failureBlock(resultDic);
+        if (failureBlock)
+            failureBlock(resultDic);
     }];
 }
 
@@ -116,7 +136,10 @@ static NSString *const aesPassword = LXHAESPassword;
                               successBlock:(void (^)(NSDictionary *resultDic))successBlock
                               failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     id<LXHBitcoinWebApi> webApi = [LXHTransactionDataManager webApiWithType:LXHWallet.mainAccount.currentNetworkType];
-    [webApi pushTransactionWithHex:hex successBlock:successBlock failureBlock:failureBlock];
+    [webApi pushTransactionWithHex:hex successBlock:^(NSDictionary * _Nonnull resultDic) {
+        [[self sharedInstance] requestDataWithSuccessBlock:nil failureBlock:nil];//发送成功了更新一下交易列表
+        successBlock(resultDic);
+    } failureBlock:failureBlock];
 }
 
 //bitpay insight code

@@ -18,29 +18,23 @@
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
-    self = [super init];
+    self = [super initWithCoder:decoder];
     if (!self) {
         return nil;
     }
-    self.address = [decoder decodeObjectOfClass:[LXHAddress class] forKey:@"address"];
-    LXHDecodeObjectOfStringClassStament(address);
-    LXHDecodeObjectOfDecimalNumberClassStament(value);
     LXHDecodeObjectOfStringClassStament(lockingScript);
     LXHDecodeObjectOfStringClassStament(lockingScriptHex);
     LXHDecodeIntegerTypeStament(scriptType);
     LXHDecodeObjectOfStringClassStament(spendTxid);
-    LXHDecodeObjectOfStringClassStament(txid);
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-    LXHEncodeObjectStament(address);
-    LXHEncodeObjectStament(value);
+    [super encodeWithCoder:encoder];
     LXHEncodeObjectStament(lockingScript);
     LXHEncodeObjectStament(lockingScriptHex);
     LXHEncodeIntegerStament(scriptType);
     LXHEncodeObjectStament(spendTxid);
-    LXHEncodeObjectStament(txid);
 }
 
 - (BOOL)isUnspent {

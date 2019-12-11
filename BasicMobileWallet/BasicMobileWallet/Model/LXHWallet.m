@@ -59,6 +59,14 @@
     return _mainAccount;
 }
 
++ (BOOL)saveCurrentAddressIndexes {
+    NSString *currentReceivingAddressIndex = @([self mainAccount].receiving.currentAddressIndex).description;
+    NSString *currentChangeAddressIndex = @([self mainAccount].change.currentAddressIndex).description;
+    BOOL saveResult = [[LXHKeychainStore sharedInstance].store setString:currentReceivingAddressIndex forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
+    saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:currentChangeAddressIndex forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
+    return saveResult;
+}
+
 
 + (BOOL)generateNewWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                 mnemonicPassphrase:(NSString *)mnemonicPassphrase

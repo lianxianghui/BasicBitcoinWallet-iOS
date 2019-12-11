@@ -26,7 +26,7 @@
     if (self) {
         //TODO 临时的
         [self setBase58Address:@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx"];
-        [self setValueString:@"0.005"];
+        [self setValueString:@"0.0001"];
     }
     return self;
 }

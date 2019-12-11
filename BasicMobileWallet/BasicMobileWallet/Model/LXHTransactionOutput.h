@@ -18,13 +18,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHTransactionOutput : LXHTransactionInputOutputCommon <NSSecureCoding>
 /**
- * same as witness script, or scriptPubKey
+ * also called witness script, or scriptPubKey
  * pubkeyhash "OP_DUP OP_HASH160 4a74c9313284709ea893c40ce666d5159eebdab5 OP_EQUALVERIFY OP_CHECKSIG"
  */
 @property (nonatomic) NSString *lockingScript;
 @property (nonatomic) NSString *lockingScriptHex;
 @property (nonatomic) LXHLockingScriptType scriptType;
-
 @property (nonatomic) NSString *spendTxid;
 
 @property (nonatomic) NSMutableDictionary *tempData;

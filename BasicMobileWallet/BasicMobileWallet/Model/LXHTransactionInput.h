@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHTransactionInput : LXHTransactionInputOutputCommon <NSSecureCoding>
 @property (nonatomic) NSString *unlockingScript;//scriptSig
-@property (nonatomic) NSArray *witness;
 @property (nonatomic) LXHLockingScriptType scriptType;
+@property (nonatomic) NSArray *witness;
 @end
 
 NS_ASSUME_NONNULL_END
