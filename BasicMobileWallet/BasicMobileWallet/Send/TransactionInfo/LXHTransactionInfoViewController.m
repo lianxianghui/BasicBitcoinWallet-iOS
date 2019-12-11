@@ -12,6 +12,7 @@
 #import "LXHTransactionInfoViewModel.h"
 #import "UILabel+LXHText.h"
 #import "LXHTransactionDataManager.h"
+#import "Toast.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -75,13 +76,21 @@
 
 //Actions
 - (void)textButton3Clicked:(UIButton *)sender {//签名并发送
-    //todo 转圈
+    [self.contentView.indicatorView startAnimating];
+    LXHWeakSelf
     [_viewModel pushSignedTransactionWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
-        //停止转圈
-        //提示
+        [self.contentView.indicatorView stopAnimating];
+        NSString *prompt = NSLocalizedString(@"发送成功.", nil);
+        [weakSelf.view makeToast:prompt];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        });
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
-        //停止转圈
-        //提示
+        [self.contentView.indicatorView stopAnimating];
+        NSError *error = resultDic[@"error"];
+        NSString *format = NSLocalizedString(@"由于%@发送失败", nil);
+        NSString *errorPrompt = [NSString stringWithFormat:format, error.localizedDescription];
+        [weakSelf.view makeToast:errorPrompt];
     }];
 }
 

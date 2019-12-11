@@ -127,6 +127,7 @@
 - (void)pushSignedTransactionWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock
                                  failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     
+    NSLog(@"正在发送的签名交易：%@", [self.signedBTCTransaction dictionary]);
     [LXHTransactionDataManager pushTransactionsWithHex:self.signedBTCTransaction.hex successBlock:successBlock failureBlock:failureBlock];
 }
 

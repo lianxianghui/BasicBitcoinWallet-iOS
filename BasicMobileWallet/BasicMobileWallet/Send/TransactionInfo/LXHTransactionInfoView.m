@@ -35,6 +35,7 @@
     [self addSubview:self.desc];
     [self addSubview:self.infoTitle];
     [self addSubview:self.customNavigationBar];
+    [self addSubview:self.indicatorView];
 }
 
 - (void)makeConstraints {
@@ -103,6 +104,12 @@
         make.centerY.equalTo(self.leftImageButton.mas_centerY);
         make.width.mas_equalTo(12.5);
         make.height.mas_equalTo(21);
+    }];
+    [self.indicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.mas_centerX);
+        make.centerY.equalTo(self.mas_centerY);
+        make.width.equalTo(self);
+        make.height.equalTo(self);
     }];
 }
 
@@ -324,6 +331,13 @@
         _leftBarItemImage.image = [UIImage imageNamed:@"back"];
     }
     return _leftBarItemImage;
+}
+
+- (UIActivityIndicatorView *)indicatorView {
+    if (!_indicatorView) {
+        _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    }
+    return _indicatorView;
 }
 
 @end
