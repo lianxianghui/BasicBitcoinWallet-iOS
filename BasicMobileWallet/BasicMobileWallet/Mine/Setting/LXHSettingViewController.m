@@ -230,7 +230,7 @@
 - (void)resetWallet {
     [self showOkCancelAlertViewWithTitle:NSLocalizedString(@"警告", nil) message:NSLocalizedString(@"重置将会清除本地的钱包数据，务必要保证已经备份了钱包助记词。您确定现在要重置吗？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
         //clear data
-        [LXHWallet clearData];
+        [LXHWallet clearAccount];
         [[LXHTransactionDataManager sharedInstance] clearCachedData];
         //show welcome page
         AppDelegate *appDelegate = (AppDelegate*)UIApplication.sharedApplication.delegate;

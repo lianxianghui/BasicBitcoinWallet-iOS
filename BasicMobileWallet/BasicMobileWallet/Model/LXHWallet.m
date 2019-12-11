@@ -33,8 +33,8 @@
 + (LXHWallet *)sharedInstance { 
     static LXHWallet *sharedInstance = nil;  
     static dispatch_once_t once;  
-    dispatch_once(&once, ^{ 
-        sharedInstance = [self createWallet];
+    dispatch_once(&once, ^{
+        sharedInstance = [[self alloc] init];
     }); 
     return sharedInstance;
 }
@@ -43,12 +43,20 @@
     return [self sharedInstance].mainAccount;
 }
 
-- (instancetype)initWithMainAccount:(LXHAccount *)mainAccount {
-    self = [super init];
-    if (self) {
-        _mainAccount = mainAccount;
+- (LXHAccount *)mainAccount {
+    if (!_mainAccount) {
+        NSData *rootSeed = [[LXHKeychainStore sharedInstance] decryptedDataForKey:kLXHKeychainStoreRootSeed error:nil];
+        NSString *receivingAddressIndex = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
+        NSString *changeAddressIndex = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreCurrentChangeAddressIndex];
+        NSString *netType = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreBitcoinNetType];
+        if (rootSeed && receivingAddressIndex && changeAddressIndex && netType) {
+            _mainAccount = [[LXHAccount alloc] initWithRootSeed:rootSeed
+                                              currentReceivingAddressIndex:receivingAddressIndex.integerValue
+                                                 currentChangeAddressIndex:changeAddressIndex.integerValue
+                                                        currentNetworkType:netType.integerValue];
+        }
     }
-    return self;
+    return _mainAccount;
 }
 
 
@@ -64,7 +72,7 @@
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@(netType).stringValue forKey:kLXHKeychainStoreBitcoinNetType];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@"1" forKey:kLXHKeychainStoreWalletDataGenerated];
     if (!saveResult) {
-        [self clearData];
+        [self clearAccount];
     }
     return saveResult;
 }
@@ -90,7 +98,7 @@
         saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@"1" forKey:kLXHKeychainStoreWalletDataGenerated];
         
         if (!saveResult) {
-            [self clearData];
+            [self clearAccount];
             failureBlock(nil);
         } else {
             //充分利用已经请求到的数据，不用重新请求交易数据
@@ -103,7 +111,8 @@
     }];
 }
 
-+ (BOOL)clearData {
++ (BOOL)clearAccount {
+    [self sharedInstance].mainAccount = nil;
     BOOL saveResult = [self encryptAndSetMnemonicCodeWords:nil];
     saveResult = saveResult && [LXHKeychainStore.sharedInstance encryptAndSetData:nil forKey:kLXHKeychainStoreRootSeed];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
@@ -157,22 +166,5 @@
 + (BOOL)walletDataGenerated {
     return [[[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreWalletDataGenerated] isEqualToString:@"1"];
 }
-
-+ (LXHWallet *)createWallet {
-    NSData *rootSeed = [[LXHKeychainStore sharedInstance] decryptedDataForKey:kLXHKeychainStoreRootSeed error:nil];
-    NSString *receivingAddressIndex = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
-    NSString *changeAddressIndex = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreCurrentChangeAddressIndex];
-    NSString *netType = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreBitcoinNetType];
-    if (rootSeed && receivingAddressIndex && changeAddressIndex && netType) {
-        LXHAccount *mainAccount = [[LXHAccount alloc] initWithRootSeed:rootSeed 
-                                          currentReceivingAddressIndex:receivingAddressIndex.integerValue 
-                                             currentChangeAddressIndex:changeAddressIndex.integerValue
-                                                    currentNetworkType:netType.integerValue];
-        LXHWallet *wallet = [[LXHWallet alloc] initWithMainAccount:mainAccount];
-        return wallet;
-    }
-    return nil;
-}
-
 
 @end

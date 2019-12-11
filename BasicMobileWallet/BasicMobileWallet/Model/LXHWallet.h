@@ -31,7 +31,6 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
  */
 @interface LXHWallet : NSObject
 @property (nonatomic, readonly) LXHAccount *mainAccount;
-- (instancetype)initWithMainAccount:(LXHAccount *)mainAccount;
 
 
 + (BOOL)generateNewWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
@@ -46,7 +45,7 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
                                        successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                                        failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 
-+ (BOOL)clearData;
++ (BOOL)clearAccount;
 + (BOOL)walletDataGenerated;
 
 + (LXHWallet *)sharedInstance;

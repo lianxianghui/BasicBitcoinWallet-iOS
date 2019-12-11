@@ -324,7 +324,7 @@
         [weakSelf.view makeToast:NSLocalizedString(@"模拟器上无法使用该功能", nil)];
 #else
         weakSelf.scanerView = [BTCQRCode scannerViewWithBlock:^(NSString *text) {
-            if ([weakSelf.viewModel setAddress:text]) {
+            if ([weakSelf.viewModel setBase58Address:text]) {
                 [weakSelf refreshListView];
             } else {
                 [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址", nil)];
