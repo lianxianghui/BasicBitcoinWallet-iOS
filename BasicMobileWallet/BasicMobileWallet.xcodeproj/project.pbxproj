@@ -1247,9 +1247,9 @@
 		8CA31F6E22D98BAA00CEA828 /* InitWallet */ = {
 			isa = PBXGroup;
 			children = (
-				8CA31F6F22D98BAA00CEA828 /* LXHInitWalletViewController.h */,
 				8CA31F7022D98BAA00CEA828 /* LXHInitWalletView.h */,
 				8CA31F7122D98BAA00CEA828 /* LXHInitWalletView.m */,
+				8CA31F6F22D98BAA00CEA828 /* LXHInitWalletViewController.h */,
 				8CA31F7222D98BAA00CEA828 /* LXHInitWalletViewController.m */,
 			);
 			path = InitWallet;
