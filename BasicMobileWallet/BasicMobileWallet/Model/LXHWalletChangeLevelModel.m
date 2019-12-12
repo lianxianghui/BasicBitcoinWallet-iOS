@@ -149,11 +149,11 @@
     _currentAddress = nil;
 }
 
-//目前只考虑当前地址
 - (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet {
     LXHAddress *currentAddress = [self currentLocalAddress];
     if ([usedBase58AddressesSet containsObject:currentAddress.base58String]) {
         [self incrementCurrentAddressIndex];
+        [self updateUsedBase58AddressesIfNeeded:usedBase58AddressesSet];//检查下一个
         return YES;
     } else {
         return NO;
