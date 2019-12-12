@@ -87,15 +87,20 @@
 //Actions
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    LXHWeakSelf
+    if (![_viewModel hasAddress]) {
+        [self showOkAlertViewWithMessage:NSLocalizedString(@"请设置地址", nil) handler:nil];
+        return;
+    }
     NSString *value = _textField.text;
     if (_viewModel.isEditing && [_viewModel valueIsZero:value]) {
-        LXHWeakSelf
         [self showOkCancelAlertViewWithMessage:NSLocalizedString(@"您所输入的值为0，你是否要删除该输出？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
             weakSelf.addOrEditOutputCallback(YES);
             [self.navigationController popViewControllerAnimated:YES];
         } cancelHandler:nil];
         return;
     }
+    
     if ([_viewModel setValueString:value]) {
         _addOrEditOutputCallback(NO);
         [self.navigationController popViewControllerAnimated:YES];

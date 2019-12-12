@@ -41,5 +41,10 @@
     return [NSString stringWithFormat:@"%@", _base58String];
 }
 
++ (LXHAddress *)addressWithBase58String:(NSString *)base58String {
+    LXHAddress *ret = [LXHAddress new];
+    ret.base58String = base58String;
+    return ret;
+}
 
 @end

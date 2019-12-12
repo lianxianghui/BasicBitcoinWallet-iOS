@@ -37,12 +37,6 @@
     LXHEncodeIntegerStament(index);
 }
 
-- (LXHAddress *)address {
-    if (!_address)
-        _address = [LXHAddress new];
-    return _address;
-}
-
 - (void)setAddress:(LXHAddress *)address {
     _address = address;
 }

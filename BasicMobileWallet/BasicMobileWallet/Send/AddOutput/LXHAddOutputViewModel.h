@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)resetCellDataArrayForListView;
 - (BOOL)setBase58Address:(NSString *)address;
 - (void)setAddress:(LXHAddress *)address;
+- (BOOL)hasAddress;
 - (BOOL)setValueString:(NSString *)valueString;
 - (BOOL)valueIsZero:(NSString *)valueString;
 - (BOOL)isChangeOutput;

@@ -27,7 +27,7 @@
         //TODO 临时的
 //        [self setBase58Address:@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx"];
 //        [self setBase58Address:@"2NAQtG5iToBy64FjpHGsRhxZjTFxvgr3E7Q"];
-        [self setValueString:@"0.0001"];
+//        [self setValueString:@"0.0001"];
     }
     return self;
 }
@@ -102,7 +102,7 @@
         if (localAddress) {
             self.output.address = localAddress;
         } else {
-            self.output.address.base58String = validAddress;
+            self.output.address =[LXHAddress addressWithBase58String:validAddress];
         }
         return YES;
     } else {
@@ -112,6 +112,10 @@
 
 - (void)setAddress:(LXHAddress *)address {
     self.output.address = address;
+}
+
+- (BOOL)hasAddress {
+    return (self.output.address.base58String != nil);
 }
 
 - (NSString *)valueString {
