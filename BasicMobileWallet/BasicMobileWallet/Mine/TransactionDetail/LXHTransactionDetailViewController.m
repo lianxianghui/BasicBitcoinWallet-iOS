@@ -124,7 +124,6 @@
             NSInteger firstSeen = [transaction.firstSeen integerValue];
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:firstSeen];
             NSString *dateString = [formatter stringFromDate:date];
-            
             dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"发起时间", nil), dateString];
             [dataForCells addObject:dataForCell];
             
@@ -132,17 +131,14 @@
             dataForCell = lxhTextCellDataDic.mutableCopy;
             NSInteger time = [transaction.time integerValue];
             NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:time];
-            NSString *dateString1 = time ? [formatter stringFromDate:date1] : NSLocalizedString(@"尚未打包进区块", nil);
+            NSString *dateString1 = transaction.time ? [formatter stringFromDate:date1] : NSLocalizedString(@"尚未打包进区块", nil);
             dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"打包时间", nil), dateString1];
             [dataForCells addObject:dataForCell];
             
             //confirmations
             dataForCell = lxhTextCellDataDic.mutableCopy;
             id confirmation = transaction.confirmations;
-            if (confirmation)
-                dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@", NSLocalizedString(@"确认数", nil), confirmation];
-            else 
-                dataForCell[@"text"] = @"";
+            dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@", NSLocalizedString(@"确认数", nil), confirmation];
             [dataForCells addObject:dataForCell];
             
             //block
