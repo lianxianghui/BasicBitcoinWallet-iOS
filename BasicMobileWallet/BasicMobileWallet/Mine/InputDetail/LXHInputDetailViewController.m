@@ -9,6 +9,7 @@
 #import "LXHInputDetailView.h"
 #import "LXHAddressDetailCell.h"
 #import "LXHTransactionInput.h"
+#import "LXHAddress.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -85,7 +86,7 @@
         if (tableView == self.contentView.listView) {
             NSDictionary *dic = nil;
 
-            dic = @{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": _model.address ?: @""};
+            dic = @{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": _model.address.base58String ?: @""};
             [_dataForCells addObject:dic];
             NSString *valueText = _model.value ? [NSString stringWithFormat:@"%@ BTC", _model.value] : @"";
             dic = @{@"title":@"输入数量 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": valueText};
