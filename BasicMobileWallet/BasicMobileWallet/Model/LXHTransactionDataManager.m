@@ -138,7 +138,8 @@ static NSString *const aesPassword = LXHAESPassword;
     id<LXHBitcoinWebApi> webApi = [LXHTransactionDataManager webApiWithType:LXHWallet.mainAccount.currentNetworkType];
     [webApi pushTransactionWithHex:hex successBlock:^(NSDictionary * _Nonnull resultDic) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [[self sharedInstance] requestDataWithSuccessBlock:nil failureBlock:nil];//发送成功了更新一下交易列表
+            //发送成功了更新一下交易列表（只请求一次，如果失败了，用户需要手动刷新交易列表
+            [[self sharedInstance] requestDataWithSuccessBlock:nil failureBlock:nil];
         });
         successBlock(resultDic);
     } failureBlock:failureBlock];

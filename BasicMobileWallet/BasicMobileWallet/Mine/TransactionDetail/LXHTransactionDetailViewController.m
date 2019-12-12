@@ -98,23 +98,6 @@
             [dataForCells addObject:dataForCell];
             
             NSDictionary *lxhTextCellDataDic = @{@"isSelectable":@"1", @"cellType":@"LXHTextCell"};
-            //time
-            dataForCell = lxhTextCellDataDic.mutableCopy;
-            static NSDateFormatter *formatter = nil;
-            if (!formatter) {
-                formatter = [[NSDateFormatter alloc] init];
-                formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
-            }
-//            NSInteger time = [transaction.time integerValue];
-//            NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
-//            NSString *dateString = [formatter stringFromDate:date];
-            
-            NSInteger firstSeen = [transaction.firstSeen integerValue];
-            NSDate *date = [NSDate dateWithTimeIntervalSince1970:firstSeen];
-            NSString *dateString = [formatter stringFromDate:date];
-            
-            dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"发起时间", nil), dateString];
-            [dataForCells addObject:dataForCell];
             //type
             dataForCell = lxhTextCellDataDic.mutableCopy;
             LXHTransactionSendOrReceiveType sendType = [_transaction sendOrReceiveType];
@@ -129,6 +112,30 @@
             typeString = NSLocalizedString(typeString, nil);
             dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"交易类型", nil), typeString];
             [dataForCells addObject:dataForCell];
+            
+            //交易发起时间
+            dataForCell = lxhTextCellDataDic.mutableCopy;
+            static NSDateFormatter *formatter = nil;
+            if (!formatter) {
+                formatter = [[NSDateFormatter alloc] init];
+                formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+            }
+            
+            NSInteger firstSeen = [transaction.firstSeen integerValue];
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:firstSeen];
+            NSString *dateString = [formatter stringFromDate:date];
+            
+            dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"发起时间", nil), dateString];
+            [dataForCells addObject:dataForCell];
+            
+            //打包时间
+            dataForCell = lxhTextCellDataDic.mutableCopy;
+            NSInteger time = [transaction.time integerValue];
+            NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:time];
+            NSString *dateString1 = time ? [formatter stringFromDate:date1] : NSLocalizedString(@"尚未打包进区块", nil);
+            dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"打包时间", nil), dateString1];
+            [dataForCells addObject:dataForCell];
+            
             //confirmations
             dataForCell = lxhTextCellDataDic.mutableCopy;
             id confirmation = transaction.confirmations;
@@ -137,9 +144,11 @@
             else 
                 dataForCell[@"text"] = @"";
             [dataForCells addObject:dataForCell];
+            
             //block
             dataForCell = lxhTextCellDataDic.mutableCopy;
-            dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@", NSLocalizedString(@"区块", nil), transaction.block];
+            NSString *block = transaction.block ?: NSLocalizedString(@"尚未打包进区块", nil);
+            dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@", NSLocalizedString(@"区块", nil), block];
             [dataForCells addObject:dataForCell];
             //valueIn
             dataForCell = lxhTextCellDataDic.mutableCopy;
