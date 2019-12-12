@@ -179,8 +179,8 @@
                     formatter = [[NSDateFormatter alloc] init];
                     formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
                 }
-                NSInteger time = [transaction.time integerValue];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
+                NSInteger firstSeen = [transaction.firstSeen integerValue];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:firstSeen];
                 NSString *dateString = [formatter stringFromDate:date];
                 dic[@"InitializedTime"] = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
                 

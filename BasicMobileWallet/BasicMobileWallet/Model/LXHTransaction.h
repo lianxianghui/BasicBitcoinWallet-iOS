@@ -23,7 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) NSString * blockhash;
 @property (nonatomic) NSString *block;
-@property (nonatomic) NSString *time;
+@property (nonatomic) NSString *firstSeen;//发起时间
+@property (nonatomic) NSString *time;//确认时间
 @property (nonatomic) NSString *confirmations;
 @property (nonatomic) NSDecimalNumber *inputAmount;
 @property (nonatomic) NSDecimalNumber *outputAmount;

@@ -56,6 +56,7 @@
         model.blockhash = dic[@"hash"];//todo
         model.block = dic[@"block"];
         model.time = dic[@"time"];
+        model.firstSeen = dic[@"first_seen"];
         model.confirmations = dic[@"confirmations"];
         model.inputAmount = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", dic[@"input_amount"]]];
         model.outputAmount = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", dic[@"output_amount"]]];

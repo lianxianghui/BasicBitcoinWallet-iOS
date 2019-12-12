@@ -48,7 +48,10 @@
 - (NSDecimalNumber *)decimalValue {
     NSNumberFormatter *formatter = [NSNumberFormatter new];
     formatter.generatesDecimalNumbers = YES;
-    return [formatter numberFromString:self];
+    if ([formatter numberFromString:self])
+        return [[NSDecimalNumber alloc] initWithString:self];
+    else
+        return nil;
 }
 
 @end

@@ -29,6 +29,7 @@
     }
     LXHDecodeObjectOfStringClassStament(blockhash);
     LXHDecodeObjectOfStringClassStament(block);
+    LXHDecodeObjectOfStringClassStament(firstSeen);
     LXHDecodeObjectOfStringClassStament(time);
     LXHDecodeObjectOfStringClassStament(confirmations);
     LXHDecodeObjectOfDecimalNumberClassStament(inputAmount);
@@ -43,6 +44,7 @@
 - (void)encodeWithCoder:(NSCoder *)encoder {
     LXHEncodeObjectStament(blockhash);
     LXHEncodeObjectStament(block);
+    LXHEncodeObjectStament(firstSeen);
     LXHEncodeObjectStament(time);
     LXHEncodeObjectStament(confirmations);
     LXHEncodeObjectStament(inputAmount);
