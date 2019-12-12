@@ -123,10 +123,19 @@
 }
 
 - (NSArray<LXHTransactionOutput *> *)myUtxos {
+    NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
+    NSSet *usedAndCurrentAddressesSet = [NSSet setWithArray:usedAndCurrentAddresses];
     return [self.outputs bk_select:^BOOL(LXHTransactionOutput *obj) {
-        NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
-        return [usedAndCurrentAddresses containsObject:obj.address.base58String] && [obj isUnspent];
+        return [usedAndCurrentAddressesSet containsObject:obj.address.base58String] && [obj isUnspent];
     }];
 }
+
+//- (NSArray<LXHTransactionOutput *> *)myUtxosWithUsedAndCurrentAddressesSet:(NSSet *)usedAndCurrentAddressesSet {
+////    NSArray *usedAndCurrentAddresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
+////    NSSet *usedAndCurrentAddressesSet = [NSSet setWithArray:usedAndCurrentAddresses];
+//    return [self.outputs bk_select:^BOOL(LXHTransactionOutput *obj) {
+//        return [usedAndCurrentAddressesSet containsObject:obj.address.base58String] && [obj isUnspent];
+//    }];
+//}
 
 @end

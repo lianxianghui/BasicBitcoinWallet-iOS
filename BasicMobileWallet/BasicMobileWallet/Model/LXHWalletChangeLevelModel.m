@@ -16,7 +16,8 @@
 @property (nonatomic) LXHLocalAddressType addressType;
 @property (nonatomic) BTCKeychain *accountKeychain;
 @property (nonatomic, readwrite) uint32_t currentAddressIndex;
-
+@property (nonatomic) NSArray<NSString *> *usedAddresses;
+@property (nonatomic) NSString *currentAddress;
 @property (nonatomic) BTCKeychain *keychain;
 @end
 
@@ -70,10 +71,14 @@
 }
 
 - (NSArray *)usedAddresses {
-    if (_currentAddressIndex == 0)
-        return nil;
-    NSArray *ret = [self addressesFromZeroToIndex:_currentAddressIndex-1];
-    return ret;
+    if (!_usedAddresses) {
+        NSArray *ret;
+        if (_currentAddressIndex == 0)
+            ret = nil;
+        ret = [self addressesFromZeroToIndex:_currentAddressIndex-1];
+        _usedAddresses = ret;
+    }
+    return _usedAddresses;
 }
 
 - (NSArray *)addressesFromZeroToIndex:(uint32_t)toIndex {
@@ -92,7 +97,9 @@
 }
 
 - (NSString *)currentAddress {
-    return [self addressStringWithIndex:_currentAddressIndex];
+    if (!_currentAddress)
+       _currentAddress = [self addressStringWithIndex:_currentAddressIndex];
+    return _currentAddress;
 }
 
 - (LXHAddress *)currentLocalAddress {
@@ -138,6 +145,8 @@
 
 - (void)incrementCurrentAddressIndex {
     _currentAddressIndex = _currentAddressIndex + 1;
+    _usedAddresses = nil;
+    _currentAddress = nil;
 }
 
 //目前只考虑当前地址
