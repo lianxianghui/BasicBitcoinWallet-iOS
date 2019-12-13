@@ -41,16 +41,19 @@
     if (!_keychain) {
         uint32_t changeLevelIndex = _addressType;
         _keychain = [self.accountKeychain derivedKeychainAtIndex:changeLevelIndex hardened:NO];
+        _keychain.network = self.accountKeychain.network;
     }
+//    NSLog(@"xpub:%@", self.accountKeychain.extendedPublicKey);
     return _keychain;
 }
 
 - (NSString *)addressPathWithIndex:(NSUInteger)index {
-    return [NSString stringWithFormat:@"m/44'/%ld'/0'/%ld/%ld", _currentNetworkType, _addressType, index];
+    return [NSString stringWithFormat:@"m/44'/%lu'/0'/%ld/%ld", (unsigned long)_currentNetworkType, _addressType, index];
 }
 
 - (NSString *)addressStringWithIndex:(uint32_t)index {
     BTCKeychain *keychain = [self.keychain derivedKeychainAtIndex:(uint32_t)index];
+    keychain.network = self.keychain.network;
     BTCPublicKeyAddress *addressModel = [self addressModelWithKey:keychain.key];
     return addressModel.string;
 }
@@ -135,11 +138,13 @@
 
 - (NSData *)signatureWithIndex:(uint32_t)index hash:(NSData *)hash {
     BTCKeychain *keychain = [self.keychain derivedKeychainAtIndex:(uint32_t)index];
+    keychain.network = self.keychain.network;
     return [keychain.key signatureForHash:hash hashType:BTCSignatureHashTypeAll];
 }
 
 - (NSData *)publicKeyWithIndex:(uint32_t)index {
     BTCKeychain *keychain = [self.keychain derivedKeychainAtIndex:(uint32_t)index];
+    keychain.network = self.keychain.network;
     return keychain.key.publicKey;
 }
 

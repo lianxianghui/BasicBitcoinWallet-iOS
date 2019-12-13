@@ -51,6 +51,7 @@
         NSString *netType = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreBitcoinNetType];
         if (rootSeed && receivingAddressIndex && changeAddressIndex && netType) {
             _mainAccount = [[LXHAccount alloc] initWithRootSeed:rootSeed
+                                                   accountIndex:0
                                               currentReceivingAddressIndex:receivingAddressIndex.integerValue
                                                  currentChangeAddressIndex:changeAddressIndex.integerValue
                                                         currentNetworkType:netType.integerValue];
