@@ -43,7 +43,7 @@
         _keychain = [self.accountKeychain derivedKeychainAtIndex:changeLevelIndex hardened:NO];
         _keychain.network = self.accountKeychain.network;
     }
-//    NSLog(@"xpub:%@", self.accountKeychain.extendedPublicKey);
+//    NSLog(@"xpub:%@, length=%ld", self.accountKeychain.extendedPublicKey, self.accountKeychain.extendedPublicKey.length);
     return _keychain;
 }
 

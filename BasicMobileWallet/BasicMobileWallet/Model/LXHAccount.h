@@ -32,6 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
        currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
               currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType;
 
+- (instancetype)initWithAccountExtendedPublicKey:(NSString *)extendedPublicKey
+                    accountIndex:(NSUInteger)accountIndex
+    currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
+       currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex;
 
 - (NSArray *)usedAddresses;
 - (NSArray *)usedAndCurrentAddresses;
