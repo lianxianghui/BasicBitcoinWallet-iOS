@@ -1,17 +1,21 @@
-// LXHInputMnemonicWordsViewController.m
+// LXHOthersViewController.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-07-13
+//  Created by lianxianghui on 19-12-17
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
-#import "LXHInputMnemonicWordsViewController.h"
+#import "LXHOthersViewController.h"
 #import "Masonry.h"
-#import "LXHInputMnemonicWordsView.h"
-#import "LXHWordCell.h"
-#import "LXHWalletMnemonicWordsViewController.h"
-#import "BTCMnemonic.h"
-#import "NSString+Base.h"
-#import "UITextField+LXHText.h"
+#import "LXHOthersView.h"
+#import "LXHAddressListViewController.h"
+#import "LXHSettingViewController.h"
+#import "LXHTransactionListViewController.h"
+#import "LXHScanQRViewController.h"
+#import "LXHLineCell.h"
+#import "LXHTextRightIconCell.h"
+#import "LXHShowWalletMnemonicWordsViewController.h"
+#import "UIViewController+LXHBasicMobileWallet.h"
+#import "Toast.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -19,22 +23,19 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
-@interface LXHInputMnemonicWordsViewController()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface LXHOthersViewController() <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic) LXHOthersView *contentView;
 
-@property (nonatomic) LXHInputMnemonicWordsView *contentView;
-@property (nonatomic) NSArray *currentPromptWords;
-@property (nonatomic) NSMutableArray *dataForCells;
-@property (nonatomic) NSMutableArray *inputWords;
 @end
 
-@implementation LXHInputMnemonicWordsViewController
+@implementation LXHOthersViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColorFromRGBA(0xFAFAFAFF);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.contentView = [[LXHInputMnemonicWordsView alloc] init];
+    self.contentView = [[LXHOthersView alloc] init];
     [self.view addSubview:self.contentView];
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_topLayoutGuideBottom);
@@ -43,7 +44,6 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
-    [self setSubviewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -52,88 +52,40 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)setSubviewProperties {
-    self.contentView.inputTextFieldWithPlaceHolder.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    self.contentView.inputTextFieldWithPlaceHolder.autocorrectionType = UITextAutocorrectionTypeNo;//For Security Consideration
-}
-
 - (void)addActions {
-    [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-    [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
-    [self.contentView.inputTextFieldWithPlaceHolder addTarget:self action:@selector(inputTextFieldWithPlaceHolderChanged:) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)setDelegates {
     self.contentView.listView.dataSource = self;
     self.contentView.listView.delegate = self;
-    self.contentView.inputTextFieldWithPlaceHolder.delegate = self;
-}
-
-//Actions
-- (void)leftImageButtonClicked:(UIButton *)sender {
-    sender.alpha = 1;
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)leftImageButtonTouchDown:(UIButton *)sender {
-    sender.alpha = 0.5;
-}
-
-- (void)leftImageButtonTouchUpOutside:(UIButton *)sender {
-    sender.alpha = 1;
-}
-
-- (void)inputTextFieldWithPlaceHolderChanged:(UITextField *)sender {
-    NSString *text = sender.text;
-    NSString *currentInputText = [text stringByTrimmingWhiteSpace];
-    if (currentInputText.length > 0) {
-        NSMutableArray *currentPromptWords = [NSMutableArray array];
-        for (NSString *word in [BTCMnemonic englishWordList]) {
-            if ([word hasPrefix:currentInputText])
-                [currentPromptWords addObject:word];
-        }
-        self.currentPromptWords = currentPromptWords;
-        [self reloadTableview];
-    }
-}
-
-- (void)clearTextFieldAndPromptWordList {
-    self.contentView.inputTextFieldWithPlaceHolder.text = @"";
-    self.currentPromptWords = nil;
-    [self reloadTableview];
-}
-
-- (void)reloadTableview {
-    self.dataForCells = nil;
-    [self.contentView.listView reloadData];
-}
-
-- (void)refreshTextFieldPlaceholder {
-    NSString *format = NSLocalizedString(@"请输入第%@个助记词", nil);
-    NSString *currentInputPlaceHolder = [NSString stringWithFormat:format, @(self.inputWords.count+1)];
-    [self.contentView.inputTextFieldWithPlaceHolder updateAttributedPlaceholderString:currentInputPlaceHolder];
 }
 
 //Delegate Methods
-
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    if (!_dataForCells) {
-        _dataForCells = [NSMutableArray array];
+    static NSMutableArray *dataForCells = nil;
+    if (!dataForCells) {
+        dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
-            for (NSString *word in self.currentPromptWords) {
-                NSDictionary *dic = @{@"text":word, @"isSelectable":@"1", @"cellType":@"LXHWordCell"};  
-                [_dataForCells addObject:dic];                
-            }
+            NSDictionary *dic = nil;
+            dic = @{@"isSelectable":@"0", @"cellType":@"LXHLineCell"};
+            [dataForCells addObject:dic];
+            dic = @{@"text":@"交易列表", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
+            [dataForCells addObject:dic];
+            dic = @{@"text":@"本地地址列表", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
+            [dataForCells addObject:dic];
+            dic = @{@"text":@"扫描二维码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
+            [dataForCells addObject:dic];
+            dic = @{@"text":@"设置", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
+            [dataForCells addObject:dic];
         }
     }
-    return _dataForCells;
+    return dataForCells;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     NSArray *dataForTableView = [self dataForTableView:tableView];
-    if (indexPath.row < dataForTableView.count) 
-        return dataForTableView[indexPath.row];
+    if (indexPath.row < dataForTableView.count)
+        return [dataForTableView objectAtIndex:indexPath.row];
     else
         return nil;
 }
@@ -143,8 +95,8 @@
     if (tableView == self.contentView.listView) {
         NSArray *data = [self dataForTableView:tableView];
         if (indexPath.row < data.count) {
-            NSDictionary *cellData = data[indexPath.row];
-            return cellData[@"cellType"];
+            NSDictionary *cellData = [data objectAtIndex:indexPath.row];
+            return [cellData valueForKey:@"cellType"];
         }
     }
     return nil;
@@ -152,8 +104,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView viewTagAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
-    if ([cellType isEqualToString:@"LXHWordCell"])
+    if ([cellType isEqualToString:@"LXHLineCell"])
         return 100;
+    if ([cellType isEqualToString:@"LXHTextRightIconCell"])
+        return 101;
     return -1;
 }
 
@@ -175,7 +129,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellType];
         NSString *viewClass = [self tableView:tableView cellContentViewClassStingAtIndexPath:indexPath];
-        UIView *view = [NSClassFromString(viewClass) new];
+        UIView *view = [[NSClassFromString(viewClass) alloc] init];
         view.tag = tag;
         [cell.contentView addSubview:view];
         //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
@@ -191,8 +145,8 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     UIView *view = [cell.contentView viewWithTag:tag];
-    if ([cellType isEqualToString:@"LXHWordCell"]) {
-        LXHWordCell *cellView = (LXHWordCell *)view;
+    if ([cellType isEqualToString:@"LXHTextRightIconCell"]) {
+        LXHTextRightIconCell *cellView = (LXHTextRightIconCell *)view;
         NSString *text = [dataForRow valueForKey:@"text"];
         if (!text)
             text = @"";
@@ -206,8 +160,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
     if (tableView == self.contentView.listView) {
-        if ([cellType isEqualToString:@"LXHWordCell"])
-            return 33;
+        if ([cellType isEqualToString:@"LXHLineCell"])
+            return 0.5;
+        if ([cellType isEqualToString:@"LXHTextRightIconCell"])
+            return 56;
     }
     return 0;
 }
@@ -224,24 +180,47 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (!self.inputWords)
-        self.inputWords = [NSMutableArray array];
-    NSString *selectedWord = self.currentPromptWords[indexPath.row];
-    [self.inputWords addObject:selectedWord];
-    
-    //测试用
-//    self.inputWords = [@"indicate theory winter excite obtain join maximum they error problem index fat" componentsSeparatedByString:@" "].mutableCopy;
-    if (self.inputWords.count < self.wordLength) {
-        [self clearTextFieldAndPromptWordList];
-        [self refreshTextFieldPlaceholder];
-    } else {
-        LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] init];
-        controller.words = self.inputWords;
-        controller.type = LXHWalletMnemonicWordsViewControllerTypeForRestoringExistingWallet;
-        [self.navigationController pushViewController:controller animated:YES];
-        self.inputWords = nil;
-        [self clearTextFieldAndPromptWordList];
-        [self refreshTextFieldPlaceholder];
+    switch(indexPath.row) {
+        case 0:
+        {
+        }
+            break;
+        case 1:
+        {
+            UIViewController *controller = [[LXHTransactionListViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+            break;
+        case 2:
+        {
+            UIViewController *controller = [[LXHAddressListViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+            break;
+        case 3:
+        {
+#if TARGET_IPHONE_SIMULATOR
+            [self.view makeToast:NSLocalizedString(@"模拟器上无法使用该功能", nil)];
+#else
+            UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *message) {
+                
+            }];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+#endif
+        }
+            break;
+        case 4:
+        {
+            UIViewController *controller = [[LXHSettingViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+            break;
+        default:
+            break;
     }
 }
 
