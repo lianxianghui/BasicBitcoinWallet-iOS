@@ -111,7 +111,7 @@ static NSString *const aesPassword = LXHAESPassword;
         //更新钱包的当前地址
         NSSet *allUsedBase58Addresses = [LXHTransactionDataManager allBase58AddressesWithTransactions:transactions];
         if ([LXHWallet.mainAccount updateUsedBase58AddressesIfNeeded:allUsedBase58Addresses])
-            [LXHWallet saveCurrentAddressIndexes];
+            [LXHWallet saveMainAccountCurrentAddressIndexes];
         if (successBlock)
             successBlock(resultDic);
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {

@@ -61,7 +61,7 @@
     return _mainAccount;
 }
 
-+ (BOOL)saveCurrentAddressIndexes {
++ (BOOL)saveMainAccountCurrentAddressIndexes {
     NSString *currentReceivingAddressIndex = @([self mainAccount].receiving.currentAddressIndex).description;
     NSString *currentChangeAddressIndex = @([self mainAccount].change.currentAddressIndex).description;
     BOOL saveResult = [[LXHKeychainStore sharedInstance].store setString:currentReceivingAddressIndex forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
@@ -193,27 +193,6 @@
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreBitcoinNetType];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreWalletDataGenerated];
     return saveResult;
-}
-
-- (NSInteger)currentAddressIndexWithKey:(NSString *)key {
-    NSError *error = nil;
-    NSString *indexString = [[LXHKeychainStore sharedInstance] decryptedStringForKey:key error:&error];
-    if (error)
-        return -1;
-    else {
-        if (indexString)
-            return indexString.integerValue;
-        else
-            return 0;
-    }
-}
-
-- (NSInteger)currentChangeAddressIndex {
-    return [self currentAddressIndexWithKey:kLXHKeychainStoreCurrentChangeAddressIndex];
-}
-
-- (NSInteger)currentReceivingAddressIndex {
-    return [self currentAddressIndexWithKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
 }
 
 - (LXHBitcoinNetworkType)currentNetworkType {
