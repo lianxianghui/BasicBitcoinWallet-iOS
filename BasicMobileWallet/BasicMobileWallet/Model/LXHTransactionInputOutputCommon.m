@@ -8,7 +8,7 @@
 
 #import "LXHTransactionInputOutputCommon.h"
 #import "BlocksKit.h"
-#import "LXHAddress.h"
+#import "LXHAddress+LXHAccount.h"
 #import "LXHGlobalHeader.h"
 
 @implementation LXHTransactionInputOutputCommon
@@ -24,6 +24,7 @@
         return nil;
     }
     LXHDecodeObjectOfStringClassStament(address);
+    [_address refreshLocalProperties];
     LXHDecodeObjectOfDecimalNumberClassStament(value);
     LXHDecodeObjectOfStringClassStament(txid);
     LXHDecodeUnsignedIntegerTypeStament(index);

@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) LXHLocalAddressType localAddressType;
 @property (nonatomic) BOOL localAddressUsed;
 
-+ (LXHAddress *)addressWithBase58String:(NSString *)base58String;
 @end
 
 NS_ASSUME_NONNULL_END
