@@ -1187,12 +1187,12 @@
 		8CA31F5522D9872900CEA828 /* InputMnemonicWords */ = {
 			isa = PBXGroup;
 			children = (
-				8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */,
-				8CA31F5722D9872900CEA828 /* LXHInputMnemonicWordsView.h */,
 				8CA31F5822D9872900CEA828 /* LXHWordCell.h */,
-				8CA31F5922D9872900CEA828 /* LXHInputMnemonicWordsViewController.h */,
-				8CA31F5A22D9872900CEA828 /* LXHInputMnemonicWordsView.m */,
 				8CA31F5B22D9872900CEA828 /* LXHWordCell.m */,
+				8CA31F5722D9872900CEA828 /* LXHInputMnemonicWordsView.h */,
+				8CA31F5A22D9872900CEA828 /* LXHInputMnemonicWordsView.m */,
+				8CA31F5922D9872900CEA828 /* LXHInputMnemonicWordsViewController.h */,
+				8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */,
 			);
 			path = InputMnemonicWords;
 			sourceTree = "<group>";

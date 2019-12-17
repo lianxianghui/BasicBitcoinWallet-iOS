@@ -25,9 +25,9 @@
     self = [super init];
     if (self) {
         //TODO 临时的
-//        [self setBase58Address:@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx"];
-//        [self setBase58Address:@"2NAQtG5iToBy64FjpHGsRhxZjTFxvgr3E7Q"];
-//        [self setValueString:@"0.0001"];
+        [self setBase58Address:@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx"];
+ //       [self setBase58Address:@"2NAQtG5iToBy64FjpHGsRhxZjTFxvgr3E7Q"];
+        [self setValueString:@"0.0001"];
     }
     return self;
 }
@@ -141,16 +141,17 @@
 }
 
 - (BOOL)valueIsValid:(NSString *)valueString {
-    if (_maxValue) {
-        NSDecimalNumber *decimalNumber = [valueString decimalValue];
-        if (!decimalNumber)
-            return NO;
-        if (!([decimalNumber compare:[NSDecimalNumber zero]] == NSOrderedDescending)) //不大于，即小于或等于0时无效
-            return NO;
+    if (valueString.length == 0)
+        return NO;
+    NSDecimalNumber *decimalNumber = [valueString decimalValue];
+    if (!decimalNumber)
+        return NO;
+    if (!([decimalNumber compare:[NSDecimalNumber zero]] == NSOrderedDescending)) //不大于，即小于或等于0时无效
+        return NO;
+    if (_maxValue)
         return !([decimalNumber compare:_maxValue] == NSOrderedDescending);//不大于，即小于或等于
-    } else {
+    else
         return YES;
-    }
 }
 
 /**
