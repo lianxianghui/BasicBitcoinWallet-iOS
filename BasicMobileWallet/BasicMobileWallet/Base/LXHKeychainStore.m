@@ -77,8 +77,8 @@ static NSString *const aesPassword = LXHAESPassword;
 - (NSString *)decryptedStringForKey:(NSString *)key error:(NSError **)error {
     NSData *data = [self decryptedDataForKey:key error:error];
     if (data) {
-        NSString *pin = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        return pin;
+        NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        return ret;
     } else {
         return nil;
     }

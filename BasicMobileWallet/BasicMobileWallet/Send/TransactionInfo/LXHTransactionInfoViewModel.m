@@ -74,9 +74,9 @@
             BTCScript *lockingScript = [[BTCScript alloc] initWithHex:utxo.lockingScriptHex];
             NSData *hash = [transaction signatureHashForScript:lockingScript inputIndex:index hashType:BTCSignatureHashTypeAll error:nil];
             if (hash) {
-                LXHAddress *localAddress = [LXHWallet.mainAccount localAddressWithBase58Address:utxo.address.base58String];
-                NSData *signature = [LXHWallet.mainAccount signatureWithLocalAddress:localAddress hash:hash];
-                NSData *publicKey = [LXHWallet.mainAccount publicKeyWithLocalAddress:localAddress];
+                LXHAddress *address = utxo.address;
+                NSData *signature = [LXHWallet signatureWithNetType:LXHWallet.mainAccount.currentNetworkType path:address.localAddressPath hash:hash];
+                NSData *publicKey = [LXHWallet.mainAccount publicKeyWithLocalAddress:address];
                 BTCScript *unlockingScript = [[BTCScript alloc] init];
                 [unlockingScript appendData:signature];
                 [unlockingScript appendData:publicKey];

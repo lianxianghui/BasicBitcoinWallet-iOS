@@ -23,15 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) LXHWalletChangeLevelModel *receiving;
 @property (nonatomic, readonly) LXHWalletChangeLevelModel *change;
 
-- (instancetype)initWithRootSeed:(NSData *)rootSeed
-              currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType;
-
-- (instancetype)initWithRootSeed:(NSData *)rootSeed
-                    accountIndex:(NSUInteger)accountIndex
-    currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
-       currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
-              currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType;
-
 - (instancetype)initWithAccountExtendedPublicKey:(NSString *)extendedPublicKey
                     accountIndex:(NSUInteger)accountIndex
     currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
@@ -51,7 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (LXHAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address;
 - (LXHAddress *)currentChangeAddress;
 
-- (NSData *)signatureWithLocalAddress:(LXHAddress *)localAddress hash:(NSData *)hash;
 - (NSData *)publicKeyWithLocalAddress:(LXHAddress *)localAddress;
 
 - (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet;

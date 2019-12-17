@@ -54,6 +54,9 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
 + (NSArray *)mnemonicCodeWordsWithErrorPointer:(NSError **)error;
 
 + (BOOL)saveMainAccountCurrentAddressIndexes;
+
++ (NSData *)signatureWithNetType:(LXHBitcoinNetworkType)netType path:(NSString *)path hash:(NSData *)hash;
++ (BOOL)isWatchOnly;
 @end
 
 NS_ASSUME_NONNULL_END

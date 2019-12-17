@@ -13,7 +13,6 @@
 
 @interface LXHAccount ()
 @property (nonatomic) NSUInteger accountIndex;
-@property (nonatomic) BTCKeychain *masterKeychain;
 @property (nonatomic) BTCKeychain *accountKeychain;
 @property (nonatomic, readwrite) LXHBitcoinNetworkType currentNetworkType;
 @property (nonatomic, readwrite) LXHWalletChangeLevelModel *receiving;
@@ -23,23 +22,6 @@
 @end
 
 @implementation LXHAccount
-
-- (instancetype)initWithRootSeed:(NSData *)rootSeed
-                    accountIndex:(NSUInteger)accountIndex
-    currentReceivingAddressIndex:(NSInteger)currentReceivingAddressIndex
-       currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex
-              currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType {
-    self = [super init];
-    if (self) {
-        BTCNetwork *network = currentNetworkType == LXHBitcoinNetworkTypeMainnet ? BTCNetwork.mainnet : BTCNetwork.testnet;
-        _masterKeychain = [[BTCKeychain alloc] initWithSeed:rootSeed network:network];
-        _accountIndex = accountIndex;
-        _currentNetworkType = currentNetworkType;
-        _receiving = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHLocalAddressTypeReceiving accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)currentReceivingAddressIndex];
-        _change = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHLocalAddressTypeChange accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)currentChangeAddressIndex];
-    }
-    return self;
-}
 
 - (instancetype)initWithAccountExtendedPublicKey:(NSString *)extendedPublicKey
                        accountIndex:(NSUInteger)accountIndex
@@ -55,24 +37,6 @@
     }
     return self;
 }
-
-- (instancetype)initWithRootSeed:(NSData *)rootSeed currentNetworkType:(LXHBitcoinNetworkType)currentNetworkType {
-    return [self initWithRootSeed:rootSeed accountIndex:0 currentReceivingAddressIndex:0 currentChangeAddressIndex:0 currentNetworkType:currentNetworkType];
-}
-
-//- (BTCKeychain *)accountKeychain {
-//    if (!_accountKeychain) {
-//        NSString *pathFormat;
-//        if (_currentNetworkType == LXHBitcoinNetworkTypeTestnet)
-//            pathFormat = @"m/44'/1'/%ld'";
-//        else
-//            pathFormat = @"m/44'/0'/%ld'";
-//        NSString *path = [NSString stringWithFormat:pathFormat, _accountIndex];
-//        _accountKeychain = [_masterKeychain derivedKeychainWithPath:path];
-//        _accountKeychain.network = _masterKeychain.network;
-//    }
-//    return _accountKeychain;
-//}
 
 - (NSArray *)usedAddresses {
     NSMutableArray *ret = [NSMutableArray array];
@@ -127,12 +91,6 @@
     if (!ret)
         ret = [[self changeLeveWithType:LXHLocalAddressTypeReceiving] localAddressWithBase58Address:base58Address];
     return ret;
-}
-
-- (NSData *)signatureWithLocalAddress:(LXHAddress *)localAddress hash:(NSData *)hash {
-    LXHWalletChangeLevelModel *changeLevel = [self changeLeveWithType:localAddress.localAddressType];
-    NSString *index = [localAddress.localAddressPath lastPathComponent];
-    return [changeLevel signatureWithIndex:(uint32_t)index.integerValue hash:hash];
 }
 
 - (NSData *)publicKeyWithLocalAddress:(LXHAddress *)localAddress {

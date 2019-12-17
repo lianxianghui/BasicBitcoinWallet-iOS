@@ -219,4 +219,28 @@
     return [[[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreWalletDataGenerated] isEqualToString:@"1"];
 }
 
+
++ (NSData *)signatureWithNetType:(LXHBitcoinNetworkType)netType path:(NSString *)path hash:(NSData *)hash  {
+    BTCNetwork *network;
+    if (netType == LXHBitcoinNetworkTypeMainnet) {
+        network = [BTCNetwork mainnet];
+    } else {
+        network = [BTCNetwork testnet];
+    }
+    
+    NSData *rootSeed = [LXHKeychainStore.sharedInstance decryptedDataForKey:kLXHKeychainStoreRootSeed error:nil];
+    if (rootSeed) {
+        BTCKeychain *masterKeychain = [[BTCKeychain alloc] initWithSeed:rootSeed];
+        masterKeychain.network = network;
+        BTCKeychain *keychain = [masterKeychain derivedKeychainWithPath:path];
+        keychain.network = network;
+        return [keychain.key signatureForHash:hash hashType:BTCSignatureHashTypeAll];
+    } else {
+        return nil;
+    }
+}
+
++ (BOOL)isWatchOnly {
+    return ![LXHKeychainStore.sharedInstance.store contains:kLXHKeychainStoreRootSeed];
+}
 @end
