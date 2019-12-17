@@ -1,19 +1,16 @@
-// LXHMineViewController.m
+// LXHCurrentAccountInfoViewController.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-09-16
+//  Created by lianxianghui on 19-12-17
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
-#import "LXHMineViewController.h"
+#import "LXHCurrentAccountInfoViewController.h"
 #import "Masonry.h"
-#import "LXHMineView.h"
-#import "LXHTransactionListViewController.h"
-#import "LXHAddressListViewController.h"
-#import "LXHSettingViewController.h"
-#import "LXHLineCell.h"
-#import "LXHTextRightIconCell.h"
-#import "LXHShowWalletMnemonicWordsViewController.h"
-#import "UIViewController+LXHBasicMobileWallet.h"
+#import "LXHCurrentAccountInfoView.h"
+#import "LXHQRCodeAndTextViewController.h"
+#import "LXHTwoColumnTextCell.h"
+#import "LXHEmptyWithSeparatorCell.h"
+#import "LXHSmallSizeTextRightIconCell.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -21,19 +18,19 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
-@interface LXHMineViewController() <UITableViewDataSource, UITableViewDelegate>
-@property (nonatomic) LXHMineView *contentView;
+@interface LXHCurrentAccountInfoViewController() <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic) LXHCurrentAccountInfoView *contentView;
 
 @end
 
-@implementation LXHMineViewController
+@implementation LXHCurrentAccountInfoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColorFromRGBA(0xFAFAFAFF);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.contentView = [[LXHMineView alloc] init];
+    self.contentView = [[LXHCurrentAccountInfoView alloc] init];
     [self.view addSubview:self.contentView];
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_topLayoutGuideBottom);
@@ -51,11 +48,28 @@
 }
 
 - (void)addActions {
+    [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
 - (void)setDelegates {
     self.contentView.listView.dataSource = self;
     self.contentView.listView.delegate = self;
+}
+
+//Actions
+- (void)leftImageButtonClicked:(UIButton *)sender {
+    sender.alpha = 1;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)leftImageButtonTouchDown:(UIButton *)sender {
+    sender.alpha = 0.5;
+}
+
+- (void)leftImageButtonTouchUpOutside:(UIButton *)sender {
+    sender.alpha = 1;
 }
 
 //Delegate Methods
@@ -65,15 +79,13 @@
         dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
             NSDictionary *dic = nil;
-            dic = @{@"isSelectable":@"0", @"cellType":@"LXHLineCell"};
+            dic = @{@"title":@"网络类型", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":@"Testnet"};
             [dataForCells addObject:dic];
-            dic = @{@"text":@"交易列表", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
+            dic = @{@"title":@"Watch only", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":@"否"};
             [dataForCells addObject:dic];
-            dic = @{@"text":@"查看钱包助记词", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
+            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
             [dataForCells addObject:dic];
-            dic = @{@"text":@"本地地址列表", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"设置", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
+            dic = @{@"text":@"账户扩展公钥(xpub)", @"isSelectable":@"1", @"cellType":@"LXHSmallSizeTextRightIconCell"};
             [dataForCells addObject:dic];
         }
     }
@@ -102,10 +114,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView viewTagAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
-    if ([cellType isEqualToString:@"LXHLineCell"])
+    if ([cellType isEqualToString:@"LXHTwoColumnTextCell"])
         return 100;
-    if ([cellType isEqualToString:@"LXHTextRightIconCell"])
+    if ([cellType isEqualToString:@"LXHEmptyWithSeparatorCell"])
         return 101;
+    if ([cellType isEqualToString:@"LXHSmallSizeTextRightIconCell"])
+        return 102;
     return -1;
 }
 
@@ -131,6 +145,8 @@
         view.tag = tag;
         [cell.contentView addSubview:view];
         //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
+        //cell.contentView.backgroundColor = view.backgroundColor;
+        //cell.backgroundColor = view.backgroundColor;
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -141,8 +157,26 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     UIView *view = [cell.contentView viewWithTag:tag];
-    if ([cellType isEqualToString:@"LXHTextRightIconCell"]) {
-        LXHTextRightIconCell *cellView = (LXHTextRightIconCell *)view;
+    if ([cellType isEqualToString:@"LXHTwoColumnTextCell"]) {
+        LXHTwoColumnTextCell *cellView = (LXHTwoColumnTextCell *)view;
+        NSString *text = [dataForRow valueForKey:@"text"];
+        if (!text)
+            text = @"";
+        NSMutableAttributedString *textAttributedString = [cellView.text.attributedText mutableCopy];
+        [textAttributedString.mutableString setString:text];
+        cellView.text.attributedText = textAttributedString;
+        NSString *title = [dataForRow valueForKey:@"title"];
+        if (!title)
+            title = @"";
+        NSMutableAttributedString *titleAttributedString = [cellView.title.attributedText mutableCopy];
+        [titleAttributedString.mutableString setString:title];
+        cellView.title.attributedText = titleAttributedString;
+    }
+    if ([cellType isEqualToString:@"LXHEmptyWithSeparatorCell"]) {
+        LXHEmptyWithSeparatorCell *cellView = (LXHEmptyWithSeparatorCell *)view;
+    }
+    if ([cellType isEqualToString:@"LXHSmallSizeTextRightIconCell"]) {
+        LXHSmallSizeTextRightIconCell *cellView = (LXHSmallSizeTextRightIconCell *)view;
         NSString *text = [dataForRow valueForKey:@"text"];
         if (!text)
             text = @"";
@@ -156,10 +190,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
     if (tableView == self.contentView.listView) {
-        if ([cellType isEqualToString:@"LXHLineCell"])
-            return 0.5;
-        if ([cellType isEqualToString:@"LXHTextRightIconCell"])
-            return 56;
+        if ([cellType isEqualToString:@"LXHTwoColumnTextCell"])
+            return 47;
+        if ([cellType isEqualToString:@"LXHEmptyWithSeparatorCell"])
+            return 18.00000000000011;
+        if ([cellType isEqualToString:@"LXHSmallSizeTextRightIconCell"])
+            return 47.00000000000011;
     }
     return 0;
 }
@@ -183,32 +219,17 @@
             break;
         case 1:
             {
-                UIViewController *controller = [[LXHTransactionListViewController alloc] init];
-                controller.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:controller animated:YES];
             }
             break;
         case 2:
             {
-                [self validatePINWithPassedHandler:^{
-                    UIViewController *controller = [[LXHShowWalletMnemonicWordsViewController alloc] init];
-                    controller.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:controller animated:YES];
-                }];
             }
             break;
         case 3:
             {
-                UIViewController *controller = [[LXHAddressListViewController alloc] init];
-                controller.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:controller animated:YES];
-            }
-            break;
-        case 4:
-            {
-                UIViewController *controller = [[LXHSettingViewController alloc] init];
-                controller.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:controller animated:YES];
+            UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
             }
             break;
         default:

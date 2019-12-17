@@ -1,4 +1,4 @@
-// LXHSettingViewController.h
+// LXHQRCodeAndTextViewController.h
 // BasicWallet
 //
 //  Created by lianxianghui on 19-12-17
@@ -6,6 +6,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LXHSettingViewController : UIViewController
+@interface LXHQRCodeAndTextViewController : UIViewController
 
 @end

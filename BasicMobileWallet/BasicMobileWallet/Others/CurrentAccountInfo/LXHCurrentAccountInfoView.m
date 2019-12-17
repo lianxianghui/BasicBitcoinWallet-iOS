@@ -1,11 +1,11 @@
-// LXHSettingView.m
+// LXHCurrentAccountInfoView.m
 // BasicWallet
 //
 //  Created by lianxianghui on 19-12-17
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
-#import "LXHSettingView.h"
+#import "LXHCurrentAccountInfoView.h"
 #import "Masonry.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -14,10 +14,10 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
 
-@interface LXHSettingView()
+@interface LXHCurrentAccountInfoView()
 @end
 
-@implementation LXHSettingView
+@implementation LXHCurrentAccountInfoView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -37,9 +37,9 @@
 
 - (void)makeConstraints {
     [self.listView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_left);
         make.right.equalTo(self.mas_right);
         make.bottom.equalTo(self.mas_bottom);
-        make.left.equalTo(self.mas_left);
         make.top.equalTo(self.customNavigationBar.mas_bottom);
     }];
     [self.customNavigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -52,7 +52,7 @@
         make.left.equalTo(self.customNavigationBar.mas_left);
         make.right.equalTo(self.customNavigationBar.mas_right);
         make.bottom.equalTo(self.customNavigationBar.mas_bottom);
-        make.height.mas_equalTo(0.5);
+        make.height.mas_equalTo(0.5099999904632568);
     }];
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.customNavigationBar.mas_centerX);
@@ -125,7 +125,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.4099999964237213) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"设置", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"账户信息", nil) attributes:textAttributes];
         _title.attributedText = text;
     }
     return _title;

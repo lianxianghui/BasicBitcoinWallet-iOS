@@ -1,25 +1,13 @@
-// LXHSettingViewController.m
+// LXHAboutViewController.m
 // BasicWallet
 //
 //  Created by lianxianghui on 19-12-17
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
-#import "LXHSettingViewController.h"
-#import "Masonry.h"
-#import "LXHSettingView.h"
-#import "LXHSetPinViewController.h"
 #import "LXHAboutViewController.h"
-#import "LXHCurrentAccountInfoViewController.h"
-#import "LXHTextRightIconCell.h"
-#import "UIUtils.h"
-#import "LXHKeychainStore.h"
-#import "UIViewController+LXHAlert.h"
-#import "LXHWallet.h"
-#import "AppDelegate.h"
-#import "LXHRootViewController.h"
-#import "UIViewController+LXHBasicMobileWallet.h"
-#import "LXHTransactionDataManager.h"
-#import "LXHShowWalletMnemonicWordsViewController.h"
+#import "Masonry.h"
+#import "LXHAboutView.h"
+#import "LXHTwoColumnTextCell.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -27,19 +15,19 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
-@interface LXHSettingViewController() <UITableViewDataSource, UITableViewDelegate>
-@property (nonatomic) LXHSettingView *contentView;
-@property (nonatomic) NSMutableArray *dataForCells;
+@interface LXHAboutViewController() <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic) LXHAboutView *contentView;
+
 @end
 
-@implementation LXHSettingViewController
+@implementation LXHAboutViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColorFromRGBA(0xFAFAFAFF);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.contentView = [[LXHSettingView alloc] init];
+    self.contentView = [[LXHAboutView alloc] init];
     [self.view addSubview:self.contentView];
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_topLayoutGuideBottom);
@@ -50,11 +38,6 @@
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
     [self setDelegates];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self refreshData];
 }
 
 - (void)swipeView:(id)sender {
@@ -88,28 +71,22 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    if (!_dataForCells) {
-        NSMutableArray *dataForCells = [NSMutableArray array];
+    static NSMutableArray *dataForCells = nil;
+    if (!dataForCells) {
+        dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
             NSDictionary *dic = nil;
-            dic = @{@"text":@"重置钱包", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(0)};
+            dic = @{@"title":@"项目名称", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":@"BasicMobileWallet-iOS"};
             [dataForCells addObject:dic];
-            dic = @{@"text":@"设置PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(1)};
+            dic = @{@"title":@"版本号", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":@"1.0"};
             [dataForCells addObject:dic];
-            if ([self hasPin]) {
-                dic = @{@"text":@"清除PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(2)};
-                [dataForCells addObject:dic];
-            }
-            dic = @{@"text":@"钱包助记词", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(3)};
+            dic = @{@"title":@"作者 ", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":@"Lian Xianghui"};
             [dataForCells addObject:dic];
-            dic = @{@"text":@"账户信息", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(4)};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"关于", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(5)};
+            dic = @{@"title":@"项目主页 ", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":@"https://github.com/lianxianghui/BasicMobileWallet-iOS"};
             [dataForCells addObject:dic];
         }
-        _dataForCells = dataForCells;
     }
-    return _dataForCells;
+    return dataForCells;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -134,7 +111,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView viewTagAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
-    if ([cellType isEqualToString:@"LXHTextRightIconCell"])
+    if ([cellType isEqualToString:@"LXHTwoColumnTextCell"])
         return 100;
     return -1;
 }
@@ -160,6 +137,9 @@
         UIView *view = [[NSClassFromString(viewClass) alloc] init];
         view.tag = tag;
         [cell.contentView addSubview:view];
+        //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
+        //cell.contentView.backgroundColor = view.backgroundColor;
+        //cell.backgroundColor = view.backgroundColor;
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -170,14 +150,20 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     UIView *view = [cell.contentView viewWithTag:tag];
-    if ([cellType isEqualToString:@"LXHTextRightIconCell"]) {
-        LXHTextRightIconCell *cellView = (LXHTextRightIconCell *)view;
+    if ([cellType isEqualToString:@"LXHTwoColumnTextCell"]) {
+        LXHTwoColumnTextCell *cellView = (LXHTwoColumnTextCell *)view;
         NSString *text = [dataForRow valueForKey:@"text"];
         if (!text)
             text = @"";
         NSMutableAttributedString *textAttributedString = [cellView.text.attributedText mutableCopy];
         [textAttributedString.mutableString setString:text];
         cellView.text.attributedText = textAttributedString;
+        NSString *title = [dataForRow valueForKey:@"title"];
+        if (!title)
+            title = @"";
+        NSMutableAttributedString *titleAttributedString = [cellView.title.attributedText mutableCopy];
+        [titleAttributedString.mutableString setString:title];
+        cellView.title.attributedText = titleAttributedString;
     }
     return cell;
 }
@@ -185,8 +171,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
     if (tableView == self.contentView.listView) {
-        if ([cellType isEqualToString:@"LXHTextRightIconCell"])
-            return 56;
+        if ([cellType isEqualToString:@"LXHTwoColumnTextCell"])
+            return 47;
     }
     return 0;
 }
@@ -203,88 +189,26 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSDictionary *cellData = [self cellDataForTableView:tableView atIndexPath:indexPath];
-    NSInteger cellId = [cellData[@"id"] integerValue];
-    switch(cellId) {
+    switch(indexPath.row) {
         case 0:
             {
-                [self validatePINWithPassedHandler:^{
-                    [self resetWallet];
-                }];
             }
             break;
         case 1:
-        {
-            [self validatePINWithPassedHandler:^{
-                [self enterSetPinViewController];
-            }];
-        }
+            {
+            }
             break;
         case 2:
-        {
-            [self validatePINWithPassedHandler:^{
-                [self clearPin];
-            }];
-        }
+            {
+            }
+            break;
         case 3:
-        {
-            [self validatePINWithPassedHandler:^{
-                UIViewController *controller = [[LXHShowWalletMnemonicWordsViewController alloc] init];
-                controller.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:controller animated:YES];
-            }];
-        }
-            break;
-        case 4:
-        {
-            UIViewController *controller = [[LXHCurrentAccountInfoViewController alloc] init];
-            controller.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:controller animated:YES];
-        }
-            break;
-        case 5:
-        {
-            UIViewController *controller = [[LXHAboutViewController alloc] init];
-            controller.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:controller animated:YES];
-        }
+            {
+            }
             break;
         default:
             break;
     }
-}
-
-- (void)enterSetPinViewController {
-    UIViewController *controller = [[LXHSetPinViewController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
-}
-
-- (void)resetWallet {
-    [self showOkCancelAlertViewWithTitle:NSLocalizedString(@"警告", nil) message:NSLocalizedString(@"重置将会清除本地的钱包数据，务必要保证已经备份了钱包助记词。您确定现在要重置吗？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
-        //clear data
-        [LXHWallet clearAccount];
-        [[LXHTransactionDataManager sharedInstance] clearCachedData];
-        //show welcome page
-        AppDelegate *appDelegate = (AppDelegate*)UIApplication.sharedApplication.delegate;
-        LXHRootViewController *rootViewController = (LXHRootViewController *)appDelegate.window.rootViewController;
-        [rootViewController clearAndPushMainController];
-    } cancelHandler:nil];
-}
-
-- (BOOL)hasPin {
-    return [[LXHKeychainStore sharedInstance].store contains:kLXHKeychainStorePIN];
-}
-
-- (void)refreshData {
-    _dataForCells = nil;
-    [self.contentView.listView reloadData];
-}
-
-- (void)clearPin {
-    [self showOkCancelAlertViewWithTitle:NSLocalizedString(@"警告", nil) message:NSLocalizedString(@"清除PIN码将会带来一定的安全隐患，您确定吗？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
-        [[LXHKeychainStore sharedInstance].store setData:nil forKey:kLXHKeychainStorePIN];
-        [self refreshData];
-    } cancelHandler:nil];
 }
 
 @end

@@ -1,4 +1,4 @@
-// LXHSettingView.h
+// LXHQRCodeAndTextView.h
 // BasicWallet
 //
 //  Created by lianxianghui on 19-12-17
@@ -6,9 +6,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LXHSettingView : UIView
+@interface LXHQRCodeAndTextView : UIView
 
-@property (nonatomic) UITableView *listView;
+@property (nonatomic) UIButton *shareButton;
+@property (nonatomic) UILabel *text;
+@property (nonatomic) UIButton *copyButton;
+@property (nonatomic) UILabel *text1;
+@property (nonatomic) UILabel *text2;
+@property (nonatomic) UIImageView *qrImage;
 @property (nonatomic) UIView *customNavigationBar;
 @property (nonatomic) UIView *bottomLine;
 @property (nonatomic) UILabel *title;

@@ -1,4 +1,4 @@
-// LXHSettingView.h
+// LXHAboutView.h
 // BasicWallet
 //
 //  Created by lianxianghui on 19-12-17
@@ -6,7 +6,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LXHSettingView : UIView
+@interface LXHAboutView : UIView
 
 @property (nonatomic) UITableView *listView;
 @property (nonatomic) UIView *customNavigationBar;
