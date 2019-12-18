@@ -7,6 +7,11 @@
 #import "LXHQRCodeAndTextViewController.h"
 #import "Masonry.h"
 #import "LXHQRCodeAndTextView.h"
+#import "LXHQRCodeAndTextViewModel.h"
+#import "UILabel+LXHText.h"
+#import "UIViewController+LXHAlert.h"
+#import "Toast.h"
+#import "LXHGlobalHeader.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -16,10 +21,18 @@
     
 @interface LXHQRCodeAndTextViewController()
 @property (nonatomic) LXHQRCodeAndTextView *contentView;
-
+@property (nonatomic) LXHQRCodeAndTextViewModel *viewModel;
 @end
 
 @implementation LXHQRCodeAndTextViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,6 +48,7 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setViewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -45,11 +59,7 @@
 
 - (void)addActions {
     [self.contentView.shareButton addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView.shareButton addTarget:self action:@selector(shareButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-    [self.contentView.shareButton addTarget:self action:@selector(shareButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
     [self.contentView.copyButton addTarget:self action:@selector(copyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView.copyButton addTarget:self action:@selector(copyButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-    [self.contentView.copyButton addTarget:self action:@selector(copyButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
@@ -58,30 +68,47 @@
 - (void)setDelegates {
 }
 
+- (void)setViewProperties {
+    self.contentView.qrImage.image = [_viewModel image];
+    if ([_viewModel showText]) {
+        self.contentView.text.hidden = NO;
+        [self.contentView.text updateAttributedTextString:[_viewModel text]];
+    } else {
+        self.contentView.text.hidden = YES;
+    }
+    self.contentView.copyButton.hidden = ![_viewModel showCopyButton];
+    self.contentView.shareButton.hidden = ![_viewModel showShareButton];
+}
+
 //Actions
 - (void)shareButtonClicked:(UIButton *)sender {
-    sender.alpha = 1;
-}
-
-- (void)shareButtonTouchDown:(UIButton *)sender {
-    sender.alpha = 0.5;
-}
-
-- (void)shareButtonTouchUpOutside:(UIButton *)sender {
-    sender.alpha = 1;
+    if ([_viewModel showShareButton]) {
+        NSString *text = [_viewModel text];
+        if (text) {
+            LXHWeakSelf
+            NSString *message = NSLocalizedString(@"分享文本到其它应用程序有可能导致泄漏隐私，您确定要分享吗？", nil);
+            [self showOkCancelAlertViewWithMessage:message okHandler:^(UIAlertAction * _Nonnull action) {
+                UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[text] applicationActivities:nil];
+                [weakSelf presentViewController:controller animated:YES completion:nil];
+            } cancelHandler:nil];
+        }
+    }
 }
 
 - (void)copyButtonClicked:(UIButton *)sender {
-    sender.alpha = 1;
+    if ([_viewModel showCopyButton]) {
+        NSString *text = [_viewModel text];
+        if (text) {
+            LXHWeakSelf
+            NSString *message = NSLocalizedString(@"拷贝文本到系统剪贴板使得该文本有可能会被其它应用程序读取从而导致泄漏隐私，您确定要拷贝吗？", nil);
+            [self showOkCancelAlertViewWithMessage:message okHandler:^(UIAlertAction * _Nonnull action) {
+                [UIPasteboard generalPasteboard].string = text;
+                [weakSelf.view makeToast:NSLocalizedString(@"文本已拷贝", nil)];
+            } cancelHandler:nil];
+        }
+    }
 }
 
-- (void)copyButtonTouchDown:(UIButton *)sender {
-    sender.alpha = 0.5;
-}
-
-- (void)copyButtonTouchUpOutside:(UIButton *)sender {
-    sender.alpha = 1;
-}
 
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;

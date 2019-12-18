@@ -1,7 +1,7 @@
 // LXHQRCodeAndTextView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-12-17
+//  Created by lianxianghui on 19-12-18
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -33,7 +33,7 @@
 - (void)addSubviews {
     [self addSubview:self.shareButton];
     [self addSubview:self.copyButton];
-    [self addSubview:self.text2];
+    [self addSubview:self.text];
     [self addSubview:self.qrImage];
     [self addSubview:self.customNavigationBar];
 }
@@ -45,21 +45,13 @@
         make.height.mas_equalTo(34);
         make.top.equalTo(self.copyButton.mas_bottom).offset(18);
     }];
-    [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.shareButton.mas_centerX);
-        make.centerY.equalTo(self.shareButton.mas_centerY);
-    }];
     [self.copyButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.mas_centerX);
         make.width.mas_equalTo(68);
         make.height.mas_equalTo(34);
-        make.top.equalTo(self.text2.mas_bottom).offset(12);
+        make.top.equalTo(self.text.mas_bottom).offset(12);
     }];
-    [self.text1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.copyButton.mas_centerX);
-        make.centerY.equalTo(self.copyButton.mas_centerY);
-    }];
-    [self.text2 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.qrImage.mas_bottom).offset(30);
         make.left.equalTo(self.mas_left).offset(40);
         make.right.equalTo(self.mas_right).offset(-40);
@@ -108,18 +100,10 @@
 //Getters
 - (UIButton *)shareButton {
     if (!_shareButton) {
-        _shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _shareButton = [UIButton buttonWithType:UIButtonTypeSystem];//Has System Highlighted color
         _shareButton.backgroundColor = UIColorFromRGBA(0x009688FF);
         _shareButton.layer.cornerRadius = 2;
         _shareButton.alpha = 1;
-        [_shareButton addSubview:self.text];
-    }
-    return _shareButton;
-}
-
-- (UILabel *)text {
-    if (!_text) {
-        _text = [[UILabel alloc] init];
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:13];
         if (!font) font = [UIFont systemFontOfSize:13];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -134,25 +118,18 @@
         [textAttributes setObject:@(0.4642857) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"分享", nil) attributes:textAttributes];
-        _text.attributedText = text;
+        [_shareButton setAttributedTitle:text forState:UIControlStateNormal];
+        _shareButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     }
-    return _text;
+    return _shareButton;
 }
 
 - (UIButton *)copyButton {
     if (!_copyButton) {
-        _copyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _copyButton = [UIButton buttonWithType:UIButtonTypeSystem];//Has System Highlighted color
         _copyButton.backgroundColor = UIColorFromRGBA(0x009688FF);
         _copyButton.layer.cornerRadius = 2;
         _copyButton.alpha = 1;
-        [_copyButton addSubview:self.text1];
-    }
-    return _copyButton;
-}
-
-- (UILabel *)text1 {
-    if (!_text1) {
-        _text1 = [[UILabel alloc] init];
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:13];
         if (!font) font = [UIFont systemFontOfSize:13];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -167,14 +144,15 @@
         [textAttributes setObject:@(0.4642857) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"拷贝", nil) attributes:textAttributes];
-        _text1.attributedText = text;
+        [_copyButton setAttributedTitle:text forState:UIControlStateNormal];
+        _copyButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     }
-    return _text1;
+    return _copyButton;
 }
 
-- (UILabel *)text2 {
-    if (!_text2) {
-        _text2 = [[UILabel alloc] init];
+- (UILabel *)text {
+    if (!_text) {
+        _text = [[UILabel alloc] init];
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
         if (!font) font = [UIFont systemFontOfSize:15];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -189,9 +167,9 @@
         [textAttributes setObject:@(-0.4220588) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"mouVCdfedfdfdfefefefefefefefefdsfdldefdeddddfe", nil) attributes:textAttributes];
-        _text2.attributedText = text;
+        _text.attributedText = text;
     }
-    return _text2;
+    return _text;
 }
 
 - (UIImageView *)qrImage {
