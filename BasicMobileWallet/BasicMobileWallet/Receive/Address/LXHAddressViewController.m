@@ -9,6 +9,8 @@
 #import "BTCQRCode.h"
 #import "LXHWallet.h"
 #import "UILabel+LXHText.h"
+#import "UIViewController+LXHAlert.h"
+#import "Toast.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -57,10 +59,11 @@
     if (!data)
         return;
     _data = data;
+    
     LXHLocalAddressType type = [_data[@"addressType"] integerValue];
     uint32_t index = [_data[@"addressIndex"] unsignedIntValue];
     
-    NSString *address = [[LXHWallet mainAccount] addressWithType:type index:index];
+    NSString *address = [self addressText];
     [self.contentView.addressText updateAttributedTextString:address];
     
     CGSize imageSize = {198, 198};
@@ -69,6 +72,14 @@
     
     NSString *path = [[LXHWallet mainAccount] addressPathWithType:type index:index];
     [self.contentView.addressPath updateAttributedTextString:path];
+}
+
+- (NSString *)addressText {
+    LXHLocalAddressType type = [_data[@"addressType"] integerValue];
+    uint32_t index = [_data[@"addressIndex"] unsignedIntValue];
+    
+    NSString *address = [[LXHWallet mainAccount] addressWithType:type index:index];
+    return address;
 }
 
 - (void)addActions {
@@ -89,6 +100,15 @@
 //Actions
 - (void)shareButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    NSString *addressText = [self addressText];
+    if (addressText) {
+        LXHWeakSelf
+        NSString *message = NSLocalizedString(@"分享地址到其它应用程序有可能导致泄漏隐私，您确定要分享吗？", nil);
+        [self showOkCancelAlertViewWithMessage:message okHandler:^(UIAlertAction * _Nonnull action) {
+            UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[addressText] applicationActivities:nil];
+            [weakSelf presentViewController:controller animated:YES completion:nil];
+        } cancelHandler:nil];
+    }
 }
 
 - (void)shareButtonTouchDown:(UIButton *)sender {
@@ -101,6 +121,12 @@
 
 - (void)copyButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    LXHWeakSelf
+    NSString *message = NSLocalizedString(@"拷贝到系统剪贴板使得该地址有可能会被其它应用程序读取从而导致泄漏隐私，您确定要拷贝吗？", nil);
+    [self showOkCancelAlertViewWithMessage:message okHandler:^(UIAlertAction * _Nonnull action) {
+        [UIPasteboard generalPasteboard].string = [weakSelf addressText];
+        [weakSelf.view makeToast:NSLocalizedString(@"地址已拷贝", nil)];
+    } cancelHandler:nil];
 }
 
 - (void)copyButtonTouchDown:(UIButton *)sender {
