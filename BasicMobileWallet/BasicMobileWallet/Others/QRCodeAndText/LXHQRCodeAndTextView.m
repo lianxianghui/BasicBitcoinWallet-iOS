@@ -52,10 +52,9 @@
         make.top.equalTo(self.text.mas_bottom).offset(12);
     }];
     [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.qrImage.mas_bottom).offset(30);
-        make.left.equalTo(self.mas_left).offset(40);
-        make.right.equalTo(self.mas_right).offset(-40);
-        make.height.mas_equalTo(80);
+        make.top.equalTo(self.qrImage.mas_bottom).offset(20);
+        make.left.equalTo(self.mas_left).offset(30);
+        make.right.equalTo(self.mas_right).offset(-30);
     }];
     [self.qrImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.mas_centerX);
@@ -168,6 +167,7 @@
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"mouVCdfedfdfdfefefefefefefefefdsfdldefdeddddfe", nil) attributes:textAttributes];
         _text.attributedText = text;
+        _text.numberOfLines = 0;
     }
     return _text;
 }

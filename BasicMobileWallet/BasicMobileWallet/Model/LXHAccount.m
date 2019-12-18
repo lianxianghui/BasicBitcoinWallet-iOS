@@ -17,8 +17,6 @@
 @property (nonatomic, readwrite) LXHBitcoinNetworkType currentNetworkType;
 @property (nonatomic, readwrite) LXHWalletChangeLevelModel *receiving;
 @property (nonatomic, readwrite) LXHWalletChangeLevelModel *change;
-
-@property (nonatomic) NSString *xpub;
 @end
 
 @implementation LXHAccount
@@ -115,6 +113,10 @@
         ret = ret || [[self changeLeveWithType:type] updateUsedBase58AddressesIfNeeded:usedBase58AddressesSet];
     }];
     return ret;
+}
+
+- (NSString *)extendedPublicKey {
+    return _accountKeychain.extendedPublicKey;
 }
 
 @end

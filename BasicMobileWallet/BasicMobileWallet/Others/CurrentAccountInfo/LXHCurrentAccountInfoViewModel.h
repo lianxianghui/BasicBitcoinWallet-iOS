@@ -10,10 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class LXHQRCodeAndTextViewModel;
 @interface LXHCurrentAccountInfoViewModel : NSObject
 
 - (NSString *)netTypeText;
 - (NSString *)isWatchOnlyText;
+- (LXHQRCodeAndTextViewModel *)qrCodeAndTextViewModel;
 @end
 
 NS_ASSUME_NONNULL_END

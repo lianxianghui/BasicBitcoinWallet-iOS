@@ -45,6 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSData *)publicKeyWithLocalAddress:(LXHAddress *)localAddress;
 
 - (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet;
+
+- (NSString *)extendedPublicKey;
 @end
 
 NS_ASSUME_NONNULL_END

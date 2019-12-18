@@ -69,7 +69,7 @@
 }
 
 - (void)setViewProperties {
-    self.title = [_viewModel title];
+    [self.contentView.title updateAttributedTextString:[_viewModel title]];
     self.contentView.qrImage.image = [_viewModel image];
     if ([_viewModel showText]) {
         self.contentView.text.hidden = NO;
