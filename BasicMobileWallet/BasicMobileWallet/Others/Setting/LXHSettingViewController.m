@@ -94,7 +94,9 @@
             NSDictionary *dic = nil;
             dic = @{@"text":@"重置钱包", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(0)};
             [dataForCells addObject:dic];
-            dic = @{@"text":@"设置PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(1)};
+            
+            NSString *text = [self hasPin] ? NSLocalizedString(@"修改PIN码", nil) : NSLocalizedString(@"设置PIN码", nil);
+            dic = @{@"text":text, @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(1)};
             [dataForCells addObject:dic];
             if ([self hasPin]) {
                 dic = @{@"text":@"清除PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(2)};
@@ -207,11 +209,11 @@
     NSInteger cellId = [cellData[@"id"] integerValue];
     switch(cellId) {
         case 0:
-            {
-                [self validatePINWithPassedHandler:^{
-                    [self resetWallet];
-                }];
-            }
+        {
+            [self validatePINWithPassedHandler:^{
+                [self resetWallet];
+            }];
+        }
             break;
         case 1:
         {
