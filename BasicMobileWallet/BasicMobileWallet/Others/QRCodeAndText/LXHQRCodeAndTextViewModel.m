@@ -20,7 +20,9 @@
     self = [super init];
     if (self) {
         _string = string;
+        //几个默认值
         _showText = YES;
+        _title = NSLocalizedString(@"二维码", nil);
     }
     return self;
 }
@@ -31,7 +33,7 @@
 
 - (UIImage *)image {
     if (!_image) {
-        CGSize imageSize = {280, 280};
+        CGSize imageSize = {250, 250};
         _image = [BTCQRCode imageForString:_string size:imageSize scale:1];
     }
     return _image;

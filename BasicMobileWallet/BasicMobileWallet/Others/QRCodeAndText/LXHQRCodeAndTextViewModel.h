@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL showText;
 @property (nonatomic) BOOL showCopyButton;
 @property (nonatomic) BOOL showShareButton;
+@property (nonatomic) NSString *title;
 
 - (instancetype)initWithString:(NSString *)string;
 
