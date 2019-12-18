@@ -102,8 +102,10 @@
                 dic = @{@"text":@"清除PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(2)};
                 [dataForCells addObject:dic];
             }
-            dic = @{@"text":@"钱包助记词", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(3)};
-            [dataForCells addObject:dic];
+            if (![LXHWallet isWatchOnly]) {//只读钱包没有助记词
+                dic = @{@"text":@"钱包助记词", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(3)};
+                [dataForCells addObject:dic];
+            }
             dic = @{@"text":@"账户信息", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(4)};
             [dataForCells addObject:dic];
             dic = @{@"text":@"关于", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(5)};
