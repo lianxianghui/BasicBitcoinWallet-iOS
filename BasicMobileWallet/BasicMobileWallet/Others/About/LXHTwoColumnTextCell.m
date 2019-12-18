@@ -82,6 +82,8 @@
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"1.0", nil) attributes:textAttributes];
         _text.attributedText = text;
+        
+        _text.numberOfLines = 0;
     }
     return _text;
 }

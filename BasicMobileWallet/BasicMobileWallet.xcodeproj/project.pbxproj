@@ -1944,8 +1944,8 @@
 		8CE9A90E23A901FF007A58EF /* About */ = {
 			isa = PBXGroup;
 			children = (
-				8CE9A90F23A901FF007A58EF /* LXHTwoColumnTextCell.m */,
 				8CE9A91223A901FF007A58EF /* LXHTwoColumnTextCell.h */,
+				8CE9A90F23A901FF007A58EF /* LXHTwoColumnTextCell.m */,
 				8CE9A91023A901FF007A58EF /* LXHAboutView.h */,
 				8CE9A91323A901FF007A58EF /* LXHAboutView.m */,
 				8CE9A91123A901FF007A58EF /* LXHAboutViewController.h */,
