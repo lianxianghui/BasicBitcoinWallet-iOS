@@ -11,6 +11,7 @@
 #import "LXHTwoColumnTextCell.h"
 #import "LXHEmptyWithSeparatorCell.h"
 #import "LXHSmallSizeTextRightIconCell.h"
+#import "LXHCurrentAccountInfoViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -20,10 +21,20 @@
     
 @interface LXHCurrentAccountInfoViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHCurrentAccountInfoView *contentView;
-
+@property (nonatomic) NSMutableArray *dataForCells;
+@property (nonatomic) LXHCurrentAccountInfoViewModel *viewModel;
 @end
 
 @implementation LXHCurrentAccountInfoViewController
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _viewModel = [LXHCurrentAccountInfoViewModel new];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -74,22 +85,21 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
+    if (!_dataForCells) {
+        NSMutableArray *dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            dic = @{@"title":@"网络类型", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":@"Testnet"};
+            NSDictionary *dic = @{@"title":@"网络类型", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":[_viewModel netTypeText]};
             [dataForCells addObject:dic];
-            dic = @{@"title":@"Watch only", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":@"否"};
+            dic = @{@"title":@"Watch only", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":[_viewModel isWatchOnlyText]};
             [dataForCells addObject:dic];
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
             [dataForCells addObject:dic];
             dic = @{@"text":@"账户扩展公钥(xpub)", @"isSelectable":@"1", @"cellType":@"LXHSmallSizeTextRightIconCell"};
             [dataForCells addObject:dic];
         }
+        _dataForCells = dataForCells;
     }
-    return dataForCells;
+    return _dataForCells;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -213,18 +223,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch(indexPath.row) {
-        case 0:
-            {
-            }
-            break;
-        case 1:
-            {
-            }
-            break;
-        case 2:
-            {
-            }
-            break;
         case 3:
             {
             UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] init];
