@@ -63,14 +63,16 @@
 
 //Actions
 - (void)textButton1Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHBuildTransactionViewController alloc] initWithViewModel:[_viewModel buildTransactionViewModelForFixedOutput]];
+    id viewModel = [_viewModel buildTransactionViewModelForFixedOutput];
+    UIViewController *controller = [[LXHBuildTransactionViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 
 - (void)textButton2Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHBuildTransactionViewController alloc] initWithViewModel:[_viewModel buildTransactionViewModelForFixedInput]];
+    id viewModel = [_viewModel buildTransactionViewModelForFixedInput];
+    UIViewController *controller = [[LXHBuildTransactionViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }

@@ -221,7 +221,8 @@
         case 3:
             {
                 [self validatePINWithPassedHandler:^{
-                    UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] initWithViewModel:[self.viewModel qrCodeAndTextViewModel]];
+                    id viewModel = [self.viewModel qrCodeAndTextViewModel];
+                    UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] initWithViewModel:viewModel];
                     controller.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:controller animated:YES];
                 }];

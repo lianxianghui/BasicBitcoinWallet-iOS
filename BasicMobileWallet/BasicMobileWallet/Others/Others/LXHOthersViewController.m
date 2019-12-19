@@ -193,7 +193,8 @@
             break;
         case 1:
         {
-            UIViewController *controller = [[LXHTransactionListViewController alloc] initWithViewModel:[_viewModel transactionListViewModel]];
+            id viewModel = [_viewModel transactionListViewModel];
+            UIViewController *controller = [[LXHTransactionListViewController alloc] initWithViewModel:viewModel];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }

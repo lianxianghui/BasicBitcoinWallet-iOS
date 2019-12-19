@@ -47,8 +47,9 @@
     UIImage *itemSelectedImage = nil;
     UIViewController *viewController = nil;
     UINavigationController *navigationController = nil;
-
-    viewController = [[LXHSelectWayOfSendingBitcoinViewController alloc] initWithViewModel:[_viewModel selectWayOfSendingBitcoinViewModel]];
+    
+    id viewModel = [_viewModel selectWayOfSendingBitcoinViewModel];
+    viewController = [[LXHSelectWayOfSendingBitcoinViewController alloc] initWithViewModel:viewModel];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_unselected_icon"];
     itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_selected_icon"];
@@ -64,7 +65,8 @@
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
 
-    viewController = [[LXHBalanceViewController alloc] initWithViewModel:[_viewModel balanceViewModel]];
+    viewModel = [_viewModel balanceViewModel];
+    viewController = [[LXHBalanceViewController alloc] initWithViewModel:viewModel];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_3inner_unselected_icon"];
     itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_3inner_selected_icon"];
@@ -72,7 +74,8 @@
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
     
-    viewController = [[LXHOthersViewController alloc] initWithViewModel:[_viewModel othersViewModel]];
+    viewModel = [_viewModel othersViewModel];
+    viewController = [[LXHOthersViewController alloc] initWithViewModel:viewModel];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_4inner_unselected_icon"];
     itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_4inner_selected_icon"];

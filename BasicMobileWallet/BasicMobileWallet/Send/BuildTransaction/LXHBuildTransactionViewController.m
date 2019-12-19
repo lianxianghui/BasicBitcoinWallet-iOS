@@ -172,7 +172,8 @@
 }
 
 - (void)pushLXHTransactionInfoViewController {
-    UIViewController *controller = [[LXHTransactionInfoViewController alloc] initWithViewModel:_viewModel.transactionInfoViewModel];
+    id viewModel = _viewModel.transactionInfoViewModel;
+    UIViewController *controller = [[LXHTransactionInfoViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -180,7 +181,8 @@
 //Actions
 - (void)LXHFeeCellInputFeeValueButtonClicked:(UIButton *)sender {
     LXHWeakSelf
-    UIViewController *controller = [[LXHInputFeeViewController alloc] initWithViewModel:_viewModel.inputFeeViewModel dataChangedCallback:^{
+    id viewModel = _viewModel.inputFeeViewModel;
+    UIViewController *controller = [[LXHInputFeeViewController alloc] initWithViewModel:viewModel dataChangedCallback:^{
         [weakSelf.viewModel resetSelectFeeRateViewModel];//把LXHSelectFeeRateViewController数据置空
     }];
     controller.hidesBottomBarWhenPushed = YES;
@@ -189,7 +191,8 @@
 
 - (void)LXHFeeCellSelectFeerateButtonClicked:(UIButton *)sender {
     LXHWeakSelf
-    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithViewModel:_viewModel.selectFeeRateViewModel dataChangedCallback:^{
+    id viewModel = _viewModel.selectFeeRateViewModel;
+    UIViewController *controller = [[LXHSelectFeeRateViewController alloc] initWithViewModel:viewModel dataChangedCallback:^{
         [weakSelf.viewModel resetInputFeeViewModel]; //把LXHInputFeeViewController数据置空
     }];
     controller.hidesBottomBarWhenPushed = YES;
@@ -389,8 +392,8 @@
                 [self showOkAlertViewWithMessage:prompt handler:nil];
                 return;
             }
-            
-            UIViewController *controller = [[LXHSelectInputViewController alloc] initWithViewModel:[_viewModel selectInputViewModel]];
+            id viewModel = [_viewModel selectInputViewModel];
+            UIViewController *controller = [[LXHSelectInputViewController alloc] initWithViewModel:viewModel];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         } else if ([cellId isEqualToString:@"selectOutput"]) {
@@ -399,8 +402,8 @@
                 [self showOkAlertViewWithMessage:prompt handler:nil];
                 return;
             }
-            
-            UIViewController *controller = [[LXHOutputListViewController alloc] initWithViewModel:_viewModel.outputListViewModel];
+            id viewModel = _viewModel.outputListViewModel;
+            UIViewController *controller = [[LXHOutputListViewController alloc] initWithViewModel:viewModel];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }

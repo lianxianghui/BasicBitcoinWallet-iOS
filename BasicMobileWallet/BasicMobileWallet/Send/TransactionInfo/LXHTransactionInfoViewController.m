@@ -96,14 +96,16 @@
 
 
 - (void)textButton2Clicked:(UIButton *)sender {//显示签名过的交易文本
-    UIViewController *controller = [[LXHTransactionTextViewController alloc] initWithViewModel:_viewModel.signedTransactionTextViewModel];
+    id viewModel = _viewModel.signedTransactionTextViewModel;
+    UIViewController *controller = [[LXHTransactionTextViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
 
 - (void)textButton1Clicked:(UIButton *)sender {//显示未签名的交易文本
-    UIViewController *controller = [[LXHTransactionTextViewController alloc] initWithViewModel:_viewModel.unsignedTransactionTextViewModel];
+    id viewModel = _viewModel.unsignedTransactionTextViewModel;
+    UIViewController *controller = [[LXHTransactionTextViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
