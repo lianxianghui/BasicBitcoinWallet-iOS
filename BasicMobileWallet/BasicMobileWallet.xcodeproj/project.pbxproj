@@ -1401,10 +1401,10 @@
 		8CA3211922DDD99300CEA828 /* SelectMnemonicWordLength */ = {
 			isa = PBXGroup;
 			children = (
-				8CA3211A22DDD99300CEA828 /* LXHSelectMnemonicWordLengthViewController.h */,
 				8CA3211B22DDD99300CEA828 /* LXHSelectMnemonicWordLengthView.h */,
-				8CA3211C22DDD99300CEA828 /* LXHSelectMnemonicWordLengthViewController.m */,
 				8CA3211D22DDD99300CEA828 /* LXHSelectMnemonicWordLengthView.m */,
+				8CA3211A22DDD99300CEA828 /* LXHSelectMnemonicWordLengthViewController.h */,
+				8CA3211C22DDD99300CEA828 /* LXHSelectMnemonicWordLengthViewController.m */,
 			);
 			path = SelectMnemonicWordLength;
 			sourceTree = "<group>";
