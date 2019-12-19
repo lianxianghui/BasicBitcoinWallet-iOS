@@ -10,6 +10,7 @@
 #import "UIViewController+LXHAlert.h"
 #import "LXHKeychainStore.h"
 #import "UIUtils.h"
+#import "LXHWallet.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \

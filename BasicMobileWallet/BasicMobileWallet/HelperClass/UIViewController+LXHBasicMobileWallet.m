@@ -8,13 +8,14 @@
 
 #import "UIViewController+LXHBasicMobileWallet.h"
 #import "LXHKeychainStore.h"
+#import "LXHWallet.h"
 #import "UIUtils.h"
 #import "UIViewController+LXHAlert.h"
 
 @implementation UIViewController (LXHBasicMobileWallet)
 
 - (void)validatePINWithPassedHandler:(void (^)(void))handler {
-    if ([[LXHKeychainStore sharedInstance].store dataForKey:kLXHKeychainStorePIN]) {
+    if ([[LXHKeychainStore sharedInstance].store contains:kLXHKeychainStorePIN]) {
         UIAlertController *pinCodeInput = [UIUtils pinCodeInputAlertWithMessage:nil textBlock:^(NSString *text) {
             if ([[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN])
                 handler();

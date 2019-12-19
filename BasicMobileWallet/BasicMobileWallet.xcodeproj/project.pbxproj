@@ -1315,10 +1315,10 @@
 		8CA31F8522D98BAC00CEA828 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
-				8CA31F8622D98BAC00CEA828 /* LXHWelcomeViewController.h */,
-				8CA31F8722D98BAC00CEA828 /* LXHWelcomeView.m */,
-				8CA31F8822D98BAC00CEA828 /* LXHWelcomeViewController.m */,
 				8CA31F8922D98BAC00CEA828 /* LXHWelcomeView.h */,
+				8CA31F8722D98BAC00CEA828 /* LXHWelcomeView.m */,
+				8CA31F8622D98BAC00CEA828 /* LXHWelcomeViewController.h */,
+				8CA31F8822D98BAC00CEA828 /* LXHWelcomeViewController.m */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";

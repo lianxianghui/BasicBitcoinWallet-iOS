@@ -17,6 +17,8 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
     LXHWalletGenerationTypeRestoringExist,
 };
 
+#define kLXHKeychainStorePIN @"PIN" //AES encrypt
+
 /**
  * 按着BIP44标准管理地址钱包对象 
  * 目前只支持一个账号，也就是按着”m/44'/coin_type'/account'/change/address_index“路径 account为0的账户
