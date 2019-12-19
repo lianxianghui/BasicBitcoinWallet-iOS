@@ -1,12 +1,13 @@
 // LXHInitWalletViewController.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-07-13
+//  Created by lianxianghui on 19-12-19
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import "LXHInitWalletViewController.h"
 #import "Masonry.h"
 #import "LXHInitWalletView.h"
+#import "LXHScanQRViewController.h"
 #import "LXHSelectMnemonicWordLengthViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -16,7 +17,6 @@
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
 @interface LXHInitWalletViewController()
-
 @property (nonatomic) LXHInitWalletView *contentView;
 
 @end
@@ -38,6 +38,7 @@
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
+    [self setDelegates];
 }
 
 - (void)swipeView:(id)sender {
@@ -45,6 +46,7 @@
 }
 
 - (void)addActions {
+    [self.contentView.importWatchOnlyWalletButton addTarget:self action:@selector(importWatchOnlyWalletButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.restoreWalletButton addTarget:self action:@selector(restoreWalletButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.createWalletButton addTarget:self action:@selector(createWalletButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -52,13 +54,24 @@
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
+- (void)setDelegates {
+}
+
 //Actions
+- (void)importWatchOnlyWalletButtonClicked:(UIButton *)sender {
+    UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *message) {
+        
+    }];
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES]; 
+}
+
+
 - (void)restoreWalletButtonClicked:(UIButton *)sender {
     LXHSelectMnemonicWordLengthViewController *controller = [LXHSelectMnemonicWordLengthViewController new];
     controller.type = LXHSelectMnemonicWordLengthViewControllerTypeForRestoringExistingWallet;
     [self.navigationController pushViewController:controller animated:YES];
 }
-
 
 - (void)createWalletButtonClicked:(UIButton *)sender {
     LXHSelectMnemonicWordLengthViewController *controller = [LXHSelectMnemonicWordLengthViewController new];
