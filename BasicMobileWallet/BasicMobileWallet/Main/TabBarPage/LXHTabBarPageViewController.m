@@ -8,8 +8,8 @@
 #import "LXHBalanceViewController.h"
 #import "LXHCurrentReceivingAddressViewController.h"
 #import "LXHOthersViewController.h"
-#import "LXHWallet.h"
 #import "LXHSelectWayOfSendingBitcoinViewController.h"
+#import "LXHTabBarPageViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -18,9 +18,21 @@
         alpha:(rgbaValue & 0x000000FF)/255.0]
 
 @interface LXHTabBarPageViewController()<UITabBarControllerDelegate>
+@property (nonatomic) LXHTabBarPageViewModel *viewModel;
 @end
 
 @implementation LXHTabBarPageViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    //这里比较特殊，因为UITabBarController会在init方法里调用viewDidLoad，而viewDidLoad由需要用到viewModel，
+    //所以在[super init]之前设置好_viewModel
+    _viewModel = viewModel;
+    self = [super init];
+    if (self) {
+ 
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,7 +48,7 @@
     UIViewController *viewController = nil;
     UINavigationController *navigationController = nil;
 
-    viewController = [[LXHSelectWayOfSendingBitcoinViewController alloc] init];
+    viewController = [[LXHSelectWayOfSendingBitcoinViewController alloc] initWithViewModel:[_viewModel selectWayOfSendingBitcoinViewModel]];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_unselected_icon"];
     itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_selected_icon"];
@@ -52,15 +64,15 @@
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
 
-    viewController = [[LXHBalanceViewController alloc] init];
+    viewController = [[LXHBalanceViewController alloc] initWithViewModel:[_viewModel balanceViewModel]];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_3inner_unselected_icon"];
     itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_3inner_selected_icon"];
     item = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"余额", nil) image:itemImage selectedImage:itemSelectedImage];
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
-
-    viewController = [[LXHOthersViewController alloc] init];
+    
+    viewController = [[LXHOthersViewController alloc] initWithViewModel:[_viewModel othersViewModel]];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_4inner_unselected_icon"];
     itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_4inner_selected_icon"];

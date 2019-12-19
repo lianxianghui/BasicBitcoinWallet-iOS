@@ -15,6 +15,9 @@
 #import "LXHWallet.h"
 #import "LXHTransactionListViewController.h"
 
+//临时
+#import "LXHTransactionListByAddressViewModel.h"
+
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
         green:((rgbaValue & 0x00FF0000) >>  16)/255.0 \
@@ -259,8 +262,9 @@
             uint32_t index = [_data[@"addressIndex"] unsignedIntValue];
             NSString *address = [LXHWallet.mainAccount addressWithType:type index:index];
             //显示地址相关的交易
-            NSDictionary *data = @{@"type":@(LXHTransactionListViewControllerTypeTransactionByAddress), @"address": address};
-            UIViewController *controller = [[LXHTransactionListViewController alloc] initWithData:data];
+            //临时
+            LXHTransactionListByAddressViewModel *viewModel = [[LXHTransactionListByAddressViewModel alloc] initWithAddress:address];
+            UIViewController *controller = [[LXHTransactionListViewController alloc] initWithViewModel:viewModel];
             [self.navigationController pushViewController:controller animated:YES];
         }
             break;

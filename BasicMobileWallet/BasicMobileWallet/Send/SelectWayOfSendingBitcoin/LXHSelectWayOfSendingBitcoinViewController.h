@@ -8,4 +8,5 @@
 
 @interface LXHSelectWayOfSendingBitcoinViewController : UIViewController
 
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

@@ -13,5 +13,5 @@ typedef NS_ENUM(NSUInteger, LXHTransactionListViewControllerType) {
 
 @interface LXHTransactionListViewController : UIViewController
 
-- (instancetype)initWithData:(NSDictionary *)data;//data has key "type"
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

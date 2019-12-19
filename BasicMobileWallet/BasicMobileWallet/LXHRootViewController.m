@@ -10,6 +10,7 @@
 #import "LXHWelcomeViewController.h"
 #import "LXHWallet.h"
 #import "LXHTabBarPageViewController.h"
+#import "LXHTabBarPageViewModel.h"
 
 @interface LXHRootViewController ()
 
@@ -26,7 +27,8 @@
 - (void)pushMainController {
     UIViewController *controller = nil;
     if ([LXHWallet walletDataGenerated]) {
-        controller = [LXHTabBarPageViewController new];
+        LXHTabBarPageViewModel *viewModel = [[LXHTabBarPageViewModel alloc] init];
+        controller = [[LXHTabBarPageViewController alloc] initWithViewModel:viewModel];
     } else {
         controller = [LXHWelcomeViewController new];
     }

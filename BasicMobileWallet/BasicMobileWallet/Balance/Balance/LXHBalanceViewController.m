@@ -16,6 +16,7 @@
 #import "MJRefresh.h"
 #import "LXHGlobalHeader.h"
 #import "UIView+Toast.h"
+#import "LXHBalanceViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -27,9 +28,18 @@
 @property (nonatomic) LXHBalanceView *contentView;
 @property (nonatomic) NSMutableArray *cellDataListForListView;
 @property (nonatomic) NSString *observerToken;
+@property (nonatomic) LXHBalanceViewModel *viewModel;
 @end
 
 @implementation LXHBalanceViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)dealloc
 {

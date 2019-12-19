@@ -13,8 +13,8 @@
 #import "LXHTransaction.h"
 #import "LXHGlobalHeader.h"
 #import "MJRefresh.h"
-#import "BlocksKit.h"
 #import "UIView+Toast.h"
+#import "LXHTransactionListViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -24,26 +24,22 @@
     
 @interface LXHTransactionListViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHTransactionListView *contentView;
-@property (nonatomic) NSMutableArray *dataForCells;
-@property (nonatomic) NSDictionary *data;
-@property (nonatomic) NSString *observerToken;
+@property (nonatomic) LXHTransactionListViewModel *viewModel;
 @end
 
 @implementation LXHTransactionListViewController
 
-- (instancetype)initWithData:(NSDictionary *)data
-{
+- (instancetype)initWithViewModel:(id)viewModel {
     self = [super init];
     if (self) {
-        _data = data;
+        _viewModel = viewModel;
     }
     return self;
 }
 
 - (void)dealloc
 {
-    if (_observerToken)
-        [[LXHTransactionDataManager sharedInstance] bk_removeObserversWithIdentifier:_observerToken];
+    [_viewModel removeObserverForUpdatedTransactinList];
 }
 
 - (void)viewDidLoad {
@@ -74,7 +70,7 @@
 - (void)addObservers {
     //观察transactionList, 有变化时刷新列表
     __weak __typeof(self)weakSelf = self;
-    _observerToken =  [[LXHTransactionDataManager sharedInstance] bk_addObserverForKeyPath:@"transactionList" task:^(id target) {
+    [_viewModel addObserverForUpdatedTransactinListWithCallback:^{
         [weakSelf reloadListView];
     }];
 }
@@ -82,36 +78,23 @@
 - (void)setViewProperties {
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(listViewRefresh)];
     self.contentView.listView.mj_header = header;
+    LXHWeakSelf
     header.lastUpdatedTimeText = ^(NSDate *lastUpdatedTime) {
-        static NSDateFormatter *formatter = nil;
-        if (!formatter) {
-            formatter = [[NSDateFormatter alloc] init];
-            formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
-        }
-        NSDate *updatedTime = [LXHTransactionDataManager sharedInstance].dataUpdatedTime;
-        if (updatedTime) {
-            NSString *dateString = [formatter stringFromDate:updatedTime];
-            return [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
-        } else {
-            return @"";
-        }
+        return [weakSelf.viewModel updatedTimeText];
     };
 }
 
 - (void)listViewRefresh {
-    [[LXHTransactionDataManager sharedInstance] requestDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+    [_viewModel updateTransactionListDataWithSuccessBlock:^{
         [self.contentView.listView.mj_header endRefreshing];
-    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+    } failureBlock:^(NSString * _Nonnull errorPrompt) {
         [self.contentView.listView.mj_header endRefreshing];
-        NSError *error = resultDic[@"error"];
-        NSString *format = NSLocalizedString(@"刷新失败:%@", nil);
-        NSString *errorPrompt = [NSString stringWithFormat:format, error.localizedDescription];
         [self.view makeToast:errorPrompt];
     }];
 }
 
 - (void)reloadListView {
-    self.dataForCells = nil;
+    [_viewModel resetDataForCells];
     [self.contentView.listView reloadData];
 }
 
@@ -140,72 +123,10 @@
     sender.alpha = 1;
 }
 
-- (NSArray *)transactionList {
-    LXHTransactionListViewControllerType type;
-    if (!_data)
-        type = LXHTransactionListViewControllerTypeAllTransactions;
-    type = [_data[@"type"] integerValue];
-    if (type == LXHTransactionListViewControllerTypeAllTransactions)
-        return [LXHTransactionDataManager sharedInstance].transactionList;
-    else if (type == LXHTransactionListViewControllerTypeTransactionByAddress) {
-        NSString *address = _data[@"address"];
-        if (!address)
-            return nil;
-        else
-            return [[LXHTransactionDataManager sharedInstance] transactionListByAddress:address];
-    } else {
-        return nil;
-    }
-}
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    if (!_dataForCells) {
-        _dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
-            NSArray *transactionList = [self transactionList];
-            for (LXHTransaction *transaction in transactionList) {
-//                NSDictionary *dic = @{@"value":@"0.00000001BTC", @"isSelectable":@"1", @"confirmation":@"确认数：2", @"InitializedTime":@"发起时间：2019-05-16  12：34", @"cellType":@"LXHTransactionInfoCell", @"type":@"交易类型：发送"};
-                
-                NSMutableDictionary *dic = @{@"isSelectable":@"1", @"cellType":@"LXHTransactionInfoCell"}.mutableCopy;
-                
-                id confirmation = transaction.confirmations;
-                if (confirmation)
-                    dic[@"confirmation"] = [NSString stringWithFormat: @"%@:%@", NSLocalizedString(@"确认数", nil), confirmation];
-                else 
-                    dic[@"confirmation"] = @"";
-                static NSDateFormatter *formatter = nil;
-                if (!formatter) {
-                    formatter = [[NSDateFormatter alloc] init];
-                    formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
-                }
-                NSInteger firstSeen = [transaction.firstSeen integerValue];
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:firstSeen];
-                NSString *dateString = [formatter stringFromDate:date];
-                dic[@"InitializedTime"] = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
-                
-                LXHTransactionSendOrReceiveType sendType = [transaction sendOrReceiveType];
-                NSString *typeString = nil;
-                NSDecimalNumber *btcValue = nil;
-                if (sendType == LXHTransactionSendOrReceiveTypeSend) {
-                    typeString = @"发送";
-                    btcValue = [transaction sentValueSumFromLocalAddress];
-                } else if (sendType == LXHTransactionSendOrReceiveTypeReceive) {
-                    typeString = @"接收";
-                    btcValue = [transaction receivedValueSumFromLocalAddress];
-                } else {
-                    typeString = @"";
-                    btcValue = [transaction sentValueSumFromLocalAddress];
-                }
-                typeString = NSLocalizedString(typeString, nil);
-                dic[@"type"] = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"交易类型", nil), typeString];
-                dic[@"value"] = [NSString stringWithFormat:@"%@ BTC", btcValue];
-                dic[@"model"] = transaction; 
-                [_dataForCells addObject:dic];
-            }
-        }
-    }
-    return _dataForCells;
+    return [_viewModel dataForCells];
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -215,7 +136,6 @@
     else
         return nil;
 }
-
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
@@ -256,7 +176,6 @@
         UIView *view = [[NSClassFromString(viewClass) alloc] init];
         view.tag = tag;
         [cell.contentView addSubview:view];
-        //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {

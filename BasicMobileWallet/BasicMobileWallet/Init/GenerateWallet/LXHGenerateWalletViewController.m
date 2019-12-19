@@ -12,6 +12,7 @@
 #import "UIViewController+LXHAlert.h"
 #import "CoreBitcoin.h"
 #import "LXHWallet.h"
+#import "LXHTabBarPageViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -120,7 +121,8 @@
 }
 
 - (void)pushTabBarViewController {
-    UIViewController *controller = [[LXHTabBarPageViewController alloc] init];
+    LXHTabBarPageViewModel *viewModel = [[LXHTabBarPageViewModel alloc] init];
+    UIViewController *controller = [[LXHTabBarPageViewController alloc] initWithViewModel:viewModel];
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 

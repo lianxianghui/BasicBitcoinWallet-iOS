@@ -16,6 +16,7 @@
 #import "LXHShowWalletMnemonicWordsViewController.h"
 #import "UIViewController+LXHBasicMobileWallet.h"
 #import "Toast.h"
+#import "LXHOthersViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -25,10 +26,18 @@
     
 @interface LXHOthersViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHOthersView *contentView;
-
+@property (nonatomic) LXHOthersViewModel *viewModel;
 @end
 
 @implementation LXHOthersViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -132,9 +141,6 @@
         UIView *view = [[NSClassFromString(viewClass) alloc] init];
         view.tag = tag;
         [cell.contentView addSubview:view];
-        //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
-        //cell.contentView.backgroundColor = view.backgroundColor;
-        //cell.backgroundColor = view.backgroundColor;
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -187,7 +193,7 @@
             break;
         case 1:
         {
-            UIViewController *controller = [[LXHTransactionListViewController alloc] init];
+            UIViewController *controller = [[LXHTransactionListViewController alloc] initWithViewModel:[_viewModel transactionListViewModel]];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }
