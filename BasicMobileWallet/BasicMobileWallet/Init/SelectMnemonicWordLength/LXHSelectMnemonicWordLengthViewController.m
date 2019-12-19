@@ -11,6 +11,7 @@
 
 #import "LXHInputMnemonicWordsViewController.h"
 #import "LXHWalletMnemonicWordsOneByOneViewController.h"
+#import "LXHWalletMnemonicWordsOneByOneViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -74,7 +75,7 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    NSMutableArray *dataForCells = nil;
+    static NSMutableArray *dataForCells = nil;
     if (!dataForCells) {
         dataForCells = [NSMutableArray array];
         if (tableView == self.contentView.listView) {
@@ -189,8 +190,8 @@
     NSDictionary *dic = [self cellDataForTableView:tableView atIndexPath:indexPath];
     NSString *selectedLength = [dic valueForKey:@"text"];
     if (self.type == LXHSelectMnemonicWordLengthViewControllerTypeForCreatingNewWallet) {
-        LXHWalletMnemonicWordsOneByOneViewController *controller = [[LXHWalletMnemonicWordsOneByOneViewController alloc] init];
-        controller.wordLength = selectedLength.integerValue;
+        id viewModel = [[LXHWalletMnemonicWordsOneByOneViewModel alloc] initWithWordLength:selectedLength.integerValue];
+        LXHWalletMnemonicWordsOneByOneViewController *controller = [[LXHWalletMnemonicWordsOneByOneViewController alloc] initWithViewModel:viewModel];
         [self.navigationController pushViewController:controller animated:YES];
     } else {
         LXHInputMnemonicWordsViewController *controller = [[LXHInputMnemonicWordsViewController alloc] init];

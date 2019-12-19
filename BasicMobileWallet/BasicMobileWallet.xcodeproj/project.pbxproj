@@ -253,6 +253,7 @@
 		8CF405F9235B0456008639F5 /* LXHLockingScriptCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF405F0235B0456008639F5 /* LXHLockingScriptCell.m */; };
 		8CF405FB235B0456008639F5 /* LXHOutputDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF405F3235B0456008639F5 /* LXHOutputDetailViewController.m */; };
 		8CF67FEF23866DEC0077263E /* LXHOutputListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF67FEE23866DEC0077263E /* LXHOutputListViewModel.m */; };
+		8CF8B6AA23AB69C300536C3A /* LXHWalletMnemonicWordsOneByOneViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF8B6A923AB69C300536C3A /* LXHWalletMnemonicWordsOneByOneViewModel.m */; };
 		D82C5A0F84FEC81976FC1809 /* libPods-BasicMobileWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD26932230B9D6D001B9300 /* libPods-BasicMobileWallet.a */; };
 /* End PBXBuildFile section */
 
@@ -922,6 +923,8 @@
 		8CF405F4235B0456008639F5 /* LXHLockingScriptCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHLockingScriptCell.h; sourceTree = "<group>"; };
 		8CF67FED23866DEC0077263E /* LXHOutputListViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHOutputListViewModel.h; sourceTree = "<group>"; };
 		8CF67FEE23866DEC0077263E /* LXHOutputListViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHOutputListViewModel.m; sourceTree = "<group>"; };
+		8CF8B6A823AB69C300536C3A /* LXHWalletMnemonicWordsOneByOneViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicWordsOneByOneViewModel.h; sourceTree = "<group>"; };
+		8CF8B6A923AB69C300536C3A /* LXHWalletMnemonicWordsOneByOneViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicWordsOneByOneViewModel.m; sourceTree = "<group>"; };
 		DCEBAA8D2A3967C43AB112E0 /* Pods-BasicMobileWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasicMobileWalletTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BasicMobileWalletTests/Pods-BasicMobileWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1293,9 +1296,11 @@
 		8CA31F7B22D98BAB00CEA828 /* WalletMnemonicWordsOneByOne */ = {
 			isa = PBXGroup;
 			children = (
-				8CA31F7C22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneView.m */,
-				8CA31F7D22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.h */,
 				8CA31F7E22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneView.h */,
+				8CA31F7C22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneView.m */,
+				8CF8B6A823AB69C300536C3A /* LXHWalletMnemonicWordsOneByOneViewModel.h */,
+				8CF8B6A923AB69C300536C3A /* LXHWalletMnemonicWordsOneByOneViewModel.m */,
+				8CA31F7D22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.h */,
 				8CA31F7F22D98BAB00CEA828 /* LXHWalletMnemonicWordsOneByOneViewController.m */,
 			);
 			path = WalletMnemonicWordsOneByOne;
@@ -2538,6 +2543,7 @@
 				8CA3229922DEBE9900CEA828 /* BTCPaymentProtocol.m in Sources */,
 				8CA31F8A22D98BAC00CEA828 /* LXHInitSetupViewController.m in Sources */,
 				8CA3227122DEBE9900CEA828 /* BTCNumberFormatter.m in Sources */,
+				8CF8B6AA23AB69C300536C3A /* LXHWalletMnemonicWordsOneByOneViewModel.m in Sources */,
 				8CA3226922DEBE9900CEA828 /* BTCBitcoinURL+Tests.m in Sources */,
 				8CE9A90523A8D066007A58EF /* LXHScanQRView.m in Sources */,
 				8CA3227422DEBE9900CEA828 /* BTCProtocolSerialization.m in Sources */,

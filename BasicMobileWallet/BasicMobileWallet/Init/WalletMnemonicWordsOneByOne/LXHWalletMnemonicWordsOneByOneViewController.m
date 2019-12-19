@@ -10,8 +10,7 @@
 #import "LXHWalletMnemonicWordsViewController.h"
 #import "UILabel+LXHText.h"
 #import "UIButton+LXHText.h"
-#import "BTCMnemonic.h"
-#import "BTCData.h"
+#import "LXHWalletMnemonicWordsOneByOneViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -20,12 +19,19 @@
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
 @interface LXHWalletMnemonicWordsOneByOneViewController()
-@property NSArray *words;
 @property (nonatomic) LXHWalletMnemonicWordsOneByOneView *contentView;
-@property (nonatomic) NSUInteger currentWordIndex;
+@property (nonatomic) LXHWalletMnemonicWordsOneByOneViewModel *viewModel;
 @end
 
 @implementation LXHWalletMnemonicWordsOneByOneViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,9 +48,6 @@
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
-    
-    [self generateRandomMnemonicWords];
-    self.currentWordIndex = 0;
     [self refreshContentView];
 }
 
@@ -60,33 +63,19 @@
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
-- (void)generateRandomMnemonicWords {
-    //todo 助记词Entropy用BTCRandomDataWithLength生成是否具有足够的随机性
-    NSUInteger entropyBitCount = self.wordLength * 32/3;
-    NSUInteger entropyByteCount = entropyBitCount / 8;
-    BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithEntropy:BTCRandomDataWithLength(entropyByteCount) password:nil wordListType:BTCMnemonicWordListTypeEnglish];
-    self.words = mnemonic.words;
-}
-
-
 - (void)showCurrentWord {
-    if (self.currentWordIndex < self.words.count) {
-        NSString *word = self.words[self.currentWordIndex];
+    NSString *word = [_viewModel currentWord];
+    if (word)
         [self.contentView.word updateAttributedTextString:word];
-        
-        NSString *currentNumberFormat = NSLocalizedString(@"%@个单词中的第%@个", nil);
-        NSString *currentNumber = [NSString stringWithFormat:currentNumberFormat, @(self.words.count), @(self.currentWordIndex+1)];
-        [self.contentView.number updateAttributedTextString:currentNumber];
-    }
+    [self.contentView.number updateAttributedTextString:[_viewModel currentNumberPrompt]];
 }
 
 - (void)setPreAndNextButtonsProperties {
     //pre button enabled
-    self.contentView.textButton1.enabled = (self.currentWordIndex != 0);
+    self.contentView.textButton1.enabled = [_viewModel button1Enabled];
     self.contentView.textButton1.alpha = self.contentView.textButton1.enabled ? 1 : 0.5;
     //button2 text
-    NSString *text = self.currentWordIndex == self.words.count-1 ? NSLocalizedString(@"完成", nil) : NSLocalizedString(@"后一个", nil);
-    [self.contentView.textButton2 updateAttributedTitleString:text forState:UIControlStateNormal];
+    [self.contentView.textButton2 updateAttributedTitleString:[_viewModel button2Text] forState:UIControlStateNormal];
 }
 
 - (void)refreshContentView {
@@ -96,22 +85,21 @@
 
 //Actions
 - (void)textButton2Clicked:(UIButton *)sender {
-    if (self.currentWordIndex == self.words.count-1) {
+    if ([_viewModel isLastWord]) {
         LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] init];
-        controller.words = self.words;
+        controller.words = _viewModel.words;
         [self.navigationController pushViewController:controller animated:YES];
     } else {
-        self.currentWordIndex++;
+        [_viewModel nextWord];
         [self refreshContentView];
     }
 }
 
 
 - (void)textButton1Clicked:(UIButton *)sender {
-    self.currentWordIndex--;
+    [_viewModel previousWord];
     [self refreshContentView];
 }
-
 
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
