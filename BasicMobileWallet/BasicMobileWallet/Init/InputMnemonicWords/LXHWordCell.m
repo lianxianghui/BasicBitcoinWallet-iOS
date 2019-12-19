@@ -39,7 +39,7 @@
     [self.separator mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.mas_right);
         make.left.equalTo(self.mas_left);
-        make.height.mas_equalTo(1);
+        make.height.mas_equalTo(0.5);
         make.bottom.equalTo(self.mas_bottom);
     }];
     [self.text mas_makeConstraints:^(MASConstraintMaker *make) {

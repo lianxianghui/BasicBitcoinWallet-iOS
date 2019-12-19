@@ -10,8 +10,10 @@
 #import "LXHWordCell.h"
 
 #import "LXHInputMnemonicWordsViewController.h"
+#import "LXHInputMnemonicWordsViewModel.h"
 #import "LXHWalletMnemonicWordsOneByOneViewController.h"
 #import "LXHWalletMnemonicWordsOneByOneViewModel.h"
+
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -194,8 +196,8 @@
         LXHWalletMnemonicWordsOneByOneViewController *controller = [[LXHWalletMnemonicWordsOneByOneViewController alloc] initWithViewModel:viewModel];
         [self.navigationController pushViewController:controller animated:YES];
     } else {
-        LXHInputMnemonicWordsViewController *controller = [[LXHInputMnemonicWordsViewController alloc] init];
-        controller.wordLength = selectedLength.integerValue;
+        id viewModel = [[LXHInputMnemonicWordsViewModel alloc] initWithWordLength:selectedLength.integerValue];
+        LXHInputMnemonicWordsViewController *controller = [[LXHInputMnemonicWordsViewController alloc] initWithViewModel:viewModel];
         [self.navigationController pushViewController:controller animated:YES]; 
     }
 }

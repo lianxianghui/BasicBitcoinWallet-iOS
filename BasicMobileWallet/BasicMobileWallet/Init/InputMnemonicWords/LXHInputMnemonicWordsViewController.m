@@ -9,9 +9,9 @@
 #import "LXHInputMnemonicWordsView.h"
 #import "LXHWordCell.h"
 #import "LXHWalletMnemonicWordsViewController.h"
-#import "BTCMnemonic.h"
-#import "NSString+Base.h"
 #import "UITextField+LXHText.h"
+#import "LXHInputMnemonicWordsViewModel.h"
+#import "NSString+Base.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -20,14 +20,19 @@
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
 @interface LXHInputMnemonicWordsViewController()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
-
 @property (nonatomic) LXHInputMnemonicWordsView *contentView;
-@property (nonatomic) NSArray *currentPromptWords;
-@property (nonatomic) NSMutableArray *dataForCells;
-@property (nonatomic) NSMutableArray *inputWords;
+@property (nonatomic) LXHInputMnemonicWordsViewModel *viewModel;
 @end
 
 @implementation LXHInputMnemonicWordsViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -87,47 +92,32 @@
 - (void)inputTextFieldWithPlaceHolderChanged:(UITextField *)sender {
     NSString *text = sender.text;
     NSString *currentInputText = [text stringByTrimmingWhiteSpace];
-    if (currentInputText.length > 0) {
-        NSMutableArray *currentPromptWords = [NSMutableArray array];
-        for (NSString *word in [BTCMnemonic englishWordList]) {
-            if ([word hasPrefix:currentInputText])
-                [currentPromptWords addObject:word];
-        }
-        self.currentPromptWords = currentPromptWords;
-        [self reloadTableview];
-    }
+    if ([_viewModel refreshCellDataArrayForListViewByCurrentInputText:currentInputText])
+        [self.contentView.listView reloadData];
 }
 
 - (void)clearTextFieldAndPromptWordList {
     self.contentView.inputTextFieldWithPlaceHolder.text = @"";
-    self.currentPromptWords = nil;
     [self reloadTableview];
 }
 
 - (void)reloadTableview {
-    self.dataForCells = nil;
+    [_viewModel resetCellDataArrayForListView];
     [self.contentView.listView reloadData];
 }
 
 - (void)refreshTextFieldPlaceholder {
-    NSString *format = NSLocalizedString(@"请输入第%@个助记词", nil);
-    NSString *currentInputPlaceHolder = [NSString stringWithFormat:format, @(self.inputWords.count+1)];
+    NSString *currentInputPlaceHolder = [_viewModel currentInputPlaceHolder];
     [self.contentView.inputTextFieldWithPlaceHolder updateAttributedPlaceholderString:currentInputPlaceHolder];
 }
 
 //Delegate Methods
 
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    if (!_dataForCells) {
-        _dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
-            for (NSString *word in self.currentPromptWords) {
-                NSDictionary *dic = @{@"text":word, @"isSelectable":@"1", @"cellType":@"LXHWordCell"};  
-                [_dataForCells addObject:dic];                
-            }
-        }
-    }
-    return _dataForCells;
+    if (tableView == self.contentView.listView)
+        return [_viewModel cellDataArrayForListView];
+    else
+        return [NSArray array];
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -178,9 +168,6 @@
         UIView *view = [NSClassFromString(viewClass) new];
         view.tag = tag;
         [cell.contentView addSubview:view];
-        //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
-        //cell.contentView.backgroundColor = view.backgroundColor;
-        //cell.backgroundColor = view.backgroundColor;
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -207,7 +194,7 @@
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
     if (tableView == self.contentView.listView) {
         if ([cellType isEqualToString:@"LXHWordCell"])
-            return 33;
+            return 40;
     }
     return 0;
 }
@@ -224,22 +211,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (!self.inputWords)
-        self.inputWords = [NSMutableArray array];
-    NSString *selectedWord = self.currentPromptWords[indexPath.row];
-    [self.inputWords addObject:selectedWord];
-    
-    //测试用
-//    self.inputWords = [@"indicate theory winter excite obtain join maximum they error problem index fat" componentsSeparatedByString:@" "].mutableCopy;
-    if (self.inputWords.count < self.wordLength) {
+    [_viewModel selectWordAtIndex:indexPath.row];
+    if ([_viewModel selectWordsFinshed]) {
         [self clearTextFieldAndPromptWordList];
         [self refreshTextFieldPlaceholder];
     } else {
         LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] init];
-        controller.words = self.inputWords;
+        controller.words = _viewModel.inputWords;
         controller.type = LXHWalletMnemonicWordsViewControllerTypeForRestoringExistingWallet;
         [self.navigationController pushViewController:controller animated:YES];
-        self.inputWords = nil;
+        _viewModel.inputWords = nil;
         [self clearTextFieldAndPromptWordList];
         [self refreshTextFieldPlaceholder];
     }
