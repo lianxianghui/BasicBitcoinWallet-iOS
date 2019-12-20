@@ -18,4 +18,8 @@
     return NSLocalizedString(@"请输入助记词密码", nil);
 }
 
+- (LXHWalletGenerationType)walletGenerationType {
+    return LXHWalletGenerationTypeRestoringExist;
+}
+
 @end

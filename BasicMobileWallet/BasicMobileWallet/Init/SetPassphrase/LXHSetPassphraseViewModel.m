@@ -40,4 +40,8 @@
     return 1;
 }
 
+- (LXHWalletGenerationType)walletGenerationType {
+    return LXHWalletGenerationTypeGeneratingNew;
+}
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LXHWallet.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
  -3 两个输入一致，但输入包含空白字符
  */
 - (NSInteger)checkInputText:(NSString *)inputText inputAgainText:(NSString *)inputAgainText;
+
+- (LXHWalletGenerationType)walletGenerationType;
 @end
 
 NS_ASSUME_NONNULL_END
