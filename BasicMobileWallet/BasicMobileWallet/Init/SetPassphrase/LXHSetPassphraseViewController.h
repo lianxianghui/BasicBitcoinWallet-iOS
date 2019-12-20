@@ -5,9 +5,7 @@
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import <UIKit/UIKit.h>
-#import "LXHWallet.h"
 
 @interface LXHSetPassphraseViewController : UIViewController
-@property (nonatomic) LXHWalletGenerationType type;
-@property (nonatomic) NSArray *words;
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHInputMnemonicWordsViewModel : NSObject
-@property (nonatomic) NSMutableArray *inputWords;
+@property (nullable, nonatomic) NSMutableArray *inputWords;
 
 - (instancetype)initWithWordLength:(NSUInteger)wordLength;
 

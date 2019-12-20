@@ -1,7 +1,7 @@
 // LXHSetPassphraseView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-07-13
+//  Created by lianxianghui on 19-12-20
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -48,10 +48,6 @@
         make.top.equalTo(self.inputAgainTextFieldWithPlaceHolder.mas_bottom).offset(25.26000022888184);
         make.width.mas_equalTo(93);
         make.height.mas_equalTo(36);
-    }];
-    [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.textButton.mas_centerX);
-        make.centerY.equalTo(self.textButton.mas_centerY);
     }];
     [self.inputAgainTextFieldWithPlaceHolder mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.inputTextFieldWithPlaceHolder.mas_left);
@@ -119,18 +115,10 @@
 
 - (UIButton *)textButton {
     if (!_textButton) {
-        _textButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _textButton = [UIButton buttonWithType:UIButtonTypeSystem];//Has System Highlighted color
         _textButton.backgroundColor = UIColorFromRGBA(0x009688FF);
         _textButton.layer.cornerRadius = 2;
         _textButton.alpha = 1;
-        [_textButton addSubview:self.text];
-    }
-    return _textButton;
-}
-
-- (UILabel *)text {
-    if (!_text) {
-        _text = [[UILabel alloc] init];
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -145,9 +133,10 @@
         [textAttributes setObject:@(0.5) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"确定", nil) attributes:textAttributes];
-        _text.attributedText = text;
+        [_textButton setAttributedTitle:text forState:UIControlStateNormal];
+        _textButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     }
-    return _text;
+    return _textButton;
 }
 
 - (UITextField *)inputAgainTextFieldWithPlaceHolder {
@@ -158,21 +147,21 @@
         _inputAgainTextFieldWithPlaceHolder.layer.borderWidth = 1;
         _inputAgainTextFieldWithPlaceHolder.layer.borderColor = UIColorFromRGBA(0xD8D8D8FF).CGColor;
         _inputAgainTextFieldWithPlaceHolder.alpha = 1;
-        UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
-        if (!font) font = [UIFont systemFontOfSize:14];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
+        UIFont *placeHolderFont = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
+        if (!placeHolderFont) placeHolderFont = [UIFont systemFontOfSize:14];
+        NSMutableParagraphStyle *placeHolderParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+        placeHolderParagraphStyle.alignment = NSTextAlignmentNatural;
+        placeHolderParagraphStyle.maximumLineHeight = 0;
+        placeHolderParagraphStyle.minimumLineHeight = 0;
+        placeHolderParagraphStyle.paragraphSpacing = 0;
 
-        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x999999FF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.3376471) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请再次输入同一密码", nil) attributes:textAttributes];
-        _inputAgainTextFieldWithPlaceHolder.attributedPlaceholder = text;
+        NSMutableDictionary *placeHolderTextAttributes = [NSMutableDictionary dictionary];
+        [placeHolderTextAttributes setObject:UIColorFromRGBA(0x999999FF) forKey:NSForegroundColorAttributeName];
+        [placeHolderTextAttributes setObject:placeHolderFont forKey:NSFontAttributeName];
+        [placeHolderTextAttributes setObject:@(-0.3376471) forKey:NSKernAttributeName];
+        [placeHolderTextAttributes setObject:placeHolderParagraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *placeHolderText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请再次输入同一密码", nil) attributes:placeHolderTextAttributes];
+        _inputAgainTextFieldWithPlaceHolder.attributedPlaceholder = placeHolderText;
     }
     return _inputAgainTextFieldWithPlaceHolder;
 }
@@ -185,21 +174,21 @@
         _inputTextFieldWithPlaceHolder.layer.borderWidth = 1;
         _inputTextFieldWithPlaceHolder.layer.borderColor = UIColorFromRGBA(0xD8D8D8FF).CGColor;
         _inputTextFieldWithPlaceHolder.alpha = 1;
-        UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
-        if (!font) font = [UIFont systemFontOfSize:14];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
+        UIFont *placeHolderFont = [UIFont fontWithName:@"STHeitiSC-Light" size:14];
+        if (!placeHolderFont) placeHolderFont = [UIFont systemFontOfSize:14];
+        NSMutableParagraphStyle *placeHolderParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+        placeHolderParagraphStyle.alignment = NSTextAlignmentNatural;
+        placeHolderParagraphStyle.maximumLineHeight = 0;
+        placeHolderParagraphStyle.minimumLineHeight = 0;
+        placeHolderParagraphStyle.paragraphSpacing = 0;
 
-        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x999999FF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.3376471) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请输入密码", nil) attributes:textAttributes];
-        _inputTextFieldWithPlaceHolder.attributedPlaceholder = text;
+        NSMutableDictionary *placeHolderTextAttributes = [NSMutableDictionary dictionary];
+        [placeHolderTextAttributes setObject:UIColorFromRGBA(0x999999FF) forKey:NSForegroundColorAttributeName];
+        [placeHolderTextAttributes setObject:placeHolderFont forKey:NSFontAttributeName];
+        [placeHolderTextAttributes setObject:@(-0.3376471) forKey:NSKernAttributeName];
+        [placeHolderTextAttributes setObject:placeHolderParagraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *placeHolderText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请输入密码", nil) attributes:placeHolderTextAttributes];
+        _inputTextFieldWithPlaceHolder.attributedPlaceholder = placeHolderText;
     }
     return _inputTextFieldWithPlaceHolder;
 }
@@ -228,7 +217,7 @@
         text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请设置密码", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
-        font = [UIFont fontWithName:@"SFProText-Regular" size:18];
+        font = [UIFont fontWithName:@"" size:18];
         if (!font) font = [UIFont systemFontOfSize:18];
         paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.alignment = NSTextAlignmentNatural;
