@@ -1,7 +1,7 @@
 // LXHWalletMnemonicWordsView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-07-13
+//  Created by lianxianghui on 19-12-20
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -32,7 +32,7 @@
 
 - (void)addSubviews {
     [self addSubview:self.button1];
-    [self addSubview:self.text1];
+    [self addSubview:self.text];
     [self addSubview:self.promot];
     [self addSubview:self.customNavigationBar];
 }
@@ -42,13 +42,9 @@
         make.left.equalTo(self.promot.mas_left);
         make.width.mas_equalTo(93);
         make.height.mas_equalTo(36);
-        make.top.equalTo(self.text1.mas_bottom).offset(13);
+        make.top.equalTo(self.text.mas_bottom).offset(13);
     }];
     [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.button1.mas_centerX);
-        make.centerY.equalTo(self.button1.mas_centerY);
-    }];
-    [self.text1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.promot.mas_left);
         make.right.equalTo(self.promot.mas_right);
         make.top.equalTo(self.promot.mas_bottom).offset(5);
@@ -95,18 +91,10 @@
 //Getters
 - (UIButton *)button1 {
     if (!_button1) {
-        _button1 = [UIButton buttonWithType:UIButtonTypeCustom];
+        _button1 = [UIButton buttonWithType:UIButtonTypeSystem];//Has System Highlighted color
         _button1.backgroundColor = UIColorFromRGBA(0x009688FF);
         _button1.layer.cornerRadius = 2;
         _button1.alpha = 1;
-        [_button1 addSubview:self.text];
-    }
-    return _button1;
-}
-
-- (UILabel *)text {
-    if (!_text) {
-        _text = [[UILabel alloc] init];
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -121,15 +109,16 @@
         [textAttributes setObject:@(0.5) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"下一步", nil) attributes:textAttributes];
-        _text.attributedText = text;
+        [_button1 setAttributedTitle:text forState:UIControlStateNormal];
+        _button1.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     }
-    return _text;
+    return _button1;
 }
 
-- (UILabel *)text1 {
-    if (!_text1) {
-        _text1 = [[UILabel alloc] init];
-        _text1.numberOfLines = 0;
+- (UILabel *)text {
+    if (!_text) {
+        _text = [[UILabel alloc] init];
+        _text.numberOfLines = 0;
         NSMutableAttributedString *attributedText = [NSMutableAttributedString new];
         UIFont *font = nil;
         NSMutableParagraphStyle *paragraphStyle = nil;
@@ -166,9 +155,9 @@
         text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
-        _text1.attributedText = attributedText;
+        _text.attributedText = attributedText;
     }
-    return _text1;
+    return _text;
 }
 
 - (UILabel *)promot {
@@ -196,7 +185,7 @@
         text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请核对助记词", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
-        font = [UIFont fontWithName:@"SFProText-Regular" size:18];
+        font = [UIFont fontWithName:@"" size:18];
         if (!font) font = [UIFont systemFontOfSize:18];
         paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.alignment = NSTextAlignmentLeft;

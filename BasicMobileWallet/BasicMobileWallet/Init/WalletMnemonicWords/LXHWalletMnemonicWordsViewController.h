@@ -6,12 +6,14 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger, LXHWalletMnemonicWordsViewControllerType) {
-    LXHWalletMnemonicWordsViewControllerTypeForCreatingNewWallet,
-    LXHWalletMnemonicWordsViewControllerTypeForRestoringExistingWallet,
-};
+//typedef NS_ENUM(NSUInteger, LXHWalletMnemonicWordsViewControllerType) {
+//    LXHWalletMnemonicWordsViewControllerTypeForCreatingNewWallet,
+//    LXHWalletMnemonicWordsViewControllerTypeForRestoringExistingWallet,
+//};
 
 @interface LXHWalletMnemonicWordsViewController : UIViewController
-@property (nonatomic) LXHWalletMnemonicWordsViewControllerType type;
-@property NSArray *words;
+//@property (nonatomic) LXHWalletMnemonicWordsViewControllerType type;
+//@property NSArray *words;
+
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

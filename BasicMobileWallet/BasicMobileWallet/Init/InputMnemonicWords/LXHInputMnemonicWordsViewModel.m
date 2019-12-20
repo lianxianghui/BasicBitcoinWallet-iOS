@@ -8,6 +8,7 @@
 
 #import "LXHInputMnemonicWordsViewModel.h"
 #import "BTCMnemonic.h"
+#import "LXHWalletMnemonicWordsViewModelForRestoringWallet.h"
 
 @interface LXHInputMnemonicWordsViewModel ()
 @property (nonatomic) NSUInteger wordLength;
@@ -69,11 +70,15 @@
     [self.inputWords addObject:selectedWord];
     
     //测试用
-    //    self.inputWords = [@"indicate theory winter excite obtain join maximum they error problem index fat" componentsSeparatedByString:@" "].mutableCopy;
+        self.inputWords = [@"indicate theory winter excite obtain join maximum they error problem index fat" componentsSeparatedByString:@" "].mutableCopy;
 }
 
-- (BOOL)selectWordsFinshed {
+- (BOOL)selectWordsUnfinshed {
     return self.inputWords.count < self.wordLength;
+}
+
+- (id)checkWalletMnemonicWordsViewModel {
+    return [[LXHWalletMnemonicWordsViewModelForRestoringWallet alloc] initWithWords:self.inputWords];
 }
 
 @end

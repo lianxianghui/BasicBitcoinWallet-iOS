@@ -80,8 +80,8 @@
 - (void)button1Clicked:(UIButton *)sender {
     sender.alpha = 1;
     LXHSetPassphraseViewController *controller = [[LXHSetPassphraseViewController alloc] init];
-    controller.words = self.words;
-    controller.type = LXHWalletGenerationTypeRestoringExist;
+//    controller.words = self.words;
+//    controller.type = LXHWalletGenerationTypeRestoringExist;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 

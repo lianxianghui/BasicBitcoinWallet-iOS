@@ -33,7 +33,7 @@
 - (void)addSubviews {
     [self addSubview:self.button2];
     [self addSubview:self.button1];
-    [self addSubview:self.promot];
+    [self addSubview:self.prompt];
     [self addSubview:self.customNavigationBar];
 }
 
@@ -49,16 +49,16 @@
         make.centerY.equalTo(self.button2.mas_centerY);
     }];
     [self.button1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.promot.mas_bottom).offset(27);
+        make.top.equalTo(self.prompt.mas_bottom).offset(27);
         make.height.mas_equalTo(36);
         make.width.mas_equalTo(93);
-        make.left.equalTo(self.promot.mas_left);
+        make.left.equalTo(self.prompt.mas_left);
     }];
     [self.text1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.button1.mas_centerX);
         make.centerY.equalTo(self.button1.mas_centerY);
     }];
-    [self.promot mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.prompt mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.mas_right).offset(-19);
         make.top.equalTo(self.customNavigationBar.mas_bottom).offset(19);
         make.left.equalTo(self.mas_left).offset(19);
@@ -164,10 +164,10 @@
     return _text1;
 }
 
-- (UILabel *)promot {
-    if (!_promot) {
-        _promot = [[UILabel alloc] init];
-        _promot.numberOfLines = 0;
+- (UILabel *)prompt {
+    if (!_prompt) {
+        _prompt = [[UILabel alloc] init];
+        _prompt.numberOfLines = 0;
         NSMutableAttributedString *attributedText = [NSMutableAttributedString new];
         UIFont *font = nil;
         NSMutableParagraphStyle *paragraphStyle = nil;
@@ -249,9 +249,9 @@
         text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"码不同，如果您不完全理解此密码的用途，请略过此步骤", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
-        _promot.attributedText = attributedText;
+        _prompt.attributedText = attributedText;
     }
-    return _promot;
+    return _prompt;
 }
 
 - (UIView *)customNavigationBar {

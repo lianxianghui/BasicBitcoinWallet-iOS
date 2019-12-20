@@ -86,8 +86,8 @@
 //Actions
 - (void)textButton2Clicked:(UIButton *)sender {
     if ([_viewModel isLastWord]) {
-        LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] init];
-        controller.words = _viewModel.words;
+        id viewModel = [_viewModel checkWalletMnemonicWordsViewModel];
+        LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] initWithViewModel:viewModel];
         [self.navigationController pushViewController:controller animated:YES];
     } else {
         [_viewModel nextWord];

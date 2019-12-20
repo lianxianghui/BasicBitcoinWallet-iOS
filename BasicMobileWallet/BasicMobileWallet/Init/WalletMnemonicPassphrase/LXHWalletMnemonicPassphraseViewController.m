@@ -9,6 +9,7 @@
 #import "LXHWalletMnemonicPassphraseView.h"
 #import "LXHSetPassphraseViewController.h"
 #import "LXHGenerateWalletViewController.h"
+#import "LXHWalletMnemonicPassphraseViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -18,18 +19,26 @@
     
 @interface LXHWalletMnemonicPassphraseViewController()
 
-@property (nonatomic) LXHWalletMnemonicPassphraseView *contentView;
-
+@property (nonatomic) LXHWalletMnemonicPassphraseView *contentView; //可能是LXHWalletMnemonicPassphraseView的子类
+@property (nonatomic) LXHWalletMnemonicPassphraseViewModel *viewModel; //可能是LXHWalletMnemonicPassphraseViewModel的子类
 @end
 
 @implementation LXHWalletMnemonicPassphraseViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColorFromRGBA(0xFFFFFF00);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.contentView = [[LXHWalletMnemonicPassphraseView alloc] init];
+    self.contentView = [[NSClassFromString([_viewModel viewClassName]) alloc] init];//可能是LXHWalletMnemonicPassphraseView或者它的子类名
     [self.view addSubview:self.contentView];
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_topLayoutGuideBottom);
@@ -64,8 +73,8 @@
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
     sender.alpha = 1;
-    UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithCreationType:LXHWalletGenerationTypeGeneratingNew  mnemonicCodeWords:self.words mnemonicPassphrase:nil];
-    [self.navigationController pushViewController:controller animated:YES];
+//    UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithCreationType:LXHWalletGenerationTypeGeneratingNew  mnemonicCodeWords:self.words mnemonicPassphrase:nil];
+//    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)button2TouchDown:(UIButton *)sender {
@@ -78,10 +87,9 @@
 
 - (void)button1Clicked:(UIButton *)sender {
     sender.alpha = 1;
-    LXHSetPassphraseViewController *controller = [[LXHSetPassphraseViewController alloc] init];
-    controller.words = self.words;
-    controller.type = LXHWalletGenerationTypeGeneratingNew;
-    [self.navigationController pushViewController:controller animated:YES]; 
+    id viewModel = [_viewModel setPassphraseViewModel];
+    LXHSetPassphraseViewController *controller = [[LXHSetPassphraseViewController alloc] initWithViewModel:viewModel];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)button1TouchDown:(UIButton *)sender {

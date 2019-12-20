@@ -1,7 +1,7 @@
 // LXHWalletMnemonicWordsView.h
 // BasicWallet
 //
-//  Created by lianxianghui on 19-07-13
+//  Created by lianxianghui on 19-12-20
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import <UIKit/UIKit.h>
@@ -10,7 +10,6 @@
 
 @property (nonatomic) UIButton *button1;
 @property (nonatomic) UILabel *text;
-@property (nonatomic) UILabel *text1;
 @property (nonatomic) UILabel *promot;
 @property (nonatomic) UIView *customNavigationBar;
 @property (nonatomic) UILabel *title;

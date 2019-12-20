@@ -212,13 +212,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [_viewModel selectWordAtIndex:indexPath.row];
-    if ([_viewModel selectWordsFinshed]) {
+    if ([_viewModel selectWordsUnfinshed]) {
         [self clearTextFieldAndPromptWordList];
         [self refreshTextFieldPlaceholder];
     } else {
-        LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] init];
-        controller.words = _viewModel.inputWords;
-        controller.type = LXHWalletMnemonicWordsViewControllerTypeForRestoringExistingWallet;
+        id viewModel = [_viewModel checkWalletMnemonicWordsViewModel];
+        LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] initWithViewModel:viewModel];
         [self.navigationController pushViewController:controller animated:YES];
         _viewModel.inputWords = nil;
         [self clearTextFieldAndPromptWordList];

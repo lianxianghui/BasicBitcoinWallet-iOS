@@ -21,7 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)refreshCellDataArrayForListViewByCurrentInputText:(NSString *)currentInputText;
 - (void)resetCellDataArrayForListView;
 - (void)selectWordAtIndex:(NSUInteger)index;
-- (BOOL)selectWordsFinshed;
+- (BOOL)selectWordsUnfinshed;
+- (id)checkWalletMnemonicWordsViewModel;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,6 +10,7 @@
 #import "LXHWalletMnemonicPassphraseViewController.h"
 #import "LXHWalletMnemonicPassphraseForRestoringViewController.h"
 #import "UILabel+LXHText.h"
+#import "LXHWalletMnemonicWordsViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -20,10 +21,18 @@
 @interface LXHWalletMnemonicWordsViewController()
 
 @property (nonatomic) LXHWalletMnemonicWordsView *contentView;
-
+@property (nonatomic) LXHWalletMnemonicWordsViewModel *viewModel;//有可能是LXHWalletMnemonicWordsViewModel的子类
 @end
 
 @implementation LXHWalletMnemonicWordsViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,8 +48,8 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setViewProperties];
     [self addActions];
-    [self setMnemonicWordsText];
 }
 
 - (void)swipeView:(id)sender {
@@ -49,31 +58,34 @@
 
 - (void)addActions {
     [self.contentView.button1 addTarget:self action:@selector(button1Clicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView.button1 addTarget:self action:@selector(button1TouchDown:) forControlEvents:UIControlEventTouchDown];
-    [self.contentView.button1 addTarget:self action:@selector(button1TouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
-- (void)setMnemonicWordsText {
-    NSString *text = [self.words componentsJoinedByString:@" "];
-    [self.contentView.text1 updateAttributedTextString:text];
+- (void)setViewProperties {
+    [self.contentView.text updateAttributedTextString:[_viewModel mnemonicWordsText]];
 }
 
 //Actions
 - (void)button1Clicked:(UIButton *)sender {
-    sender.alpha = 1;
-    if (self.type == LXHWalletMnemonicWordsViewControllerTypeForCreatingNewWallet) {
-        LXHWalletMnemonicPassphraseViewController *controller = [[LXHWalletMnemonicPassphraseViewController alloc] init];
-        controller.words = self.words;
-        [self.navigationController pushViewController:controller animated:YES];
-    } else {
-        LXHWalletMnemonicPassphraseForRestoringViewController *controller = [[LXHWalletMnemonicPassphraseForRestoringViewController alloc] init];
-        controller.words = self.words;
-        [self.navigationController pushViewController:controller animated:YES];
-    }
+    id viewModel = [_viewModel walletMnemonicPassphraseViewModel];
+    LXHWalletMnemonicPassphraseViewController *controller = [[LXHWalletMnemonicPassphraseViewController alloc] initWithViewModel:viewModel];
+    [self.navigationController pushViewController:controller animated:YES];
 }
+
+//- (void)button1Clicked:(UIButton *)sender {
+//    sender.alpha = 1;
+//    if (self.type == LXHWalletMnemonicWordsViewControllerTypeForCreatingNewWallet) {
+//        LXHWalletMnemonicPassphraseViewController *controller = [[LXHWalletMnemonicPassphraseViewController alloc] init];
+//        controller.words = self.words;
+//        [self.navigationController pushViewController:controller animated:YES];
+//    } else {
+//        LXHWalletMnemonicPassphraseForRestoringViewController *controller = [[LXHWalletMnemonicPassphraseForRestoringViewController alloc] init];
+//        controller.words = self.words;
+//        [self.navigationController pushViewController:controller animated:YES];
+//    }
+//}
 
 - (void)button1TouchDown:(UIButton *)sender {
     sender.alpha = 0.5;

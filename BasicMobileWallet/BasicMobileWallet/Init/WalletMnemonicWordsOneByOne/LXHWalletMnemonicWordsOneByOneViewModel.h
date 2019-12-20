@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isLastWord;
 
 - (NSArray<NSString *> *)words;
+
+- (id)checkWalletMnemonicWordsViewModel;
 @end
 
 NS_ASSUME_NONNULL_END
