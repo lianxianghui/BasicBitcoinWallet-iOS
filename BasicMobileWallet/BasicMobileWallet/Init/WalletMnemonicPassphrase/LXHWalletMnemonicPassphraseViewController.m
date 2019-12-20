@@ -73,7 +73,7 @@
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
     sender.alpha = 1;
-    UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithCreationType:LXHWalletGenerationTypeGeneratingNew  mnemonicCodeWords:_viewModel.words mnemonicPassphrase:nil];
+    UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithCreationType:[_viewModel walletGenerationType] mnemonicCodeWords:_viewModel.words mnemonicPassphrase:nil];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

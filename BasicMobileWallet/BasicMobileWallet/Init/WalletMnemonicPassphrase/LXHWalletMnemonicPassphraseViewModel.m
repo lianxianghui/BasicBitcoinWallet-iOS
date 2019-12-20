@@ -27,8 +27,8 @@
     return [[LXHSetPassphraseViewModel alloc] initWithWords:_words];
 }
 
-- (id)generateWalletView {
-    return nil;
+- (LXHWalletGenerationType)walletGenerationType {
+    return LXHWalletGenerationTypeGeneratingNew;
 }
 
 @end

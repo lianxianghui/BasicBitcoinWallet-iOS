@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LXHWallet.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,7 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithWords:(NSArray *)words;
 - (NSString *)viewClassName;
 - (id)setPassphraseViewModel;
-- (id)generateWalletView;
+
+- (LXHWalletGenerationType)walletGenerationType;
 @end
 
 NS_ASSUME_NONNULL_END
