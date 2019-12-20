@@ -11,7 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class LXHTransaction;
-@interface LXHTransactionListViewModel : NSObject
+@interface LXHTransactionListViewModel : NSObject {
+    @protected
+    NSMutableArray *_dataForCells;
+}
 
 - (NSString *)updatedTimeText;
 - (NSMutableArray *)dataForCells;

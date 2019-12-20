@@ -12,7 +12,6 @@
 #import "BlocksKit.h"
 
 @interface LXHTransactionListViewModel ()
-@property (nonatomic) NSMutableArray *dataForCells;
 @property (nonatomic) NSString *observerToken;
 @end
 
@@ -20,7 +19,6 @@
 
 - (NSArray<LXHTransaction *> *)transactionList {
     return [LXHTransactionDataManager sharedInstance].transactionList;
-//        return [[LXHTransactionDataManager sharedInstance] transactionListByAddress:address];
 }
 
 - (NSString *)updatedTimeText {

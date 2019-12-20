@@ -43,8 +43,7 @@
 
 - (void)dealloc
 {
-    if (_observerToken)
-        [[LXHTransactionDataManager sharedInstance] bk_removeObserversWithIdentifier:_observerToken];
+    [_viewModel removeObserverForUpdatedTransactinList];
 }
 
 - (void)viewDidLoad {
@@ -75,28 +74,16 @@
 
 - (void)setViewProperties {
     [self refreshBalance];
-    //set refreshing header
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(listViewRefresh)];
-    header.lastUpdatedTimeText = ^(NSDate *lastUpdatedTime) {
-        static NSDateFormatter *formatter = nil;
-        if (!formatter) {
-            formatter = [[NSDateFormatter alloc] init];
-            formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
-        }
-        NSDate *updatedTime = [LXHTransactionDataManager sharedInstance].dataUpdatedTime;
-        if (updatedTime) {
-            NSString *dateString = [formatter stringFromDate:updatedTime];
-            return [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
-        } else {
-            return @"";
-        }
-    };
     self.contentView.listView.mj_header = header;
+    LXHWeakSelf
+    header.lastUpdatedTimeText = ^(NSDate *lastUpdatedTime) {
+        return [weakSelf.viewModel updatedTimeText];
+    };
 }
 
 - (void)refreshBalance {
-    NSString *balanceValueText = [NSString stringWithFormat:@"%@ BTC", [[LXHTransactionDataManager sharedInstance] balance]];
-    [self.contentView.balanceValue updateAttributedTextString:balanceValueText];
+    [self.contentView.balanceValue updateAttributedTextString:[_viewModel balanceValueText]];
 }
 
 - (void)refreshContentView {
@@ -107,19 +94,16 @@
 - (void)addObservers {
     //观察transactionList, 有变化时刷新列表
     __weak __typeof(self)weakSelf = self;
-   _observerToken =  [[LXHTransactionDataManager sharedInstance] bk_addObserverForKeyPath:@"transactionList" task:^(id target) {
-       [weakSelf refreshContentView];
+    [_viewModel addObserverForUpdatedTransactinListWithCallback:^{
+        [weakSelf refreshContentView];
     }];
 }
 
 - (void)listViewRefresh {
-    [[LXHTransactionDataManager sharedInstance] requestDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+    [_viewModel updateTransactionListDataWithSuccessBlock:^{
         [self.contentView.listView.mj_header endRefreshing];
-    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+    } failureBlock:^(NSString * _Nonnull errorPrompt) {
         [self.contentView.listView.mj_header endRefreshing];
-        NSError *error = resultDic[@"error"];
-        NSString *format = NSLocalizedString(@"刷新失败:%@", nil);
-        NSString *errorPrompt = [NSString stringWithFormat:format, error.localizedDescription];
         [self.view makeToast:errorPrompt];
     }];
 }
@@ -129,33 +113,9 @@
     [self.contentView.listView reloadData];
 }
 
-//按value从大到小排序
-- (NSMutableArray<LXHTransactionOutput *> *)utxos {
-    NSMutableArray<LXHTransactionOutput *> *ret = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
-    [ret sortUsingComparator:^NSComparisonResult(LXHTransactionOutput *  _Nonnull obj1, LXHTransactionOutput *  _Nonnull obj2) {
-        return -[obj1.value compare:obj2.value];
-    }];
-    return ret;
-}
-
 //Delegate Methods
 - (nullable NSArray *)cellDataListForTableView:(UITableView *)tableView {
-    if (tableView == self.contentView.listView) {
-        if (!_cellDataListForListView) {
-            _cellDataListForListView = [NSMutableArray array];
-            NSDictionary *dic = nil;
-            dic = @{@"isSelectable":@"0", @"cellType":@"LXHLineCell"};
-            [_cellDataListForListView addObject:dic];
-            for (LXHTransactionOutput *utxo in [self utxos]) {
-                NSString *valueText = [NSString stringWithFormat:@"%@ BTC", utxo.value];
-                dic = @{@"text1": utxo.address.base58String ?: @"", @"isSelectable":@"1", @"text2": valueText, @"cellType":@"LXHBalanceLeftRightTextCell", @"data": utxo};
-                [_cellDataListForListView addObject:dic];
-            }
-        }
-        return _cellDataListForListView;
-    } else {
-        return nil;
-    }
+    return [_viewModel dataForCells];
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -165,7 +125,6 @@
     else
         return nil;
 }
-
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
@@ -208,9 +167,6 @@
         UIView *view = [[NSClassFromString(viewClass) alloc] init];
         view.tag = tag;
         [cell.contentView addSubview:view];
-        //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
-        //cell.contentView.backgroundColor = view.backgroundColor;
-        //cell.backgroundColor = view.backgroundColor;
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -7,7 +7,40 @@
 //
 
 #import "LXHBalanceViewModel.h"
+#import "LXHTransactionDataManager.h"
+#import "LXHTransaction.h"
+#import "BlocksKit.h"
+
 
 @implementation LXHBalanceViewModel
+
+- (NSString *)balanceValueText {
+    NSString *balanceValueText = [NSString stringWithFormat:@"%@ BTC", [[LXHTransactionDataManager sharedInstance] balance]];
+    return balanceValueText;
+}
+
+- (NSMutableArray *)dataForCells {
+    if (!_dataForCells) {
+        _dataForCells = [NSMutableArray array];
+        NSDictionary *dic = nil;
+        dic = @{@"isSelectable":@"0", @"cellType":@"LXHLineCell"};
+        [_dataForCells addObject:dic];
+        for (LXHTransactionOutput *utxo in [self utxos]) {
+            NSString *valueText = [NSString stringWithFormat:@"%@ BTC", utxo.value];
+            dic = @{@"text1": utxo.address.base58String ?: @"", @"isSelectable":@"1", @"text2": valueText, @"cellType":@"LXHBalanceLeftRightTextCell", @"data": utxo};
+            [_dataForCells addObject:dic];
+        }
+    }
+    return _dataForCells;
+}
+
+//按value从大到小排序
+- (NSMutableArray<LXHTransactionOutput *> *)utxos {
+    NSMutableArray<LXHTransactionOutput *> *ret = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
+    [ret sortUsingComparator:^NSComparisonResult(LXHTransactionOutput *  _Nonnull obj1, LXHTransactionOutput *  _Nonnull obj2) {
+        return -[obj1.value compare:obj2.value];
+    }];
+    return ret;
+}
 
 @end
