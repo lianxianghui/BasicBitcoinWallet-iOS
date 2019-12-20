@@ -18,7 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithWords:(NSArray *)words;
 - (NSString *)viewClassName;
 - (id)setPassphraseViewModel;
-
 - (LXHWalletGenerationType)walletGenerationType;
 @end
 
