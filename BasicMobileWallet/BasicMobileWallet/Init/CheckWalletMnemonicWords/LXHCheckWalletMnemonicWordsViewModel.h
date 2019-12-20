@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  创建新钱包时的ViewModel
  */
-@interface LXHWalletMnemonicWordsViewModel : NSObject
+@interface LXHCheckWalletMnemonicWordsViewModel : NSObject
 
 @property (nonatomic) NSArray *words;
 

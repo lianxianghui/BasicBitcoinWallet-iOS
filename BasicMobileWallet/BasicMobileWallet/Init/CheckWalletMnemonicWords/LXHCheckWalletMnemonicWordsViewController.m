@@ -4,13 +4,12 @@
 //  Created by lianxianghui on 19-07-13
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
-#import "LXHWalletMnemonicWordsViewController.h"
+#import "LXHCheckWalletMnemonicWordsViewController.h"
 #import "Masonry.h"
-#import "LXHWalletMnemonicWordsView.h"
+#import "LXHCheckWalletMnemonicWordsView.h"
 #import "LXHWalletMnemonicPassphraseViewController.h"
-#import "LXHWalletMnemonicPassphraseForRestoringViewController.h"
 #import "UILabel+LXHText.h"
-#import "LXHWalletMnemonicWordsViewModel.h"
+#import "LXHCheckWalletMnemonicWordsViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -18,13 +17,13 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
-@interface LXHWalletMnemonicWordsViewController()
+@interface LXHCheckWalletMnemonicWordsViewController()
 
-@property (nonatomic) LXHWalletMnemonicWordsView *contentView;
-@property (nonatomic) LXHWalletMnemonicWordsViewModel *viewModel;//有可能是LXHWalletMnemonicWordsViewModel的子类
+@property (nonatomic) LXHCheckWalletMnemonicWordsView *contentView;
+@property (nonatomic) LXHCheckWalletMnemonicWordsViewModel *viewModel;//有可能是LXHWalletMnemonicWordsViewModel的子类
 @end
 
-@implementation LXHWalletMnemonicWordsViewController
+@implementation LXHCheckWalletMnemonicWordsViewController
 
 - (instancetype)initWithViewModel:(id)viewModel {
     self = [super init];
@@ -39,7 +38,7 @@
     self.view.backgroundColor = UIColorFromRGBA(0xFFFFFF00);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.contentView = [[LXHWalletMnemonicWordsView alloc] init];
+    self.contentView = [[LXHCheckWalletMnemonicWordsView alloc] init];
     [self.view addSubview:self.contentView];
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_topLayoutGuideBottom);

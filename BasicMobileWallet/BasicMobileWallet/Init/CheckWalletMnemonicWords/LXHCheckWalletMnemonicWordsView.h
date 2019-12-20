@@ -6,7 +6,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LXHWalletMnemonicWordsView : UIView
+@interface LXHCheckWalletMnemonicWordsView : UIView
 
 @property (nonatomic) UIButton *button1;
 @property (nonatomic) UILabel *text;

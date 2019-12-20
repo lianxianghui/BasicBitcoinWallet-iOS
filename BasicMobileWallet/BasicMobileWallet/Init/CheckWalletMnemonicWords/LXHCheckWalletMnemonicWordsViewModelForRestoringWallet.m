@@ -6,10 +6,10 @@
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 //
 
-#import "LXHWalletMnemonicWordsViewModelForRestoringWallet.h"
+#import "LXHCheckWalletMnemonicWordsViewModelForRestoringWallet.h"
 #import "LXHWalletMnemonicPassphraseForRestoringViewModel.h"
 
-@implementation LXHWalletMnemonicWordsViewModelForRestoringWallet
+@implementation LXHCheckWalletMnemonicWordsViewModelForRestoringWallet
 
 - (id)walletMnemonicPassphraseViewModel {
     return [[LXHWalletMnemonicPassphraseForRestoringViewModel alloc] initWithWords:self.words];

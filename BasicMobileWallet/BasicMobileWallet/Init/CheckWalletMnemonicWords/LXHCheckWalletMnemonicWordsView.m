@@ -5,7 +5,7 @@
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
-#import "LXHWalletMnemonicWordsView.h"
+#import "LXHCheckWalletMnemonicWordsView.h"
 #import "Masonry.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -14,10 +14,10 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
 
-@interface LXHWalletMnemonicWordsView()
+@interface LXHCheckWalletMnemonicWordsView()
 @end
 
-@implementation LXHWalletMnemonicWordsView
+@implementation LXHCheckWalletMnemonicWordsView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];

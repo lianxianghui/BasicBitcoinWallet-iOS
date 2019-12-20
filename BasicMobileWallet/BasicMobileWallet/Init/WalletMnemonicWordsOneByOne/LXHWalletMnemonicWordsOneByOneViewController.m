@@ -7,7 +7,7 @@
 #import "LXHWalletMnemonicWordsOneByOneViewController.h"
 #import "Masonry.h"
 #import "LXHWalletMnemonicWordsOneByOneView.h"
-#import "LXHWalletMnemonicWordsViewController.h"
+#import "LXHCheckWalletMnemonicWordsViewController.h"
 #import "UILabel+LXHText.h"
 #import "UIButton+LXHText.h"
 #import "LXHWalletMnemonicWordsOneByOneViewModel.h"
@@ -87,7 +87,7 @@
 - (void)textButton2Clicked:(UIButton *)sender {
     if ([_viewModel isLastWord]) {
         id viewModel = [_viewModel checkWalletMnemonicWordsViewModel];
-        LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] initWithViewModel:viewModel];
+        LXHCheckWalletMnemonicWordsViewController *controller = [[LXHCheckWalletMnemonicWordsViewController alloc] initWithViewModel:viewModel];
         [self.navigationController pushViewController:controller animated:YES];
     } else {
         [_viewModel nextWord];

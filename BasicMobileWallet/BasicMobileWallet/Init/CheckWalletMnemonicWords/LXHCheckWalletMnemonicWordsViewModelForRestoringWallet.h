@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LXHWalletMnemonicWordsViewModel.h"
+#import "LXHCheckWalletMnemonicWordsViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
  恢复钱包时的ViewModel
  会覆盖父类的实现
  */
-@interface LXHWalletMnemonicWordsViewModelForRestoringWallet : LXHWalletMnemonicWordsViewModel
+@interface LXHCheckWalletMnemonicWordsViewModelForRestoringWallet : LXHCheckWalletMnemonicWordsViewModel
 
 @end
 

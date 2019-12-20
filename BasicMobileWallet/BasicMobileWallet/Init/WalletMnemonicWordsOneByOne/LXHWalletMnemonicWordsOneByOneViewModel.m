@@ -9,7 +9,7 @@
 #import "LXHWalletMnemonicWordsOneByOneViewModel.h"
 #import "BTCMnemonic.h"
 #import "BTCData.h"
-#import "LXHWalletMnemonicWordsViewModel.h"
+#import "LXHCheckWalletMnemonicWordsViewModel.h"
 
 @interface LXHWalletMnemonicWordsOneByOneViewModel ()
 @property (nonatomic) NSUInteger wordLength;
@@ -78,7 +78,7 @@
 }
 
 - (id)checkWalletMnemonicWordsViewModel {
-    return [[LXHWalletMnemonicWordsViewModel alloc] initWithWords:_words];
+    return [[LXHCheckWalletMnemonicWordsViewModel alloc] initWithWords:_words];
 }
 
 @end

@@ -6,10 +6,10 @@
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 //
 
-#import "LXHWalletMnemonicWordsViewModel.h"
+#import "LXHCheckWalletMnemonicWordsViewModel.h"
 #import "LXHWalletMnemonicPassphraseViewModel.h"
 
-@implementation LXHWalletMnemonicWordsViewModel
+@implementation LXHCheckWalletMnemonicWordsViewModel
 
 - (instancetype)initWithWords:(NSArray *)words {
     self = [super init];

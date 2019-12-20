@@ -8,7 +8,7 @@
 #import "Masonry.h"
 #import "LXHInputMnemonicWordsView.h"
 #import "LXHWordCell.h"
-#import "LXHWalletMnemonicWordsViewController.h"
+#import "LXHCheckWalletMnemonicWordsViewController.h"
 #import "UITextField+LXHText.h"
 #import "LXHInputMnemonicWordsViewModel.h"
 #import "NSString+Base.h"
@@ -217,7 +217,7 @@
         [self refreshTextFieldPlaceholder];
     } else {
         id viewModel = [_viewModel checkWalletMnemonicWordsViewModel];
-        LXHWalletMnemonicWordsViewController *controller = [[LXHWalletMnemonicWordsViewController alloc] initWithViewModel:viewModel];
+        LXHCheckWalletMnemonicWordsViewController *controller = [[LXHCheckWalletMnemonicWordsViewController alloc] initWithViewModel:viewModel];
         [self.navigationController pushViewController:controller animated:YES];
         _viewModel.inputWords = nil;
         [self clearTextFieldAndPromptWordList];
