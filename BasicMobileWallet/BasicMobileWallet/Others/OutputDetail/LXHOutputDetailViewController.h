@@ -9,5 +9,5 @@
 @class LXHTransactionOutput;
 @interface LXHOutputDetailViewController : UIViewController
 
-- (instancetype)initWithOutput:(LXHTransactionOutput *)output;
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

@@ -6,11 +6,6 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger, LXHTransactionListViewControllerType) {
-    LXHTransactionListViewControllerTypeAllTransactions,
-    LXHTransactionListViewControllerTypeTransactionByAddress,
-};
-
 @interface LXHTransactionListViewController : UIViewController
 
 - (instancetype)initWithViewModel:(id)viewModel;

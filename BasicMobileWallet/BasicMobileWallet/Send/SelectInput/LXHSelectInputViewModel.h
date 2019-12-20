@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex;
 
 - (NSString *)infoText;//for overriding
+
+- (id)outputDetailViewModelAtIndex:(NSInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END

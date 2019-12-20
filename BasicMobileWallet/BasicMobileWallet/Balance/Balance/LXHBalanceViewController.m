@@ -218,12 +218,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    LXHTransactionOutput *output = [[self cellDataForTableView:tableView atIndexPath:indexPath] valueForKey:@"data"];
-    if (!output)
-        return;
-    UIViewController *controller = [[LXHOutputDetailViewController alloc] initWithOutput:output];
-    controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES];
+    id viewModel = [_viewModel outputDetailViewModelAtIndex:indexPath.row];
+    if (viewModel) {
+        UIViewController *controller = [[LXHOutputDetailViewController alloc] initWithViewModel:viewModel];
+        controller.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 
 }
 

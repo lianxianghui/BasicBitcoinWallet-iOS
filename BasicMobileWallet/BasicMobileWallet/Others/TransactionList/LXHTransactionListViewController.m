@@ -237,10 +237,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSDictionary *cellData = [self cellDataForTableView:tableView atIndexPath:indexPath];
-    id model = cellData[@"model"];
-    UIViewController *controller = [[LXHTransactionDetailViewController alloc] initWithModel:model];
-    [self.navigationController pushViewController:controller animated:YES];
+    id viewModel = [_viewModel transactionDetailViewModelAtIndex:indexPath.row];
+    if (viewModel) {
+        UIViewController *controller = [[LXHTransactionDetailViewController alloc] initWithViewModel:viewModel];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 @end

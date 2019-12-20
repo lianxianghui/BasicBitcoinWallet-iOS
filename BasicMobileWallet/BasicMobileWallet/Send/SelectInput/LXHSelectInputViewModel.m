@@ -9,6 +9,7 @@
 #import "LXHSelectInputViewModel.h"
 #import "LXHTransactionDataManager.h"
 #import "BlocksKit.h"
+#import "LXHOutputDetailViewModel.h"
 
 @interface LXHSelectInputViewModel ()
 @property (nonatomic, readwrite) NSArray *selectedUtxos;
@@ -102,6 +103,16 @@
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex {
     [self.cellDataArrayForListview exchangeObjectAtIndex:sourceIndex withObjectAtIndex:destinationIndex];
     [self refershSelectedUtxosFromCellDataArray];
+}
+
+- (id)outputDetailViewModelAtIndex:(NSInteger)index {
+    if (index >= self.cellDataArrayForListview.count)
+        return nil;
+    LXHTransactionOutput *output = self.cellDataArrayForListview[index][@"model"];
+    if (!output)
+        return nil;
+    id viewModel = [[LXHOutputDetailViewModel alloc] initWithOutput:output];
+    return viewModel;
 }
 
 @end

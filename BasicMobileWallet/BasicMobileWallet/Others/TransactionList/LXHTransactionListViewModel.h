@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
                        failureBlock:(nullable void (^)(NSString *errorPrompt))failureBlock;
 
 
+- (id)transactionDetailViewModelAtIndex:(NSInteger)index;
 
 #pragma mark - for overriding
 - (NSArray<LXHTransaction *> *)transactionList;//默认实现是全部交易，子类可以根据需要重新实现

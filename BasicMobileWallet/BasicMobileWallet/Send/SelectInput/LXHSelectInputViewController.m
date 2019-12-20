@@ -117,13 +117,8 @@
 
 - (void)LXHSelectInputCellButtonClicked:(UIButton *)sender {
     NSUInteger index = (NSUInteger)sender.tag;
-    if (index >= _viewModel.cellDataArrayForListview.count)
-        return;
-    NSDictionary *cellData = _viewModel.cellDataArrayForListview[index]; //todo index ?
-    LXHTransactionOutput *output = cellData[@"model"];
-    if (!output)
-        return;
-    UIViewController *controller = [[LXHOutputDetailViewController alloc] initWithOutput:output];
+    id viewModel = [_viewModel outputDetailViewModelAtIndex:index];
+    UIViewController *controller = [[LXHOutputDetailViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }

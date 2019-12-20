@@ -10,7 +10,7 @@
 #import "LXHTransactionDataManager.h"
 #import "LXHTransaction.h"
 #import "BlocksKit.h"
-
+#import "LXHOutputDetailViewModel.h"
 
 @implementation LXHBalanceViewModel
 
@@ -27,7 +27,7 @@
         [_dataForCells addObject:dic];
         for (LXHTransactionOutput *utxo in [self utxos]) {
             NSString *valueText = [NSString stringWithFormat:@"%@ BTC", utxo.value];
-            dic = @{@"text1": utxo.address.base58String ?: @"", @"isSelectable":@"1", @"text2": valueText, @"cellType":@"LXHBalanceLeftRightTextCell", @"data": utxo};
+            dic = @{@"text1": utxo.address.base58String ?: @"", @"isSelectable":@"1", @"text2": valueText, @"cellType":@"LXHBalanceLeftRightTextCell", @"model": utxo};
             [_dataForCells addObject:dic];
         }
     }
@@ -41,6 +41,14 @@
         return -[obj1.value compare:obj2.value];
     }];
     return ret;
+}
+
+- (id)outputDetailViewModelAtIndex:(NSInteger)index {
+    LXHTransactionOutput *output = [self dataForCells][index][@"model"];
+    if (!output)
+        return nil;
+    id viewModel = [[LXHOutputDetailViewModel alloc] initWithOutput:output];
+    return viewModel;
 }
 
 @end

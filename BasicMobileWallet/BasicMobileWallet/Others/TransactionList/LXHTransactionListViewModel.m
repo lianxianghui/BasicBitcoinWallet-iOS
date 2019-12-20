@@ -10,6 +10,7 @@
 #import "LXHTransactionDataManager.h"
 #import "LXHTransaction.h"
 #import "BlocksKit.h"
+#import "LXHTransactionDetailViewModel.h"
 
 @interface LXHTransactionListViewModel ()
 @property (nonatomic) NSString *observerToken;
@@ -109,5 +110,15 @@
         failureBlock(errorPrompt);
     }];
 }
+
+- (id)transactionDetailViewModelAtIndex:(NSInteger)index {
+    NSDictionary *cellData = self.dataForCells[index];
+    LXHTransaction *transaction = cellData[@"model"];
+    if (!transaction)
+        return nil;
+    id viewModel = [[LXHTransactionDetailViewModel alloc] initWithTransaction:transaction];
+    return viewModel;
+}
+
 
 @end

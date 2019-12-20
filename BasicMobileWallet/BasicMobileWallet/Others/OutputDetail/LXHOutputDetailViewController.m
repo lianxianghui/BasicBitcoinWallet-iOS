@@ -12,8 +12,7 @@
 #import "LXHLockingScriptCell.h"
 #import "LXHEmptyWithSeparatorCell.h"
 #import "LXHOutputDetailTextRightIconCell.h"
-#import "LXHTransactionOutput.h"
-#import "LXHTransactionDataManager.h"
+#import "LXHOutputDetailViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -23,17 +22,15 @@
     
 @interface LXHOutputDetailViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHOutputDetailView *contentView;
-@property (nonatomic) LXHTransactionOutput *model;
-@property (nonatomic) NSMutableArray *dataForCells;
-
+@property (nonatomic) LXHOutputDetailViewModel *viewModel;
 @end
 
 @implementation LXHOutputDetailViewController
-- (instancetype)initWithOutput:(LXHTransactionOutput *)output
-{
+
+- (instancetype)initWithViewModel:(id)viewModel {
     self = [super init];
     if (self) {
-        _model = output;
+        _viewModel = viewModel;
     }
     return self;
 }
@@ -87,46 +84,7 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    if (!_dataForCells) {
-        _dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            dic = @{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": _model.address.base58String ?: @""};
-            [_dataForCells addObject:dic];
-            NSString *valueText = _model.value ? [NSString stringWithFormat:@"%@ BTC", _model.value] : @"";
-            dic = @{@"title":@"输出数量 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": valueText};
-            [_dataForCells addObject:dic];
-            dic = @{@"content":_model.lockingScript ?: @"", @"isSelectable":@"1", @"title":@"锁定脚本", @"cellType":@"LXHLockingScriptCell"};
-            [_dataForCells addObject:dic];
-            dic = @{@"title":@"脚本类型 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": [self scriptTypeText]};
-            [_dataForCells addObject:dic];
-            dic = @{@"title":@"使用情况", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell",
-                    @"text": [_model isUnspent] ? @"未花费" : @"已花费"};
-            [_dataForCells addObject:dic];
-            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
-            [_dataForCells addObject:dic];
-            dic = @{@"text":@"所在交易", @"isSelectable":@"1", @"cellType":@"LXHOutputDetailTextRightIconCell"};
-            [_dataForCells addObject:dic];
-        }
-    }
-    return _dataForCells;
-}
-
-- (NSString *)scriptTypeText {
-    switch (_model.scriptType) {
-        case LXHLockingScriptTypeUnSupported:
-            return NSLocalizedString(@"无法识别", nil);
-            break;
-        case LXHLockingScriptTypeP2PKH:
-            return NSLocalizedString(@"P2PKH (Pay-to-Public-Key-Hash)", nil);
-            break;
-        case LXHLockingScriptTypeP2SH:
-            return NSLocalizedString(@"Pay-to-Script-Hash (P2SH)", nil);
-            break;
-        default:
-            return NSLocalizedString(@"无法识别", nil);
-            break;
-    }
+    return [_viewModel dataForCells];
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -136,7 +94,6 @@
     else
         return nil;
 }
-
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
@@ -183,9 +140,6 @@
         UIView *view = [[NSClassFromString(viewClass) alloc] init];
         view.tag = tag;
         [cell.contentView addSubview:view];
-        //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
-        //cell.contentView.backgroundColor = view.backgroundColor;
-        //cell.backgroundColor = view.backgroundColor;
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -268,14 +222,12 @@
     switch(indexPath.row) {
         case 6:
         {
-            if (!_model.txid)
-                return;
-            LXHTransaction *transaction = [[LXHTransactionDataManager sharedInstance] transactionByTxid:_model.txid];
-            if (!transaction)
-                return;
-            UIViewController *controller = [[LXHTransactionDetailViewController alloc] initWithModel:transaction];
-            controller.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:controller animated:YES];
+            id viewModel = [_viewModel transactionDetailViewModel];
+            if (viewModel) {
+                UIViewController *controller = [[LXHTransactionDetailViewController alloc] initWithViewModel:viewModel];
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
+            }
         }
             break;
         default:

@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface LXHBalanceViewModel : LXHTransactionListViewModel
 - (NSString *)balanceValueText;
+- (id)outputDetailViewModelAtIndex:(NSInteger)index;
+//- (id)outputDetailViewModelAtIndex:(NSInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END
