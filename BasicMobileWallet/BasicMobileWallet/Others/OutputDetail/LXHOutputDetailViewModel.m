@@ -51,10 +51,10 @@
     return _dataForCells;
 }
 
-- (NSString *)scriptTypeText {
-    switch (_model.scriptType) {
++ (NSString *)scriptTypeTextWithLockingScriptType:(LXHLockingScriptType)lockingScriptType {
+    switch (lockingScriptType) {
         case LXHLockingScriptTypeUnSupported:
-            return NSLocalizedString(@"无法识别", nil);
+            return NSLocalizedString(@"尚不支持", nil);
             break;
         case LXHLockingScriptTypeP2PKH:
             return NSLocalizedString(@"P2PKH (Pay-to-Public-Key-Hash)", nil);
@@ -63,9 +63,13 @@
             return NSLocalizedString(@"Pay-to-Script-Hash (P2SH)", nil);
             break;
         default:
-            return NSLocalizedString(@"无法识别", nil);
+            return NSLocalizedString(@"尚不支持", nil);
             break;
     }
+}
+
+- (NSString *)scriptTypeText {
+    return [LXHOutputDetailViewModel scriptTypeTextWithLockingScriptType:_model.scriptType];
 }
 
 - (id)transactionDetailViewModel {

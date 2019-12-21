@@ -240,37 +240,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch(indexPath.row) {
+    NSDictionary *cellData = [self cellDataForTableView:tableView atIndexPath:indexPath];
+    NSNumber *cellId = cellData[@"cellId"];
+    if (!cellId)
+        return;
+    switch(cellId.integerValue) {
         case 0:
             {
-            }
-            break;
-        case 1:
-            {
-            }
-            break;
-        case 2:
-            {
-            }
-            break;
-        case 3:
-            {
-            }
-            break;
-        case 4:
-            {
-            }
-            break;
-        case 5:
-            {
-            }
-            break;
-        case 6:
-            {
-            }
-            break;
-        case 7:
-            {
+                //先从本地获取，如果没有就请求
                 id viewModel = [_viewModel transactionDetailViewModel];
                 if (viewModel) {
                     [self pushTransactionDetailViewControllerWithViewModel:viewModel];

@@ -46,7 +46,7 @@
         } else if (sendType == LXHTransactionSendOrReceiveTypeReceive) {
             typeString = @"接收";
         } else {
-            typeString = @"";
+            typeString = @"外部交易";//与当前钱包的地址无关
         }
         typeString = NSLocalizedString(typeString, nil);
         dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"交易类型", nil), typeString];

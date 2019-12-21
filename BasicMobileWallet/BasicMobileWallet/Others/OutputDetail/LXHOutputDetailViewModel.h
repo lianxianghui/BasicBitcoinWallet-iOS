@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LXHTransactionInputOutputCommon.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableArray *)dataForCells;
 
 - (id)transactionDetailViewModel;
+
++ (NSString *)scriptTypeTextWithLockingScriptType:(LXHLockingScriptType)lockingScriptType;
 @end
 
 NS_ASSUME_NONNULL_END

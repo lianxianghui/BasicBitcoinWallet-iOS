@@ -10,6 +10,7 @@
 #import "LXHTransactionInput.h"
 #import "LXHTransactionDataManager.h"
 #import "LXHTransactionDetailViewModel.h"
+#import "LXHOutputDetailViewModel.h"
 
 @interface LXHInputDetailViewModel ()
 @property (nonatomic) LXHTransactionInput *input;
@@ -45,6 +46,9 @@ return self;
         dic = @{@"content":_input.unlockingScript ?: @" ", @"isSelectable":@"1", @"title":@"解锁脚本", @"cellType":@"LXHUnLockingScriptCell"};
         [_dataForCells addObject:dic];
         
+        dic = @{@"title":@"脚本类型 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": [LXHOutputDetailViewModel scriptTypeTextWithLockingScriptType:_input.scriptType]};
+        [_dataForCells addObject:dic];
+        
         dic = @{@"title":@"序列号 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":[@(_input.sequence) description]};
         [_dataForCells addObject:dic];
         
@@ -57,7 +61,7 @@ return self;
         dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
         [_dataForCells addObject:dic];
         
-        dic = @{@"text":@"引用交易", @"isSelectable":@"1", @"cellType":@"LXHOutputDetailTextRightIconCell"};
+        dic = @{@"text":@"引用交易", @"isSelectable":@"1", @"cellType":@"LXHOutputDetailTextRightIconCell", @"cellId":@(0)};
         [_dataForCells addObject:dic];
     }
     return _dataForCells;
