@@ -14,6 +14,7 @@
 #import "LXHEmptyWithSeparatorCell.h"
 #import "LXHOutputDetailTextRightIconCell.h"
 #import "LXHInputDetailViewModel.h"
+#import "Toast.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -270,14 +271,31 @@
             break;
         case 7:
             {
-            UIViewController *controller = [[LXHTransactionDetailViewController alloc] init];
-            controller.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:controller animated:YES];
+                id viewModel = [_viewModel transactionDetailViewModel];
+                if (viewModel) {
+                    [self pushTransactionDetailViewControllerWithViewModel:viewModel];
+                } else {
+                    //todo转圈
+                    __weak __typeof(self)weakSelf = self;
+                    [_viewModel asynchronousTransactionDetailViewModelWithSuccessBlock:^(id  _Nonnull viewModel) {
+                        if (viewModel) {
+                            [weakSelf pushTransactionDetailViewControllerWithViewModel:viewModel];
+                        }
+                    } failureBlock:^(NSString * _Nonnull errorPrompt) {
+                        [weakSelf.view makeToast:errorPrompt];
+                    }];
+                }
             }
             break;
         default:
             break;
     }
+}
+
+- (void)pushTransactionDetailViewControllerWithViewModel:(id)viewModel {
+    UIViewController *controller = [[LXHTransactionDetailViewController alloc] initWithViewModel:viewModel];
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 @end

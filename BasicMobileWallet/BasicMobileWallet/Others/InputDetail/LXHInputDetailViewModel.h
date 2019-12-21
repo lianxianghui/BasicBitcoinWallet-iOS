@@ -15,6 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithInput:(LXHTransactionInput *)input;
 
 @property (nonatomic, readonly) NSMutableArray *dataForCells;
+
+- (id)transactionDetailViewModel;
+- (void)asynchronousTransactionDetailViewModelWithSuccessBlock:(nullable void (^)(id viewModel))successBlock
+                                                  failureBlock:(nullable void (^)(NSString *errorPrompt))failureBlock;
 @end
 
 NS_ASSUME_NONNULL_END

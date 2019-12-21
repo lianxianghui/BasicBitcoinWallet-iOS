@@ -8,6 +8,8 @@
 
 #import "LXHInputDetailViewModel.h"
 #import "LXHTransactionInput.h"
+#import "LXHTransactionDataManager.h"
+#import "LXHTransactionDetailViewModel.h"
 
 @interface LXHInputDetailViewModel ()
 @property (nonatomic) LXHTransactionInput *input;
@@ -59,6 +61,32 @@ return self;
         [_dataForCells addObject:dic];
     }
     return _dataForCells;
+}
+
+- (id)transactionDetailViewModel {
+    LXHTransaction *transaction = [[LXHTransactionDataManager sharedInstance] transactionByTxid:_input.txid];
+    if (transaction) {
+        LXHTransactionDetailViewModel *viewModel = [[LXHTransactionDetailViewModel alloc] initWithTransaction:transaction];
+        return viewModel;
+    } else {
+        return nil;
+    }
+}
+
+- (void)asynchronousTransactionDetailViewModelWithSuccessBlock:(nullable void (^)(id viewModel))successBlock
+                                                  failureBlock:(nullable void (^)(NSString *errorPrompt))failureBlock {
+    [LXHTransactionDataManager requestTransactionsWithTxids:@[_input.txid] successBlock:^(NSDictionary * _Nonnull resultDic) {
+        LXHTransaction *transaction = resultDic[@"transaction"];
+        LXHTransactionDetailViewModel *viewModel = nil;
+        if (transaction)
+            viewModel = [[LXHTransactionDetailViewModel alloc] initWithTransaction:transaction];
+        successBlock(viewModel);
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        NSError *error = resultDic[@"error"];
+        NSString *format = NSLocalizedString(@"请求交易失败:%@", nil);
+        NSString *errorPrompt = [NSString stringWithFormat:format, error.localizedDescription];
+        failureBlock(errorPrompt);
+    }];
 }
 
 @end

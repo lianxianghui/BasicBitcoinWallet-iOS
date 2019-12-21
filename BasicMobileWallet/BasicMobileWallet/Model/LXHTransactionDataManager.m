@@ -125,11 +125,14 @@ static NSString *const aesPassword = LXHAESPassword;
                             successBlock:(void (^)(NSDictionary *resultDic))successBlock
                             failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     id<LXHBitcoinWebApi> webApi = [self webApiWithType:type];
-    [webApi requestAllTransactionsWithAddresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
-        successBlock(resultDic);
-    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
-        failureBlock(resultDic);
-    }];
+    [webApi requestAllTransactionsWithAddresses:addresses successBlock:successBlock failureBlock:failureBlock];
+}
+
++ (void)requestTransactionsWithTxids:(NSArray *)txids
+                        successBlock:(void (^)(NSDictionary *resultDic))successBlock
+                        failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+    id<LXHBitcoinWebApi> webApi = [LXHTransactionDataManager webApiWithType:LXHWallet.mainAccount.currentNetworkType];
+    [webApi requestTransactionsByIds:txids successBlock:successBlock failureBlock:failureBlock];
 }
 
 + (void)pushTransactionsWithHex:(NSString *)hex
@@ -176,11 +179,13 @@ static NSString *const aesPassword = LXHAESPassword;
 //从全部交易列表里过滤出 输入地址或输出地址为address的交易
 - (NSArray *)transactionListByAddress:(NSString *)address {
     return [self.transactionList bk_select:^BOOL(LXHTransaction *transaction) {
-        return [transaction.inputs bk_any:^BOOL(LXHTransactionInput *input) {
+        BOOL inputContainsAddress = [transaction.inputs bk_any:^BOOL(LXHTransactionInput *input) {
             return [input.address.base58String isEqualToString:address];
-        }] || [transaction.outputs bk_any:^BOOL(LXHTransactionOutput *output) {
+        }];
+        BOOL outputContainsAddress =[transaction.outputs bk_any:^BOOL(LXHTransactionOutput *output) {
             return [output.address.base58String isEqualToString:address];
         }];
+        return inputContainsAddress || outputContainsAddress;
     }];
 }
 

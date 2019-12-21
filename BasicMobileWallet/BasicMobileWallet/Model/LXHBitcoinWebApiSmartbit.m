@@ -45,6 +45,39 @@
     }];
 }
 
+- (void)requestTransactionsByIds:(NSArray<NSString *> *)txids
+                    successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
+                    failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+    NSString *txidsString = [txids componentsJoinedByString:@","];
+    NSString *url = [NSString stringWithFormat:[self transactionByIdsUrlFormat], txidsString];
+    [LXHNetworkRequest GETWithUrlString:url parameters:nil successCallback:^(NSDictionary * _Nonnull resultDic) {
+        BOOL success =  [resultDic[@"success"] boolValue];
+        if (!success) {
+            failureBlock(nil);
+            return;
+        }
+        NSArray *transactions = resultDic[@"transactions"];
+        if (!transactions) {
+            NSDictionary *transaction = resultDic[@"transaction"];
+            if (transaction)
+                transactions = @[transaction];
+        }
+        if (!transactions) { //应该不会发生
+            failureBlock(nil);
+            return;
+        }
+            
+        NSArray *models = [self allTransactionModelsWithTransactionDics:transactions];
+        NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+        ret[@"transactions"] = models;
+        if (transactions.count == 1) //for convenience
+            ret[@"transaction"] = models[0];
+        successBlock(ret);
+    } failureCallback:^(NSDictionary * _Nonnull resultDic) {
+        failureBlock(resultDic);
+    }];
+}
+
 //参考 https://testnet-api.smartbit.com.au/v1/blockchain/address/mrQoR4BMyZWyAZfHF4NuqRmkVtp87AqsUh,n1dAqxk6UCb6568d5f28W2sh6LvwkP5snW/wallet 的返回值
 - (NSArray<LXHTransaction *> *)allTransactionModelsWithTransactionDics:(NSArray *)transactionDics {
     NSMutableArray *ret = [NSMutableArray array];
@@ -53,7 +86,7 @@
         [dic eliminateAllNullObjectValues];
         LXHTransaction *model = [[LXHTransaction alloc] init];
         model.txid = dic[@"txid"];
-        model.blockhash = dic[@"hash"];//todo
+        model.blockhash = dic[@"hash"];
         model.block = dic[@"block"];
         model.time = dic[@"time"];
         model.firstSeen = dic[@"first_seen"];
@@ -152,6 +185,10 @@
 
 - (NSString *)transactionByAddressesUrlFormat {
     return [[self bashUrl] stringByAppendingString:@"address/%@/wallet"];
+}
+
+- (NSString *)transactionByIdsUrlFormat {
+    return [[self bashUrl] stringByAppendingString:@"tx/%@"];
 }
 
 - (NSString *)bashUrl {

@@ -69,7 +69,7 @@
 
 - (void)addObservers {
     //观察transactionList, 有变化时刷新列表
-    __weak __typeof(self)weakSelf = self;
+    LXHWeakSelf
     [_viewModel addObserverForUpdatedTransactinListWithCallback:^{
         [weakSelf reloadListView];
     }];
@@ -85,11 +85,12 @@
 }
 
 - (void)listViewRefresh {
+    LXHWeakSelf
     [_viewModel updateTransactionListDataWithSuccessBlock:^{
-        [self.contentView.listView.mj_header endRefreshing];
+        [weakSelf.contentView.listView.mj_header endRefreshing];
     } failureBlock:^(NSString * _Nonnull errorPrompt) {
-        [self.contentView.listView.mj_header endRefreshing];
-        [self.view makeToast:errorPrompt];
+        [weakSelf.contentView.listView.mj_header endRefreshing];
+        [weakSelf.view makeToast:errorPrompt];
     }];
 }
 

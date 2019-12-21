@@ -13,9 +13,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol LXHBitcoinWebApi
 
-- (void)requestAllTransactionsWithAddresses:(NSArray<NSString *> *)address
+- (void)requestAllTransactionsWithAddresses:(NSArray<NSString *> *)addresses
                                successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
                                failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
+
+- (void)requestTransactionsByIds:(NSArray<NSString *> *)txids
+                               successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
+                               failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
+
 
 - (void)pushTransactionWithHex:(NSString *)hex
                   successBlock:(void (^)(NSDictionary *resultDic))successBlock
