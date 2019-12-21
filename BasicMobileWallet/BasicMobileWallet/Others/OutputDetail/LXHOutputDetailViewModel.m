@@ -23,6 +23,7 @@
     self = [super init];
     if (self) {
         _model = output;
+        _showGotoTransactionCell = YES;
     }
     return self;
 }
@@ -43,10 +44,12 @@
         dic = @{@"title":@"使用情况", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell",
                 @"text": [_model isUnspent] ? @"未花费" : @"已花费"};
         [_dataForCells addObject:dic];
-        dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
-        [_dataForCells addObject:dic];
-        dic = @{@"text":@"所在交易", @"isSelectable":@"1", @"cellType":@"LXHOutputDetailTextRightIconCell"};
-        [_dataForCells addObject:dic];
+        if (_showGotoTransactionCell) {
+            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
+            [_dataForCells addObject:dic];
+            dic = @{@"text":@"所在交易", @"isSelectable":@"1", @"cellType":@"LXHOutputDetailTextRightIconCell"};
+            [_dataForCells addObject:dic];
+        }
     }
     return _dataForCells;
 }
@@ -83,3 +86,4 @@
 }
 
 @end
+

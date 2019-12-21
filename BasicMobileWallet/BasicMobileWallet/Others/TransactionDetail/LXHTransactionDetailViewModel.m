@@ -150,7 +150,9 @@
     } else if ([data isKindOfClass:[LXHTransactionOutput class]]) {
         LXHTransactionOutput *output = (LXHTransactionOutput *)data;
         controllerClassName = @"LXHOutputDetailViewController";
-        viewModel = [[LXHOutputDetailViewModel alloc] initWithOutput:output];
+        LXHOutputDetailViewModel *outputDetailViewModel = [[LXHOutputDetailViewModel alloc] initWithOutput:output];
+        outputDetailViewModel.showGotoTransactionCell = NO;
+        viewModel = outputDetailViewModel;
     } else {
         return nil;
     }
