@@ -38,7 +38,14 @@
         dic = @{@"title":@"输入数量 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": text};
         [_dataForCells addObject:dic];
         
-        dic = @{@"content":_input.unlockingScript ?: @" ", @"isSelectable":@"1", @"title":@"解锁脚本", @"cellType":@"LXHUnLockingScriptCell"};
+        //显示解锁脚本或隔离见证
+        BOOL isSegwit = (_input.scriptType == LXHLockingScriptTypeP2WPKH || _input.scriptType == LXHLockingScriptTypeP2WSH);
+        if (isSegwit) {
+            NSString *segwit = [_input.witness componentsJoinedByString:@","];
+            dic = @{@"content":segwit ?: @" ", @"isSelectable":@"1", @"title":@"隔离见证", @"cellType":@"LXHUnLockingScriptCell"};
+        } else {
+            dic = @{@"content":_input.unlockingScript ?: @" ", @"isSelectable":@"1", @"title":@"解锁脚本", @"cellType":@"LXHUnLockingScriptCell"};
+        }
         [_dataForCells addObject:dic];
         
         dic = @{@"title":@"脚本类型 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": [LXHOutputDetailViewModel scriptTypeTextWithLockingScriptType:_input.scriptType]};
