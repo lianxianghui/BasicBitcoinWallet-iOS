@@ -39,6 +39,7 @@
         [_dataForCells addObject:dic];
         
         //显示解锁脚本或隔离见证
+        //todo 目前cell高度固定，有可能显示不下，改成自适应高度的
         BOOL isSegwit = (_input.scriptType == LXHLockingScriptTypeP2WPKH || _input.scriptType == LXHLockingScriptTypeP2WSH);
         if (isSegwit) {
             NSString *segwit = [_input.witness componentsJoinedByString:@","];
