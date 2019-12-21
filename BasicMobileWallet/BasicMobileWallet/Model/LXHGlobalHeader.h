@@ -22,10 +22,12 @@ typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) { //do not modify
 #define LXHDecodeObjectStament(propertyName) self.propertyName = [decoder decodeObjectForKey:@#propertyName];
 #define LXHEncodeObjectStament(propertyName) [encoder encodeObject:self.propertyName forKey:@#propertyName];
 #define LXHEncodeIntegerStament(propertyName) [encoder encodeObject:@(self.propertyName) forKey:@#propertyName];
-
+#define LXHEncodeBOOLStament(propertyName) [encoder encodeObject:@(self.propertyName) forKey:@#propertyName];
 
 #define LXHDecodeIntegerTypeStament(propertyName) self.propertyName = [[decoder decodeObjectForKey:@#propertyName] integerValue];
 #define LXHDecodeUnsignedIntegerTypeStament(propertyName) self.propertyName = [[decoder decodeObjectForKey:@#propertyName] unsignedIntegerValue];
+#define LXHDecodeBOOLTypeStament(propertyName) self.propertyName = [[decoder decodeObjectForKey:@#propertyName] boolValue];
+
 #define LXHDecodeObjectOfStringClassStament(propertyName) self.propertyName = [decoder decodeObjectOfClass:[NSString class] forKey:@#propertyName];
 #define LXHDecodeObjectOfDecimalNumberClassStament(propertyName) self.propertyName = [decoder decodeObjectOfClass:[NSDecimalNumber class] forKey:@#propertyName];
 #define LXHDecodeObjectOfNumberClassStament(propertyName) self.propertyName = [decoder decodeObjectOfClass:[NSNumber class] forKey:@#propertyName];

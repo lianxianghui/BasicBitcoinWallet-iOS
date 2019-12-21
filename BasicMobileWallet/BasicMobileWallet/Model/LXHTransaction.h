@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSDecimalNumber *outputAmount;
 @property (nonatomic) NSDecimalNumber *fees;
 @property (nonatomic) NSString *txid;
+@property (nonatomic) BOOL coinbase;
 @property (nonatomic) NSMutableArray<LXHTransactionInput *> *inputs;
 @property (nonatomic) NSMutableArray<LXHTransactionOutput *> *outputs;
 

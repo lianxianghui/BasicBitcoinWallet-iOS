@@ -105,7 +105,9 @@
         return LXHLockingScriptTypeP2PKH;
     if ([typeString isEqualToString:@"scripthash"])
         return LXHLockingScriptTypeP2SH;
-    return LXHLockingScriptTypeUnSupported;//其他暂时不支持  witness_v0_keyhash  应该是  Pay-to-Witness-Public-Key-Hash
+    //其他暂时不支持  witness_v0_keyhash   Pay-to-Witness-Public-Key-Hash
+    //nulldata  无实际输出，用OP_RETURN 存放数据的输出会返回 nulldata
+    return LXHLockingScriptTypeUnSupported;
 }
 
 - (void)requestTransactionsWithUrlString:(NSString *)url

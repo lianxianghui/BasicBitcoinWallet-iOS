@@ -98,6 +98,12 @@
         dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@ BTC", NSLocalizedString(@"手续费", nil), _transaction.fees];
         [dataForCells addObject:dataForCell];
         
+        dataForCell = lxhTextCellDataDic.mutableCopy;
+        NSString *isCoinbase = _transaction.coinbase ? @"是" : @"否";
+        isCoinbase = NSLocalizedString(isCoinbase, nil);
+        dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@", NSLocalizedString(@"币基交易", nil), isCoinbase];
+        [dataForCells addObject:dataForCell];
+        
         //in title
         dataForCell = @{@"isSelectable":@"0", @"cellType":@"LXHTitleCell"}.mutableCopy;
         dataForCell[@"title"] = NSLocalizedString(@"输入", nil);
@@ -139,6 +145,7 @@
     if ([data isKindOfClass:[LXHTransactionInput class]]) {
         LXHTransactionInput *input = (LXHTransactionInput *)data;
         controllerClassName = @"LXHInputDetailViewController";
+//        InputDetailViewController 重构
 //        controller = [[LXHInputDetailViewController alloc] initWithInput:input];
     } else if ([data isKindOfClass:[LXHTransactionOutput class]]) {
         LXHTransactionOutput *output = (LXHTransactionOutput *)data;

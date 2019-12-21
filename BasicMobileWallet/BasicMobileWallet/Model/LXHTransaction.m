@@ -36,6 +36,7 @@
     LXHDecodeObjectOfDecimalNumberClassStament(outputAmount);
     LXHDecodeObjectOfDecimalNumberClassStament(fees);
     LXHDecodeObjectOfStringClassStament(txid);
+    LXHDecodeBOOLTypeStament(coinbase);
     LXHDecodeObjectOfMutableArrayClassStament(inputs);
     LXHDecodeObjectOfMutableArrayClassStament(outputs);
     return self;
@@ -51,6 +52,7 @@
     LXHEncodeObjectStament(outputAmount);
     LXHEncodeObjectStament(fees);
     LXHEncodeObjectStament(txid);
+    LXHEncodeBOOLStament(coinbase);
     LXHEncodeObjectStament(inputs);
     LXHEncodeObjectStament(outputs);
 }
