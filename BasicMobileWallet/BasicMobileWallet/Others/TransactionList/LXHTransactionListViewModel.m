@@ -63,20 +63,19 @@
             
             LXHTransactionSendOrReceiveType sendType = [transaction sendOrReceiveType];
             NSString *typeString = nil;
-            NSDecimalNumber *btcValue = nil;
+            NSDecimalNumber *receivedValueSum = [transaction receivedValueSumFromLocalAddress];
+            NSDecimalNumber *sendValueSum = [transaction sentValueSumFromLocalAddress];
+            NSDecimalNumber *value =  [receivedValueSum decimalNumberBySubtracting:sendValueSum];
             if (sendType == LXHTransactionSendOrReceiveTypeSend) {
                 typeString = @"发送";
-                btcValue = [transaction sentValueSumFromLocalAddress];
             } else if (sendType == LXHTransactionSendOrReceiveTypeReceive) {
                 typeString = @"接收";
-                btcValue = [transaction receivedValueSumFromLocalAddress];
-            } else {
-                typeString = @"";
-                btcValue = [transaction sentValueSumFromLocalAddress];
+            } else { //应该不会发生
+                typeString = @"外部交易";
             }
             typeString = NSLocalizedString(typeString, nil);
             dic[@"type"] = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"交易类型", nil), typeString];
-            dic[@"value"] = [NSString stringWithFormat:@"%@ BTC", btcValue];
+            dic[@"value"] = [NSString stringWithFormat:@"%@ BTC", value];
             dic[@"model"] = transaction;
             [_dataForCells addObject:dic];
         }
