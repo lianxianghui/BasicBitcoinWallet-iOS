@@ -76,7 +76,7 @@
             input.unlockingScript = [inputDic valueForKeyPath:@"script_sig.asm"];
             input.witness = inputDic[@"witness"];
             input.scriptType = [self scriptTypeByTypeString:inputDic[@"type"]];
-            
+            input.sequence = [inputDic[@"sequence"] unsignedIntegerValue];
             [model.inputs addObject:input];
         }];
         NSArray *outputs = dic[@"outputs"];
