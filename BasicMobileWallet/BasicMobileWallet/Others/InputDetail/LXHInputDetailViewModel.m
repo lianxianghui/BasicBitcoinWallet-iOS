@@ -42,7 +42,7 @@ return self;
         [_dataForCells addObject:dic];
         dic = @{@"title":@"序列号 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":@"4294967295"};
         [_dataForCells addObject:dic];
-        dic = @{@"content":@"71e8a069e7ce8985c3e260cdb0bde4d50d0294c42704b102f3b1ac5db0f9d2b9 ", @"isSelectable":@"1", @"title":@"引用交易ID ", @"cellType":@"LXHTransactionCell"};
+        dic = @{@"text":@"71e8a069e7ce8985c3e260cdb0bde4d50d0294c42704b102f3b1ac5db0f9d2b9 ", @"isSelectable":@"1", @"title":@"引用交易ID ", @"cellType":@"LXHTwoColumnTextCell"};
         [_dataForCells addObject:dic];
         dic = @{@"title":@"输出索引 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":@"0"};
         [_dataForCells addObject:dic];

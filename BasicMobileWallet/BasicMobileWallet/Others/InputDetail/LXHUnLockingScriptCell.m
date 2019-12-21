@@ -53,7 +53,6 @@
         make.centerY.equalTo(self.mas_centerY);
         make.left.equalTo(self.mas_left).offset(8);
     }];
-    [self.title setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
 }
 
 //Getters

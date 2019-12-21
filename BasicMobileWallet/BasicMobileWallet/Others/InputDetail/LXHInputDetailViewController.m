@@ -10,7 +10,7 @@
 #import "LXHTransactionDetailViewController.h"
 #import "LXHAddressDetailCell.h"
 #import "LXHUnLockingScriptCell.h"
-#import "LXHTransactionCell.h"
+#import "LXHTwoColumnTextCell.h"
 #import "LXHEmptyWithSeparatorCell.h"
 #import "LXHOutputDetailTextRightIconCell.h"
 #import "LXHInputDetailViewModel.h"
@@ -113,7 +113,7 @@
         return 100;
     if ([cellType isEqualToString:@"LXHUnLockingScriptCell"])
         return 101;
-    if ([cellType isEqualToString:@"LXHTransactionCell"])
+    if ([cellType isEqualToString:@"LXHTwoColumnTextCell"])
         return 102;
     if ([cellType isEqualToString:@"LXHEmptyWithSeparatorCell"])
         return 103;
@@ -183,14 +183,14 @@
         [titleAttributedString.mutableString setString:title];
         cellView.title.attributedText = titleAttributedString;
     }
-    if ([cellType isEqualToString:@"LXHTransactionCell"]) {
-        LXHTransactionCell *cellView = (LXHTransactionCell *)view;
-        NSString *content = [dataForRow valueForKey:@"content"];
+    if ([cellType isEqualToString:@"LXHTwoColumnTextCell"]) {
+        LXHTwoColumnTextCell *cellView = (LXHTwoColumnTextCell *)view;
+        NSString *content = [dataForRow valueForKey:@"text"];
         if (!content)
             content = @"";
-        NSMutableAttributedString *contentAttributedString = [cellView.content.attributedText mutableCopy];
+        NSMutableAttributedString *contentAttributedString = [cellView.text.attributedText mutableCopy];
         [contentAttributedString.mutableString setString:content];
-        cellView.content.attributedText = contentAttributedString;
+        cellView.text.attributedText = contentAttributedString;
         NSString *title = [dataForRow valueForKey:@"title"];
         if (!title)
             title = @"";
@@ -217,7 +217,7 @@
             return 47;
         if ([cellType isEqualToString:@"LXHUnLockingScriptCell"])
             return 100;
-        if ([cellType isEqualToString:@"LXHTransactionCell"])
+        if ([cellType isEqualToString:@"LXHTwoColumnTextCell"])
             return 60;
         if ([cellType isEqualToString:@"LXHEmptyWithSeparatorCell"])
             return 18;
