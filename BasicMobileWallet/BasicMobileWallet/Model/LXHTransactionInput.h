@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSString *unlockingScript;//scriptSig
 @property (nonatomic) LXHLockingScriptType scriptType;
 @property (nonatomic) NSArray *witness;
-@property (nonatomic) NSUInteger sequence;
+@property (nonatomic) NSUInteger sequence;
 @end
 
 NS_ASSUME_NONNULL_END

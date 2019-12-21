@@ -1,7 +1,7 @@
 // LXHInputDetailView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-19
+//  Created by lianxianghui on 19-12-21
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
@@ -112,7 +112,6 @@
 - (UILabel *)title {
     if (!_title) {
         _title = [[UILabel alloc] init];
-        _title.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Light" size:17];
         if (!font) font = [UIFont systemFontOfSize:17];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -146,7 +145,6 @@
 - (UILabel *)leftText {
     if (!_leftText) {
         _leftText = [[UILabel alloc] init];
-        _leftText.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Light" size:17];
         if (!font) font = [UIFont systemFontOfSize:17];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];

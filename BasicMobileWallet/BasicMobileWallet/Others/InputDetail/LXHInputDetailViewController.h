@@ -1,12 +1,12 @@
 // LXHInputDetailViewController.h
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-19
+//  Created by lianxianghui on 19-12-21
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import <UIKit/UIKit.h>
 
-@class LXHTransactionInput;
 @interface LXHInputDetailViewController : UIViewController
-- (instancetype)initWithInput:(LXHTransactionInput *)input;
+
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

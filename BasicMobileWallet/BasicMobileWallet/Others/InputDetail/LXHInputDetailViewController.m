@@ -1,15 +1,19 @@
 // LXHInputDetailViewController.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-19
+//  Created by lianxianghui on 19-12-21
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 #import "LXHInputDetailViewController.h"
 #import "Masonry.h"
 #import "LXHInputDetailView.h"
+#import "LXHTransactionDetailViewController.h"
 #import "LXHAddressDetailCell.h"
-#import "LXHTransactionInput.h"
-#import "LXHAddress.h"
+#import "LXHUnLockingScriptCell.h"
+#import "LXHTransactionCell.h"
+#import "LXHEmptyWithSeparatorCell.h"
+#import "LXHOutputDetailTextRightIconCell.h"
+#import "LXHInputDetailViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -19,19 +23,19 @@
     
 @interface LXHInputDetailViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHInputDetailView *contentView;
-@property (nonatomic) LXHTransactionInput *model;
-@property (nonatomic) NSMutableArray *dataForCells;
+@property (nonatomic) LXHInputDetailViewModel *viewModel;
 @end
 
 @implementation LXHInputDetailViewController
 
-- (instancetype)initWithInput:(LXHTransactionInput *)input {
+- (instancetype)initWithViewModel:(id)viewModel {
     self = [super init];
     if (self) {
-        _model = input;
+        _viewModel = viewModel;
     }
     return self;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColorFromRGBA(0xFAFAFAFF);
@@ -81,19 +85,7 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    if (!_dataForCells) {
-        _dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-
-            dic = @{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": _model.address.base58String ?: @""};
-            [_dataForCells addObject:dic];
-            NSString *valueText = _model.value ? [NSString stringWithFormat:@"%@ BTC", _model.value] : @"";
-            dic = @{@"title":@"输入数量 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": valueText};
-            [_dataForCells addObject:dic];
-        }
-    }
-    return _dataForCells;
+    return _viewModel.dataForCells;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -103,7 +95,6 @@
     else
         return nil;
 }
-
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
@@ -120,6 +111,14 @@
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
     if ([cellType isEqualToString:@"LXHAddressDetailCell"])
         return 100;
+    if ([cellType isEqualToString:@"LXHUnLockingScriptCell"])
+        return 101;
+    if ([cellType isEqualToString:@"LXHTransactionCell"])
+        return 102;
+    if ([cellType isEqualToString:@"LXHEmptyWithSeparatorCell"])
+        return 103;
+    if ([cellType isEqualToString:@"LXHOutputDetailTextRightIconCell"])
+        return 104;
     return -1;
 }
 
@@ -144,9 +143,6 @@
         UIView *view = [[NSClassFromString(viewClass) alloc] init];
         view.tag = tag;
         [cell.contentView addSubview:view];
-        //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
-        //cell.contentView.backgroundColor = view.backgroundColor;
-        //cell.backgroundColor = view.backgroundColor;
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -172,6 +168,45 @@
         [titleAttributedString.mutableString setString:title];
         cellView.title.attributedText = titleAttributedString;
     }
+    if ([cellType isEqualToString:@"LXHUnLockingScriptCell"]) {
+        LXHUnLockingScriptCell *cellView = (LXHUnLockingScriptCell *)view;
+        NSString *content = [dataForRow valueForKey:@"content"];
+        if (!content)
+            content = @"";
+        NSMutableAttributedString *contentAttributedString = [cellView.content.attributedText mutableCopy];
+        [contentAttributedString.mutableString setString:content];
+        cellView.content.attributedText = contentAttributedString;
+        NSString *title = [dataForRow valueForKey:@"title"];
+        if (!title)
+            title = @"";
+        NSMutableAttributedString *titleAttributedString = [cellView.title.attributedText mutableCopy];
+        [titleAttributedString.mutableString setString:title];
+        cellView.title.attributedText = titleAttributedString;
+    }
+    if ([cellType isEqualToString:@"LXHTransactionCell"]) {
+        LXHTransactionCell *cellView = (LXHTransactionCell *)view;
+        NSString *content = [dataForRow valueForKey:@"content"];
+        if (!content)
+            content = @"";
+        NSMutableAttributedString *contentAttributedString = [cellView.content.attributedText mutableCopy];
+        [contentAttributedString.mutableString setString:content];
+        cellView.content.attributedText = contentAttributedString;
+        NSString *title = [dataForRow valueForKey:@"title"];
+        if (!title)
+            title = @"";
+        NSMutableAttributedString *titleAttributedString = [cellView.title.attributedText mutableCopy];
+        [titleAttributedString.mutableString setString:title];
+        cellView.title.attributedText = titleAttributedString;
+    }
+    if ([cellType isEqualToString:@"LXHOutputDetailTextRightIconCell"]) {
+        LXHOutputDetailTextRightIconCell *cellView = (LXHOutputDetailTextRightIconCell *)view;
+        NSString *text = [dataForRow valueForKey:@"text"];
+        if (!text)
+            text = @"";
+        NSMutableAttributedString *textAttributedString = [cellView.text.attributedText mutableCopy];
+        [textAttributedString.mutableString setString:text];
+        cellView.text.attributedText = textAttributedString;
+    }
     return cell;
 }
 
@@ -179,6 +214,14 @@
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
     if (tableView == self.contentView.listView) {
         if ([cellType isEqualToString:@"LXHAddressDetailCell"])
+            return 47;
+        if ([cellType isEqualToString:@"LXHUnLockingScriptCell"])
+            return 100;
+        if ([cellType isEqualToString:@"LXHTransactionCell"])
+            return 60;
+        if ([cellType isEqualToString:@"LXHEmptyWithSeparatorCell"])
+            return 18;
+        if ([cellType isEqualToString:@"LXHOutputDetailTextRightIconCell"])
             return 47;
     }
     return 0;
@@ -196,6 +239,45 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    switch(indexPath.row) {
+        case 0:
+            {
+            }
+            break;
+        case 1:
+            {
+            }
+            break;
+        case 2:
+            {
+            }
+            break;
+        case 3:
+            {
+            }
+            break;
+        case 4:
+            {
+            }
+            break;
+        case 5:
+            {
+            }
+            break;
+        case 6:
+            {
+            }
+            break;
+        case 7:
+            {
+            UIViewController *controller = [[LXHTransactionDetailViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 @end

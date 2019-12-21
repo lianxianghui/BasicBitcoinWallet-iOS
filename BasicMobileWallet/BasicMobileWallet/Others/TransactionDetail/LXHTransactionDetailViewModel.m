@@ -10,6 +10,7 @@
 #import "LXHTransaction.h"
 #import "LXHGlobalHeader.h"
 #import "LXHOutputDetailViewModel.h"
+#import "LXHInputDetailViewModel.h"
 
 @interface LXHTransactionDetailViewModel ()
 @property (nonatomic) LXHTransaction *transaction;
@@ -145,8 +146,7 @@
     if ([data isKindOfClass:[LXHTransactionInput class]]) {
         LXHTransactionInput *input = (LXHTransactionInput *)data;
         controllerClassName = @"LXHInputDetailViewController";
-//        InputDetailViewController 重构
-//        controller = [[LXHInputDetailViewController alloc] initWithInput:input];
+        viewModel = [[LXHInputDetailViewModel alloc] initWithInput:input];
     } else if ([data isKindOfClass:[LXHTransactionOutput class]]) {
         LXHTransactionOutput *output = (LXHTransactionOutput *)data;
         controllerClassName = @"LXHOutputDetailViewController";
