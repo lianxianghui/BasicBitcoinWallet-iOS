@@ -275,13 +275,15 @@
                 if (viewModel) {
                     [self pushTransactionDetailViewControllerWithViewModel:viewModel];
                 } else {
-                    //todo转圈
                     __weak __typeof(self)weakSelf = self;
+                    [self.contentView.indicatorView startAnimating];
                     [_viewModel asynchronousTransactionDetailViewModelWithSuccessBlock:^(id  _Nonnull viewModel) {
+                        [self.contentView.indicatorView stopAnimating];
                         if (viewModel) {
                             [weakSelf pushTransactionDetailViewControllerWithViewModel:viewModel];
                         }
                     } failureBlock:^(NSString * _Nonnull errorPrompt) {
+                        [self.contentView.indicatorView stopAnimating];
                         [weakSelf.view makeToast:errorPrompt];
                     }];
                 }
