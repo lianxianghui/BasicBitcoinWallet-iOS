@@ -60,10 +60,22 @@
             return NSLocalizedString(@"尚不支持", nil);
             break;
         case LXHLockingScriptTypeP2PKH:
-            return NSLocalizedString(@"P2PKH (Pay-to-Public-Key-Hash)", nil);
+            return NSLocalizedString(@"Pay-to-Public-Key-Hash (P2PKH)", nil);
             break;
         case LXHLockingScriptTypeP2SH:
             return NSLocalizedString(@"Pay-to-Script-Hash (P2SH)", nil);
+            break;
+        case LXHLockingScriptTypeP2WPKH:
+            return NSLocalizedString(@"Pay-to-Witness-Public-Key-Hash (P2WPKH)", nil);
+            break;
+        case LXHLockingScriptTypeP2WSH:
+            return NSLocalizedString(@"Pay-to-Witness-Script-Hash (P2WSH)", nil);
+            break;
+        case LXHLockingScriptTypeNullData:
+            return NSLocalizedString(@"Null Data", nil);
+            break;
+        case LXHLockingScriptTypeMultisig:
+            return NSLocalizedString(@"Multi-signature", nil);
             break;
         default:
             return NSLocalizedString(@"尚不支持", nil);

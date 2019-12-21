@@ -139,6 +139,12 @@
         return LXHLockingScriptTypeP2PKH;
     if ([typeString isEqualToString:@"scripthash"])
         return LXHLockingScriptTypeP2SH;
+    if ([typeString isEqualToString:@"witness_v0_keyhash"])
+        return LXHLockingScriptTypeP2WPKH;
+    if ([typeString isEqualToString:@"witness_v0_scripthash"])
+        return LXHLockingScriptTypeP2WSH;
+    if ([typeString isEqualToString:@"nulldata"])
+        return LXHLockingScriptTypeNullData;
     //其他暂时不支持  witness_v0_keyhash   Pay-to-Witness-Public-Key-Hash
     //nulldata  无实际输出，用OP_RETURN 存放数据的输出会返回 nulldata
     return LXHLockingScriptTypeUnSupported;

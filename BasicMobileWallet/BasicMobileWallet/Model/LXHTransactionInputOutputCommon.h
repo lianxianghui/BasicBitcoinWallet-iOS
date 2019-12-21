@@ -16,8 +16,10 @@ typedef NS_ENUM(NSInteger, LXHLockingScriptType) {
     LXHLockingScriptTypeUnSupported = 0,
     LXHLockingScriptTypeP2PKH,//Pay-to-Public-Key-Hash (P2PKH)
     LXHLockingScriptTypeP2SH,//Pay-to-Script-Hash (P2SH)
-    //    LXHLockingScriptTypeP2WPKH, // Pay-to-Witness-Public-Key-Hash (P2WPKH)
-    //    LXHLockingScriptTypeP2WSH, //Pay-to-Witness-Script-Hash (P2WSH)
+    LXHLockingScriptTypeP2WPKH, // Pay-to-Witness-Public-Key-Hash (P2WPKH)
+    LXHLockingScriptTypeP2WSH, //Pay-to-Witness-Script-Hash (P2WSH)
+    LXHLockingScriptTypeNullData,
+    LXHLockingScriptTypeMultisig,
 };
 
 /**
