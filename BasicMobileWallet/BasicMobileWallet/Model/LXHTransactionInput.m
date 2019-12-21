@@ -22,6 +22,7 @@
     }
     LXHDecodeObjectOfStringClassStament(unlockingScript);
     LXHDecodeIntegerTypeStament(scriptType);
+    LXHDecodeUnsignedIntegerTypeStament(vout);
 //    LXHDecodeObjectOfArrayClassStament(witness);
     return self;
 }
@@ -30,6 +31,7 @@
     [super encodeWithCoder:encoder];
     LXHEncodeObjectStament(unlockingScript);
     LXHEncodeIntegerStament(scriptType);
+    LXHEncodeUnsignedIntegerStament(vout);
 //    LXHEncodeObjectStament(witness);
 }
 

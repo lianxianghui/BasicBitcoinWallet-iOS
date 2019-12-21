@@ -19,11 +19,12 @@ typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) { //do not modify
 #define LXHTranactionTimeDateFormat @"yyyy-MM-dd HH:mm:ss"
 
 //encode decode statement macro
-#define LXHDecodeObjectStament(propertyName) self.propertyName = [decoder decodeObjectForKey:@#propertyName];
 #define LXHEncodeObjectStament(propertyName) [encoder encodeObject:self.propertyName forKey:@#propertyName];
 #define LXHEncodeIntegerStament(propertyName) [encoder encodeObject:@(self.propertyName) forKey:@#propertyName];
-#define LXHEncodeBOOLStament(propertyName) [encoder encodeObject:@(self.propertyName) forKey:@#propertyName];
+#define LXHEncodeUnsignedIntegerStament(propertyName) LXHEncodeIntegerStament(propertyName);
+#define LXHEncodeBOOLStament(propertyName) LXHEncodeIntegerStament(propertyName);
 
+#define LXHDecodeObjectStament(propertyName) self.propertyName = [decoder decodeObjectForKey:@#propertyName];
 #define LXHDecodeIntegerTypeStament(propertyName) self.propertyName = [[decoder decodeObjectForKey:@#propertyName] integerValue];
 #define LXHDecodeUnsignedIntegerTypeStament(propertyName) self.propertyName = [[decoder decodeObjectForKey:@#propertyName] unsignedIntegerValue];
 #define LXHDecodeBOOLTypeStament(propertyName) self.propertyName = [[decoder decodeObjectForKey:@#propertyName] boolValue];

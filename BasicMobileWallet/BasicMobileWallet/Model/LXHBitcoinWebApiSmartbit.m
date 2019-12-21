@@ -69,6 +69,7 @@
             input.index = idx;
             input.value =  [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", inputDic[@"value"]]];
             input.txid = inputDic[@"txid"];
+            input.vout = [inputDic[@"vout"] unsignedIntegerValue];
             NSArray *inputAddresses = [inputDic valueForKey:@"addresses"];
             if (inputAddresses.count == 1) //目前只处理每个输入只有一个输入地址的情况
                 input.address = [LXHAddress addressWithBase58String:inputAddresses[0]];
