@@ -202,6 +202,7 @@
 		8CCA7D2D23ACCBF500E4E9B2 /* LXHTransactionDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CCA7D2C23ACCBF500E4E9B2 /* LXHTransactionDetailViewModel.m */; };
 		8CCA7D3023ADC91900E4E9B2 /* LXHUnLockingScriptCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CCA7D2E23ADC91900E4E9B2 /* LXHUnLockingScriptCell.m */; };
 		8CCA7D3323ADCA8A00E4E9B2 /* LXHInputDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CCA7D3223ADCA8A00E4E9B2 /* LXHInputDetailViewModel.m */; };
+		8CCA7D3F23AE3FF600E4E9B2 /* NSDecimalNumber+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CCA7D3E23AE3FF600E4E9B2 /* NSDecimalNumber+Convenience.m */; };
 		8CD26924230A452B001B9300 /* LXHGenerateWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD26920230A452A001B9300 /* LXHGenerateWalletViewController.m */; };
 		8CD26925230A452B001B9300 /* LXHGenerateWalletView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD26921230A452A001B9300 /* LXHGenerateWalletView.m */; };
 		8CDF912B239637350004A229 /* LXHAddress+LXHAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDF912A239637350004A229 /* LXHAddress+LXHAccount.m */; };
@@ -829,6 +830,8 @@
 		8CCA7D2F23ADC91900E4E9B2 /* LXHUnLockingScriptCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHUnLockingScriptCell.h; sourceTree = "<group>"; };
 		8CCA7D3123ADCA8A00E4E9B2 /* LXHInputDetailViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHInputDetailViewModel.h; sourceTree = "<group>"; };
 		8CCA7D3223ADCA8A00E4E9B2 /* LXHInputDetailViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHInputDetailViewModel.m; sourceTree = "<group>"; };
+		8CCA7D3D23AE3FF600E4E9B2 /* NSDecimalNumber+Convenience.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+Convenience.h"; sourceTree = "<group>"; };
+		8CCA7D3E23AE3FF600E4E9B2 /* NSDecimalNumber+Convenience.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+Convenience.m"; sourceTree = "<group>"; };
 		8CD26920230A452A001B9300 /* LXHGenerateWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHGenerateWalletViewController.m; sourceTree = "<group>"; };
 		8CD26921230A452A001B9300 /* LXHGenerateWalletView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHGenerateWalletView.m; sourceTree = "<group>"; };
 		8CD26922230A452A001B9300 /* LXHGenerateWalletView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHGenerateWalletView.h; sourceTree = "<group>"; };
@@ -1404,6 +1407,8 @@
 				8CA31FC522D9A37600CEA828 /* NSJSONSerialization+VLBase.h */,
 				8CA31FC622D9A37600CEA828 /* NSMutableDictionary+Base.h */,
 				8CA31FC722D9A37600CEA828 /* NSArray+FunStyle.m */,
+				8CCA7D3D23AE3FF600E4E9B2 /* NSDecimalNumber+Convenience.h */,
+				8CCA7D3E23AE3FF600E4E9B2 /* NSDecimalNumber+Convenience.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -2527,6 +2532,7 @@
 				8C2CC6BA232F20E5005AA93C /* LXHAddressDetailViewController.m in Sources */,
 				8CA3227722DEBE9900CEA828 /* BTCBlindSignature+Tests.m in Sources */,
 				8CA3227222DEBE9900CEA828 /* BTCScriptMachine.m in Sources */,
+				8CCA7D3F23AE3FF600E4E9B2 /* NSDecimalNumber+Convenience.m in Sources */,
 				8CE9A90123A8C277007A58EF /* LXHTextRightIconCell.m in Sources */,
 				8CA31FCD22D9A37600CEA828 /* NSString+Base.m in Sources */,
 				8CE9A8FF23A8C277007A58EF /* LXHOthersViewController.m in Sources */,

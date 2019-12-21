@@ -11,6 +11,7 @@
 #import "LXHTransaction.h"
 #import "BlocksKit.h"
 #import "LXHTransactionDetailViewModel.h"
+#import "NSDecimalNumber+Convenience.h"
 
 @interface LXHTransactionListViewModel ()
 @property (nonatomic) NSString *observerToken;
@@ -71,11 +72,15 @@
             } else if (sendType == LXHTransactionSendOrReceiveTypeReceive) {
                 typeString = @"接收";
             } else { //应该不会发生
-                typeString = @"外部交易";
+                typeString = @"未知";
             }
             typeString = NSLocalizedString(typeString, nil);
             dic[@"type"] = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"交易类型", nil), typeString];
-            dic[@"value"] = [NSString stringWithFormat:@"%@ BTC", value];
+            //正数前面加'+'
+            NSString *valueString = value.description;
+            if ([value greaterThanZero])
+                valueString = [@"+" stringByAppendingString:valueString];
+            dic[@"value"] = [NSString stringWithFormat:@"%@ BTC", valueString];
             dic[@"model"] = transaction;
             [_dataForCells addObject:dic];
         }
