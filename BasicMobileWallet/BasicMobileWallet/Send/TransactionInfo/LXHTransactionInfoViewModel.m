@@ -57,11 +57,13 @@
 }
 
 - (NSDictionary *)unsignedTransactionDictionary {
-    return [self.unsignedBTCTransaction dictionary];
+    NSDictionary *data = [self.unsignedBTCTransaction dictionary];
+    return @{@"dataType":@"unsignedTransaction", @"data":data};
 }
 
 - (NSDictionary *)signedTransactionDictionary {
-    return [self.signedBTCTransaction dictionary];
+    NSDictionary *data = [self.signedBTCTransaction dictionary];
+    return @{@"dataType":@"signedTransaction", @"data":data};
 }
 
 - (BTCTransaction *)signedBTCTransaction {
@@ -77,6 +79,8 @@
                 LXHAddress *address = utxo.address;
                 NSData *signature = [LXHWallet signatureWithNetType:LXHWallet.mainAccount.currentNetworkType path:address.localAddressPath hash:hash];
                 NSData *publicKey = [LXHWallet.mainAccount publicKeyWithLocalAddress:address];
+//                NSData *publicKeyHash = BTCHash160(publicKey);
+//                NSAssert([publicKeyHash isEqual:[lockingScript.scriptChunks[2] pushdata]], @"锁定脚本的第三项是公钥哈希");
                 BTCScript *unlockingScript = [[BTCScript alloc] init];
                 [unlockingScript appendData:signature];
                 [unlockingScript appendData:publicKey];
@@ -101,6 +105,8 @@
             BTCTransactionInput *input = [[BTCTransactionInput alloc] init];
             input.previousTransactionID = utxo.txid;
             input.previousIndex = (uint32_t)utxo.index;
+            BTCScript *lockingScript = [[BTCScript alloc] initWithHex:utxo.lockingScriptHex];
+            input.signatureScript = lockingScript;//临时的，put the output script here so the signer knows which key to use.
             [transaction addInput:input];
         }];
         [_outputs enumerateObjectsUsingBlock:^(LXHTransactionOutput * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
