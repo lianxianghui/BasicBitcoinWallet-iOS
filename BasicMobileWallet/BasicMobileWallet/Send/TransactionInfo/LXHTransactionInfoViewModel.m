@@ -56,14 +56,45 @@
     return info;
 }
 
-- (NSDictionary *)unsignedTransactionDictionary {
-    NSDictionary *data = [self.unsignedBTCTransaction dictionary];
-    return @{@"dataType":@"unsignedTransaction", @"data":data};
+- (NSArray *)outputBase58AddressesWithBTCOutputs:(NSArray<BTCTransactionOutput *> *)btcOutputs network:(NSString *)network {
+    NSArray *outputBase58Addresses = [btcOutputs bk_map:^id(BTCTransactionOutput *btcOutput) {
+        BTCScript *lockingScript = btcOutput.script;
+        if (lockingScript.isPayToPublicKeyHashScript) {
+            BTCScriptChunk *chunk = btcOutput.script.scriptChunks[2];
+            BTCAddress *address;
+            if ([network isEqualToString:@"mainnet"])
+                address = [BTCPublicKeyAddress addressWithData:chunk.pushdata];
+            else if ([network isEqualToString:@"testnet"])
+                address = [BTCPublicKeyAddressTestnet addressWithData:chunk.pushdata];
+            return address.string;
+        } else {
+            return @"unsupported locking script type";
+        }
+    }];
+    return outputBase58Addresses;
 }
 
-- (NSDictionary *)signedTransactionDictionary {
-    NSDictionary *data = [self.signedBTCTransaction dictionary];
-    return @{@"dataType":@"signedTransaction", @"data":data};
+- (NSString *)network {
+    return (LXHWallet.mainAccount.currentNetworkType == LXHBitcoinNetworkTypeMainnet) ? @"mainnet" : @"testnet";
+}
+
+- (NSDictionary *)dictionaryOfBTCTransaction:(BTCTransaction *)transaction {
+    NSDictionary *data = [transaction dictionary];
+    NSString *network = [self network];
+    NSArray *outputBase58Addresses = [self outputBase58AddressesWithBTCOutputs:transaction.outputs network:network];
+    return @{@"data":data, @"outputAddresses":outputBase58Addresses, @"network":network};
+}
+
+- (NSDictionary *)unsignedTransactionDictionary {
+    NSMutableDictionary *dictionary = [self dictionaryOfBTCTransaction:self.unsignedBTCTransaction].mutableCopy;
+    dictionary[@"dataType"] = @"unsignedTransaction";
+    return dictionary;
+}
+
+- (NSMutableDictionary *)signedTransactionDictionary {
+    NSMutableDictionary *dictionary = [self dictionaryOfBTCTransaction:self.signedBTCTransaction].mutableCopy;
+    dictionary[@"dataType"] = @"signedTransaction";
+    return dictionary;
 }
 
 - (BTCTransaction *)signedBTCTransaction {
