@@ -67,6 +67,7 @@
 }
 
 - (void)setViewProperties {
+    self.contentView.text.editable = NO;
     [self.contentView.text updateAttributedTextString:[_viewModel text]];
 }
 
