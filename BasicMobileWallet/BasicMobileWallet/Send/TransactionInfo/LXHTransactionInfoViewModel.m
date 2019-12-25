@@ -79,10 +79,11 @@
 }
 
 - (NSDictionary *)dictionaryOfBTCTransaction:(BTCTransaction *)transaction {
-    NSDictionary *data = [transaction dictionary];
+    NSDictionary *transactionData = [transaction dictionary];
     NSString *network = [self network];
     NSArray *outputBase58Addresses = [self outputBase58AddressesWithBTCOutputs:transaction.outputs network:network];
-    return @{@"data":data, @"outputAddresses":outputBase58Addresses, @"network":network};
+    NSDictionary *dataForCheckingOutputAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
+    return @{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
 }
 
 - (NSDictionary *)unsignedTransactionDictionary {
