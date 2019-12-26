@@ -159,5 +159,15 @@
     }
 }
 
+- (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash {
+    const uint32_t maxScanCount = 10000;
+    for (uint32_t i = 0 ; i < maxScanCount; i++) {
+        NSData *publicKey = [self publicKeyWithIndex:i];
+        NSData *currentPublicKeyHash = BTCHash160(publicKey);
+        if ([currentPublicKeyHash isEqualToData:publicKeyHash])
+            return [self localAddressWithIndex:i];
+    }
+    return nil;
+}
 
 @end

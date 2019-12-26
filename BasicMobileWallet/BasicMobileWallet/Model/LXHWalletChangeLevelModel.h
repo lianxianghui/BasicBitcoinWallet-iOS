@@ -37,6 +37,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (LXHAddress *)currentLocalAddress;
 - (NSData *)publicKeyWithIndex:(uint32_t)index;
 - (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet;
+
+/**
+ 从本地查找该公钥哈希，找到了就返回一个LXHAddress对象。
+ 目前最大扫描数量都为10000
+ */
+- (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash;
 @end
 
 
