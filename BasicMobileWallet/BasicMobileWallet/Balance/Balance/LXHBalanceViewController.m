@@ -26,7 +26,6 @@
     
 @interface LXHBalanceViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHBalanceView *contentView;
-@property (nonatomic) NSMutableArray *cellDataListForListView;
 @property (nonatomic) NSString *observerToken;
 @property (nonatomic) LXHBalanceViewModel *viewModel;
 @end
@@ -109,7 +108,7 @@
 }
 
 - (void)reloadListView {
-    self.cellDataListForListView = nil;
+    [_viewModel resetDataForCells];
     [self.contentView.listView reloadData];
 }
 
