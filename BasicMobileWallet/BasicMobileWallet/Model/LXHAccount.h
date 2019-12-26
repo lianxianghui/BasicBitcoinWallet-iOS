@@ -54,6 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
  目前接收和找零的最大扫描数量都为10000
  */
 - (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash;
+
+- (LXHAddress *)localAddressWithPublicKeyHash:(NSData *)publicKeyHash;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -131,4 +131,16 @@
     return ret;
 }
 
+- (LXHAddress *)localAddressWithPublicKeyHash:(NSData *)publicKeyHash {
+    NSArray *types = @[@(LXHLocalAddressTypeReceiving), @(LXHLocalAddressTypeChange)];
+    __block LXHAddress *ret = nil;
+    [types enumerateObjectsUsingBlock:^(NSNumber  * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSUInteger type = obj.unsignedIntegerValue;
+        ret = [[self changeLeveWithType:type] localAddressWithPublicKeyHash:publicKeyHash];
+        if (ret)
+            *stop = YES;
+    }];
+    return ret;
+}
+
 @end
