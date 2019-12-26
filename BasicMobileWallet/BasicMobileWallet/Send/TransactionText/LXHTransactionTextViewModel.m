@@ -8,13 +8,13 @@
 
 #import "LXHTransactionTextViewModel.h"
 #import "NSJSONSerialization+VLBase.h"
-#import "LXHQRCodeViewModel.h"
+#import "LXHQRCodeAndTextViewModel.h"
 
-@interface LXHTransactionTextViewModel ()
+@interface LXHTransactionTextViewModelBaseClass ()
 @property (nonatomic) NSDictionary *data;
 @end
 
-@implementation LXHTransactionTextViewModel
+@implementation LXHTransactionTextViewModelBaseClass
 
 
 - (instancetype)initWithData:(NSDictionary *)data {
@@ -24,7 +24,6 @@
     }
     return self;
 }
-
 
 - (NSString *)text {
     NSString *jsonString = [self jsonString];
@@ -38,12 +37,31 @@
     return [NSJSONSerialization jsonStringWithObject:_data];
 }
 
-- (LXHQRCodeViewModel *)qrCodeViewModel {
+- (LXHQRCodeAndTextViewModel *)qrCodeViewModel {
     NSString *jsonString = [self jsonString];
     if (jsonString)
-        return [[LXHQRCodeViewModel alloc] initWithString:jsonString];
+        return [[LXHQRCodeAndTextViewModel alloc] initWithString:jsonString];
     else
         return nil;
 }
 
+#pragma mark - for subclass overriding
+- (NSString *)navigationBarTitle {
+    return nil;
+}
+- (NSString *)button2Text {
+    return nil;
+}
+- (BOOL)button2NavigationIsAsynchronous {
+    return NO;
+}
+- (NSDictionary *)button2NavigationInfo {
+    return nil;
+}
+- (NSDictionary *)asynchronousbutton2NavigationInfoWithSuccessBlock:(nullable void (^)(id viewModel))successBlock
+                                                       failureBlock:(nullable void (^)(NSString *errorPrompt))failureBlock {
+    return nil;
+}
+
 @end
+

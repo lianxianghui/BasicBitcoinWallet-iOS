@@ -1,11 +1,11 @@
-// LXHTransactionTextView.m
+// LXHUnsignedTransactionTextView.m
 // BasicWallet
 //
 //  Created by lianxianghui on 19-12-26
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
-#import "LXHTransactionTextView.h"
+#import "LXHUnsignedTransactionTextView.h"
 #import "Masonry.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -14,10 +14,10 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
 
-@interface LXHTransactionTextView()
+@interface LXHUnsignedTransactionTextView()
 @end
 
-@implementation LXHTransactionTextView
+@implementation LXHUnsignedTransactionTextView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -91,9 +91,10 @@
 }
 
 //Getters
-- (UITextView *)text {
+- (UILabel *)text {
     if (!_text) {
-        _text = [[UITextView alloc] init];
+        _text = [[UILabel alloc] init];
+        _text.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];

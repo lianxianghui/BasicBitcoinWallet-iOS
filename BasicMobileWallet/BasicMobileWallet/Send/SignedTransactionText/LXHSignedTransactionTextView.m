@@ -1,11 +1,11 @@
-// LXHTransactionTextView.m
+// LXHSignedTransactionTextView.m
 // BasicWallet
 //
 //  Created by lianxianghui on 19-12-26
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
-#import "LXHTransactionTextView.h"
+#import "LXHSignedTransactionTextView.h"
 #import "Masonry.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -14,10 +14,10 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
 
-@interface LXHTransactionTextView()
+@interface LXHSignedTransactionTextView()
 @end
 
-@implementation LXHTransactionTextView
+@implementation LXHSignedTransactionTextView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -47,14 +47,14 @@
     [self.textButton2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(19);
         make.right.equalTo(self.mas_right).offset(-19);
-        make.height.mas_equalTo(46);
         make.bottom.equalTo(self.mas_bottom).offset(-16);
+        make.height.mas_equalTo(46);
     }];
     [self.textButton1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(19);
         make.right.equalTo(self.mas_right).offset(-19);
-        make.height.mas_equalTo(46);
         make.bottom.equalTo(self.textButton2.mas_top).offset(-10);
+        make.height.mas_equalTo(46);
     }];
     [self.customNavigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top);
@@ -91,9 +91,10 @@
 }
 
 //Getters
-- (UITextView *)text {
+- (UILabel *)text {
     if (!_text) {
-        _text = [[UITextView alloc] init];
+        _text = [[UILabel alloc] init];
+        _text.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -131,7 +132,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.449999988079071) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"签名", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"发送", nil) attributes:textAttributes];
         [_textButton2 setAttributedTitle:text forState:UIControlStateNormal];
         _textButton2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     }
@@ -200,7 +201,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.4099999964237213) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"未签名交易文本", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"签名交易文本", nil) attributes:textAttributes];
         _title.attributedText = text;
     }
     return _title;

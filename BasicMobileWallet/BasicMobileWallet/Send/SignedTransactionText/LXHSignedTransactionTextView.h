@@ -1,4 +1,4 @@
-// LXHTransactionTextView.h
+// LXHSignedTransactionTextView.h
 // BasicWallet
 //
 //  Created by lianxianghui on 19-12-26
@@ -6,9 +6,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LXHTransactionTextView : UIView
+@interface LXHSignedTransactionTextView : UIView
 
-@property (nonatomic) UITextView *text;
+@property (nonatomic) UILabel *text;
 @property (nonatomic) UIButton *textButton2;
 @property (nonatomic) UIButton *textButton1;
 @property (nonatomic) UIView *customNavigationBar;

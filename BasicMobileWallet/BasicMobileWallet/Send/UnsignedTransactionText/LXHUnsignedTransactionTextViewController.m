@@ -1,16 +1,15 @@
-// LXHTransactionTextViewController.m
+// LXHUnsignedTransactionTextViewController.m
 // BasicWallet
 //
 //  Created by lianxianghui on 19-12-26
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
-#import "LXHTransactionTextViewController.h"
+#import "LXHUnsignedTransactionTextViewController.h"
 #import "Masonry.h"
-#import "LXHTransactionTextView.h"
+#import "LXHUnsignedTransactionTextView.h"
+#import "LXHSignedTransactionTextViewController.h"
 #import "LXHQRCodeAndTextViewController.h"
-#import "LXHQRCodeViewController.h"
-#import "LXHTransactionTextViewModel.h"
-#import "UITextView+LXHText.h"
+#import "LXHUnsignedTransactionTextViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -18,12 +17,12 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
-@interface LXHTransactionTextViewController()
-@property (nonatomic) LXHTransactionTextView *contentView;
-@property (nonatomic) id<LXHTransactionTextViewModel> viewModel;
+@interface LXHUnsignedTransactionTextViewController()
+@property (nonatomic) LXHUnsignedTransactionTextView *contentView;
+@property (nonatomic) LXHUnsignedTransactionTextViewModel *viewModel;
 @end
 
-@implementation LXHTransactionTextViewController
+@implementation LXHUnsignedTransactionTextViewController
 
 - (instancetype)initWithViewModel:(id)viewModel {
     self = [super init];
@@ -38,7 +37,7 @@
     self.view.backgroundColor = UIColorFromRGBA(0xFAFAFAFF);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.contentView = [[LXHTransactionTextView alloc] init];
+    self.contentView = [[LXHUnsignedTransactionTextView alloc] init];
     [self.view addSubview:self.contentView];
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_topLayoutGuideBottom);
@@ -47,7 +46,6 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
-    [self setViewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -67,24 +65,16 @@
 - (void)setDelegates {
 }
 
-- (void)setViewProperties {
-    self.contentView.text.editable = NO;
-    [self.contentView.text updateAttributedTextString:[_viewModel text]];
-}
-
 //Actions
 - (void)textButton2Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHQRCodeViewController alloc] init];
+    UIViewController *controller = [[LXHSignedTransactionTextViewController alloc] init];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
 
 - (void)textButton1Clicked:(UIButton *)sender {
-    id viewModel = nil;// [_viewModel qrCodeViewModel];
-    if (!viewModel)
-        return;
-    UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] initWithViewModel:viewModel];
+    UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] init];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
