@@ -211,9 +211,9 @@
 #if TARGET_IPHONE_SIMULATOR
             [self.view makeToast:NSLocalizedString(@"模拟器上无法使用该功能", nil)];
 #else
+            __weak typeof(self) weakSelf = self;
             UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *message) {
-                __weak typeof(self) weakSelf = self;
-                [weakSelf.navigationController popToViewController:self animated:NO];
+                [weakSelf.navigationController popViewControllerAnimated:NO];
                 NSString *errorMessage = [weakSelf.viewModel checkScannedText:message];
                 if (errorMessage) {
                     [weakSelf.view makeToast:errorMessage];

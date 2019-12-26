@@ -94,7 +94,7 @@
 - (NSData *)publicKeyWithLocalAddress:(LXHAddress *)localAddress {
     LXHWalletChangeLevelModel *changeLevel = [self changeLeveWithType:localAddress.localAddressType];
     NSString *index = [localAddress.localAddressPath lastPathComponent];
-    return [changeLevel publicKeyWithIndex:(uint32_t)index.integerValue];
+    return [changeLevel publicKeyAtIndex:(uint32_t)index.integerValue];
 }
 
 - (LXHAddress *)currentChangeAddress {

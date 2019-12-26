@@ -32,30 +32,28 @@
 
 + (BTCTransaction *)signBTCTransaction:(BTCTransaction *)unsignedBTCTransaction {
     BTCTransaction *transaction = [unsignedBTCTransaction copy];
-    __block BOOL hasError = NO;
-    [transaction.inputs enumerateObjectsUsingBlock:^(BTCTransactionInput *input, NSUInteger idx, BOOL * _Nonnull stop) {
-        uint32_t index = (uint32_t)idx;
+    NSArray *inputs = transaction.inputs;
+    for (uint32_t index = 0; index < inputs.count; index++) {
+        BTCTransactionInput *input = inputs[index];
         BTCScript *lockingScript = input.signatureScript;//未签名时input.signatureScript存的是PayToPublicKeyHash的锁定脚本
-        NSData *publicKeyHash = [lockingScript.scriptChunks[2] pushdata];//第三项是公钥哈希
         NSData *hash = [transaction signatureHashForScript:lockingScript inputIndex:index hashType:BTCSignatureHashTypeAll error:nil];
-        if (hash) {
-            LXHAddress *address = [LXHWallet.mainAccount localAddressWithPublicKeyHash:publicKeyHash];
-            NSData *signature = [LXHWallet signatureWithNetType:LXHWallet.mainAccount.currentNetworkType path:address.localAddressPath hash:hash];
-            NSData *publicKey = [LXHWallet.mainAccount publicKeyWithLocalAddress:address];
-            //                NSData *publicKeyHash = BTCHash160(publicKey);
-            //                NSAssert([publicKeyHash isEqual:[lockingScript.scriptChunks[2] pushdata]], @"锁定脚本的第三项是公钥哈希");
-            BTCScript *unlockingScript = [[BTCScript alloc] init];
-            [unlockingScript appendData:signature];
-            [unlockingScript appendData:publicKey];
-            BTCTransactionInput *input = transaction.inputs[idx];
-            input.signatureScript = unlockingScript;
-        } else {
-            hasError = YES;
-            *stop = YES;
-        }
-    }];
-    if (hasError)
-        return nil;
+        if (!hash)
+            return nil;
+        NSData *publicKeyHash = [lockingScript.scriptChunks[2] pushdata];//第三项是公钥哈希
+        if (!publicKeyHash)
+            return nil;
+        LXHAddress *address = [LXHWallet.mainAccount scanLocalAddressWithPublicKeyHash:publicKeyHash];
+        if (!address)
+            return nil;
+        NSData *signature = [LXHWallet signatureWithNetType:LXHWallet.mainAccount.currentNetworkType path:address.localAddressPath hash:hash];
+        NSData *publicKey = [LXHWallet.mainAccount publicKeyWithLocalAddress:address];
+        if (!signature || !publicKey)
+            return nil;
+        BTCScript *unlockingScript = [[BTCScript alloc] init];
+        [unlockingScript appendData:signature];
+        [unlockingScript appendData:publicKey];
+        input.signatureScript = unlockingScript;
+    }
     return transaction;
 }
 

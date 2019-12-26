@@ -19,6 +19,8 @@
 @property (nonatomic) NSArray<NSString *> *usedAddresses;
 @property (nonatomic) NSString *currentAddress;
 @property (nonatomic) BTCKeychain *keychain;
+@property (nonatomic) NSMutableArray<BTCKeychain *> *cachedKeychains;
+@property (nonatomic) NSMutableArray<NSData *> *cachedPublicKeyHashes;
 @end
 
 @implementation LXHWalletChangeLevelModel
@@ -33,6 +35,8 @@
         _addressType = addressType;
         _accountKeychain = (BTCKeychain *)accountKeychain;
         _currentAddressIndex = currentAddressIndex;
+        _cachedKeychains = [NSMutableArray array];
+        _cachedPublicKeyHashes = [NSMutableArray array];
     }
     return self;
 }
@@ -52,7 +56,7 @@
 }
 
 - (NSString *)addressStringWithIndex:(uint32_t)index {
-    BTCKeychain *keychain = [self.keychain derivedKeychainAtIndex:(uint32_t)index];
+    BTCKeychain *keychain = [self keychainAtIndex:(uint32_t)index];
     keychain.network = self.keychain.network;
     BTCPublicKeyAddress *addressModel = [self addressModelWithKey:keychain.key];
     return addressModel.string;
@@ -136,10 +140,35 @@
         return nil;
 }
 
-- (NSData *)publicKeyWithIndex:(uint32_t)index {
-    BTCKeychain *keychain = [self.keychain derivedKeychainAtIndex:(uint32_t)index];
+- (NSData *)publicKeyAtIndex:(uint32_t)index {
+    BTCKeychain *keychain = [self keychainAtIndex:(uint32_t)index];
     keychain.network = self.keychain.network;
     return keychain.key.publicKey;
+}
+
+- (BTCKeychain *)keychainAtIndex:(uint32_t)index {
+    if (index < self.cachedKeychains.count)
+        return self.cachedKeychains[index];
+    NSUInteger fromIndex = self.cachedKeychains.count;
+    NSUInteger toIndex = index;
+    for (NSUInteger i = fromIndex; i <= toIndex; i++) {
+         BTCKeychain *keychain = [self.keychain derivedKeychainAtIndex:(uint32_t)i];
+        [self.cachedKeychains addObject:keychain];
+    }
+    return self.cachedKeychains[index];
+}
+
+- (NSData *)publicKeyHashAtIndex:(uint32_t)index {
+    if (index < self.cachedPublicKeyHashes.count)
+        return self.cachedPublicKeyHashes[index];
+    NSUInteger fromIndex = self.cachedPublicKeyHashes.count;
+    NSUInteger toIndex = index;
+    for (NSUInteger i = fromIndex; i <= toIndex; i++) {
+        NSData *publicKey = [self publicKeyAtIndex:(uint32_t)i];
+        NSData *publicKeyHash = BTCHash160(publicKey);
+        [self.cachedPublicKeyHashes addObject:publicKeyHash];
+    }
+    return self.cachedPublicKeyHashes[index];
 }
 
 - (void)incrementCurrentAddressIndex {
@@ -160,14 +189,13 @@
 }
 
 - (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash {
-    const uint32_t maxScanCount = 10000;
+    const uint32_t maxScanCount = 1000;
     return [self scanLocalAddressWithPublicKeyHash:publicKeyHash maxScanCount:maxScanCount];
 }
 
 - (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash maxScanCount:(uint32_t)maxScanCount {
     for (uint32_t i = 0 ; i < maxScanCount; i++) {
-        NSData *publicKey = [self publicKeyWithIndex:i];
-        NSData *currentPublicKeyHash = BTCHash160(publicKey);
+        NSData *currentPublicKeyHash = [self publicKeyHashAtIndex:i];
         if ([currentPublicKeyHash isEqualToData:publicKeyHash])
             return [self localAddressWithIndex:i];
     }

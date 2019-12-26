@@ -11,6 +11,7 @@
 #import "LXHQRCodeAndTextViewController.h"
 #import "LXHUnsignedTransactionTextViewModel.h"
 #import "UITextView+LXHText.h"
+#import "Toast.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -75,6 +76,10 @@
 //Actions
 - (void)textButton2Clicked:(UIButton *)sender {
     id viewModel = [_viewModel signedTransactionTextViewModel];
+    if (!viewModel) {
+        [self.view makeToast:NSLocalizedString(@"无法签名", nil)];
+        return;
+    }
     UIViewController *controller = [[LXHSignedTransactionTextViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
@@ -83,6 +88,10 @@
 
 - (void)textButton1Clicked:(UIButton *)sender {
     id viewModel = [_viewModel qrCodeAndTextViewModel];
+    if (!viewModel) {
+        [self.view makeToast:NSLocalizedString(@"文本无法显示", nil)];
+        return;
+    }
     UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 

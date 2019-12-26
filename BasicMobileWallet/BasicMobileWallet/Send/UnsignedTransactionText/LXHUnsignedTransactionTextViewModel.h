@@ -14,8 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithData:(NSDictionary *)data;
 
 - (NSString *)text;
-- (id)qrCodeAndTextViewModel;
-- (id)signedTransactionTextViewModel;
+- (nullable id)qrCodeAndTextViewModel;
+- (nullable id)signedTransactionTextViewModel;
 @end
 
 NS_ASSUME_NONNULL_END

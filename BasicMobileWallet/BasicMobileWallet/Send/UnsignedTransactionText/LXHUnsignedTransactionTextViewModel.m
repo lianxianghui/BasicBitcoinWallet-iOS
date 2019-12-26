@@ -41,7 +41,7 @@
     return [NSJSONSerialization jsonStringWithObject:_data];
 }
 
-- (id)qrCodeAndTextViewModel {
+- (nullable id)qrCodeAndTextViewModel {
     NSString *jsonString = [self jsonString];
     if (jsonString) {
         LXHQRCodeAndTextViewModel *viewModel = [[LXHQRCodeAndTextViewModel alloc] initWithString:jsonString];
@@ -62,13 +62,15 @@
     return signedTransaction;
 }
 
-- (id)signedTransactionTextViewModel {
+- (nullable id)signedTransactionTextViewModel {
     BTCTransaction *transaction = [self signedTransaction];
+    if (!transaction)
+        return nil;
     NSDictionary *transactionData = [transaction dictionary];
     NSArray *outputBase58Addresses = [LXHSignatureUtils outputBase58AddressesWithBTCOutputs:transaction.outputs networkType:LXHWallet.mainAccount.currentNetworkType];
     NSString *network = [_data valueForKeyPath:@"dataForCheckingOutputAddresses.network"];
     NSDictionary *dataForCheckingOutputAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
-    NSDictionary *dictionary = @{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
+    NSDictionary *dictionary = @{@"dataType":@"signedTransaction", @"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
     LXHSignedTransactionTextViewModel *viewModel = [[LXHSignedTransactionTextViewModel alloc] initWithData:dictionary];
     return viewModel;
 }

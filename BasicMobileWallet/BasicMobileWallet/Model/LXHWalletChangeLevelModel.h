@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (LXHAddress *)localAddressWithIndex:(uint32_t)index;
 - (LXHAddress *)localAddressWithBase58Address:(nonnull NSString *)base58Address;
 - (LXHAddress *)currentLocalAddress;
-- (NSData *)publicKeyWithIndex:(uint32_t)index;
+- (NSData *)publicKeyAtIndex:(uint32_t)index;
 - (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet;
 
 /**
