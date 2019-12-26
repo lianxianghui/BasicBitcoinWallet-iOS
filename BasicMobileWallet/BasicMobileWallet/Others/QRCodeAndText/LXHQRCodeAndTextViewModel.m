@@ -20,7 +20,7 @@
     self = [super init];
     if (self) {
         _string = string;
-        //几个默认值
+        //以下为几个默认值
         _showText = YES;
         _title = NSLocalizedString(@"二维码", nil);
     }
