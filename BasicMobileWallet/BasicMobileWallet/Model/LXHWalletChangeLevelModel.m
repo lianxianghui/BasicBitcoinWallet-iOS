@@ -169,6 +169,9 @@
         [self.cachedPublicKeyHashes addObject:publicKeyHash];
     }
     return self.cachedPublicKeyHashes[index];
+    
+//    NSData *publicKey = [self publicKeyAtIndex:(uint32_t)index];
+//    NSData *publicKeyHash = BTCHash160(publicKey);
 }
 
 - (void)incrementCurrentAddressIndex {
@@ -189,7 +192,7 @@
 }
 
 - (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash {
-    const uint32_t maxScanCount = 1000;
+    const uint32_t maxScanCount = 100;
     return [self scanLocalAddressWithPublicKeyHash:publicKeyHash maxScanCount:maxScanCount];
 }
 
@@ -207,5 +210,13 @@
     return [self scanLocalAddressWithPublicKeyHash:publicKeyHash maxScanCount:maxScanCount];
 }
 
+- (NSArray<NSData *> *)extendedPublicKeysFromIndex:(uint32_t)fromIndex toIndex:(uint32_t)toIndex {
+    NSMutableArray *ret = [NSMutableArray array];
+    for (NSUInteger i = fromIndex; i <= toIndex; i++) {
+        BTCKeychain *keychain = [self.keychain derivedKeychainAtIndex:(uint32_t)i];
+        [ret addObject:keychain.extendedPublicKey];
+    }
+    return ret;
+}
 
 @end

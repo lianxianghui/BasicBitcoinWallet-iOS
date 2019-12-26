@@ -24,6 +24,7 @@
 //for first Account
 #define kLXHKeychainStoreCurrentChangeAddressIndex @"CurrentChangeAddressIndex" 
 #define kLXHKeychainStoreCurrentReceivingAddressIndex @"CurrentReceivingAddressIndex"
+#define kLXHKeychainStoreMaxAddressCount  @"kLXHKeychainStoreMaxAddressCount"
 
 #define MainAccountIndex 0
 
@@ -60,6 +61,23 @@
     }
     return _mainAccount;
 }
+
++ (void)pregenerateExtendedPublicKeysWithCount:(uint32_t)count {
+    NSArray *receivingExtendedPublicKeys = [LXHWallet.mainAccount.receiving extendedPublicKeysFromIndex:0 toIndex:count-1];
+    NSArray *changeExtendedPublicKeys = [LXHWallet.mainAccount.change extendedPublicKeysFromIndex:0 toIndex:count-1];
+    [self saveExtendedPublicKeys:receivingExtendedPublicKeys type:LXHLocalAddressTypeReceiving];
+    [self saveExtendedPublicKeys:changeExtendedPublicKeys type:LXHLocalAddressTypeChange];
+    [[LXHKeychainStore sharedInstance].store setString:[@(count) description] forKey:kLXHKeychainStoreMaxAddressCount];
+}
+
++ (void)saveExtendedPublicKeys:(NSArray *)extendedPublicKeys type:(LXHLocalAddressType)type {
+    NSUInteger accountIndex = 0;//index of mainAccount is 0
+    [extendedPublicKeys enumerateObjectsUsingBlock:^(NSData  *extendedPublicKey, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *key = [NSString stringWithFormat:@"%@.%@.%@", @(accountIndex), @(type), @(idx)];
+        [[LXHKeychainStore sharedInstance] encryptAndSetData:extendedPublicKey forKey:key];
+    }];
+}
+
 
 + (BOOL)saveMainAccountCurrentAddressIndexes {
     NSString *currentReceivingAddressIndex = @([self mainAccount].receiving.currentAddressIndex).description;

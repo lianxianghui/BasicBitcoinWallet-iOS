@@ -44,6 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash;
 - (LXHAddress *)localAddressWithPublicKeyHash:(NSData *)publicKeyHash;
+
+- (NSArray<NSData *> *)extendedPublicKeysFromIndex:(uint32_t)fromIndex toIndex:(uint32_t)toIndex;
 @end
 
 
