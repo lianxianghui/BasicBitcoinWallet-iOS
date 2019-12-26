@@ -10,20 +10,24 @@
 #import "NSJSONSerialization+VLBase.h"
 #import "LXHQRCodeAndTextViewModel.h"
 #import "LXHSignedTransactionTextViewModel.h"
+#import "CoreBitcoin.h"
+#import "LXHSignatureUtils.h"
+#import "LXHWallet.h"
 
 @interface LXHUnsignedTransactionTextViewModel ()
-@property (nonatomic) NSDictionary *transactionDictionary;
+@property (nonatomic) NSDictionary *data;
 @end
 
 @implementation LXHUnsignedTransactionTextViewModel
 
-- (instancetype)initWithTransactionDictionary:(NSDictionary *)transactionDictionary {
+- (instancetype)initWithData:(NSDictionary *)data {
     self = [super init];
     if (self) {
-        _transactionDictionary = transactionDictionary;
+        _data = data;
     }
     return self;
 }
+
 
 - (NSString *)text {
     NSString *jsonString = [self jsonString];
@@ -34,24 +38,38 @@
 }
 
 - (NSString *)jsonString {
-    return [NSJSONSerialization jsonStringWithObject:_transactionDictionary];
+    return [NSJSONSerialization jsonStringWithObject:_data];
 }
 
 - (id)qrCodeAndTextViewModel {
     NSString *jsonString = [self jsonString];
-    if (jsonString)
-        return [[LXHQRCodeAndTextViewModel alloc] initWithString:jsonString];
-    else
+    if (jsonString) {
+        LXHQRCodeAndTextViewModel *viewModel = [[LXHQRCodeAndTextViewModel alloc] initWithString:jsonString];
+        viewModel.showText = NO;
+        return viewModel;
+    } else {
         return nil;
+    }
 }
 
-- (NSDictionary *)signedTransactionDictionary {
-    return nil;
+- (NSDictionary *)transactionDictionary {
+    return _data[@"transactionData"];
+}
+
+- (BTCTransaction *)signedTransaction {
+    BTCTransaction *unsiginedTransaction = [[BTCTransaction alloc] initWithDictionary:self.transactionDictionary];
+    BTCTransaction *signedTransaction = [LXHSignatureUtils signBTCTransaction:unsiginedTransaction];
+    return signedTransaction;
 }
 
 - (id)signedTransactionTextViewModel {
-    NSDictionary *dictionary = [self signedTransactionDictionary];
-    LXHSignedTransactionTextViewModel *viewModel = [[LXHSignedTransactionTextViewModel alloc] initWithTransactionDictionary:dictionary];
+    BTCTransaction *transaction = [self signedTransaction];
+    NSDictionary *transactionData = [transaction dictionary];
+    NSArray *outputBase58Addresses = [LXHSignatureUtils outputBase58AddressesWithBTCOutputs:transaction.outputs networkType:LXHWallet.mainAccount.currentNetworkType];
+    NSString *network = [_data valueForKeyPath:@"dataForCheckingOutputAddresses.network"];
+    NSDictionary *dataForCheckingOutputAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
+    NSDictionary *dictionary = @{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
+    LXHSignedTransactionTextViewModel *viewModel = [[LXHSignedTransactionTextViewModel alloc] initWithData:dictionary];
     return viewModel;
 }
 

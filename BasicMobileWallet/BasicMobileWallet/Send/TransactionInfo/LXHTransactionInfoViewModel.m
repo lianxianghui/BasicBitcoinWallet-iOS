@@ -11,9 +11,11 @@
 #import "BlocksKit.h"
 #import "LXHAddress.h"
 #import "CoreBitcoin.h"
-#import "LXHTransactionTextViewModel.h"
+#import "LXHSignedTransactionTextViewModel.h"
+#import "LXHUnsignedTransactionTextViewModel.h"
 #import "LXHWallet.h"
 #import "LXHTransactionDataManager.h"
+#import "LXHSignatureUtils.h"
 
 @interface LXHTransactionInfoViewModel ()
 @property (nonatomic) NSArray<LXHTransactionOutput *> *inputs;
@@ -33,6 +35,7 @@
     return self;
 }
 
+//按以下格式生成字符串
 //输入：两个输入，共0.01BTC
 //输出：两个输出（包含一个找零），共0.00986BTC
 //交易手续费：0.00014BTC
@@ -56,76 +59,34 @@
     return info;
 }
 
-- (NSArray *)outputBase58AddressesWithBTCOutputs:(NSArray<BTCTransactionOutput *> *)btcOutputs network:(NSString *)network {
-    NSArray *outputBase58Addresses = [btcOutputs bk_map:^id(BTCTransactionOutput *btcOutput) {
-        BTCScript *lockingScript = btcOutput.script;
-        if (lockingScript.isPayToPublicKeyHashScript) {
-            BTCScriptChunk *chunk = btcOutput.script.scriptChunks[2];
-            BTCAddress *address;
-            if ([network isEqualToString:@"mainnet"])
-                address = [BTCPublicKeyAddress addressWithData:chunk.pushdata];
-            else if ([network isEqualToString:@"testnet"])
-                address = [BTCPublicKeyAddressTestnet addressWithData:chunk.pushdata];
-            return address.string;
-        } else {
-            return @"unsupported locking script type";
-        }
-    }];
-    return outputBase58Addresses;
-}
 
 - (NSString *)network {
     return (LXHWallet.mainAccount.currentNetworkType == LXHBitcoinNetworkTypeMainnet) ? @"mainnet" : @"testnet";
 }
 
-- (NSDictionary *)dictionaryOfBTCTransaction:(BTCTransaction *)transaction {
+- (NSDictionary *)dataWithBTCTransaction:(BTCTransaction *)transaction {
     NSDictionary *transactionData = [transaction dictionary];
+    NSArray *outputBase58Addresses = [LXHSignatureUtils outputBase58AddressesWithBTCOutputs:transaction.outputs networkType:LXHWallet.mainAccount.currentNetworkType];
     NSString *network = [self network];
-    NSArray *outputBase58Addresses = [self outputBase58AddressesWithBTCOutputs:transaction.outputs network:network];
     NSDictionary *dataForCheckingOutputAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
     return @{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
 }
 
-- (NSDictionary *)unsignedTransactionDictionary {
-    NSMutableDictionary *dictionary = [self dictionaryOfBTCTransaction:self.unsignedBTCTransaction].mutableCopy;
+- (NSDictionary *)unsignedTransactionData {
+    NSMutableDictionary *dictionary = [self dataWithBTCTransaction:self.unsignedBTCTransaction].mutableCopy;
     dictionary[@"dataType"] = @"unsignedTransaction";
     return dictionary;
 }
 
-- (NSMutableDictionary *)signedTransactionDictionary {
-    NSMutableDictionary *dictionary = [self dictionaryOfBTCTransaction:self.signedBTCTransaction].mutableCopy;
+- (NSMutableDictionary *)signedTransactionData {
+    NSMutableDictionary *dictionary = [self dataWithBTCTransaction:self.signedBTCTransaction].mutableCopy;
     dictionary[@"dataType"] = @"signedTransaction";
     return dictionary;
 }
 
 - (BTCTransaction *)signedBTCTransaction {
     if (!_signedBTCTransaction) {
-        BTCTransaction *transaction = [[self unsignedBTCTransaction] copy];
-        //sign inputs
-        __block BOOL hasError = NO;
-        [_inputs enumerateObjectsUsingBlock:^(LXHTransactionOutput * _Nonnull utxo, NSUInteger idx, BOOL * _Nonnull stop) {
-            uint32_t index = (uint32_t)idx;
-            BTCScript *lockingScript = [[BTCScript alloc] initWithHex:utxo.lockingScriptHex];
-            NSData *hash = [transaction signatureHashForScript:lockingScript inputIndex:index hashType:BTCSignatureHashTypeAll error:nil];
-            if (hash) {
-                LXHAddress *address = utxo.address;
-                NSData *signature = [LXHWallet signatureWithNetType:LXHWallet.mainAccount.currentNetworkType path:address.localAddressPath hash:hash];
-                NSData *publicKey = [LXHWallet.mainAccount publicKeyWithLocalAddress:address];
-//                NSData *publicKeyHash = BTCHash160(publicKey);
-//                NSAssert([publicKeyHash isEqual:[lockingScript.scriptChunks[2] pushdata]], @"锁定脚本的第三项是公钥哈希");
-                BTCScript *unlockingScript = [[BTCScript alloc] init];
-                [unlockingScript appendData:signature];
-                [unlockingScript appendData:publicKey];
-                BTCTransactionInput *input = transaction.inputs[idx];
-                input.signatureScript = unlockingScript;
-            } else {
-                hasError = YES;
-                *stop = YES;
-            }
-        }];
-        if (hasError)
-            return nil;
-        _signedBTCTransaction = transaction;
+        _signedBTCTransaction = [LXHSignatureUtils signBTCTransaction:self.unsignedBTCTransaction];
     }
     return _signedBTCTransaction;
 }
@@ -153,12 +114,12 @@
     return _unsignedBTCTransaction;
 }
 
-- (LXHTransactionTextViewModel *)unsignedTransactionTextViewModel {
-    LXHTransactionTextViewModel *viewModel = [[LXHTransactionTextViewModel alloc] initWithData:[self unsignedTransactionDictionary]];
+- (id)unsignedTransactionTextViewModel {
+    LXHUnsignedTransactionTextViewModel *viewModel = [[LXHUnsignedTransactionTextViewModel alloc] initWithData:[self unsignedTransactionData]];
     return viewModel;
 }
-- (LXHTransactionTextViewModel *)signedTransactionTextViewModel {
-    LXHTransactionTextViewModel *viewModel = [[LXHTransactionTextViewModel alloc] initWithData:[self signedTransactionDictionary]];
+- (id)signedTransactionTextViewModel {
+    LXHSignedTransactionTextViewModel *viewModel = [[LXHSignedTransactionTextViewModel alloc] initWithData:[self signedTransactionData]];
     return viewModel;
 }
 

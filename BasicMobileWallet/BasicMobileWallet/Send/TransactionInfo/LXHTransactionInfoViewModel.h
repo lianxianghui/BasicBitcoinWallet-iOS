@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class LXHTransactionOutput, LXHTransactionTextViewModel;
+@class LXHTransactionOutput;
 @interface LXHTransactionInfoViewModel : NSObject
 
 - (instancetype)initWithInputs:(NSArray<LXHTransactionOutput *> *)inputs outputs:(NSArray<LXHTransactionOutput *> *)outputs;
@@ -20,8 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pushSignedTransactionWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock
                                  failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 
-- (LXHTransactionTextViewModel *)unsignedTransactionTextViewModel;
-- (LXHTransactionTextViewModel *)signedTransactionTextViewModel;
+- (id)unsignedTransactionTextViewModel;
+- (id)signedTransactionTextViewModel;
 @end
 
 NS_ASSUME_NONNULL_END

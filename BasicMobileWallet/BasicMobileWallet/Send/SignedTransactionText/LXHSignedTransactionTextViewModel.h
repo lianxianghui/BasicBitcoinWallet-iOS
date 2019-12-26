@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHSignedTransactionTextViewModel : NSObject
 
-- (instancetype)initWithTransactionDictionary:(NSDictionary *)transactionDictionary;
+- (instancetype)initWithData:(NSDictionary *)transactionDictionary;
 
 - (NSString *)text;
 - (id)qrCodeAndTextViewModel;

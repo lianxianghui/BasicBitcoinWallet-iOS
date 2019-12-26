@@ -8,7 +8,7 @@
 
 @interface LXHUnsignedTransactionTextView : UIView
 
-@property (nonatomic) UILabel *text;
+@property (nonatomic) UITextView *text;
 @property (nonatomic) UIButton *textButton2;
 @property (nonatomic) UIButton *textButton1;
 @property (nonatomic) UIView *customNavigationBar;

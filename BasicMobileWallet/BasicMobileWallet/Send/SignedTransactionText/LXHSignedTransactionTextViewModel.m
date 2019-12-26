@@ -9,17 +9,22 @@
 #import "LXHSignedTransactionTextViewModel.h"
 #import "NSJSONSerialization+VLBase.h"
 #import "LXHQRCodeAndTextViewModel.h"
+#import "LXHTransactionDataManager.h"
+#import "CoreBitcoin.h"
 
 @interface LXHSignedTransactionTextViewModel ()
-@property (nonatomic) NSDictionary *transactionDictionary;
+@property (nonatomic) NSDictionary *data;
+@property (nonatomic) BTCTransaction *signedBTCTransaction;
+@property (nonatomic) NSDictionary *signedTransactionDictionary;
 @end
 
 @implementation LXHSignedTransactionTextViewModel
 
-- (instancetype)initWithTransactionDictionary:(NSDictionary *)transactionDictionary {
+- (instancetype)initWithData:(NSDictionary *)data {
     self = [super init];
     if (self) {
-        _transactionDictionary = transactionDictionary;
+        _data = data;
+        _signedTransactionDictionary = _data[@"transactionData"];
     }
     return self;
 }
@@ -33,20 +38,30 @@
 }
 
 - (NSString *)jsonString {
-    return [NSJSONSerialization jsonStringWithObject:_transactionDictionary];
+    return [NSJSONSerialization jsonStringWithObject:_data];
 }
 
 - (id)qrCodeAndTextViewModel {
     NSString *jsonString = [self jsonString];
-    if (jsonString)
-        return [[LXHQRCodeAndTextViewModel alloc] initWithString:jsonString];
-    else
+    if (jsonString) {
+        LXHQRCodeAndTextViewModel *viewModel = [[LXHQRCodeAndTextViewModel alloc] initWithString:jsonString];
+        viewModel.showText = NO;
+        return viewModel;
+    } else {
         return nil;
+    }
+}
+
+- (BTCTransaction *)signedBTCTransaction {
+    if (!_signedBTCTransaction)
+        _signedBTCTransaction = [[BTCTransaction alloc] initWithDictionary:_signedTransactionDictionary];
+    return _signedBTCTransaction;
 }
 
 - (void)pushSignedTransactionWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock
                                  failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     
+    NSLog(@"正在发送的签名交易：%@", [self.signedBTCTransaction dictionary]);
+    [LXHTransactionDataManager pushTransactionsWithHex:self.signedBTCTransaction.hex successBlock:successBlock failureBlock:failureBlock];
 }
-
 @end

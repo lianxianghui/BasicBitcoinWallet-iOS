@@ -10,6 +10,8 @@
 #import "LXHQRCodeAndTextViewController.h"
 #import "LXHQRCodeViewController.h"
 #import "LXHSignedTransactionTextViewModel.h"
+#import "Toast.h"
+#import "UITextView+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -46,6 +48,7 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setViewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -65,20 +68,38 @@
 - (void)setDelegates {
 }
 
+- (void)setViewProperties {
+    self.contentView.text.editable = NO;
+    [self.contentView.text updateAttributedTextString:[_viewModel text]];
+}
+
 //Actions
 - (void)textButton2Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHQRCodeViewController alloc] init];
-    controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
+    [self.contentView.indicatorView startAnimating];
+    __weak typeof(self) weakSelf = self;
+    [_viewModel pushSignedTransactionWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+        [self.contentView.indicatorView stopAnimating];
+        NSString *prompt = NSLocalizedString(@"发送成功.", nil);
+        [weakSelf.view makeToast:prompt];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        });
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        [self.contentView.indicatorView stopAnimating];
+        NSError *error = resultDic[@"error"];
+        NSString *format = NSLocalizedString(@"由于%@发送失败", nil);
+        NSString *errorPrompt = [NSString stringWithFormat:format, error.localizedDescription];
+        [weakSelf.view makeToast:errorPrompt];
+    }];
 }
 
 
 - (void)textButton1Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] init];
+    id viewModel = [_viewModel qrCodeAndTextViewModel];
+    UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
+    [self.navigationController pushViewController:controller animated:YES];
 }
-
 
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;

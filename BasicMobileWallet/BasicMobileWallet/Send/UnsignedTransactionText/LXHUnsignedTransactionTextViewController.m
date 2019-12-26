@@ -10,6 +10,7 @@
 #import "LXHSignedTransactionTextViewController.h"
 #import "LXHQRCodeAndTextViewController.h"
 #import "LXHUnsignedTransactionTextViewModel.h"
+#import "UITextView+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -46,6 +47,7 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setViewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -65,20 +67,26 @@
 - (void)setDelegates {
 }
 
+- (void)setViewProperties {
+    self.contentView.text.editable = NO;
+    [self.contentView.text updateAttributedTextString:[_viewModel text]];
+}
+
 //Actions
 - (void)textButton2Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHSignedTransactionTextViewController alloc] init];
+    id viewModel = [_viewModel signedTransactionTextViewModel];
+    UIViewController *controller = [[LXHSignedTransactionTextViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
 
 - (void)textButton1Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] init];
+    id viewModel = [_viewModel qrCodeAndTextViewModel];
+    UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
-
 
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;

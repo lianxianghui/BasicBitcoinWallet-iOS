@@ -91,10 +91,9 @@
 }
 
 //Getters
-- (UILabel *)text {
+- (UITextView *)text {
     if (!_text) {
-        _text = [[UILabel alloc] init];
-        _text.numberOfLines = 0;
+        _text = [[UITextView alloc] init];
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];

@@ -8,7 +8,7 @@
 
 @interface LXHSignedTransactionTextView : UIView
 
-@property (nonatomic) UILabel *text;
+@property (nonatomic) UITextView *text;
 @property (nonatomic) UIButton *textButton2;
 @property (nonatomic) UIButton *textButton1;
 @property (nonatomic) UIView *customNavigationBar;
@@ -17,5 +17,6 @@
 @property (nonatomic) UIButton *leftImageButton;
 @property (nonatomic) UILabel *leftText;
 @property (nonatomic) UIImageView *leftBarItemImage;
+@property (nonatomic) UIActivityIndicatorView *indicatorView;
 
 @end

@@ -35,6 +35,7 @@
     [self addSubview:self.textButton2];
     [self addSubview:self.textButton1];
     [self addSubview:self.customNavigationBar];
+    [self addSubview:self.indicatorView];
 }
 
 - (void)makeConstraints {
@@ -88,13 +89,18 @@
         make.width.mas_equalTo(12.5);
         make.height.mas_equalTo(21);
     }];
+    [self.indicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.mas_centerX);
+        make.centerY.equalTo(self.mas_centerY);
+        make.width.equalTo(self);
+        make.height.equalTo(self);
+    }];
 }
 
 //Getters
-- (UILabel *)text {
+- (UITextView *)text {
     if (!_text) {
-        _text = [[UILabel alloc] init];
-        _text.numberOfLines = 0;
+        _text = [[UITextView alloc] init];
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -247,6 +253,13 @@
         _leftBarItemImage.image = [UIImage imageNamed:@"back"];
     }
     return _leftBarItemImage;
+}
+
+- (UIActivityIndicatorView *)indicatorView {
+    if (!_indicatorView) {
+        _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    }
+    return _indicatorView;
 }
 
 @end
