@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)transactionListViewModel;
 - (id)addressListViewModel;
 - (id)settingViewModel;
+
+- (NSString *)checkScannedText:(NSString *)text;
+- (NSDictionary *)dataForNavigationWithScannedText:(NSString *)text;
 @end
 
 NS_ASSUME_NONNULL_END

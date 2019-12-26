@@ -1,15 +1,13 @@
-// LXHTransactionTextViewController.m
+// LXHTextViewController.m
 // BasicWallet
 //
 //  Created by lianxianghui on 19-12-26
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
-#import "LXHTransactionTextViewController.h"
+#import "LXHTextViewController.h"
 #import "Masonry.h"
-#import "LXHTransactionTextView.h"
-#import "LXHQRCodeAndTextViewController.h"
-#import "LXHQRCodeViewController.h"
-#import "LXHTransactionTextViewModel.h"
+#import "LXHTextView.h"
+#import "LXHTextViewModel.h"
 #import "UITextView+LXHText.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -18,12 +16,12 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
-@interface LXHTransactionTextViewController()
-@property (nonatomic) LXHTransactionTextView *contentView;
-@property (nonatomic) id<LXHTransactionTextViewModel> viewModel;
+@interface LXHTextViewController()
+@property (nonatomic) LXHTextView *contentView;
+@property (nonatomic) LXHTextViewModel *viewModel;
 @end
 
-@implementation LXHTransactionTextViewController
+@implementation LXHTextViewController
 
 - (instancetype)initWithViewModel:(id)viewModel {
     self = [super init];
@@ -38,7 +36,7 @@
     self.view.backgroundColor = UIColorFromRGBA(0xFAFAFAFF);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.contentView = [[LXHTransactionTextView alloc] init];
+    self.contentView = [[LXHTextView alloc] init];
     [self.view addSubview:self.contentView];
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_topLayoutGuideBottom);
@@ -57,8 +55,6 @@
 }
 
 - (void)addActions {
-    [self.contentView.textButton2 addTarget:self action:@selector(textButton2Clicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView.textButton1 addTarget:self action:@selector(textButton1Clicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
@@ -69,27 +65,10 @@
 
 - (void)setViewProperties {
     self.contentView.text.editable = NO;
-    [self.contentView.text updateAttributedTextString:[_viewModel text]];
+    [self.contentView.text updateAttributedTextString:_viewModel.text];
 }
 
 //Actions
-- (void)textButton2Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHQRCodeViewController alloc] init];
-    controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
-}
-
-
-- (void)textButton1Clicked:(UIButton *)sender {
-    id viewModel = nil;// [_viewModel qrCodeViewModel];
-    if (!viewModel)
-        return;
-    UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] initWithViewModel:viewModel];
-    controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
-}
-
-
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
     [self.navigationController popViewControllerAnimated:YES];

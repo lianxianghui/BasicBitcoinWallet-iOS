@@ -212,7 +212,23 @@
             [self.view makeToast:NSLocalizedString(@"模拟器上无法使用该功能", nil)];
 #else
             UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *message) {
-                
+                __weak typeof(self) weakSelf = self;
+                [weakSelf.navigationController popToViewController:self animated:NO];
+                NSString *errorMessage = [weakSelf.viewModel checkScannedText:message];
+                if (errorMessage) {
+                    [weakSelf.view makeToast:errorMessage];
+                } else {
+                    NSDictionary *dataForNavigation = [weakSelf.viewModel dataForNavigationWithScannedText:message];
+                    if (dataForNavigation) {
+                        NSString *controllerClassName = dataForNavigation[@"controllerClassName"];
+                        id viewModel = dataForNavigation[@"viewModel"];
+                        UIViewController *controller = [[NSClassFromString(controllerClassName) alloc] initWithViewModel:viewModel];
+                        controller.hidesBottomBarWhenPushed = YES;
+                        [weakSelf.navigationController pushViewController:controller animated:YES];
+                    } else {
+                       [weakSelf.view makeToast:NSLocalizedString(@"不支持该数据类型", nil)];
+                    }
+                }
             }];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];

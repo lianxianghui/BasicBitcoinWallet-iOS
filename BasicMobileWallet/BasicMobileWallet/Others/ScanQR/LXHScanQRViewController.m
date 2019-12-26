@@ -54,7 +54,6 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         weakSelf.scanerView = [BTCQRCode scannerViewWithBlock:^(NSString *text) {
             weakSelf.detectionBlock(text);
-            [weakSelf.navigationController popViewControllerAnimated:YES];
         }];
         [weakSelf.view addSubview:self.scanerView];
         [weakSelf.view bringSubviewToFront:self.contentView];

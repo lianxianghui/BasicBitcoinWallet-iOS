@@ -1,11 +1,11 @@
-// LXHTransactionTextView.m
+// LXHTextView.m
 // BasicWallet
 //
 //  Created by lianxianghui on 19-12-26
 //  Copyright © 2019年 lianxianghui. All rights reserved.
 
 
-#import "LXHTransactionTextView.h"
+#import "LXHTextView.h"
 #import "Masonry.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -14,10 +14,10 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
 
-@interface LXHTransactionTextView()
+@interface LXHTextView()
 @end
 
-@implementation LXHTransactionTextView
+@implementation LXHTextView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -32,8 +32,6 @@
 
 - (void)addSubviews {
     [self addSubview:self.text];
-    [self addSubview:self.textButton2];
-    [self addSubview:self.textButton1];
     [self addSubview:self.customNavigationBar];
 }
 
@@ -41,20 +39,8 @@
     [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(12);
         make.right.equalTo(self.mas_right).offset(-12);
-        make.top.equalTo(self.customNavigationBar.mas_bottom).offset(2);
-        make.bottom.equalTo(self.textButton1.mas_top).offset(-15);
-    }];
-    [self.textButton2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(19);
-        make.right.equalTo(self.mas_right).offset(-19);
-        make.height.mas_equalTo(46);
-        make.bottom.equalTo(self.mas_bottom).offset(-16);
-    }];
-    [self.textButton1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(19);
-        make.right.equalTo(self.mas_right).offset(-19);
-        make.height.mas_equalTo(46);
-        make.bottom.equalTo(self.textButton2.mas_top).offset(-10);
+        make.bottom.equalTo(self.mas_bottom).offset(-10);
+        make.top.equalTo(self.customNavigationBar.mas_bottom).offset(5);
     }];
     [self.customNavigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top);
@@ -107,60 +93,10 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.801448) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"{\n  \"version\": 1,\n  \"locktime\": 0,\n  \"vin\": [\n    {\n      \"txid\": \"7957a35fe64f80d234d76d83a2a8f1a0d8149a41d81de548f0a65a8a999f6f18\",\n      \"vout\": 0,\n      \"sequence\": 4294967295\n    }\n  ],\n  \"vout\": [\n    {\n      \"value\": 0.01500000,\n      \"scriptPubKey\": \"OP_DUP OP_HASH160 ab68025513c3dbd2f7b92a94e0581f5d50f654e7 OP_EQUALVERIFY OP_CHECKSIG\"\n    },\n    {\n      \"value\": 0.08450000,\n      \"scriptPubKey\": \"OP_DUP OP_HASH160 7f9b1a7fb68d60c536c2fd8aeaa53a8f3cc025a8 OP_EQUALVERIFY OP_CHECKSIG\",\n    }\n  ]\n}\n", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE\n", nil) attributes:textAttributes];
         _text.attributedText = text;
     }
     return _text;
-}
-
-- (UIButton *)textButton2 {
-    if (!_textButton2) {
-        _textButton2 = [UIButton buttonWithType:UIButtonTypeSystem];//Has System Highlighted color
-        _textButton2.backgroundColor = UIColorFromRGBA(0x009688FF);
-        _textButton2.alpha = 1;
-        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:18];
-        if (!font) font = [UIFont systemFontOfSize:18];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentCenter;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-
-        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0xFFFFFFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.449999988079071) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"签名", nil) attributes:textAttributes];
-        [_textButton2 setAttributedTitle:text forState:UIControlStateNormal];
-        _textButton2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    }
-    return _textButton2;
-}
-
-- (UIButton *)textButton1 {
-    if (!_textButton1) {
-        _textButton1 = [UIButton buttonWithType:UIButtonTypeSystem];//Has System Highlighted color
-        _textButton1.backgroundColor = UIColorFromRGBA(0x009688FF);
-        _textButton1.alpha = 1;
-        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:18];
-        if (!font) font = [UIFont systemFontOfSize:18];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentCenter;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-
-        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0xFFFFFFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.449999988079071) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"生成二维码", nil) attributes:textAttributes];
-        [_textButton1 setAttributedTitle:text forState:UIControlStateNormal];
-        _textButton1.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    }
-    return _textButton1;
 }
 
 - (UIView *)customNavigationBar {
@@ -200,7 +136,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.4099999964237213) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"未签名交易文本", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"文本", nil) attributes:textAttributes];
         _title.attributedText = text;
     }
     return _title;
