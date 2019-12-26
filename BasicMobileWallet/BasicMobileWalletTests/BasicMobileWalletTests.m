@@ -12,6 +12,7 @@
 #import "LXHBitcoinWebApiSmartbit.h"
 #import "LXHTransactionDataManager.h"
 #import "CoreBitcoin.h"
+#import "BTCQRCode.h"
 
 @interface BasicMobileWalletTests : XCTestCase
 @property (nonatomic) NSArray *words;
@@ -37,6 +38,56 @@
     [self waitForExpectationsWithTimeout:30 handler:nil];
     
     //[[LXHWalletDataManager sharedInstance] clearData];
+}
+
+- (void)testBTCQRCode {
+//    + (UIImage*) imageForString:(NSString*)string size:(CGSize)size scale:(CGFloat)scale;
+//    UIImage *image = [BTCQRCode imageForString:
+    [self imageForString:@"" size:CGSizeMake(200, 200) scale:1];
+}
+                       
+- (UIImage*) imageForString:(NSString*)string size:(CGSize)size scale:(CGFloat)scale {
+    CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
+    
+//    NSData *data = [string dataUsingEncoding:NSISOLatin1StringEncoding];
+    NSMutableData *data = [[NSMutableData alloc] initWithLength:2954];
+
+    
+    
+    [filter setValue:data forKey:@"inputMessage"];
+    [filter setValue:@"L" forKey:@"inputCorrectionLevel"];
+    
+    UIGraphicsBeginImageContextWithOptions(size, NO, scale);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGImageRef cgimage = [[CIContext contextWithOptions:nil] createCGImage:filter.outputImage
+                                                                  fromRect:filter.outputImage.extent];
+    
+    UIImage* image = nil;
+    if (context) {
+        CGContextSetInterpolationQuality(context, kCGInterpolationNone);
+        CGContextDrawImage(context, CGContextGetClipBoundingBox(context), cgimage);
+        image = [UIImage imageWithCGImage:UIGraphicsGetImageFromCurrentImageContext().CGImage
+                                    scale:scale
+                              orientation:UIImageOrientationDownMirrored];
+    }
+    
+    UIGraphicsEndImageContext();
+    CGImageRelease(cgimage);
+    
+    return image;
+}
+
+
+- (void)testBTCHash160 {
+//    BTCKeychain *keychain = [LXHWallet.mainAccount.change keychainAtIndex:1000];
+//    for (NSInteger i = 0; i < 1000; i++) {
+//        BTCKeychain *kechain1 = [[BTCKeychain alloc] initWithExtendedKey:keychain.extendedPublicKey];
+//    }
+//    NSData *data = keychain.key.publicKey;
+//    for (NSInteger i = 0; i < 1000; i++) {
+//        BTCHash160(data);
+//    }
 }
 
 - (void)testAddressGeneration {

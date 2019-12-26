@@ -70,7 +70,11 @@
 
 - (void)setViewProperties {
     [self.contentView.title updateAttributedTextString:[_viewModel title]];
-    self.contentView.qrImage.image = [_viewModel image];
+    UIImage *image = [_viewModel image];
+    if (!image)
+        [self.view makeToast:NSLocalizedString(@"文本长度已超过最大限制，无法生成二维码", nil)];
+    else
+        self.contentView.qrImage.image = image;
     if ([_viewModel showText]) {
         self.contentView.text.hidden = NO;
         [self.contentView.text updateAttributedTextString:[_viewModel text]];
