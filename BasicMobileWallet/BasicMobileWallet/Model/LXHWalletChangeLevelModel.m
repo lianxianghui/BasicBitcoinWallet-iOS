@@ -10,17 +10,16 @@
 #import "CoreBitcoin.h"
 #import "NSMutableArray+Base.h"
 #import "BlocksKit.h"
+#import "LXHKeychainStore.h"
 
 @interface LXHWalletChangeLevelModel ()
 @property (nonatomic) LXHBitcoinNetworkType currentNetworkType;
 @property (nonatomic) LXHLocalAddressType addressType;
 @property (nonatomic) BTCKeychain *accountKeychain;
-@property (nonatomic, readwrite) uint32_t currentAddressIndex;
 @property (nonatomic) NSArray<NSString *> *usedAddresses;
 @property (nonatomic) NSString *currentAddress;
 @property (nonatomic) BTCKeychain *keychain;
-@property (nonatomic) NSMutableArray<BTCKeychain *> *cachedKeychains;
-@property (nonatomic) NSMutableArray<NSData *> *cachedPublicKeyHashes;
+@property (nonatomic) NSMutableArray<BTCKeychain *> *childKeychains;
 @end
 
 @implementation LXHWalletChangeLevelModel
@@ -35,10 +34,87 @@
         _addressType = addressType;
         _accountKeychain = (BTCKeychain *)accountKeychain;
         _currentAddressIndex = currentAddressIndex;
-        _cachedKeychains = [NSMutableArray array];
-        _cachedPublicKeyHashes = [NSMutableArray array];
     }
     return self;
+}
+
+//以下两个方法保证childKeychains里包含了所有已经使用过和当前地址的keychain对象
+- (NSMutableArray<BTCKeychain *> *)childKeychains {
+    if (!_childKeychains) {
+        _childKeychains = [NSMutableArray array];
+        for (uint32_t i = 0; i <= _currentAddressIndex; i++) {
+            if (![self loadChildKeychainAtIndex:i]) {
+                [self deriveAndSaveNewChildKeychainAtIndex:i];
+            }
+        }
+    }
+    return _childKeychains;
+}
+
+- (void)setCurrentAddressIndex:(uint32_t)currentAddressIndex {
+    if (currentAddressIndex > _currentAddressIndex) {
+        uint32_t fromIndex =  _currentAddressIndex + 1;
+        uint32_t toIndex = currentAddressIndex;
+        for (uint32_t i = fromIndex; i <= toIndex; i++) {
+            [self deriveAndSaveNewChildKeychainAtIndex:i];
+        }
+        _currentAddressIndex = currentAddressIndex;
+        _usedAddresses = nil;
+        _currentAddress = nil;
+        NSString *string = @(_currentAddressIndex).description;
+        [[LXHKeychainStore sharedInstance].store setString:string forKey:[self currentAddressIndexKey]];
+    }
+}
+
+- (NSString *)currentAddressIndexKey {
+   NSString *key = (_addressType == LXHLocalAddressTypeReceiving) ? kLXHKeychainStoreCurrentReceivingAddressIndex : kLXHKeychainStoreCurrentChangeAddressIndex;
+    return key;
+}
+
+
+//以下保存和加载ExtendPublicKey的方法实现主要是因为从self.keychain生成新的子keychain是一个费时的过程。
+//如果已使用过的地址比较多，这个时间很明显，如果同步的方式调用会造成卡顿。
+//通过已保存的ExtendPublicKey，这个时间就会缩短。
+
+/**
+ 生成新的子keychain，加到_childKeychains数组里并把对应的ExtendedPublicKey保存到系统
+ */
+- (BOOL)deriveAndSaveNewChildKeychainAtIndex:(uint32_t)index {
+    BTCKeychain *childKeychain = [self.keychain derivedKeychainAtIndex:index hardened:NO];
+    if (!childKeychain)
+        return NO;
+    [_childKeychains insertObject:childKeychain atIndex:index];
+    [self saveExtendPublicKeyAtIndex:index];
+    return YES;
+}
+
+/**
+ 从系统查找相应ExtendedPublicKey，并生成keychain对象，加到_childKeychains数组里
+ */
+- (BOOL)loadChildKeychainAtIndex:(uint32_t)index {
+    NSString *key = [self addressPathWithIndex:index];
+    NSString *extendedPublicKey = [[LXHKeychainStore sharedInstance] decryptedStringForKey:key error:nil];
+    if (extendedPublicKey) {
+        BTCKeychain *childKeychain = [[BTCKeychain alloc] initWithExtendedKey:extendedPublicKey];
+        [_childKeychains insertObject:childKeychain atIndex:index];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (void)saveExtendPublicKeyAtIndex:(uint32_t)index {
+    BTCKeychain *childKeychain = _childKeychains[index];
+    NSString *extendedPublicKey = childKeychain.extendedPublicKey;
+    NSString *key = [self addressPathWithIndex:index];
+    [[LXHKeychainStore sharedInstance] encryptAndSetString:extendedPublicKey forKey:key];
+}
+
+- (BTCKeychain *)keychainAtIndex:(uint32_t)index {
+    if (index < self.childKeychains.count)
+        return self.childKeychains[index];
+    else
+        return nil;
 }
 
 - (BTCKeychain *)keychain {
@@ -146,44 +222,19 @@
     return keychain.key.publicKey;
 }
 
-- (BTCKeychain *)keychainAtIndex:(uint32_t)index {
-    if (index < self.cachedKeychains.count)
-        return self.cachedKeychains[index];
-    NSUInteger fromIndex = self.cachedKeychains.count;
-    NSUInteger toIndex = index;
-    for (NSUInteger i = fromIndex; i <= toIndex; i++) {
-         BTCKeychain *keychain = [self.keychain derivedKeychainAtIndex:(uint32_t)i];
-        [self.cachedKeychains addObject:keychain];
-    }
-    return self.cachedKeychains[index];
-}
 
 - (NSData *)publicKeyHashAtIndex:(uint32_t)index {
-    if (index < self.cachedPublicKeyHashes.count)
-        return self.cachedPublicKeyHashes[index];
-    NSUInteger fromIndex = self.cachedPublicKeyHashes.count;
-    NSUInteger toIndex = index;
-    for (NSUInteger i = fromIndex; i <= toIndex; i++) {
-        NSData *publicKey = [self publicKeyAtIndex:(uint32_t)i];
-        NSData *publicKeyHash = BTCHash160(publicKey);
-        [self.cachedPublicKeyHashes addObject:publicKeyHash];
-    }
-    return self.cachedPublicKeyHashes[index];
-    
+    NSData *publicKey = [self publicKeyAtIndex:index];
+    NSData *publicKeyHash = BTCHash160(publicKey);
+    return publicKeyHash;
 //    NSData *publicKey = [self publicKeyAtIndex:(uint32_t)index];
 //    NSData *publicKeyHash = BTCHash160(publicKey);
-}
-
-- (void)incrementCurrentAddressIndex {
-    _currentAddressIndex = _currentAddressIndex + 1;
-    _usedAddresses = nil;
-    _currentAddress = nil;
 }
 
 - (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet {
     LXHAddress *currentAddress = [self currentLocalAddress];
     if ([usedBase58AddressesSet containsObject:currentAddress.base58String]) {
-        [self incrementCurrentAddressIndex];
+        [self setCurrentAddressIndex:_currentAddressIndex + 1];
         [self updateUsedBase58AddressesIfNeeded:usedBase58AddressesSet];//检查下一个
         return YES;
     } else {

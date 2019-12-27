@@ -12,7 +12,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-
+#define kLXHKeychainStoreCurrentChangeAddressIndex @"CurrentChangeAddressIndex"
+#define kLXHKeychainStoreCurrentReceivingAddressIndex @"CurrentReceivingAddressIndex"
 
 /**
  * 代表 ”m/44'/coin_type'/account'/change/address_index“路径中 change级别的模型对象
@@ -23,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
                            accountKeychain:(id)accountKeychain
                        currentAddressIndex:(uint32_t)currentAddressIndex;
 
-@property (nonatomic, readonly) uint32_t currentAddressIndex;
+@property (nonatomic) uint32_t currentAddressIndex;
 
 - (NSArray *)addressesFromIndex:(uint32_t)fromIndex count:(uint32_t)count;
 - (NSString *)addressStringWithIndex:(uint32_t)index;
