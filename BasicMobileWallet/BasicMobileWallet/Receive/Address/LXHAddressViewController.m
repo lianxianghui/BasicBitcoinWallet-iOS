@@ -67,6 +67,7 @@
     [self.contentView.addressText updateAttributedTextString:address];
     
     CGSize imageSize = {198, 198};
+    //这里的字符串转成二进制后，如果大于 2,953 bytes, image会为nil
     UIImage *qrImage = [BTCQRCode imageForString:address size:imageSize scale:1];
     self.contentView.qrImage.image = qrImage;
     

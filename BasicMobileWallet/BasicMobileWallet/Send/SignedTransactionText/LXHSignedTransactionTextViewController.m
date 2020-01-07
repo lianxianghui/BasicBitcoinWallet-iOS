@@ -8,7 +8,6 @@
 #import "Masonry.h"
 #import "LXHSignedTransactionTextView.h"
 #import "LXHQRCodeAndTextViewController.h"
-#import "LXHQRCodeViewController.h"
 #import "LXHSignedTransactionTextViewModel.h"
 #import "Toast.h"
 #import "UITextView+LXHText.h"

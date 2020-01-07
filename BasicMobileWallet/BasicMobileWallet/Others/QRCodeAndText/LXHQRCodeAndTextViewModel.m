@@ -34,6 +34,7 @@
 - (UIImage *)image {
     if (!_image) {
         CGSize imageSize = {250, 250};
+        //这里的字符串转成二进制后，如果大于 2,953 bytes, _image会为nil
         _image = [BTCQRCode imageForString:_string size:imageSize scale:1];
     }
     return _image;
