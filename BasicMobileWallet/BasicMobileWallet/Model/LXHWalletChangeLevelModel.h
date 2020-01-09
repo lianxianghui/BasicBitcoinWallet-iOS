@@ -49,7 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray<NSData *> *)extendedPublicKeysFromIndex:(uint32_t)fromIndex toIndex:(uint32_t)toIndex;
 
 - (void)clearSavedPublicKeys;
-}
 @end
 
 
