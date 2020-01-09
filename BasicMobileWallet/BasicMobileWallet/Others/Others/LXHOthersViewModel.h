@@ -16,8 +16,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)addressListViewModel;
 - (id)settingViewModel;
 
-- (NSString *)checkScannedText:(NSString *)text;
-- (NSDictionary *)dataForNavigationWithScannedText:(NSString *)text;
+
+- (NSDictionary *)jsonWithScannedText:(NSString *)text;
+- (NSString *)checkScannedData:(NSDictionary *)data;
+
+- (BOOL)needUpdateCurrentAddressIndexDataWithData:(NSDictionary *)data;
+- (void)updateCurrentAddressIndexData:(NSDictionary *)data
+                         successBlock:(nullable void (^)(void))successBlock
+                         failureBlock:(nullable void (^)(NSString *errorPrompt))failureBlock;
+
+
+- (NSDictionary *)dataForNavigationWithScannedData:(NSDictionary *)data text:(NSString *)text;
 @end
 
 NS_ASSUME_NONNULL_END

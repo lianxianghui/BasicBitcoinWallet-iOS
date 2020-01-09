@@ -56,6 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash;
 
 - (LXHAddress *)localAddressWithPublicKeyHash:(NSData *)publicKeyHash;
+
+- (void)clearSavedPublicKeys;
 @end
 
 NS_ASSUME_NONNULL_END

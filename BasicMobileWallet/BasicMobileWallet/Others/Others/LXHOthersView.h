@@ -12,5 +12,6 @@
 @property (nonatomic) UIView *customNavigationBar;
 @property (nonatomic) UIView *bottomLine;
 @property (nonatomic) UILabel *title;
+@property (nonatomic) UIActivityIndicatorView *indicatorView;
 
 @end

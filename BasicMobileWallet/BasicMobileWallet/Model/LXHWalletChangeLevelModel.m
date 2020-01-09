@@ -110,6 +110,17 @@
     [[LXHKeychainStore sharedInstance] encryptAndSetString:extendedPublicKey forKey:key];
 }
 
+- (void)clearSavedPublicKeyAtIndex:(uint32_t)index {
+    NSString *key = [self addressPathWithIndex:index];
+    [[LXHKeychainStore sharedInstance] encryptAndSetString:nil forKey:key];
+}
+
+- (void)clearSavedPublicKeys {
+    for (uint32_t i = 0; i <= _currentAddressIndex; i++) {
+        [self clearSavedPublicKeyAtIndex:i];
+    }
+}
+
 - (BTCKeychain *)keychainAtIndex:(uint32_t)index {
     if (index < self.childKeychains.count)
         return self.childKeychains[index];

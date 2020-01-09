@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
                            accountKeychain:(id)accountKeychain
                        currentAddressIndex:(uint32_t)currentAddressIndex;
 
-@property (nonatomic) uint32_t currentAddressIndex;
+@property (nonatomic) uint32_t currentAddressIndex;//setCurrentAddressIndex有可能比较耗时
 
 - (NSArray *)addressesFromIndex:(uint32_t)fromIndex count:(uint32_t)count;
 - (NSString *)addressStringWithIndex:(uint32_t)index;
@@ -47,6 +47,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (LXHAddress *)localAddressWithPublicKeyHash:(NSData *)publicKeyHash;
 
 - (NSArray<NSData *> *)extendedPublicKeysFromIndex:(uint32_t)fromIndex toIndex:(uint32_t)toIndex;
+
+- (void)clearSavedPublicKeys;
+}
 @end
 
 

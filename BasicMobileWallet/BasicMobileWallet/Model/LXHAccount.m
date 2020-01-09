@@ -143,4 +143,10 @@
     return ret;
 }
 
+- (void)clearSavedPublicKeys {
+    for (NSInteger type = LXHLocalAddressTypeReceiving; type <= LXHLocalAddressTypeChange; type++) {
+        [[self changeLeveWithType:type] clearSavedPublicKeys];
+    }
+}
+
 @end

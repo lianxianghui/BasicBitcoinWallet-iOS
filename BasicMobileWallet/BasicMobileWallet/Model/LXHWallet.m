@@ -200,6 +200,7 @@
 }
 
 + (BOOL)clearAccount {
+    [[self sharedInstance].mainAccount clearSavedPublicKeys];
     [self sharedInstance].mainAccount = nil;
     BOOL saveResult = [self encryptAndSetMnemonicCodeWords:nil];
     saveResult = saveResult && [LXHKeychainStore.sharedInstance encryptAndSetData:nil forKey:kLXHKeychainStoreRootSeed];

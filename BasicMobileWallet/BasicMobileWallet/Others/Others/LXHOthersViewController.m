@@ -212,21 +212,27 @@
             [self.view makeToast:NSLocalizedString(@"模拟器上无法使用该功能", nil)];
 #else
             __weak typeof(self) weakSelf = self;
-            UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *message) {
+            LXHOthersViewModel *viewModel = self.viewModel;
+            UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *text) {
                 [weakSelf.navigationController popViewControllerAnimated:NO];
-                NSString *errorMessage = [weakSelf.viewModel checkScannedText:message];
+                
+                NSDictionary *data = [viewModel jsonWithScannedText:text];
+                NSString *errorMessage = [viewModel checkScannedData:data];
                 if (errorMessage) {
                     [weakSelf.view makeToast:errorMessage];
                 } else {
-                    NSDictionary *dataForNavigation = [weakSelf.viewModel dataForNavigationWithScannedText:message];
-                    if (dataForNavigation) {
-                        NSString *controllerClassName = dataForNavigation[@"controllerClassName"];
-                        id viewModel = dataForNavigation[@"viewModel"];
-                        UIViewController *controller = [[NSClassFromString(controllerClassName) alloc] initWithViewModel:viewModel];
-                        controller.hidesBottomBarWhenPushed = YES;
-                        [weakSelf.navigationController pushViewController:controller animated:YES];
+                    if ([viewModel needUpdateCurrentAddressIndexDataWithData:data]) {
+                        UIActivityIndicatorView *indicatorView = weakSelf.contentView.indicatorView;
+                        [indicatorView startAnimating];
+                        [viewModel updateCurrentAddressIndexData:data successBlock:^{
+                            [indicatorView stopAnimating];
+                            [weakSelf navigateWithScannedData:data text:text];
+                        } failureBlock:^(NSString * _Nonnull errorPrompt) {
+                            [indicatorView stopAnimating];
+                            [weakSelf.view makeToast:errorPrompt];
+                        }];
                     } else {
-                       [weakSelf.view makeToast:NSLocalizedString(@"不支持该数据类型", nil)];
+                        [weakSelf navigateWithScannedData:data text:text];
                     }
                 }
             }];
@@ -244,6 +250,19 @@
             break;
         default:
             break;
+    }
+}
+
+- (void)navigateWithScannedData:(NSDictionary *)data text:(NSString *)text {
+    NSDictionary *dataForNavigation = [self.viewModel dataForNavigationWithScannedData:data text:text];
+    if (dataForNavigation) {
+        NSString *controllerClassName = dataForNavigation[@"controllerClassName"];
+        id viewModel = dataForNavigation[@"viewModel"];
+        UIViewController *controller = [[NSClassFromString(controllerClassName) alloc] initWithViewModel:viewModel];
+        controller.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:controller animated:YES];
+    } else {
+        [self.view makeToast:NSLocalizedString(@"不支持该数据类型", nil)];
     }
 }
 

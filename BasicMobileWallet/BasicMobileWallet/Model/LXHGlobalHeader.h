@@ -9,10 +9,7 @@
 #ifndef LXHGlobalHeader_h
 #define LXHGlobalHeader_h
 
-typedef NS_ENUM(NSUInteger, LXHBitcoinNetworkType) { //do not modify
-    LXHBitcoinNetworkTypeTestnet = 1,
-    LXHBitcoinNetworkTypeMainnet = 0,
-};
+#import "LXHBitcoinNetwork.h"
 
 #define LXHAESPassword @"serefddetggg" //TODO 随便写的，用你自己的代替
 #define LXHCacheFileDir [NSSearchPathForDirectoriesInDomains(NSCachesDirectory ,NSUserDomainMask, YES) objectAtIndex:0]

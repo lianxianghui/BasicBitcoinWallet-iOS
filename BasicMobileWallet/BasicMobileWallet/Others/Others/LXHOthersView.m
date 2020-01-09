@@ -33,6 +33,7 @@
 - (void)addSubviews {
     [self addSubview:self.listView];
     [self addSubview:self.customNavigationBar];
+    [self addSubview:self.indicatorView];
 }
 
 - (void)makeConstraints {
@@ -52,11 +53,17 @@
         make.left.equalTo(self.customNavigationBar.mas_left);
         make.right.equalTo(self.customNavigationBar.mas_right);
         make.bottom.equalTo(self.customNavigationBar.mas_bottom);
-        make.height.mas_equalTo(0.5099999904632568);
+        make.height.mas_equalTo(0.5);
     }];
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.customNavigationBar.mas_centerX);
         make.centerY.equalTo(self.customNavigationBar.mas_centerY);
+    }];
+    [self.indicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.mas_centerX);
+        make.centerY.equalTo(self.mas_centerY);
+        make.width.equalTo(self);
+        make.height.equalTo(self);
     }];
 }
 
@@ -112,6 +119,13 @@
         _title.attributedText = text;
     }
     return _title;
+}
+
+- (UIActivityIndicatorView *)indicatorView {
+    if (!_indicatorView) {
+        _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    }
+    return _indicatorView;
 }
 
 @end

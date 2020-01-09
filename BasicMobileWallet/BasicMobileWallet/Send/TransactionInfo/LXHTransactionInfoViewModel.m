@@ -59,17 +59,16 @@
     return info;
 }
 
-
-- (NSString *)network {
-    return (LXHWallet.mainAccount.currentNetworkType == LXHBitcoinNetworkTypeMainnet) ? @"mainnet" : @"testnet";
-}
-
 - (NSDictionary *)dataWithBTCTransaction:(BTCTransaction *)transaction {
     NSDictionary *transactionData = [transaction dictionary];
     NSArray *outputBase58Addresses = [LXHSignatureUtils outputBase58AddressesWithBTCOutputs:transaction.outputs networkType:LXHWallet.mainAccount.currentNetworkType];
-    NSString *network = [self network];
+    NSString *network = [LXHBitcoinNetwork networkStringWithType:LXHWallet.mainAccount.currentNetworkType];
     NSDictionary *dataForCheckingOutputAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
-    return @{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
+    LXHAccount *mainAccount = [LXHWallet mainAccount];
+    NSDictionary *currentAddressIndexData =
+                        @{kLXHKeychainStoreCurrentReceivingAddressIndex:@(mainAccount.receiving.currentAddressIndex),
+                          kLXHKeychainStoreCurrentChangeAddressIndex:@(mainAccount.change.currentAddressIndex)};
+    return @{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses, @"currentAddressIndexData":currentAddressIndexData};
 }
 
 - (NSDictionary *)unsignedTransactionData {
