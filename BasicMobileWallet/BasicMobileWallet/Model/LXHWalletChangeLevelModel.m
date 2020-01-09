@@ -125,7 +125,7 @@
     if (index < self.childKeychains.count)
         return self.childKeychains[index];
     else
-        return nil;
+        return [self.keychain derivedKeychainAtIndex:index hardened:NO];
 }
 
 - (BTCKeychain *)keychain {
