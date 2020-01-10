@@ -208,9 +208,6 @@
             break;
         case 3:
         {
-#if TARGET_IPHONE_SIMULATOR
-            [self.view makeToast:NSLocalizedString(@"模拟器上无法使用该功能", nil)];
-#else
             __weak typeof(self) weakSelf = self;
             LXHOthersViewModel *viewModel = self.viewModel;
             UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *text) {
@@ -238,7 +235,6 @@
             }];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
-#endif
         }
             break;
         case 4:

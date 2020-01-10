@@ -38,6 +38,8 @@
     self.view.backgroundColor = UIColorFromRGBA(0xFAFAFA00);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    [self addScanerView];
     self.contentView = [[LXHScanQRView alloc] init];
     [self.view addSubview:self.contentView];
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -49,28 +51,19 @@
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
     [self setDelegates];
-    
+}
+
+- (void)addScanerView {
     LXHWeakSelf
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        weakSelf.scanerView = [BTCQRCode scannerViewWithBlock:^(NSString *text) {
-            weakSelf.detectionBlock(text);
-        }];
-        [weakSelf.view addSubview:self.scanerView];
-        [weakSelf.view bringSubviewToFront:self.contentView];
-    });
-
-}
-
-- (void)processScanedText:(NSString *)text {
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.scanerView removeFromSuperview];
+    self.scanerView = [BTCQRCode scannerViewWithBlock:^(NSString *text) {
+        [weakSelf.scanerView removeFromSuperview];
+        weakSelf.detectionBlock(text);
+    }];
+    [self.view addSubview:self.scanerView];;
 }
 
 - (void)swipeView:(id)sender {
+    [self.scanerView removeFromSuperview];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -86,6 +79,7 @@
 //Actions
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
+    [self.scanerView removeFromSuperview];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
