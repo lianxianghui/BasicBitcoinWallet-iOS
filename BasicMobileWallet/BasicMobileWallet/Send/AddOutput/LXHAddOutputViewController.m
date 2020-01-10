@@ -17,6 +17,7 @@
 #import "LXHAddOutputViewModel.h"
 #import "UILabel+LXHText.h"
 #import "UIViewController+LXHAlert.h"
+#import "LXHScanQRViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -325,20 +326,15 @@
     }];
     
     UIAlertAction *scanAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"扫描二维码", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-#if TARGET_IPHONE_SIMULATOR
-        [weakSelf.view makeToast:NSLocalizedString(@"模拟器上无法使用该功能", nil)];
-#else
-        weakSelf.scanerView = [BTCQRCode scannerViewWithBlock:^(NSString *text) {
+        UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *text) {
+            [weakSelf.navigationController popViewControllerAnimated:NO];
             if ([weakSelf.viewModel setBase58Address:text]) {
                 [weakSelf refreshListView];
             } else {
                 [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址", nil)];
             }
-            [self.scanerView removeFromSuperview];
         }];
-        [weakSelf.contentView.window addSubview:weakSelf.scanerView];//todo 加入返回按钮
-
-#endif
+        [self.navigationController pushViewController:controller animated:YES];
     }];
     
     UIAlertAction *selectAddressAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"选择本地地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
