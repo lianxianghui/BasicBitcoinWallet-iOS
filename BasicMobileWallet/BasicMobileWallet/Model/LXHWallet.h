@@ -46,6 +46,9 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
                                             netType:(LXHBitcoinNetworkType)netType
                                        successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                                        failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
++ (void)searchAndUpdateCurrentAddressIndexWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock
+                                              failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
+
 
 + (BOOL)clearAccount;
 + (BOOL)walletDataGenerated;

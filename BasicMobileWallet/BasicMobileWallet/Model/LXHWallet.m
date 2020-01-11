@@ -162,6 +162,25 @@
     return saveResult;
 }
 
++ (void)searchAndUpdateCurrentAddressIndexWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock
+                                              failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+    LXHAccount *account = [LXHWallet mainAccount];
+    LXHAccountAddressSearcher *searcher = [[LXHAccountAddressSearcher alloc] initWithAccount:account];
+    [searcher searchWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+        NSNumber *currentUnusedReceivingAddressIndex = resultDic[@"currentUnusedReceivingAddressIndex"];
+        NSNumber *currentUnusedChangeAddressIndex = resultDic[@"currentUnusedChangeAddressIndex"];
+        
+        [account.receiving setCurrentAddressIndex:currentUnusedReceivingAddressIndex.unsignedIntValue];
+        [account.change setCurrentAddressIndex:currentUnusedChangeAddressIndex.unsignedIntValue];
+        //充分利用已经请求到的数据，不用重新请求交易数据
+        NSArray *allTransactions = resultDic[@"allTransactions"];
+        [[LXHTransactionDataManager sharedInstance] setTransactionList:allTransactions];
+        successBlock(resultDic);//has @"allTransactions":allTransaction
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+        failureBlock(nil);
+    }];
+}
+
 + (void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                 mnemonicPassphrase:(nullable NSString *)mnemonicPassphrase
                                            netType:(LXHBitcoinNetworkType)netType
