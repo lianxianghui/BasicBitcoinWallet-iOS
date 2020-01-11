@@ -71,6 +71,7 @@
 - (void)setViewProperties {
     self.contentView.text.editable = NO;
     [self.contentView.text updateAttributedTextString:[_viewModel text]];
+    self.contentView.textButton2.enabled = [_viewModel signTransactionButtonEnabled];
 }
 
 //Actions

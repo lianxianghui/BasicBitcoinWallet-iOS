@@ -72,6 +72,8 @@
 }
 
 - (void)setViewProperties {
+    self.contentView.textButton2.enabled = [_viewModel signButtonsEnabled];
+    self.contentView.textButton3.enabled = [_viewModel signButtonsEnabled];
     [self.contentView.desc updateAttributedTextString:[_viewModel infoDescription]];
 }
 

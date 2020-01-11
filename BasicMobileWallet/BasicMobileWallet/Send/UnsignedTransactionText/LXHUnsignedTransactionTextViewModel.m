@@ -75,4 +75,8 @@
     return viewModel;
 }
 
+- (BOOL)signTransactionButtonEnabled {
+    return ![LXHWallet isWatchOnly];
+}
+
 @end

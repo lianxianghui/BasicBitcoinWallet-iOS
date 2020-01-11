@@ -129,4 +129,8 @@
     [LXHTransactionDataManager pushTransactionsWithHex:self.signedBTCTransaction.hex successBlock:successBlock failureBlock:failureBlock];
 }
 
+- (BOOL)signButtonsEnabled {
+    return ![LXHWallet isWatchOnly];
+}
+
 @end
