@@ -9,8 +9,10 @@
 #import "AppDelegate.h"
 #import "LXHWallet.h"
 #import "LXHValidatePINViewController.h"
+#import "LXHMaskViewController.h"
 
 @interface AppDelegate ()
+@property (nonatomic) LXHMaskViewController *maskViewController;
 @end
 
 @implementation AppDelegate
@@ -29,13 +31,24 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-    if ([LXHWallet hasPIN]) {
-        __weak UIViewController *rootViewController = self.window.rootViewController;
-        UIViewController *validatePINViewController = [[LXHValidatePINViewController alloc] initWithValidatePINSuccessBlock:^{
-            [rootViewController dismissViewControllerAnimated:NO completion:nil];
-        }];
-        [rootViewController presentViewController:validatePINViewController animated:NO completion:nil];
-    }
+    if ([LXHWallet hasPIN])
+        [self presentValidatePINViewController];
+    else
+        [self presentMaskViewController];
+}
+
+- (void)presentValidatePINViewController {
+    __weak UIViewController *rootViewController = self.window.rootViewController;
+    UIViewController *validatePINViewController = [[LXHValidatePINViewController alloc] initWithValidatePINSuccessBlock:^{
+        [rootViewController dismissViewControllerAnimated:NO completion:nil];
+    }];
+    [rootViewController presentViewController:validatePINViewController animated:NO completion:nil];
+}
+
+- (void)presentMaskViewController {
+    LXHMaskViewController *controller = [[LXHMaskViewController alloc] init];
+    [self.window.rootViewController presentViewController:controller animated:NO completion:nil];
+    self.maskViewController = controller;
 }
 
 
@@ -47,6 +60,10 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    if (self.maskViewController) {//正在显示mask
+        [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
+        self.maskViewController = nil;
+    }
 }
 
 
