@@ -64,16 +64,21 @@
     NSArray *outputBase58Addresses = [LXHSignatureUtils outputBase58AddressesWithBTCOutputs:transaction.outputs networkType:LXHWallet.mainAccount.currentNetworkType];
     NSString *network = [LXHBitcoinNetwork networkStringWithType:LXHWallet.mainAccount.currentNetworkType];
     NSDictionary *dataForCheckingOutputAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
+    return @{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
+}
+
+- (NSDictionary *)currentAddressIndexData {
     LXHAccount *mainAccount = [LXHWallet mainAccount];
     NSDictionary *currentAddressIndexData =
-                        @{kLXHKeychainStoreCurrentReceivingAddressIndex:@(mainAccount.receiving.currentAddressIndex),
-                          kLXHKeychainStoreCurrentChangeAddressIndex:@(mainAccount.change.currentAddressIndex)};
-    return @{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses, @"currentAddressIndexData":currentAddressIndexData};
+    @{@"currentReceivingAddressIndex":@(mainAccount.receiving.currentAddressIndex),
+      @"currentChangeAddressIndex":@(mainAccount.change.currentAddressIndex)};
+    return currentAddressIndexData;
 }
 
 - (NSDictionary *)unsignedTransactionData {
     NSMutableDictionary *dictionary = [self dataWithBTCTransaction:self.unsignedBTCTransaction].mutableCopy;
     dictionary[@"dataType"] = @"unsignedTransaction";
+    dictionary[@"currentAddressIndexData"] = [self currentAddressIndexData];
     return dictionary;
 }
 

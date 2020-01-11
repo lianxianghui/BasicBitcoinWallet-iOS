@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHUnsignedTransactionTextViewModel : NSObject
+//数据格式参考Doc目录下的unsignedTransaction.plist
 - (instancetype)initWithData:(NSDictionary *)data;
 
 - (NSString *)text;

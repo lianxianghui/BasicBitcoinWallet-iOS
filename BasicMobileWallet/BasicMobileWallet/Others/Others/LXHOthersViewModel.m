@@ -36,6 +36,7 @@
 }
 
 //数据格式
+//@"dataType" : @"signedTransaction" or @"unsignedTransaction"
 //NSDictionary *dataForCheckingOutputAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
 //return @{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
 - (NSString *)checkScannedData:(NSDictionary *)data {
@@ -79,8 +80,8 @@
 
 - (void)updateCurrentAddressIndexData:(NSDictionary *)data {
     NSDictionary *currentAddressIndexData = data[@"currentAddressIndexData"];
-    uint32_t currentReceivingAddressIndex = [currentAddressIndexData[kLXHKeychainStoreCurrentReceivingAddressIndex] unsignedIntValue];
-    uint32_t currentChangeAddressIndex = [currentAddressIndexData[kLXHKeychainStoreCurrentChangeAddressIndex] unsignedIntValue];
+    uint32_t currentReceivingAddressIndex = [currentAddressIndexData[@"currentReceivingAddressIndex"] unsignedIntValue];
+    uint32_t currentChangeAddressIndex = [currentAddressIndexData[@"currentChangeAddressIndex"] unsignedIntValue];
     LXHAccount *mainAccount = LXHWallet.mainAccount;
     [mainAccount.receiving setCurrentAddressIndex:currentReceivingAddressIndex];
     [mainAccount.change setCurrentAddressIndex:currentChangeAddressIndex];

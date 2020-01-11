@@ -100,7 +100,6 @@
     }];
 }
 
-
 - (void)textButton2Clicked:(UIButton *)sender {//显示签名过的交易文本
     LXHWeakSelf
     [self validatePINWithPassedHandler:^{
@@ -110,7 +109,6 @@
         [weakSelf.navigationController pushViewController:controller animated:YES];
     }];
 }
-
 
 - (void)textButton1Clicked:(UIButton *)sender {//显示未签名的交易文本
     id viewModel = _viewModel.unsignedTransactionTextViewModel;

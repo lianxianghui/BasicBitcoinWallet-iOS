@@ -14,6 +14,10 @@
 		8C0BAA4E23609C88001D029B /* LXHBitcoinfeesNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C0BAA4D23609C88001D029B /* LXHBitcoinfeesNetworkRequest.m */; };
 		8C23C1D623C9C14D00B801CF /* LXHMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C1D423C9C14D00B801CF /* LXHMaskView.m */; };
 		8C23C1D723C9C14D00B801CF /* LXHMaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C1D523C9C14D00B801CF /* LXHMaskViewController.m */; };
+		8C23C1DD23C9CE5D00B801CF /* todo in Resources */ = {isa = PBXBuildFile; fileRef = 8C23C1D923C9CE5D00B801CF /* todo */; };
+		8C23C1DE23C9CE5D00B801CF /* my_transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C23C1DA23C9CE5D00B801CF /* my_transactions.json */; };
+		8C23C1DF23C9CE5D00B801CF /* transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C23C1DB23C9CE5D00B801CF /* transactions.json */; };
+		8C23C1E023C9CE5D00B801CF /* unsignedTransaction.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C23C1DC23C9CE5D00B801CF /* unsignedTransaction.plist */; };
 		8C2B281323863CF4007C74FA /* LXHSelectInputViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2B281223863CF4007C74FA /* LXHSelectInputViewModel.m */; };
 		8C2CC6A6232F20E5005AA93C /* LXHTransactionDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC66C232F20E4005AA93C /* LXHTransactionDetailView.m */; };
 		8C2CC6A7232F20E5005AA93C /* LXHTransactionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC66D232F20E4005AA93C /* LXHTransactionDetailViewController.m */; };
@@ -302,6 +306,10 @@
 		8C23C1D323C9C14D00B801CF /* LXHMaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHMaskViewController.h; sourceTree = "<group>"; };
 		8C23C1D423C9C14D00B801CF /* LXHMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHMaskView.m; sourceTree = "<group>"; };
 		8C23C1D523C9C14D00B801CF /* LXHMaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHMaskViewController.m; sourceTree = "<group>"; };
+		8C23C1D923C9CE5D00B801CF /* todo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo; sourceTree = "<group>"; };
+		8C23C1DA23C9CE5D00B801CF /* my_transactions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = my_transactions.json; sourceTree = "<group>"; };
+		8C23C1DB23C9CE5D00B801CF /* transactions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = transactions.json; sourceTree = "<group>"; };
+		8C23C1DC23C9CE5D00B801CF /* unsignedTransaction.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = unsignedTransaction.plist; sourceTree = "<group>"; };
 		8C2B281123863CF4007C74FA /* LXHSelectInputViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHSelectInputViewModel.h; sourceTree = "<group>"; };
 		8C2B281223863CF4007C74FA /* LXHSelectInputViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHSelectInputViewModel.m; sourceTree = "<group>"; };
 		8C2CC66C232F20E4005AA93C /* LXHTransactionDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHTransactionDetailView.m; sourceTree = "<group>"; };
@@ -1017,6 +1025,17 @@
 				8C23C1D523C9C14D00B801CF /* LXHMaskViewController.m */,
 			);
 			path = Mask;
+			sourceTree = "<group>";
+		};
+		8C23C1D823C9CE5D00B801CF /* Doc */ = {
+			isa = PBXGroup;
+			children = (
+				8C23C1D923C9CE5D00B801CF /* todo */,
+				8C23C1DA23C9CE5D00B801CF /* my_transactions.json */,
+				8C23C1DB23C9CE5D00B801CF /* transactions.json */,
+				8C23C1DC23C9CE5D00B801CF /* unsignedTransaction.plist */,
+			);
+			path = Doc;
 			sourceTree = "<group>";
 		};
 		8C2CC66A232F20E4005AA93C /* Others */ = {
@@ -1897,6 +1916,7 @@
 			isa = PBXGroup;
 			children = (
 				8CA7019B22D8713500F42814 /* BasicMobileWallet */,
+				8C23C1D823C9CE5D00B801CF /* Doc */,
 				8CA701B422D8713F00F42814 /* BasicMobileWalletTests */,
 				8CA7019A22D8713500F42814 /* Products */,
 				AB84CFFB5BCDBF404E043B57 /* Pods */,
@@ -2339,9 +2359,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C23C1DF23C9CE5D00B801CF /* transactions.json in Resources */,
 				8CA701A922D8713E00F42814 /* LaunchScreen.storyboard in Resources */,
 				8C7E10F22379496500B224ED /* Assets.xcassets in Resources */,
+				8C23C1DD23C9CE5D00B801CF /* todo in Resources */,
 				8CA701A422D8713600F42814 /* Main.storyboard in Resources */,
+				8C23C1E023C9CE5D00B801CF /* unsignedTransaction.plist in Resources */,
+				8C23C1DE23C9CE5D00B801CF /* my_transactions.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
