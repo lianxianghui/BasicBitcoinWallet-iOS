@@ -205,6 +205,8 @@
 		8CCA7D3F23AE3FF600E4E9B2 /* NSDecimalNumber+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CCA7D3E23AE3FF600E4E9B2 /* NSDecimalNumber+Convenience.m */; };
 		8CD26924230A452B001B9300 /* LXHGenerateWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD26920230A452A001B9300 /* LXHGenerateWalletViewController.m */; };
 		8CD26925230A452B001B9300 /* LXHGenerateWalletView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD26921230A452A001B9300 /* LXHGenerateWalletView.m */; };
+		8CDCDE1023C97D0B001F1287 /* LXHMaskToEnterPINView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDCDE0D23C97D0B001F1287 /* LXHMaskToEnterPINView.m */; };
+		8CDCDE1123C97D0B001F1287 /* LXHMaskToEnterPINViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDCDE0E23C97D0B001F1287 /* LXHMaskToEnterPINViewController.m */; };
 		8CDF912B239637350004A229 /* LXHAddress+LXHAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDF912A239637350004A229 /* LXHAddress+LXHAccount.m */; };
 		8CDF912E239781470004A229 /* LXHOutputListViewModelForFixedInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDF912D239781470004A229 /* LXHOutputListViewModelForFixedInput.m */; };
 		8CDF91312397A3C30004A229 /* LXHOutputListViewModelForFixedOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDF91302397A3C30004A229 /* LXHOutputListViewModelForFixedOutput.m */; };
@@ -842,6 +844,10 @@
 		8CD26922230A452A001B9300 /* LXHGenerateWalletView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHGenerateWalletView.h; sourceTree = "<group>"; };
 		8CD26923230A452A001B9300 /* LXHGenerateWalletViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHGenerateWalletViewController.h; sourceTree = "<group>"; };
 		8CD26932230B9D6D001B9300 /* libPods-BasicMobileWallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-BasicMobileWallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CDCDE0C23C97D0B001F1287 /* LXHMaskToEnterPINViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHMaskToEnterPINViewController.h; sourceTree = "<group>"; };
+		8CDCDE0D23C97D0B001F1287 /* LXHMaskToEnterPINView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHMaskToEnterPINView.m; sourceTree = "<group>"; };
+		8CDCDE0E23C97D0B001F1287 /* LXHMaskToEnterPINViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHMaskToEnterPINViewController.m; sourceTree = "<group>"; };
+		8CDCDE0F23C97D0B001F1287 /* LXHMaskToEnterPINView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHMaskToEnterPINView.h; sourceTree = "<group>"; };
 		8CDF9129239637350004A229 /* LXHAddress+LXHAccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LXHAddress+LXHAccount.h"; sourceTree = "<group>"; };
 		8CDF912A239637350004A229 /* LXHAddress+LXHAccount.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "LXHAddress+LXHAccount.m"; sourceTree = "<group>"; };
 		8CDF912C239781470004A229 /* LXHOutputListViewModelForFixedInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHOutputListViewModelForFixedInput.h; sourceTree = "<group>"; };
@@ -1968,6 +1974,7 @@
 			isa = PBXGroup;
 			children = (
 				8CAA6697230E468200B17222 /* TabBarPage */,
+				8CDCDE0B23C97D0B001F1287 /* MaskToEnterPIN */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1992,6 +1999,17 @@
 				8CD26920230A452A001B9300 /* LXHGenerateWalletViewController.m */,
 			);
 			path = GenerateWallet;
+			sourceTree = "<group>";
+		};
+		8CDCDE0B23C97D0B001F1287 /* MaskToEnterPIN */ = {
+			isa = PBXGroup;
+			children = (
+				8CDCDE0F23C97D0B001F1287 /* LXHMaskToEnterPINView.h */,
+				8CDCDE0D23C97D0B001F1287 /* LXHMaskToEnterPINView.m */,
+				8CDCDE0C23C97D0B001F1287 /* LXHMaskToEnterPINViewController.h */,
+				8CDCDE0E23C97D0B001F1287 /* LXHMaskToEnterPINViewController.m */,
+			);
+			path = MaskToEnterPIN;
 			sourceTree = "<group>";
 		};
 		8CE9A8EF23A8BD26007A58EF /* ScanQR */ = {
@@ -2530,6 +2548,7 @@
 				8C9332D6235D8BD600FBF238 /* LXHBalanceView.m in Sources */,
 				8CA3211F22DDD99400CEA828 /* LXHSelectMnemonicWordLengthView.m in Sources */,
 				8CEAECC92383D508005754B3 /* LXHInputOutputCell.m in Sources */,
+				8CDCDE1023C97D0B001F1287 /* LXHMaskToEnterPINView.m in Sources */,
 				8CECB02023B48D5500742E36 /* LXHTextViewController.m in Sources */,
 				8CA3227622DEBE9900CEA828 /* BTCBase58+Tests.m in Sources */,
 				8CA3227922DEBE9900CEA828 /* BTCSecretSharing.m in Sources */,
@@ -2596,6 +2615,7 @@
 				8CA3229522DEBE9900CEA828 /* BTCScript.m in Sources */,
 				8C9334BB235DD15A00FBF238 /* LXHAddOutputView.m in Sources */,
 				8CA3227B22DEBE9900CEA828 /* BTCFancyEncryptedMessage.m in Sources */,
+				8CDCDE1123C97D0B001F1287 /* LXHMaskToEnterPINViewController.m in Sources */,
 				8CE9A92B23A901FF007A58EF /* LXHSmallSizeTextRightIconCell.m in Sources */,
 				8C2CC6AA232F20E5005AA93C /* LXHTextCell.m in Sources */,
 				8CEAECC62383D508005754B3 /* LXHFeeCell.m in Sources */,
