@@ -12,6 +12,7 @@
 #import "LXHUnsignedTransactionTextViewModel.h"
 #import "UITextView+LXHText.h"
 #import "Toast.h"
+#import "UIViewController+LXHBasicMobileWallet.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -76,14 +77,17 @@
 
 //Actions
 - (void)textButton2Clicked:(UIButton *)sender {
-    id viewModel = [_viewModel signedTransactionTextViewModel];
-    if (!viewModel) {
-        [self.view makeToast:NSLocalizedString(@"无法签名", nil)];
-        return;
-    }
-    UIViewController *controller = [[LXHSignedTransactionTextViewController alloc] initWithViewModel:viewModel];
-    controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
+    __weak typeof(self) weakSelf = self;
+    [self validatePINWithPassedHandler:^{
+        id viewModel = [weakSelf.viewModel signedTransactionTextViewModel];
+        if (!viewModel) {
+            [weakSelf.view makeToast:NSLocalizedString(@"无法签名", nil)];
+            return;
+        }
+        UIViewController *controller = [[LXHSignedTransactionTextViewController alloc] initWithViewModel:viewModel];
+        controller.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:controller animated:YES];
+    }];
 }
 
 

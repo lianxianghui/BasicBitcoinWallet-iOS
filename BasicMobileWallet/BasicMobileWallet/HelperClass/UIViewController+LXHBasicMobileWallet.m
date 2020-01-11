@@ -23,7 +23,7 @@
                 [self showOkAlertViewWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"PIN码不正确", nil) handler:nil];
         }];
         [self presentViewController:pinCodeInput animated:YES completion:nil];
-    } else {
+    } else {//不需要验证，直接执行
         handler();
     }
 }
