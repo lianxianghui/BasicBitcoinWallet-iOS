@@ -16,7 +16,7 @@
 
 - (void)validatePINWithPassedHandler:(void (^)(void))handler {
     if ([[LXHKeychainStore sharedInstance].store contains:kLXHKeychainStorePIN]) {
-        UIAlertController *pinCodeInput = [UIUtils pinCodeInputAlertWithMessage:nil textBlock:^(NSString *text) {
+        UIAlertController *pinCodeInput = [UIUtils pinCodeInputOKCancelAlertWithMessage:nil textBlock:^(NSString *text) {
             if ([[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN])
                 handler();
             else

@@ -59,6 +59,7 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
 
 + (NSData *)signatureWithNetType:(LXHBitcoinNetworkType)netType path:(NSString *)path hash:(NSData *)hash;
 + (BOOL)isWatchOnly;
++ (BOOL)hasPIN;
 @end
 
 NS_ASSUME_NONNULL_END

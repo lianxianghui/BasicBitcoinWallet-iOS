@@ -260,4 +260,8 @@
 + (BOOL)isWatchOnly {
     return ![LXHKeychainStore.sharedInstance.store contains:kLXHKeychainStoreRootSeed];
 }
+
++ (BOOL)hasPIN {
+    return ([[LXHKeychainStore sharedInstance].store contains:kLXHKeychainStorePIN]);
+}
 @end

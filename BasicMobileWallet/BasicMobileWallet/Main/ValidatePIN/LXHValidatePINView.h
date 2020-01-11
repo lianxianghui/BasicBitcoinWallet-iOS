@@ -1,4 +1,4 @@
-// LXHInputPINToEnterAppViewController.h
+// LXHValidatePINView.h
 // BasicWallet
 //
 //  Created by lianxianghui on 20-01-11
@@ -6,6 +6,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LXHInputPINToEnterAppViewController : UIViewController
+@interface LXHValidatePINView : UIView
+
+@property (nonatomic) UILabel *text;
 
 @end
