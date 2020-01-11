@@ -11,6 +11,7 @@
 #import "LXHWallet.h"
 #import "LXHTabBarPageViewController.h"
 #import "LXHTabBarPageViewModel.h"
+#import "LXHValidatePINViewController.h"
 
 @interface LXHRootViewController ()
 
@@ -25,13 +26,36 @@
 }
 
 - (void)pushMainController {
-    UIViewController *controller = nil;
-    if ([LXHWallet walletDataGenerated]) {
-        LXHTabBarPageViewModel *viewModel = [[LXHTabBarPageViewModel alloc] init];
-        controller = [[LXHTabBarPageViewController alloc] initWithViewModel:viewModel];
+    BOOL walletDataInitialized = [LXHWallet walletDataGenerated];
+    if (!walletDataInitialized) {
+        [self pushInitWalletWelcomeViewController];
     } else {
-        controller = [LXHWelcomeViewController new];
+        BOOL hasPIN = [LXHWallet hasPIN];
+        if (hasPIN) {//需要输入PIN码
+            [self pushValidatePINViewController];
+        } else {//没有设置PIN码就直接进入TabBarController
+            [self pushTabBarController];
+        }
     }
+}
+
+- (void)pushValidatePINViewController {
+    __weak typeof(self) weakSelf = self;
+    LXHValidatePINViewController *validatePINViewController = [[LXHValidatePINViewController alloc] initWithValidatePINSuccessBlock:^{
+        [weakSelf popViewControllerAnimated:NO];
+        [weakSelf pushTabBarController];//如果成功进入TabBarController
+    }];
+    [self pushViewController:validatePINViewController animated:NO];
+}
+
+- (void)pushTabBarController {
+    LXHTabBarPageViewModel *viewModel = [[LXHTabBarPageViewModel alloc] init];
+    UIViewController *controller = [[LXHTabBarPageViewController alloc] initWithViewModel:viewModel];
+    [self pushViewController:controller animated:YES];
+}
+
+- (void)pushInitWalletWelcomeViewController {
+    UIViewController *controller = [[LXHWelcomeViewController alloc] init];
     [self pushViewController:controller animated:NO];
 }
 

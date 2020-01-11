@@ -6,6 +6,9 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^LXHValidatePINSuccessBlock)(void);
+
 @interface LXHValidatePINViewController : UIViewController
 
+- (instancetype)initWithValidatePINSuccessBlock:(LXHValidatePINSuccessBlock)successBlock;
 @end

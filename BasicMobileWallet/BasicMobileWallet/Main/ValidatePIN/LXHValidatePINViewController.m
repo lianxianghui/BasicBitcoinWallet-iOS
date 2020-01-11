@@ -21,10 +21,18 @@
     
 @interface LXHValidatePINViewController()
 @property (nonatomic) LXHValidatePINView *contentView;
-
+@property (nonatomic, copy) LXHValidatePINSuccessBlock successBlock;
 @end
 
 @implementation LXHValidatePINViewController
+
+- (instancetype)initWithValidatePINSuccessBlock:(LXHValidatePINSuccessBlock)successBlock {
+    self = [super init];
+    if (self) {
+        _successBlock = successBlock;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -64,12 +72,14 @@
     if ([LXHWallet hasPIN]) {
          __weak typeof(self) weakSelf = self;
         UIAlertController *pinCodeInput = [UIUtils pinCodeInputOKAlertWithMessage:nil textBlock:^(NSString *text) {
-            if ([[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN])
-                [weakSelf dismissViewControllerAnimated:NO completion:nil];
-            else
+            if ([[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN]) {
+                if (weakSelf.successBlock)
+                    weakSelf.successBlock();
+            } else {
                 [self showOkAlertViewWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"PIN码不正确", nil) handler:^(UIAlertAction * _Nonnull action) {
-                    [weakSelf showValidatePINOKAlert];
+                    [weakSelf showValidatePINOKAlert];//确定后再次显示
                 }];
+            }
         }];
         [self presentViewController:pinCodeInput animated:YES completion:nil];
     }
