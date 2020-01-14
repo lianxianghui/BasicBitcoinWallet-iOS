@@ -1,11 +1,11 @@
-// LXHWalletMnemonicPassphraseView.m
+// LXHSearchUsedAddressesView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-07-13
-//  Copyright © 2019年 lianxianghui. All rights reserved.
+//  Created by lianxianghui on 20-01-14
+//  Copyright © 2020年 lianxianghui. All rights reserved.
 
 
-#import "LXHWalletMnemonicPassphraseView.h"
+#import "LXHSearchUsedAddressesView.h"
 #import "Masonry.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -14,10 +14,10 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
 
-@interface LXHWalletMnemonicPassphraseView()
+@interface LXHSearchUsedAddressesView()
 @end
 
-@implementation LXHWalletMnemonicPassphraseView
+@implementation LXHSearchUsedAddressesView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -31,13 +31,19 @@
 }
 
 - (void)addSubviews {
+    [self addSubview:self.promot];
     [self addSubview:self.button2];
     [self addSubview:self.button1];
-    [self addSubview:self.prompt];
     [self addSubview:self.customNavigationBar];
+    [self addSubview:self.indicatorView];
 }
 
 - (void)makeConstraints {
+    [self.promot mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.mas_right).offset(-19);
+        make.left.equalTo(self.mas_left).offset(19);
+        make.top.equalTo(self.customNavigationBar.mas_bottom).offset(19);
+    }];
     [self.button2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.button1.mas_right).offset(20);
         make.top.equalTo(self.button1.mas_top);
@@ -49,19 +55,14 @@
         make.centerY.equalTo(self.button2.mas_centerY);
     }];
     [self.button1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.prompt.mas_bottom).offset(27);
+        make.top.equalTo(self.promot.mas_bottom).offset(27);
+        make.left.equalTo(self.promot.mas_left);
         make.height.mas_equalTo(36);
         make.width.mas_equalTo(93);
-        make.left.equalTo(self.prompt.mas_left);
     }];
     [self.text1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.button1.mas_centerX);
         make.centerY.equalTo(self.button1.mas_centerY);
-    }];
-    [self.prompt mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.mas_right).offset(-19);
-        make.top.equalTo(self.customNavigationBar.mas_bottom).offset(19);
-        make.left.equalTo(self.mas_left).offset(19);
     }];
     [self.customNavigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top);
@@ -95,9 +96,38 @@
         make.bottom.equalTo(self.customNavigationBar.mas_bottom);
         make.height.mas_equalTo(0.5);
     }];
+    [self.indicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.mas_centerX);
+        make.centerY.equalTo(self.mas_centerY);
+        make.width.equalTo(self);
+        make.height.equalTo(self);
+    }];
 }
 
 //Getters
+- (UILabel *)promot {
+    if (!_promot) {
+        _promot = [[UILabel alloc] init];
+        _promot.numberOfLines = 0;
+        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+        if (!font) font = [UIFont systemFontOfSize:14];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentNatural;
+        paragraphStyle.maximumLineHeight = 0;
+        paragraphStyle.minimumLineHeight = 0;
+        paragraphStyle.paragraphSpacing = 0;
+
+        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
+        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
+        [textAttributes setObject:font forKey:NSFontAttributeName];
+        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
+        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"由于您正在恢复之前使用过的钱包，这需要通过联网搜索之前有哪些地址已经被使用过，这样才能保证正确获取交易数据。这是恢复钱包的最后一步。\n(如果您打算把当前正在恢复的钱包作为冷钱包使用，请略过，否则不要略过）", nil) attributes:textAttributes];
+        _promot.attributedText = text;
+    }
+    return _promot;
+}
+
 - (UIButton *)button2 {
     if (!_button2) {
         _button2 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -158,100 +188,10 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(0.5) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"设置", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"搜索", nil) attributes:textAttributes];
         _text1.attributedText = text;
     }
     return _text1;
-}
-
-- (UILabel *)prompt {
-    if (!_prompt) {
-        _prompt = [[UILabel alloc] init];
-        _prompt.numberOfLines = 0;
-        NSMutableAttributedString *attributedText = [NSMutableAttributedString new];
-        UIFont *font = nil;
-        NSMutableParagraphStyle *paragraphStyle = nil;
-        NSMutableDictionary *textAttributes = nil;
-        NSAttributedString *text = nil;
-
-        font = [UIFont fontWithName:@"PingFangSC-Regular" size:18];
-        if (!font) font = [UIFont systemFontOfSize:18];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请设置密码", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"SFProText-Regular" size:18];
-        if (!font) font = [UIFont systemFontOfSize:18];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
-        if (!font) font = [UIFont systemFontOfSize:14];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"您可以选择设置或者略过这一步骤。如果您设置该密码，会用此密码和助记词一起生成整个钱包账户的根种子，用来增强账户的安全性，此密码务必不可忘记；此密码与", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"SFProText-Regular" size:14];
-        if (!font) font = [UIFont systemFontOfSize:14];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"PIN", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
-        if (!font) font = [UIFont systemFontOfSize:14];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"码不同，如果您不完全理解此密码的用途，请略过此步骤", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        _prompt.attributedText = attributedText;
-    }
-    return _prompt;
 }
 
 - (UIView *)customNavigationBar {
@@ -282,7 +222,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.4099999964237213) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"设置助记词密码", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"搜索已使用的地址", nil) attributes:textAttributes];
         _title.attributedText = text;
     }
     return _title;
@@ -337,6 +277,13 @@
         _bottomLine.alpha = 1;
     }
     return _bottomLine;
+}
+
+- (UIActivityIndicatorView *)indicatorView {
+    if (!_indicatorView) {
+        _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    }
+    return _indicatorView;
 }
 
 @end

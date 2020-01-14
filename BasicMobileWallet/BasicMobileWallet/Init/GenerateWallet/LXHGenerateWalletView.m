@@ -60,7 +60,7 @@
         make.left.equalTo(self.customNavigationBar.mas_left);
         make.right.equalTo(self.customNavigationBar.mas_right);
         make.bottom.equalTo(self.customNavigationBar.mas_bottom);
-        make.height.mas_equalTo(0.5099999904632568);
+        make.height.mas_equalTo(0.5);
     }];
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.customNavigationBar.mas_centerX);
