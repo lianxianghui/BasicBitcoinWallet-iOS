@@ -15,7 +15,7 @@
 #import "LXHTransactionDataManager.h"
 
 //for wallet
-#define kLXHKeychainStoreMnemonicCodeWords @"MnemonicCodeWords" //AES encrypt 
+#define kLXHKeychainStoreMnemonicCodeWords @"MnemonicCodeWords" //AES encrypt
 #define kLXHKeychainStoreRootSeed @"RootSeed" //AES encrypt
 #define kLXHKeychainStoreExtendedPublicKey @"ExtendedPublicKey"
 #define kLXHKeychainStoreBitcoinNetType @"kLXHKeychainStoreBitcoinNetType"
@@ -32,12 +32,12 @@
 
 @implementation LXHWallet
 
-+ (LXHWallet *)sharedInstance { 
-    static LXHWallet *sharedInstance = nil;  
-    static dispatch_once_t once;  
++ (LXHWallet *)sharedInstance {
+    static LXHWallet *sharedInstance = nil;
+    static dispatch_once_t once;
     dispatch_once(&once, ^{
         sharedInstance = [[self alloc] init];
-    }); 
+    });
     return sharedInstance;
 }
 
@@ -53,8 +53,8 @@
         if (extendedPublicKey && receivingAddressIndex && changeAddressIndex) {
             _mainAccount = [[LXHAccount alloc] initWithAccountExtendedPublicKey:extendedPublicKey
                                                                    accountIndex:0 //first account
-                                              currentReceivingAddressIndex:receivingAddressIndex.integerValue
-                                                 currentChangeAddressIndex:changeAddressIndex.integerValue];
+                                                   currentReceivingAddressIndex:receivingAddressIndex.integerValue
+                                                      currentChangeAddressIndex:changeAddressIndex.integerValue];
         }
     }
     return _mainAccount;
@@ -104,7 +104,7 @@
 }
 
 + (BTCKeychain *)firstAccountKeychainWithMasterKeychain:(BTCKeychain *)masterKeychain
-                                netType:(LXHBitcoinNetworkType)netType {
+                                                netType:(LXHBitcoinNetworkType)netType {
     BTCNetwork *network;
     NSString *path;
     if (netType == LXHBitcoinNetworkTypeMainnet) {
@@ -143,7 +143,7 @@
             successBlock(resultDic);//has @"allTransactions":allTransaction
         }
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
-        failureBlock(nil);
+        failureBlock(resultDic);
     }];
 }
 
@@ -167,25 +167,34 @@
     LXHAccount *account = [LXHWallet mainAccount];
     LXHAccountAddressSearcher *searcher = [[LXHAccountAddressSearcher alloc] initWithAccount:account];
     [searcher searchWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
-        NSNumber *currentUnusedReceivingAddressIndex = resultDic[@"currentUnusedReceivingAddressIndex"];
-        NSNumber *currentUnusedChangeAddressIndex = resultDic[@"currentUnusedChangeAddressIndex"];
+        uint32_t currentUnusedReceivingAddressIndex = [resultDic[@"currentUnusedReceivingAddressIndex"] unsignedIntValue];
+        uint32_t currentUnusedChangeAddressIndex = [resultDic[@"currentUnusedChangeAddressIndex"] unsignedIntValue];
         
-        [account.receiving setCurrentAddressIndex:currentUnusedReceivingAddressIndex.unsignedIntValue];
-        [account.change setCurrentAddressIndex:currentUnusedChangeAddressIndex.unsignedIntValue];
+        BOOL indexNeedBeUpdated =
+        (currentUnusedReceivingAddressIndex > account.receiving.currentAddressIndex) ||
+        (currentUnusedChangeAddressIndex > account.change.currentAddressIndex);
+        NSMutableDictionary *resultDicCopy = [resultDic mutableCopy];
+        if (indexNeedBeUpdated) {
+            [account.receiving setCurrentAddressIndex:currentUnusedReceivingAddressIndex];
+            [account.change setCurrentAddressIndex:currentUnusedChangeAddressIndex];
+            resultDicCopy[@"indexUpdated"] = @(YES);
+        } else {
+            resultDicCopy[@"indexUpdated"] = @(NO);
+        }
         //充分利用已经请求到的数据，不用重新请求交易数据
-        NSArray *allTransactions = resultDic[@"allTransactions"];
+        NSArray *allTransactions = resultDicCopy[@"allTransactions"];
         [[LXHTransactionDataManager sharedInstance] setTransactionList:allTransactions];
-        successBlock(resultDic);//has @"allTransactions":allTransaction
+        successBlock(resultDicCopy);//has @"allTransactions":allTransaction
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
-        failureBlock(nil);
+        failureBlock(resultDic);
     }];
 }
 
 + (void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
-                                mnemonicPassphrase:(nullable NSString *)mnemonicPassphrase
-                                           netType:(LXHBitcoinNetworkType)netType
-                                      successBlock:(void (^)(NSDictionary *resultDic))successBlock 
-                                      failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+                                 mnemonicPassphrase:(nullable NSString *)mnemonicPassphrase
+                                            netType:(LXHBitcoinNetworkType)netType
+                                       successBlock:(void (^)(NSDictionary *resultDic))successBlock
+                                       failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:mnemonicCodeWords password:mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
     NSData *rootSeed = [mnemonic seed].copy;
     
@@ -214,7 +223,7 @@
             successBlock(resultDic);//has @"allTransactions":allTransaction
         }
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
-        failureBlock(nil);
+        failureBlock(resultDic);
     }];
 }
 
@@ -247,7 +256,7 @@
     NSString *string = [[LXHKeychainStore sharedInstance] decryptedStringForKey:kLXHKeychainStoreMnemonicCodeWords error:error];
     if (string)
         return [string componentsSeparatedByString:@" "];
-    else 
+    else
         return nil;
 }
 
@@ -284,3 +293,4 @@
     return ([[LXHKeychainStore sharedInstance].store contains:kLXHKeychainStorePIN]);
 }
 @end
+

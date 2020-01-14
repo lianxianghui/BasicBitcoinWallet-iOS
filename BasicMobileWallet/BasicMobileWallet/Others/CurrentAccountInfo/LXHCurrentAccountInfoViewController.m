@@ -13,13 +13,14 @@
 #import "LXHSmallSizeTextRightIconCell.h"
 #import "LXHCurrentAccountInfoViewModel.h"
 #import "UIViewController+LXHBasicMobileWallet.h"
+#import "Toast.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
-        green:((rgbaValue & 0x00FF0000) >>  16)/255.0 \
-        blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
-        alpha:(rgbaValue & 0x000000FF)/255.0]
-    
+green:((rgbaValue & 0x00FF0000) >>  16)/255.0 \
+blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
+alpha:(rgbaValue & 0x000000FF)/255.0]
+
 @interface LXHCurrentAccountInfoViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHCurrentAccountInfoView *contentView;
 @property (nonatomic) NSMutableArray *dataForCells;
@@ -96,6 +97,8 @@
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
             [dataForCells addObject:dic];
             dic = @{@"text":@"账户扩展公钥(xpub)", @"isSelectable":@"1", @"cellType":@"LXHSmallSizeTextRightIconCell"};
+            [dataForCells addObject:dic];
+            dic = @{@"text":@"重新搜索当前地址", @"isSelectable":@"1", @"cellType":@"LXHSmallSizeTextRightIconCell"};
             [dataForCells addObject:dic];
         }
         _dataForCells = dataForCells;
@@ -219,14 +222,29 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch(indexPath.row) {
         case 3:
-            {
-                [self validatePINWithPassedHandler:^{
-                    id viewModel = [self.viewModel qrCodeAndTextViewModel];
-                    UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] initWithViewModel:viewModel];
-                    controller.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:controller animated:YES];
+        {
+            [self validatePINWithPassedHandler:^{
+                id viewModel = [self.viewModel qrCodeAndTextViewModel];
+                UIViewController *controller = [[LXHQRCodeAndTextViewController alloc] initWithViewModel:viewModel];
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
+            }];
+        }
+            break;
+        case 4:
+        {
+            __weak typeof(self) weakSelf = self;
+            [self validatePINWithPassedHandler:^{
+                [weakSelf.contentView.indicatorView startAnimating];
+                [weakSelf.viewModel searchAndUpdateCurrentAddressIndexWithSuccessBlock:^(NSString * _Nonnull prompt) {
+                    [weakSelf.contentView.indicatorView stopAnimating];
+                    [weakSelf.view makeToast:prompt];
+                } failureBlock:^(NSString * _Nonnull errorPrompt) {
+                    [weakSelf.contentView.indicatorView stopAnimating];
+                    [weakSelf.view makeToast:errorPrompt];
                 }];
-            }
+            }];
+        }
             break;
         default:
             break;
@@ -234,3 +252,4 @@
 }
 
 @end
+

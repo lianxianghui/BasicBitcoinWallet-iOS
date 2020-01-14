@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)netTypeText;
 - (NSString *)isWatchOnlyText;
 - (LXHQRCodeAndTextViewModel *)qrCodeAndTextViewModel;
+- (void)searchAndUpdateCurrentAddressIndexWithSuccessBlock:(void (^)(NSString *prompt))successBlock
+                                              failureBlock:(void (^)(NSString *errorPrompt))failureBlock;
 @end
 
 NS_ASSUME_NONNULL_END
