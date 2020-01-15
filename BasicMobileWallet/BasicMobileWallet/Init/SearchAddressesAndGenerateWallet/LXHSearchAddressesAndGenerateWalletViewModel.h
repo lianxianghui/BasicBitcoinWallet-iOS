@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)searchUsedAddressesAndGenerateExistWalletDataWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock
                                                          failureBlock:(void (^)(NSString *errorPrompt))failureBlock;
-- (id)generateExistWalletData;
+- (BOOL)generateExistWalletData;
 @end
 
 NS_ASSUME_NONNULL_END

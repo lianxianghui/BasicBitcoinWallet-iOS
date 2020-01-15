@@ -169,7 +169,8 @@
         NSArray *ret;
         if (_currentAddressIndex == 0)
             ret = nil;
-        ret = [self addressesFromZeroToIndex:_currentAddressIndex-1];
+        else
+            ret = [self addressesFromZeroToIndex:_currentAddressIndex-1];
         _usedAddresses = ret;
     }
     return _usedAddresses;
