@@ -27,8 +27,10 @@
           currentChangeAddressIndex:(NSInteger)currentChangeAddressIndex {
     self = [super init];
     if (self) {
-        _accountIndex = accountIndex;
         _accountKeychain = [[BTCKeychain alloc] initWithExtendedKey:extendedPublicKey];
+        if (!_accountKeychain)
+            return nil;
+        _accountIndex = accountIndex;
         _currentNetworkType = _accountKeychain.network.isMainnet ? LXHBitcoinNetworkTypeMainnet : LXHBitcoinNetworkTypeTestnet;
         _receiving = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHLocalAddressTypeReceiving accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)currentReceivingAddressIndex];
         _change = [[LXHWalletChangeLevelModel alloc] initWithBitcoinNetworkType:_currentNetworkType addressType:LXHLocalAddressTypeChange accountKeychain:self.accountKeychain currentAddressIndex:(uint32_t)currentChangeAddressIndex];

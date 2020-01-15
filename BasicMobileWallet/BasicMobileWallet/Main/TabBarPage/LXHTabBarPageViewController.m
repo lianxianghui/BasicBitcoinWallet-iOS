@@ -41,7 +41,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.tabBar.barTintColor = UIColorFromRGBA(0xFAFAFAE5);
     self.tabBar.tintColor = UIColorFromRGBA(0x0076FFFF);
-    self.tabBar.unselectedItemTintColor = UIColorFromRGBA(0xA4AAB3FF);
+    //self.tabBar.unselectedItemTintColor = UIColorFromRGBA(0xA4AAB3FF);
     UITabBarItem *item = nil;
     UIImage *itemImage = nil;
     UIImage *itemSelectedImage = nil;

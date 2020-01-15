@@ -125,6 +125,10 @@
                                             successBlock:(void (^)(NSDictionary *resultDic))successBlock
                                             failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     LXHAccount *account = [[LXHAccount alloc] initWithAccountExtendedPublicKey:extendedPublicKey accountIndex:MainAccountIndex currentReceivingAddressIndex:0 currentChangeAddressIndex:0];
+    if (!account) {
+        failureBlock(nil);
+        return;
+    }
     LXHAccountAddressSearcher *searcher = [[LXHAccountAddressSearcher alloc] initWithAccount:account];
     [searcher searchWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
         NSNumber *currentUnusedReceivingAddressIndex = resultDic[@"currentUnusedReceivingAddressIndex"];
