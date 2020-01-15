@@ -63,15 +63,15 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    if (self.maskViewController) {//正在显示mask
-        [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
-        self.maskViewController = nil;
-    }
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    if (self.maskViewController) {//正在显示mask
+        [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
+        self.maskViewController = nil;
+    }
 }
 
 
