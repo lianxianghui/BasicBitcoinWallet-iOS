@@ -21,6 +21,10 @@
 		8C23C1E623CDCC1B00B801CF /* LXHSearchUsedAddressesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C1E223CDCC1B00B801CF /* LXHSearchUsedAddressesViewController.m */; };
 		8C23C1E723CDCC1B00B801CF /* LXHSearchUsedAddressesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C1E523CDCC1B00B801CF /* LXHSearchUsedAddressesView.m */; };
 		8C23C1EA23CDCCB200B801CF /* LXHSearchUsedAddressesViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C1E923CDCCB200B801CF /* LXHSearchUsedAddressesViewModel.m */; };
+		8C23C1ED23CDCE8100B801CF /* LXHGenerateWalletViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C1EC23CDCE8100B801CF /* LXHGenerateWalletViewModel.m */; };
+		8C23C1F323CEB9E900B801CF /* LXHSearchAddressesAndGenerateWalletView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C1F123CEB9E800B801CF /* LXHSearchAddressesAndGenerateWalletView.m */; };
+		8C23C1F423CEB9E900B801CF /* LXHSearchAddressesAndGenerateWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C1F223CEB9E800B801CF /* LXHSearchAddressesAndGenerateWalletViewController.m */; };
+		8C23C1F723CEBC8100B801CF /* LXHSearchAddressesAndGenerateWalletViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C1F623CEBC8100B801CF /* LXHSearchAddressesAndGenerateWalletViewModel.m */; };
 		8C2B281323863CF4007C74FA /* LXHSelectInputViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2B281223863CF4007C74FA /* LXHSelectInputViewModel.m */; };
 		8C2CC6A6232F20E5005AA93C /* LXHTransactionDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC66C232F20E4005AA93C /* LXHTransactionDetailView.m */; };
 		8C2CC6A7232F20E5005AA93C /* LXHTransactionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC66D232F20E4005AA93C /* LXHTransactionDetailViewController.m */; };
@@ -319,6 +323,14 @@
 		8C23C1E523CDCC1B00B801CF /* LXHSearchUsedAddressesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSearchUsedAddressesView.m; sourceTree = "<group>"; };
 		8C23C1E823CDCCB200B801CF /* LXHSearchUsedAddressesViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHSearchUsedAddressesViewModel.h; sourceTree = "<group>"; };
 		8C23C1E923CDCCB200B801CF /* LXHSearchUsedAddressesViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHSearchUsedAddressesViewModel.m; sourceTree = "<group>"; };
+		8C23C1EB23CDCE8100B801CF /* LXHGenerateWalletViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHGenerateWalletViewModel.h; sourceTree = "<group>"; };
+		8C23C1EC23CDCE8100B801CF /* LXHGenerateWalletViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHGenerateWalletViewModel.m; sourceTree = "<group>"; };
+		8C23C1EF23CEB9E800B801CF /* LXHSearchAddressesAndGenerateWalletView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSearchAddressesAndGenerateWalletView.h; sourceTree = "<group>"; };
+		8C23C1F023CEB9E800B801CF /* LXHSearchAddressesAndGenerateWalletViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSearchAddressesAndGenerateWalletViewController.h; sourceTree = "<group>"; };
+		8C23C1F123CEB9E800B801CF /* LXHSearchAddressesAndGenerateWalletView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSearchAddressesAndGenerateWalletView.m; sourceTree = "<group>"; };
+		8C23C1F223CEB9E800B801CF /* LXHSearchAddressesAndGenerateWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSearchAddressesAndGenerateWalletViewController.m; sourceTree = "<group>"; };
+		8C23C1F523CEBC8100B801CF /* LXHSearchAddressesAndGenerateWalletViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHSearchAddressesAndGenerateWalletViewModel.h; sourceTree = "<group>"; };
+		8C23C1F623CEBC8100B801CF /* LXHSearchAddressesAndGenerateWalletViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHSearchAddressesAndGenerateWalletViewModel.m; sourceTree = "<group>"; };
 		8C2B281123863CF4007C74FA /* LXHSelectInputViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHSelectInputViewModel.h; sourceTree = "<group>"; };
 		8C2B281223863CF4007C74FA /* LXHSelectInputViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHSelectInputViewModel.m; sourceTree = "<group>"; };
 		8C2CC66C232F20E4005AA93C /* LXHTransactionDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHTransactionDetailView.m; sourceTree = "<group>"; };
@@ -1058,6 +1070,19 @@
 				8C23C1E223CDCC1B00B801CF /* LXHSearchUsedAddressesViewController.m */,
 			);
 			path = SearchUsedAddresses;
+			sourceTree = "<group>";
+		};
+		8C23C1EE23CEB9E800B801CF /* SearchAddressesAndGenerateWallet */ = {
+			isa = PBXGroup;
+			children = (
+				8C23C1EF23CEB9E800B801CF /* LXHSearchAddressesAndGenerateWalletView.h */,
+				8C23C1F123CEB9E800B801CF /* LXHSearchAddressesAndGenerateWalletView.m */,
+				8C23C1F523CEBC8100B801CF /* LXHSearchAddressesAndGenerateWalletViewModel.h */,
+				8C23C1F623CEBC8100B801CF /* LXHSearchAddressesAndGenerateWalletViewModel.m */,
+				8C23C1F023CEB9E800B801CF /* LXHSearchAddressesAndGenerateWalletViewController.h */,
+				8C23C1F223CEB9E800B801CF /* LXHSearchAddressesAndGenerateWalletViewController.m */,
+			);
+			path = SearchAddressesAndGenerateWallet;
 			sourceTree = "<group>";
 		};
 		8C2CC66A232F20E4005AA93C /* Others */ = {
@@ -2004,6 +2029,7 @@
 				8CA31F8022D98BAB00CEA828 /* WalletMnemonicPassphrase */,
 				8CA31F6422D98BAA00CEA828 /* SetPassphrase */,
 				8CD2691F230A452A001B9300 /* GenerateWallet */,
+				8C23C1EE23CEB9E800B801CF /* SearchAddressesAndGenerateWallet */,
 				8C23C1E123CDCC1B00B801CF /* SearchUsedAddresses */,
 			);
 			path = Init;
@@ -2056,6 +2082,8 @@
 			children = (
 				8CD26922230A452A001B9300 /* LXHGenerateWalletView.h */,
 				8CD26921230A452A001B9300 /* LXHGenerateWalletView.m */,
+				8C23C1EB23CDCE8100B801CF /* LXHGenerateWalletViewModel.h */,
+				8C23C1EC23CDCE8100B801CF /* LXHGenerateWalletViewModel.m */,
 				8CD26923230A452A001B9300 /* LXHGenerateWalletViewController.h */,
 				8CD26920230A452A001B9300 /* LXHGenerateWalletViewController.m */,
 			);
@@ -2482,6 +2510,7 @@
 				8CAA669A230E468200B17222 /* LXHAddressView.m in Sources */,
 				8C6ACE8D23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m in Sources */,
 				8CA3228822DEBE9900CEA828 /* BTCOutpoint.m in Sources */,
+				8C23C1F323CEB9E900B801CF /* LXHSearchAddressesAndGenerateWalletView.m in Sources */,
 				8C23C1E723CDCC1B00B801CF /* LXHSearchUsedAddressesView.m in Sources */,
 				8CA3226F22DEBE9900CEA828 /* BTCScript+Tests.m in Sources */,
 				8CA3229122DEBE9900CEA828 /* BTCTransactionOutput.m in Sources */,
@@ -2494,6 +2523,7 @@
 				8CA3229422DEBE9900CEA828 /* BTCKey+Tests.m in Sources */,
 				8CA3228322DEBE9900CEA828 /* BTCTransactionInput.m in Sources */,
 				8CA3228922DEBE9900CEA828 /* BTCMerkleTree.m in Sources */,
+				8C23C1F723CEBC8100B801CF /* LXHSearchAddressesAndGenerateWalletViewModel.m in Sources */,
 				8C2CC6B2232F20E5005AA93C /* LXHAddressListView.m in Sources */,
 				8C2CC6D3232F679A005AA93C /* LXHWallet.m in Sources */,
 				8CEAECC72383D508005754B3 /* LXHSelectionCell.m in Sources */,
@@ -2546,6 +2576,7 @@
 				8C93349D235DB14C00FBF238 /* LXHOutputListViewController.m in Sources */,
 				8CA31FCE22D9A37600CEA828 /* NSJSONSerialization+VLBase.m in Sources */,
 				8CEAECCB2383D508005754B3 /* LXHTitleCell2.m in Sources */,
+				8C23C1F423CEB9E900B801CF /* LXHSearchAddressesAndGenerateWalletViewController.m in Sources */,
 				8CA3226522DEBE9900CEA828 /* BTCAssetID.m in Sources */,
 				8CCA7D3323ADCA8A00E4E9B2 /* LXHInputDetailViewModel.m in Sources */,
 				8CA3228A22DEBE9900CEA828 /* BTCAddress+Tests.m in Sources */,
@@ -2710,6 +2741,7 @@
 				8CA3228C22DEBE9900CEA828 /* BTCData.m in Sources */,
 				8CA3212622DDE61900CEA828 /* LXHSetPinView.m in Sources */,
 				8C03E2DF2359710100936B31 /* LXHTransactionOutput.m in Sources */,
+				8C23C1ED23CDCE8100B801CF /* LXHGenerateWalletViewModel.m in Sources */,
 				8C9334AF235DB14C00FBF238 /* LXHInputFeeViewController.m in Sources */,
 				8CA31F5E22D9872A00CEA828 /* LXHWordCell.m in Sources */,
 				8CEAECD62383D996005754B3 /* LXHBuildTransactionViewModelForFixedOutput.m in Sources */,

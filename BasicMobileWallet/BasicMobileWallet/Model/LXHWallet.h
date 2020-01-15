@@ -12,11 +12,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
-    LXHWalletGenerationTypeGeneratingNew,
-    LXHWalletGenerationTypeRestoringExist,
-};
-
 #define kLXHKeychainStorePIN @"PIN" //AES encrypt
 
 /**
@@ -35,7 +30,7 @@ typedef NS_ENUM(NSUInteger, LXHWalletGenerationType) {
 @property (nonatomic, readonly) LXHAccount *mainAccount;
 
 
-+ (BOOL)generateNewWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
++ (BOOL)generateWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                 mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                            netType:(LXHBitcoinNetworkType)netType;
 /**

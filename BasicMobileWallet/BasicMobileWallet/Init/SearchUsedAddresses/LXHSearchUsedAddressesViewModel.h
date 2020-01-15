@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHSearchUsedAddressesViewModel : NSObject
 
+
+- (void)searchAndUpdateCurrentAddressIndexWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock
+                                              failureBlock:(void (^)(NSString *errorPrompt))failureBlock;
 @end
 
 NS_ASSUME_NONNULL_END

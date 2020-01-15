@@ -8,6 +8,7 @@
 
 #import "LXHWalletMnemonicPassphraseForRestoringViewModel.h"
 #import "LXHSetPassphraseViewModelForRestoringWallet.h"
+#import "LXHGenerateWalletViewModel.h"
 
 @implementation LXHWalletMnemonicPassphraseForRestoringViewModel
 
@@ -19,8 +20,9 @@
     return [[LXHSetPassphraseViewModelForRestoringWallet alloc] initWithWords:self.words];
 }
 
-- (LXHWalletGenerationType)walletGenerationType {
-    return LXHWalletGenerationTypeRestoringExist;
+- (id)generateWalletViewModelWithPassphrase:(NSString *)passphrase {
+    id viewModel = [[LXHRestoreExistWalletViewModel alloc] initWithMnemonicCodeWords:self.words mnemonicPassphrase:passphrase];
+    return viewModel;
 }
 
 @end

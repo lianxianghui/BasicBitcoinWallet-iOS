@@ -7,12 +7,8 @@
 #import "LXHGenerateWalletViewController.h"
 #import "Masonry.h"
 #import "LXHGenerateWalletView.h"
-#import "LXHTabBarPageViewController.h"
-#import "LXHKeychainStore.h"
-#import "UIViewController+LXHAlert.h"
-#import "CoreBitcoin.h"
-#import "LXHWallet.h"
-#import "LXHTabBarPageViewModel.h"
+#import "UIViewController+LXHAlert.h""
+#import "LXHGenerateWalletViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -23,24 +19,20 @@
 @interface LXHGenerateWalletViewController()
 
 @property (nonatomic) LXHGenerateWalletView *contentView;
-@property (nonatomic) LXHWalletGenerationType creationType;
-@property (nonatomic) NSArray * mnemonicCodeWords;
-@property (nonatomic) NSString *mnemonicPassphrase;
+@property (nonatomic) LXHGenerateWalletViewModel *viewModel;
 @end
 
 @implementation LXHGenerateWalletViewController
 
-- (instancetype)initWithCreationType:(LXHWalletGenerationType)creationType
-                   mnemonicCodeWords:(NSArray *)mnemonicCodeWords
-                  mnemonicPassphrase:(NSString *)mnemonicPassphrase {
+- (instancetype)initWithViewModel:(id)viewModel {
     self = [super init];
     if (self) {
-        self.creationType = creationType;
-        self.mnemonicCodeWords = mnemonicCodeWords;
-        self.mnemonicPassphrase = mnemonicPassphrase;
+        _viewModel = viewModel;
     }
     return self;
 }
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,7 +69,8 @@
 
 //Actions
 - (void)generateMainnetWalletButtonClicked:(UIButton *)sender {
-    [self generateWalletWithNetType:LXHBitcoinNetworkTypeMainnet];
+    NSDictionary *info = [_viewModel clickMainnetNavigationInfo];
+    [self pushViewContrllerWithNavigationInfo:info];
 }
 
 - (void)leftImageButtonClicked:(UIButton *)sender {
@@ -94,36 +87,19 @@
 }
 
 - (void)generateTestnet3WalletButtonClicked:(UIButton *)sender {
-    [self generateWalletWithNetType:LXHBitcoinNetworkTypeTestnet];
+    NSDictionary *info = [_viewModel clickTestnetButtonNavigationInfo];
+    [self pushViewContrllerWithNavigationInfo:info];
 }
 
-- (void)generateWalletWithNetType:(LXHBitcoinNetworkType)netType {
-    if (self.creationType == LXHWalletGenerationTypeGeneratingNew) {
-        if ([LXHWallet generateNewWalletDataWithMnemonicCodeWords:_mnemonicCodeWords mnemonicPassphrase:_mnemonicPassphrase netType:netType]) {
-             [self pushTabBarViewController];
-        } else {
-            [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"发生了无法处理的错误，如果方便请联系并告知开发人员", nil) handler:nil];
-        }
+- (void)pushViewContrllerWithNavigationInfo:(NSDictionary *)info {
+    if (info) {
+        NSString *controllerName = info[@"controllerName"];
+        id viewModel = info[@"viewModel"];
+        UIViewController *controller = [[NSClassFromString(controllerName) alloc] initWithViewModel:viewModel];
+        [self.navigationController pushViewController:controller animated:YES];
     } else {
-        [self.contentView.indicatorView startAnimating];
-        [LXHWallet restoreExistWalletDataWithMnemonicCodeWords:_mnemonicCodeWords mnemonicPassphrase:_mnemonicPassphrase netType:netType successBlock:^(NSDictionary * _Nonnull resultDic) {
-            [self.contentView.indicatorView stopAnimating];
-            [self pushTabBarViewController];
-        } failureBlock:^(NSDictionary * _Nonnull resultDic) {
-            [self.contentView.indicatorView stopAnimating];
-            NSString *errorMsg = resultDic[@"error"];
-            if (!errorMsg)
-                errorMsg = @"发生错误";
-            [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(errorMsg, nil) handler:nil];
-        }];
+        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"发生了无法处理的错误，如果方便请联系并告知开发人员", nil) handler:nil];
     }
-    
-}
-
-- (void)pushTabBarViewController {
-    LXHTabBarPageViewModel *viewModel = [[LXHTabBarPageViewModel alloc] init];
-    UIViewController *controller = [[LXHTabBarPageViewController alloc] initWithViewModel:viewModel];
-    [self.navigationController pushViewController:controller animated:YES]; 
 }
 
 

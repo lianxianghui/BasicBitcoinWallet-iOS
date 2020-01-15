@@ -8,8 +8,5 @@
 #import "LXHWallet.h"
 
 @interface LXHGenerateWalletViewController : UIViewController
-
-- (instancetype)initWithCreationType:(LXHWalletGenerationType)creationType
-                   mnemonicCodeWords:(NSArray *)mnemonicCodeWords
-                  mnemonicPassphrase:(NSString *)mnemonicPassphrase;
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

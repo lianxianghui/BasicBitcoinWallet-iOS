@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)checkInputText:(NSString *)inputText inputAgainText:(NSString *)inputAgainText;
 
-- (LXHWalletGenerationType)walletGenerationType;
+- (id)generateWalletViewModelWithPassphrase:(NSString *)passphrase;
 @end
 
 NS_ASSUME_NONNULL_END

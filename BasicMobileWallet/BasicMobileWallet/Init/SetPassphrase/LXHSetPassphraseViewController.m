@@ -107,7 +107,8 @@
 }
 
 - (void)pushGenerateWalletViewControllerWithPassphrase:(NSString *)passphrase {
-    UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithCreationType:[_viewModel walletGenerationType] mnemonicCodeWords:_viewModel.words mnemonicPassphrase:passphrase];
+    id viewModel = [_viewModel generateWalletViewModelWithPassphrase:passphrase];
+    UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithViewModel:viewModel];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
