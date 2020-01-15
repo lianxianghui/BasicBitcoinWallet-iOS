@@ -86,7 +86,7 @@
 - (UITableView *)listView {
     if (!_listView) {
         _listView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        _listView.backgroundColor = UIColorFromRGBA(0xFFFFFF00);
+        _listView.backgroundColor = self.backgroundColor;
         _listView.alpha = 1;
         _listView.tableFooterView = [UIView new];
         _listView.separatorStyle = UITableViewCellSeparatorStyleNone;
