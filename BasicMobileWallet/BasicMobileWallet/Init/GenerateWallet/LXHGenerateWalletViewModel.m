@@ -41,8 +41,7 @@
 
 - (NSDictionary *)clickButtonNavigationInfoWithNetworkType:(LXHBitcoinNetworkType)networkType {
     if ([LXHWallet generateWalletDataWithMnemonicCodeWords:self.mnemonicCodeWords mnemonicPassphrase:self.mnemonicPassphrase netType:networkType]) {
-        LXHTabBarPageViewModel *viewModel = [[LXHTabBarPageViewModel alloc] init];
-        return @{@"controllerName":@"LXHTabBarPageViewController", @"viewModel":viewModel};
+        return @{@"willEnterTabBarPage":@(YES)};
     } else {
         return nil;
     }

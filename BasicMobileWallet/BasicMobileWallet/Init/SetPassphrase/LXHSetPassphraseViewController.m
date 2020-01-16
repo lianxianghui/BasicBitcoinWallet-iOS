@@ -7,7 +7,6 @@
 #import "LXHSetPassphraseViewController.h"
 #import "Masonry.h"
 #import "LXHSetPassphraseView.h"
-#import "LXHTabBarPageViewController.h"
 #import "UILabel+LXHText.h"
 #import "UIViewController+LXHAlert.h"
 #import "LXHGenerateWalletViewController.h"

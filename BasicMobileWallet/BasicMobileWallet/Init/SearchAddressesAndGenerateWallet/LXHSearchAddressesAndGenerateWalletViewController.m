@@ -9,8 +9,8 @@
 #import "LXHSearchAddressesAndGenerateWalletView.h"
 #import "LXHSearchAddressesAndGenerateWalletViewModel.h"
 #import "UIViewController+LXHAlert.h"
-#import "LXHTabBarPageViewController.h"
 #import "LXHTabBarPageViewModel.h"
+#import "LXHRootViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -101,9 +101,7 @@
 }
 
 - (void)pushTabBarViewController {
-    LXHTabBarPageViewModel *viewModel = [[LXHTabBarPageViewModel alloc] init];
-    UIViewController *controller = [[LXHTabBarPageViewController alloc] initWithViewModel:viewModel];
-    [self.navigationController pushViewController:controller animated:YES];
+    [LXHRootViewController reset];//之前的页面中含有助记词等信息。为了安全考虑，把之前的页面清除，然后再进入LXHTabBarPageViewController
 }
 
 @end

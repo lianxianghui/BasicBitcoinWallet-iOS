@@ -12,12 +12,18 @@
 #import "LXHTabBarPageViewController.h"
 #import "LXHTabBarPageViewModel.h"
 #import "LXHValidatePINViewController.h"
+#import "AppDelegate.h"
 
 @interface LXHRootViewController ()
 
 @end
 
 @implementation LXHRootViewController
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    _showValidatePINViewControllerIfNeeded = YES;//默认值
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,7 +37,7 @@
         [self pushInitWalletWelcomeViewController];
     } else {
         BOOL hasPIN = [LXHWallet hasPIN];
-        if (hasPIN) {//需要输入PIN码
+        if (hasPIN && _showValidatePINViewControllerIfNeeded) {//需要输入PIN码
             [self pushValidatePINViewController];
         } else {//没有设置PIN码就直接进入TabBarController
             [self pushTabBarController];
@@ -59,9 +65,12 @@
     [self pushViewController:controller animated:NO];
 }
 
-- (void)clearAndPushMainController {
-    [self popViewControllerAnimated:NO];
-    [self pushMainController];
++ (void)reset {
+    //按着目前的逻辑，会进入TabBarController且不需要输入PIN
+    AppDelegate *appDelegate = (AppDelegate*)UIApplication.sharedApplication.delegate;
+    LXHRootViewController *rootViewController = [[LXHRootViewController alloc] init];
+    rootViewController.showValidatePINViewControllerIfNeeded = NO;//重置的时候不用重复输入PIN
+    appDelegate.window.rootViewController = rootViewController;
 }
 
 

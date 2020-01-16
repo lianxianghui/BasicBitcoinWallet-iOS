@@ -7,8 +7,9 @@
 #import "LXHGenerateWalletViewController.h"
 #import "Masonry.h"
 #import "LXHGenerateWalletView.h"
-#import "UIViewController+LXHAlert.h""
+#import "UIViewController+LXHAlert.h"
 #import "LXHGenerateWalletViewModel.h"
+#import "LXHRootViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -93,6 +94,11 @@
 
 - (void)pushViewContrllerWithNavigationInfo:(NSDictionary *)info {
     if (info) {
+        BOOL willEnterTabBarPage = [info[@"willEnterTabBarPage"] boolValue];
+        if (willEnterTabBarPage) {//will enter TabBarPage
+            [LXHRootViewController reset];
+            return;
+        }
         NSString *controllerName = info[@"controllerName"];
         id viewModel = info[@"viewModel"];
         UIViewController *controller = [[NSClassFromString(controllerName) alloc] initWithViewModel:viewModel];

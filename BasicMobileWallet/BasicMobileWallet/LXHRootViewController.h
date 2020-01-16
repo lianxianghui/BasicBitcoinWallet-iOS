@@ -10,7 +10,7 @@
 
 @interface LXHRootViewController : UINavigationController
 
-- (void)clearAndPushMainController;
-
+@property (nonatomic) BOOL showValidatePINViewControllerIfNeeded;//默认YES
++ (void)reset;
 @end
 

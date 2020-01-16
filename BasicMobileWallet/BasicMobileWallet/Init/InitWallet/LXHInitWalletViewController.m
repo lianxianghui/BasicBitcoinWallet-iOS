@@ -10,9 +10,9 @@
 #import "LXHScanQRViewController.h"
 #import "LXHSelectMnemonicWordLengthViewController.h"
 #import "LXHWallet.h"
-#import "LXHTabBarPageViewController.h"
-#import "LXHTabBarPageViewModel.h"
+#import "LXHRootViewController.h"
 #import "Toast.h"
+
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -69,9 +69,7 @@
         [weakSelf.contentView.indicatorView startAnimating];
         [LXHWallet importReadOnlyWalletWithAccountExtendedPublicKey:message successBlock:^(NSDictionary * _Nonnull resultDic) {
             [weakSelf.contentView.indicatorView stopAnimating];
-            id viewModel = [[LXHTabBarPageViewModel alloc] init];
-            UIViewController *controller = [[LXHTabBarPageViewController alloc] initWithViewModel:viewModel];
-            [self.navigationController pushViewController:controller animated:YES];
+            [LXHRootViewController reset];
          } failureBlock:^(NSDictionary * _Nonnull resultDic) {
              [weakSelf.contentView.indicatorView stopAnimating];
              [weakSelf.view makeToast:NSLocalizedString(@"导入只读钱包失败", nil)];
@@ -80,7 +78,6 @@
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }
-
 
 - (void)restoreWalletButtonClicked:(UIButton *)sender {
     LXHSelectMnemonicWordLengthViewController *controller = [LXHSelectMnemonicWordLengthViewController new];

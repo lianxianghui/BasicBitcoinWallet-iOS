@@ -270,9 +270,7 @@
         [LXHWallet clearAccount];
         [[LXHTransactionDataManager sharedInstance] clearCachedData];
         //show welcome page
-        AppDelegate *appDelegate = (AppDelegate*)UIApplication.sharedApplication.delegate;
-        LXHRootViewController *rootViewController = (LXHRootViewController *)appDelegate.window.rootViewController;
-        [rootViewController clearAndPushMainController];
+        [LXHRootViewController reset];
     } cancelHandler:nil];
 }
 
