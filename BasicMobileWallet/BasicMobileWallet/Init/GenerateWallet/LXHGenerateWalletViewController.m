@@ -96,7 +96,7 @@
     if (info) {
         BOOL willEnterTabBarPage = [info[@"willEnterTabBarPage"] boolValue];
         if (willEnterTabBarPage) {//will enter TabBarPage
-            [LXHRootViewController reset];
+            [LXHRootViewController reEnter];
             return;
         }
         NSString *controllerName = info[@"controllerName"];

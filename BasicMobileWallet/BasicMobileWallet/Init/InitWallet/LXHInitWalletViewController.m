@@ -69,7 +69,7 @@
         [weakSelf.contentView.indicatorView startAnimating];
         [LXHWallet importReadOnlyWalletWithAccountExtendedPublicKey:message successBlock:^(NSDictionary * _Nonnull resultDic) {
             [weakSelf.contentView.indicatorView stopAnimating];
-            [LXHRootViewController reset];
+            [LXHRootViewController reEnter];
          } failureBlock:^(NSDictionary * _Nonnull resultDic) {
              [weakSelf.contentView.indicatorView stopAnimating];
              [weakSelf.view makeToast:NSLocalizedString(@"导入只读钱包失败", nil)];

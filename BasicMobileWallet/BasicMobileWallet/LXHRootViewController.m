@@ -65,8 +65,7 @@
     [self pushViewController:controller animated:NO];
 }
 
-+ (void)reset {
-    //按着目前的逻辑，会进入TabBarController且不需要输入PIN
++ (void)reEnter {
     AppDelegate *appDelegate = (AppDelegate*)UIApplication.sharedApplication.delegate;
     LXHRootViewController *rootViewController = [[LXHRootViewController alloc] init];
     rootViewController.showValidatePINViewControllerIfNeeded = NO;//重置的时候不用重复输入PIN

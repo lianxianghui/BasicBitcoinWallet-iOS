@@ -101,7 +101,7 @@
 }
 
 - (void)pushTabBarViewController {
-    [LXHRootViewController reset];//之前的页面中含有助记词等信息。为了安全考虑，把之前的页面清除，然后再进入LXHTabBarPageViewController
+    [LXHRootViewController reEnter];//之前的页面中含有助记词等信息。为了安全考虑，把之前的页面清除，然后再进入LXHTabBarPageViewController
 }
 
 @end

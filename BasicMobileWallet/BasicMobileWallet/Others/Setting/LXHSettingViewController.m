@@ -270,7 +270,7 @@
         [LXHWallet clearAccount];
         [[LXHTransactionDataManager sharedInstance] clearCachedData];
         //show welcome page
-        [LXHRootViewController reset];
+        [LXHRootViewController reEnter];
     } cancelHandler:nil];
 }
 
