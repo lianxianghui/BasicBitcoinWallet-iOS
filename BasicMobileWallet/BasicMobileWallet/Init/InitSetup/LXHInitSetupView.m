@@ -178,7 +178,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"您是第一次在当前设备上使用Basic Wallet，需要进行以下一些初始设置：\n\n1.设置PIN码：", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"要使用Basic Bitcoin Wallet，首先需要进行一些初始设置：\n\n1.设置PIN码：", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
@@ -208,7 +208,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"2.创建或恢复钱包：", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"2.初始化钱包：", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
@@ -223,7 +223,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"会按着BIP-39的标准为您生成一个HD钱包（分层确定性钱包），在生成的过程中会显示12个英文单词的助记词，您也可以选择性地设置一个密码。有了助记词和密码，你可以在未来重新生成私钥。由于拥有私钥就等于拥有了您的比特币，所以请务必记住助记码和密码并保存好。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"会按着BIP-44的标准为您生成一个HD钱包（分层确定性钱包）。您可以从创建新钱包、恢复已有钱包和导入只读钱包这三个选项中选择一种来初始化您的钱包。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         font = [UIFont fontWithName:@"SFProText-Regular" size:14];
