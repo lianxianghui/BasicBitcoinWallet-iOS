@@ -63,6 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSData *)signatureWithNetType:(LXHBitcoinNetworkType)netType path:(NSString *)path hash:(NSData *)hash;
 + (BOOL)isWatchOnly;
 + (BOOL)hasPIN;
++ (void)clearPIN;
 @end
 
 NS_ASSUME_NONNULL_END

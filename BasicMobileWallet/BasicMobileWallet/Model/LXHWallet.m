@@ -296,5 +296,9 @@
 + (BOOL)hasPIN {
     return ([[LXHKeychainStore sharedInstance].store contains:kLXHKeychainStorePIN]);
 }
+
++ (void)clearPIN {
+    [[LXHKeychainStore sharedInstance].store setData:nil forKey:kLXHKeychainStorePIN];
+}
 @end
 

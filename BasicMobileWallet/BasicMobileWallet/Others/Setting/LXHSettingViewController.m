@@ -95,10 +95,10 @@
             dic = @{@"text":@"重置钱包", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(0)};
             [dataForCells addObject:dic];
             
-            NSString *text = [self hasPin] ? NSLocalizedString(@"修改PIN码", nil) : NSLocalizedString(@"设置PIN码", nil);
+            NSString *text = [LXHWallet hasPIN] ? NSLocalizedString(@"修改PIN码", nil) : NSLocalizedString(@"设置PIN码", nil);
             dic = @{@"text":text, @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(1)};
             [dataForCells addObject:dic];
-            if ([self hasPin]) {
+            if ([LXHWallet hasPIN]) {
                 dic = @{@"text":@"清除PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(2)};
                 [dataForCells addObject:dic];
             }
@@ -264,18 +264,15 @@
 }
 
 - (void)resetWallet {
-    NSString *message = [LXHWallet isWatchOnly] ? NSLocalizedString(@"重置将会清除本地的钱包数据，您确定现在要重置吗？", nil) : NSLocalizedString(@"重置将会清除本地的钱包数据，务必要保证已经备份了钱包助记词。您确定现在要重置吗？", nil);
+    NSString *message = [LXHWallet isWatchOnly] ? NSLocalizedString(@"重置将会清除本地的钱包数据与PIN码，您确定现在要重置吗？", nil) : NSLocalizedString(@"重要：重置将会清除本地的钱包数据与PIN码，请务必保证已经备份了钱包助记词，否则会导致比特币丢失。您确定现在要重置吗？", nil);
     [self showOkCancelAlertViewWithTitle:NSLocalizedString(@"警告", nil) message:message okHandler:^(UIAlertAction * _Nonnull action) {
         //clear data
         [LXHWallet clearAccount];
+        [LXHWallet clearPIN];
         [[LXHTransactionDataManager sharedInstance] clearCachedData];
         //show welcome page
         [LXHRootViewController reEnter];
     } cancelHandler:nil];
-}
-
-- (BOOL)hasPin {
-    return [[LXHKeychainStore sharedInstance].store contains:kLXHKeychainStorePIN];
 }
 
 - (void)refreshData {
@@ -285,7 +282,7 @@
 
 - (void)clearPin {
     [self showOkCancelAlertViewWithTitle:NSLocalizedString(@"警告", nil) message:NSLocalizedString(@"清除PIN码将会带来一定的安全隐患，您确定吗？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
-        [[LXHKeychainStore sharedInstance].store setData:nil forKey:kLXHKeychainStorePIN];
+        [LXHWallet clearPIN];
         [self refreshData];
     } cancelHandler:nil];
 }
