@@ -2076,10 +2076,10 @@
 		8CBCA8FD24121D7800655C9F /* ForgotPINBeforeWalletDataGenerated */ = {
 			isa = PBXGroup;
 			children = (
-				8CBCA8FE24121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedView.m */,
-				8CBCA8FF24121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedViewController.m */,
 				8CBCA90024121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedView.h */,
+				8CBCA8FE24121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedView.m */,
 				8CBCA90124121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedViewController.h */,
+				8CBCA8FF24121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedViewController.m */,
 			);
 			path = ForgotPINBeforeWalletDataGenerated;
 			sourceTree = "<group>";
@@ -2087,10 +2087,10 @@
 		8CBCA90224121D7800655C9F /* ForgotPINAfterWalletDataGenerated */ = {
 			isa = PBXGroup;
 			children = (
-				8CBCA90324121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedView.m */,
-				8CBCA90424121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedViewController.m */,
 				8CBCA90524121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedView.h */,
+				8CBCA90324121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedView.m */,
 				8CBCA90624121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedViewController.h */,
+				8CBCA90424121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedViewController.m */,
 			);
 			path = ForgotPINAfterWalletDataGenerated;
 			sourceTree = "<group>";

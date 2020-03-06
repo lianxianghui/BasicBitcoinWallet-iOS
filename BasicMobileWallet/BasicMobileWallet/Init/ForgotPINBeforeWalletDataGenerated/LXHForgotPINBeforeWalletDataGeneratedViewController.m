@@ -7,7 +7,7 @@
 #import "LXHForgotPINBeforeWalletDataGeneratedViewController.h"
 #import "Masonry.h"
 #import "LXHForgotPINBeforeWalletDataGeneratedView.h"
-#import "LXHTabBarPageViewController.h"
+#import "LXHRootViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -56,11 +56,8 @@
 
 //Actions
 - (void)buttonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHTabBarPageViewController alloc] init];
-    controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
+    [LXHRootViewController reEnter];
 }
-
 
 - (void)leftImageButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
