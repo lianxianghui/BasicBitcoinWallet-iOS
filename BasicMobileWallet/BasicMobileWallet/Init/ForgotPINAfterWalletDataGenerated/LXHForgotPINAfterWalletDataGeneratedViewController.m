@@ -8,6 +8,9 @@
 #import "Masonry.h"
 #import "LXHForgotPINAfterWalletDataGeneratedView.h"
 #import "LXHTabBarPageViewController.h"
+#import "LXHScanQRViewController.h"
+#import "LXHWallet.h"
+#import "Toast.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -62,11 +65,21 @@
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
-
+//scan extendedPublicKey
 - (void)button1Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHTabBarPageViewController alloc] init];
+    __weak typeof(self) weakSelf = self;
+    UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *message) {
+        [weakSelf.navigationController popViewControllerAnimated:NO];
+        if ([message isEqualToString:[LXHWallet mainAccount].extendedPublicKey]) {
+            UIViewController *controller = [[LXHTabBarPageViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+        } else {
+            [self.view makeToast:NSLocalizedString(@"您扫描的扩展公钥与当前钱包的不符。", nil)];
+        }
+    }];
     controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES]; 
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 
