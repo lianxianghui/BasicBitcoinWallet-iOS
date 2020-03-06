@@ -26,6 +26,12 @@
 
 @implementation LXHSetPinViewController
 
+//目前没有用，只是为了便于统一处理
+- (instancetype)initWithViewModel:(nullable id)viewModel {
+    self = [super init];
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColorFromRGBA(0xFAFAFAFF);

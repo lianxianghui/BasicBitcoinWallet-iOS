@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)checkInputText:(NSString *)inputText inputAgainText:(NSString *)inputAgainText;
 
-- (id)generateWalletViewModelWithPassphrase:(NSString *)passphrase;
+- (nullable NSDictionary *)clickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase;
 @end
 
 NS_ASSUME_NONNULL_END

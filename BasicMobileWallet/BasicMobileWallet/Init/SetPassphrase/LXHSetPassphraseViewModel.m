@@ -41,9 +41,10 @@
     return 1;
 }
 
-- (id)generateWalletViewModelWithPassphrase:(NSString *)passphrase {
+- (NSDictionary *)clickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
+    NSString *controllerClassName = @"LXHGenerateWalletViewController";
     id viewModel = [[LXHGenerateNewWalletViewModel alloc] initWithMnemonicCodeWords:self.words mnemonicPassphrase:passphrase];
-    return viewModel;
+    return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
 }
 
 @end

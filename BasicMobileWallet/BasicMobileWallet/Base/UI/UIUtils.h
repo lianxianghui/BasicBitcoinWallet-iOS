@@ -17,4 +17,5 @@
 
 + (UIAlertController *)pinCodeInputOKCancelAlertWithMessage:(NSString *)message textBlock:(void (^)(NSString *text))textBlock;
 + (UIAlertController *)pinCodeInputOKAlertWithMessage:(NSString *)message textBlock:(void (^)(NSString *text))textBlock;
++ (UIAlertController *)pinCodeInputOKAndForgotPINAlertWithMessage:(NSString *)message textBlock:(void (^)(NSString *text))textBlock forgotPINBlock:(void (^)(void))forgotPINBlock;
 @end

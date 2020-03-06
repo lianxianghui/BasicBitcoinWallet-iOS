@@ -50,6 +50,27 @@
     return pinCodeInput;
 }
 
++ (UIAlertController *)pinCodeInputOKAndForgotPINAlertWithMessage:(NSString *)message textBlock:(void (^)(NSString *text))textBlock forgotPINBlock:(void (^)(void))forgotPINBlock {
+    
+    UIAlertController *pinCodeInput = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"请输入PIN码", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+    __block UITextField *pinCodeTextField = nil;
+    [pinCodeInput addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = NSLocalizedString(@"PIN码", nil);
+        [textField setSecureTextEntry:YES];
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+        pinCodeTextField = textField;
+    }];
+    UIAlertAction *forgotPINAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"我忘记了PIN码", nil)  style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        forgotPINBlock();
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", nil)  style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        textBlock(pinCodeTextField.text);
+    }];
+    [pinCodeInput addAction:forgotPINAction];
+    [pinCodeInput addAction:okAction];
+    return pinCodeInput;
+}
+
 + (UIAlertController *)pinCodeInputOKAlertWithMessage:(NSString *)message textBlock:(void (^)(NSString *text))textBlock {
     UIAlertController *pinCodeInput = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"请输入PIN码", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
     __block UITextField *pinCodeTextField = nil;

@@ -11,6 +11,7 @@
 #import "LXHScanQRViewController.h"
 #import "LXHWallet.h"
 #import "Toast.h"
+#import "LXHSelectMnemonicWordLengthViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -60,7 +61,8 @@
 
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHTabBarPageViewController alloc] init];
+    LXHSelectMnemonicWordLengthViewController *controller = [[LXHSelectMnemonicWordLengthViewController alloc] init];
+    controller.type = LXHSelectMnemonicWordLengthViewControllerTypeForResettingPIN;
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }

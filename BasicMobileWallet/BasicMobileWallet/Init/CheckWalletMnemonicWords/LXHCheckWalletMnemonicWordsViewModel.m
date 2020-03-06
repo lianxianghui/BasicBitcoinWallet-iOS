@@ -28,4 +28,9 @@
     return [[LXHWalletMnemonicPassphraseViewModel alloc] initWithWords:self.words];
 }
 
+- (NSDictionary *)clickNextButtonNavigationInfo {
+    id viewModel = [[LXHWalletMnemonicPassphraseViewModel alloc] initWithWords:self.words];
+    return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseViewController", @"viewModel":viewModel};
+}
+
 @end

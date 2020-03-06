@@ -19,9 +19,10 @@
     return NSLocalizedString(@"请输入助记词密码", nil);
 }
 
-- (id)generateWalletViewModelWithPassphrase:(NSString *)passphrase {
+- (NSDictionary *)clickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
+    NSString *controllerClassName = @"LXHGenerateWalletViewController";
     id viewModel = [[LXHRestoreExistWalletViewModel alloc] initWithMnemonicCodeWords:self.words mnemonicPassphrase:passphrase];
-    return viewModel;
+    return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
 }
 
 @end

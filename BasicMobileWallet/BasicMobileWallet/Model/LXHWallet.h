@@ -42,6 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
                                        successBlock:(void (^)(NSDictionary *resultDic))successBlock 
                                        failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 
++ (BOOL)isCurrentMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+             andMnemonicPassphrase:(nullable NSString *)mnemonicPassphrase;
+
 + (void)importReadOnlyWalletWithAccountExtendedPublicKey:(NSString *)extendedPublicKey
                                             successBlock:(void (^)(NSDictionary *resultDic))successBlock
                                             failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;

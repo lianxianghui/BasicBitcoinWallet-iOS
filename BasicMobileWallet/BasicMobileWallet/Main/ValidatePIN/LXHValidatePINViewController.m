@@ -12,6 +12,9 @@
 #import "UIViewController+LXHAlert.h"
 #import "LXHWallet.h"
 #import "LXHKeychainStore.h"
+#import "LXHForgotPINAfterWalletDataGeneratedViewController.h"
+#import "LXHForgotPINBeforeWalletDataGeneratedViewController.h"
+#import "AppDelegate.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -71,7 +74,7 @@
 - (void)showValidatePINOKAlert {
     if ([LXHWallet hasPIN]) {
          __weak typeof(self) weakSelf = self;
-        UIAlertController *pinCodeInput = [UIUtils pinCodeInputOKAlertWithMessage:nil textBlock:^(NSString *text) {
+        UIAlertController *pinCodeInput = [UIUtils pinCodeInputOKAndForgotPINAlertWithMessage:nil textBlock:^(NSString *text) {
             if ([[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN]) {
                 if (weakSelf.successBlock)
                     weakSelf.successBlock();
@@ -80,6 +83,14 @@
                     [weakSelf showValidatePINOKAlert];//确定后再次显示
                 }];
             }
+        } forgotPINBlock:^{
+            UIViewController *viewController;
+            if ([LXHWallet walletDataGenerated]) {
+                viewController = [[LXHForgotPINAfterWalletDataGeneratedViewController alloc] init];
+            } else {
+                viewController = [[LXHForgotPINBeforeWalletDataGeneratedViewController alloc] init];
+            }
+            [self.navigationController pushViewController:viewController animated:YES];
         }];
         [self presentViewController:pinCodeInput animated:YES completion:nil];
     }

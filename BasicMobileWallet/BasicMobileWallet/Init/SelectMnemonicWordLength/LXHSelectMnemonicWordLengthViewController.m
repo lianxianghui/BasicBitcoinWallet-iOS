@@ -13,6 +13,7 @@
 #import "LXHInputMnemonicWordsViewModel.h"
 #import "LXHWalletMnemonicWordsOneByOneViewController.h"
 #import "LXHWalletMnemonicWordsOneByOneViewModel.h"
+#import "LXHInputMnemonicWordsViewModelForResettingPIN.h"
 
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -195,10 +196,14 @@
         id viewModel = [[LXHWalletMnemonicWordsOneByOneViewModel alloc] initWithWordLength:selectedLength.integerValue];
         LXHWalletMnemonicWordsOneByOneViewController *controller = [[LXHWalletMnemonicWordsOneByOneViewController alloc] initWithViewModel:viewModel];
         [self.navigationController pushViewController:controller animated:YES];
-    } else {
+    } else if (self.type == LXHSelectMnemonicWordLengthViewControllerTypeForRestoringExistingWallet) {
         id viewModel = [[LXHInputMnemonicWordsViewModel alloc] initWithWordLength:selectedLength.integerValue];
         LXHInputMnemonicWordsViewController *controller = [[LXHInputMnemonicWordsViewController alloc] initWithViewModel:viewModel];
         [self.navigationController pushViewController:controller animated:YES]; 
+    } else if (self.type == LXHSelectMnemonicWordLengthViewControllerTypeForResettingPIN) {
+        id viewModel = [[LXHInputMnemonicWordsViewModelForResettingPIN alloc] initWithWordLength:selectedLength.integerValue];
+        LXHInputMnemonicWordsViewController *controller = [[LXHInputMnemonicWordsViewController alloc] initWithViewModel:viewModel];
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 

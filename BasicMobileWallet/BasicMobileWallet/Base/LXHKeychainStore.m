@@ -85,14 +85,7 @@ static NSString *const aesPassword = LXHAESPassword;
 }
 
 - (BOOL)data:(NSData *)data isEqualToEncryptedDataForKey:(NSString *)key {
-    NSData *encryptedData = [RNEncryptor encryptData:data
-                                        withSettings:kRNCryptorAES256Settings
-                                            password:aesPassword
-                                               error:nil];
-    if (!encryptedData)
-        return NO;
-    NSData *encryptedData1 = [self.store dataForKey:key];
-    return [encryptedData isEqualToData:encryptedData1];
+    return [data isEqualToData:[self decryptedDataForKey:key error:nil]];
 }
 
 - (BOOL)string:(NSString *)string isEqualToEncryptedStringForKey:(NSString *)key {

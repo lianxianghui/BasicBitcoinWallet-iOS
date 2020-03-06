@@ -212,7 +212,12 @@
 		8CBCA90824121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA8FF24121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedViewController.m */; };
 		8CBCA90924121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA90324121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedView.m */; };
 		8CBCA90A24121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA90424121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedViewController.m */; };
-		8CBCA90D24121DA300655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA90C24121DA300655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.m */; };
+		8CBCA910241226E900655C9F /* LXHInputMnemonicWordsViewModelForResettingPIN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA90F241226E900655C9F /* LXHInputMnemonicWordsViewModelForResettingPIN.m */; };
+		8CBCA91624122CFE00655C9F /* LXHSetPassphraseViewModelForResettingPIN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA91524122CFE00655C9F /* LXHSetPassphraseViewModelForResettingPIN.m */; };
+		8CBCA91C2412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA9182412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.m */; };
+		8CBCA91D2412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA9192412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewController.m */; };
+		8CBCA920241233B700655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA91F241233B700655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewModel.m */; };
+		8CBCA92324123E1B00655C9F /* LXHCheckWalletMnemonicWordsViewModelForResettingPIN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA92224123E1B00655C9F /* LXHCheckWalletMnemonicWordsViewModelForResettingPIN.m */; };
 		8CCA7D2A23ACC98E00E4E9B2 /* LXHOutputDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CCA7D2923ACC98E00E4E9B2 /* LXHOutputDetailViewModel.m */; };
 		8CCA7D2D23ACCBF500E4E9B2 /* LXHTransactionDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CCA7D2C23ACCBF500E4E9B2 /* LXHTransactionDetailViewModel.m */; };
 		8CCA7D3023ADC91900E4E9B2 /* LXHUnLockingScriptCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CCA7D2E23ADC91900E4E9B2 /* LXHUnLockingScriptCell.m */; };
@@ -868,8 +873,18 @@
 		8CBCA90424121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHForgotPINAfterWalletDataGeneratedViewController.m; sourceTree = "<group>"; };
 		8CBCA90524121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHForgotPINAfterWalletDataGeneratedView.h; sourceTree = "<group>"; };
 		8CBCA90624121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHForgotPINAfterWalletDataGeneratedViewController.h; sourceTree = "<group>"; };
-		8CBCA90B24121DA300655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicPassphraseForResettingPINView.h; sourceTree = "<group>"; };
-		8CBCA90C24121DA300655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicPassphraseForResettingPINView.m; sourceTree = "<group>"; };
+		8CBCA90E241226E900655C9F /* LXHInputMnemonicWordsViewModelForResettingPIN.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHInputMnemonicWordsViewModelForResettingPIN.h; sourceTree = "<group>"; };
+		8CBCA90F241226E900655C9F /* LXHInputMnemonicWordsViewModelForResettingPIN.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHInputMnemonicWordsViewModelForResettingPIN.m; sourceTree = "<group>"; };
+		8CBCA91424122CFE00655C9F /* LXHSetPassphraseViewModelForResettingPIN.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHSetPassphraseViewModelForResettingPIN.h; sourceTree = "<group>"; };
+		8CBCA91524122CFE00655C9F /* LXHSetPassphraseViewModelForResettingPIN.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHSetPassphraseViewModelForResettingPIN.m; sourceTree = "<group>"; };
+		8CBCA9182412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicPassphraseForResettingPINView.m; sourceTree = "<group>"; };
+		8CBCA9192412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicPassphraseForResettingPINViewController.m; sourceTree = "<group>"; };
+		8CBCA91A2412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicPassphraseForResettingPINView.h; sourceTree = "<group>"; };
+		8CBCA91B2412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicPassphraseForResettingPINViewController.h; sourceTree = "<group>"; };
+		8CBCA91E241233B700655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicPassphraseForResettingPINViewModel.h; sourceTree = "<group>"; };
+		8CBCA91F241233B700655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicPassphraseForResettingPINViewModel.m; sourceTree = "<group>"; };
+		8CBCA92124123E1B00655C9F /* LXHCheckWalletMnemonicWordsViewModelForResettingPIN.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHCheckWalletMnemonicWordsViewModelForResettingPIN.h; sourceTree = "<group>"; };
+		8CBCA92224123E1B00655C9F /* LXHCheckWalletMnemonicWordsViewModelForResettingPIN.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHCheckWalletMnemonicWordsViewModelForResettingPIN.m; sourceTree = "<group>"; };
 		8CCA7D2823ACC98E00E4E9B2 /* LXHOutputDetailViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHOutputDetailViewModel.h; sourceTree = "<group>"; };
 		8CCA7D2923ACC98E00E4E9B2 /* LXHOutputDetailViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHOutputDetailViewModel.m; sourceTree = "<group>"; };
 		8CCA7D2B23ACCBF500E4E9B2 /* LXHTransactionDetailViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHTransactionDetailViewModel.h; sourceTree = "<group>"; };
@@ -1377,6 +1392,8 @@
 				8CA31F5A22D9872900CEA828 /* LXHInputMnemonicWordsView.m */,
 				8CF8B6AB23ABB73900536C3A /* LXHInputMnemonicWordsViewModel.h */,
 				8CF8B6AC23ABB73900536C3A /* LXHInputMnemonicWordsViewModel.m */,
+				8CBCA90E241226E900655C9F /* LXHInputMnemonicWordsViewModelForResettingPIN.h */,
+				8CBCA90F241226E900655C9F /* LXHInputMnemonicWordsViewModelForResettingPIN.m */,
 				8CA31F5922D9872900CEA828 /* LXHInputMnemonicWordsViewController.h */,
 				8CA31F5622D9872900CEA828 /* LXHInputMnemonicWordsViewController.m */,
 			);
@@ -1403,6 +1420,8 @@
 				8CF8B6AF23AC704C00536C3A /* LXHSetPassphraseViewModel.m */,
 				8CF8B6B123AC738A00536C3A /* LXHSetPassphraseViewModelForRestoringWallet.h */,
 				8CF8B6B223AC738A00536C3A /* LXHSetPassphraseViewModelForRestoringWallet.m */,
+				8CBCA91424122CFE00655C9F /* LXHSetPassphraseViewModelForResettingPIN.h */,
+				8CBCA91524122CFE00655C9F /* LXHSetPassphraseViewModelForResettingPIN.m */,
 				8CA31F6622D98BAA00CEA828 /* LXHSetPassphraseViewController.h */,
 				8CA31F6822D98BAA00CEA828 /* LXHSetPassphraseViewController.m */,
 			);
@@ -1429,6 +1448,8 @@
 				8CF8B6BB23AC89A500536C3A /* LXHCheckWalletMnemonicWordsViewModel.m */,
 				8CF8B6BD23AC8A9700536C3A /* LXHCheckWalletMnemonicWordsViewModelForRestoringWallet.h */,
 				8CF8B6BE23AC8A9700536C3A /* LXHCheckWalletMnemonicWordsViewModelForRestoringWallet.m */,
+				8CBCA92124123E1B00655C9F /* LXHCheckWalletMnemonicWordsViewModelForResettingPIN.h */,
+				8CBCA92224123E1B00655C9F /* LXHCheckWalletMnemonicWordsViewModelForResettingPIN.m */,
 				8CA31F7A22D98BAB00CEA828 /* LXHCheckWalletMnemonicWordsViewController.h */,
 				8CA31F7822D98BAB00CEA828 /* LXHCheckWalletMnemonicWordsViewController.m */,
 			);
@@ -1459,8 +1480,6 @@
 				8CA3211522DD69E700CEA828 /* LXHWalletMnemonicPassphraseForRestoringView.m */,
 				8CF8B6B723AC84B700536C3A /* LXHWalletMnemonicPassphraseForRestoringViewModel.h */,
 				8CF8B6B823AC84B700536C3A /* LXHWalletMnemonicPassphraseForRestoringViewModel.m */,
-				8CBCA90B24121DA300655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.h */,
-				8CBCA90C24121DA300655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.m */,
 				8CA31F8122D98BAB00CEA828 /* LXHWalletMnemonicPassphraseViewController.h */,
 				8CA31F8322D98BAB00CEA828 /* LXHWalletMnemonicPassphraseViewController.m */,
 			);
@@ -2016,14 +2035,15 @@
 				8CA31F8522D98BAC00CEA828 /* Welcome */,
 				8CA31F5F22D98BAA00CEA828 /* InitSetup */,
 				8CA3212022DDE61900CEA828 /* SetPin */,
-				8CBCA90224121D7800655C9F /* ForgotPINAfterWalletDataGenerated */,
 				8CBCA8FD24121D7800655C9F /* ForgotPINBeforeWalletDataGenerated */,
+				8CBCA90224121D7800655C9F /* ForgotPINAfterWalletDataGenerated */,
 				8CA31F6E22D98BAA00CEA828 /* InitWallet */,
 				8CA3211922DDD99300CEA828 /* SelectMnemonicWordLength */,
 				8CA31F7B22D98BAB00CEA828 /* WalletMnemonicWordsOneByOne */,
 				8CA31F5522D9872900CEA828 /* InputMnemonicWords */,
 				8CA31F7622D98BAB00CEA828 /* CheckWalletMnemonicWords */,
 				8CA31F8022D98BAB00CEA828 /* WalletMnemonicPassphrase */,
+				8CBCA9172412333C00655C9F /* WalletMnemonicPassphraseForResettingPIN */,
 				8CA31F6422D98BAA00CEA828 /* SetPassphrase */,
 				8CD2691F230A452A001B9300 /* GenerateWallet */,
 				8C23C1EE23CEB9E800B801CF /* SearchAddressesAndGenerateWallet */,
@@ -2093,6 +2113,19 @@
 				8CBCA90424121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedViewController.m */,
 			);
 			path = ForgotPINAfterWalletDataGenerated;
+			sourceTree = "<group>";
+		};
+		8CBCA9172412333C00655C9F /* WalletMnemonicPassphraseForResettingPIN */ = {
+			isa = PBXGroup;
+			children = (
+				8CBCA91A2412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.h */,
+				8CBCA9182412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.m */,
+				8CBCA91E241233B700655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewModel.h */,
+				8CBCA91F241233B700655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewModel.m */,
+				8CBCA91B2412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewController.h */,
+				8CBCA9192412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewController.m */,
+			);
+			path = WalletMnemonicPassphraseForResettingPIN;
 			sourceTree = "<group>";
 		};
 		8CD2691F230A452A001B9300 /* GenerateWallet */ = {
@@ -2546,6 +2579,7 @@
 				8CEAECC72383D508005754B3 /* LXHSelectionCell.m in Sources */,
 				8CF8B6BF23AC8A9700536C3A /* LXHCheckWalletMnemonicWordsViewModelForRestoringWallet.m in Sources */,
 				8CE9A94323AB2098007A58EF /* LXHTabBarPageViewModel.m in Sources */,
+				8CBCA91D2412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewController.m in Sources */,
 				8CA3228E22DEBE9900CEA828 /* BTCCurvePoint.m in Sources */,
 				8CA31F5D22D9872A00CEA828 /* LXHInputMnemonicWordsView.m in Sources */,
 				8CEAECDC2383D9B9005754B3 /* LXHBuildTransactionViewModelForFixedInput.m in Sources */,
@@ -2559,6 +2593,7 @@
 				8CF405FB235B0456008639F5 /* LXHOutputDetailViewController.m in Sources */,
 				8CA3229F22DEBE9900CEA828 /* BTCKey.m in Sources */,
 				8CA31FD222D9A37600CEA828 /* UIUtils.m in Sources */,
+				8CBCA91624122CFE00655C9F /* LXHSetPassphraseViewModelForResettingPIN.m in Sources */,
 				8C2CC6BB232F20E5005AA93C /* LXHSettingView.m in Sources */,
 				8C9334BC235DD15A00FBF238 /* LXHInputAddressCell.m in Sources */,
 				8CD26924230A452B001B9300 /* LXHGenerateWalletViewController.m in Sources */,
@@ -2583,8 +2618,10 @@
 				8CE9A93723AB194C007A58EF /* LXHTransactionListByAddressViewModel.m in Sources */,
 				8CE9A93423AB0F7C007A58EF /* LXHTransactionListViewModel.m in Sources */,
 				8CECB00E23B454EC00742E36 /* LXHSignedTransactionTextViewController.m in Sources */,
+				8CBCA920241233B700655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewModel.m in Sources */,
 				8CDF91312397A3C30004A229 /* LXHOutputListViewModelForFixedOutput.m in Sources */,
 				8CA322B9230049A000CEA828 /* RNCryptorEngine.m in Sources */,
+				8CBCA92324123E1B00655C9F /* LXHCheckWalletMnemonicWordsViewModelForResettingPIN.m in Sources */,
 				8C2CC6A9232F20E5005AA93C /* LXHTitleCell.m in Sources */,
 				8C93349E235DB14C00FBF238 /* LXHOutputListView.m in Sources */,
 				8CF405F6235B0456008639F5 /* LXHInputDetailView.m in Sources */,
@@ -2611,6 +2648,7 @@
 				8C9332CB235D816200FBF238 /* LXHOutputDetailTextRightIconCell.m in Sources */,
 				8CA3226422DEBE9900CEA828 /* BTCMnemonic+Tests.m in Sources */,
 				8CAA669C230E468200B17222 /* LXHTabBarPageViewController.m in Sources */,
+				8CBCA910241226E900655C9F /* LXHInputMnemonicWordsViewModelForResettingPIN.m in Sources */,
 				8CDCDE2523C998A6001F1287 /* LXHValidatePINViewController.m in Sources */,
 				8CA3211E22DDD99400CEA828 /* LXHSelectMnemonicWordLengthViewController.m in Sources */,
 				8CF405F5235B0456008639F5 /* LXHInputDetailViewController.m in Sources */,
@@ -2696,7 +2734,6 @@
 				8CA322B6230049A000CEA828 /* RNCryptor.m in Sources */,
 				8CA3228222DEBE9900CEA828 /* NS+BTCBase58.m in Sources */,
 				8CE9A92623A901FF007A58EF /* LXHAboutViewController.m in Sources */,
-				8CBCA90D24121DA300655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.m in Sources */,
 				8CA3226B22DEBE9900CEA828 /* BTCTransaction.m in Sources */,
 				8CA701AC22D8713E00F42814 /* main.m in Sources */,
 				8CA3211722DD69E800CEA828 /* LXHWalletMnemonicPassphraseForRestoringView.m in Sources */,
@@ -2763,6 +2800,7 @@
 				8CBCA90824121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedViewController.m in Sources */,
 				8C23C1ED23CDCE8100B801CF /* LXHGenerateWalletViewModel.m in Sources */,
 				8C9334AF235DB14C00FBF238 /* LXHInputFeeViewController.m in Sources */,
+				8CBCA91C2412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.m in Sources */,
 				8CA31F5E22D9872A00CEA828 /* LXHWordCell.m in Sources */,
 				8CEAECD62383D996005754B3 /* LXHBuildTransactionViewModelForFixedOutput.m in Sources */,
 				8C44C81F23A208E00091EC72 /* LXHEmptyCell.m in Sources */,

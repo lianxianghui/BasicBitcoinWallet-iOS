@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithWords:(NSArray *)words;
 
 - (NSString *)mnemonicWordsText;
+
+- (NSDictionary *)clickNextButtonNavigationInfo;
 - (id)walletMnemonicPassphraseViewModel;
 @end
 

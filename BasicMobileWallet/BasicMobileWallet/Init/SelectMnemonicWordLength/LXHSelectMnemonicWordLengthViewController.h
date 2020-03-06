@@ -9,6 +9,7 @@
 typedef NS_ENUM(NSUInteger, LXHSelectMnemonicWordLengthViewControllerType) {
     LXHSelectMnemonicWordLengthViewControllerTypeForCreatingNewWallet,
     LXHSelectMnemonicWordLengthViewControllerTypeForRestoringExistingWallet,
+    LXHSelectMnemonicWordLengthViewControllerTypeForResettingPIN,
 };
 
 @interface LXHSelectMnemonicWordLengthViewController : UIViewController

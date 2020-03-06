@@ -8,4 +8,5 @@
 
 @interface LXHSetPinViewController : UIViewController
 
+- (instancetype)initWithViewModel:(nullable id)viewModel;
 @end

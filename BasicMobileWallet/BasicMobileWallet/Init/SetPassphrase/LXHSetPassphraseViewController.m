@@ -84,7 +84,7 @@
 //    -3 两个输入一致，但输入包含空白字符
     switch (code) {
         case 1:
-            [self pushGenerateWalletViewControllerWithPassphrase:self.contentView.inputTextFieldWithPlaceHolder.text];
+            [self pushViewControllerWithPassphrase:self.contentView.inputTextFieldWithPlaceHolder.text];
             break;
         case -1:
             [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"请输入密码", nil) handler:nil];
@@ -96,7 +96,7 @@
         {
             LXHWeakSelf
             [self showOkCancelAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"密码含有空白字符，这是您的本意吗，您确定要使用包含空白字符的密码吗？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
-                [weakSelf pushGenerateWalletViewControllerWithPassphrase:self.contentView.inputTextFieldWithPlaceHolder.text];
+                [weakSelf pushViewControllerWithPassphrase:self.contentView.inputTextFieldWithPlaceHolder.text];
             } cancelHandler:nil];
             break;
         }
@@ -105,10 +105,16 @@
     }
 }
 
-- (void)pushGenerateWalletViewControllerWithPassphrase:(NSString *)passphrase {
-    id viewModel = [_viewModel generateWalletViewModelWithPassphrase:passphrase];
-    UIViewController *controller = [[LXHGenerateWalletViewController alloc] initWithViewModel:viewModel];
-    [self.navigationController pushViewController:controller animated:YES];
+- (void)pushViewControllerWithPassphrase:(NSString *)passphrase {
+    NSDictionary *navigationInfo = [_viewModel clickOKButtonNavigationInfoWithWithPassphrase:passphrase];
+    if (navigationInfo[@"errorInfo"]) {
+        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(navigationInfo[@"errorInfo"], nil) handler:nil];
+    } else {
+        NSString *controllerClassName = navigationInfo[@"controllerClassName"];
+        id viewModel = navigationInfo[@"viewModel"];
+        UIViewController *controller = [[NSClassFromString(controllerClassName) alloc] initWithViewModel:viewModel];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 - (void)leftImageButtonClicked:(UIButton *)sender {

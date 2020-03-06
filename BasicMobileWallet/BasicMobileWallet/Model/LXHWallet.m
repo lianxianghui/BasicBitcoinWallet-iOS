@@ -194,6 +194,13 @@
     }];
 }
 
++ (BOOL)isCurrentMnemonicCodeWords:(NSArray *)mnemonicCodeWords
+             andMnemonicPassphrase:(nullable NSString *)mnemonicPassphrase {
+    BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:mnemonicCodeWords password:mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
+    NSData *seedToCompare = [mnemonic seed].copy;
+    return [LXHKeychainStore.sharedInstance data:seedToCompare isEqualToEncryptedDataForKey:kLXHKeychainStoreRootSeed];
+}
+
 + (void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                  mnemonicPassphrase:(nullable NSString *)mnemonicPassphrase
                                             netType:(LXHBitcoinNetworkType)netType
