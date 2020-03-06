@@ -289,7 +289,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"如果您之前拥有一个符合BIP-44标准的HD钱包，可以用您之前记录的助记词序列和助记词密码来恢复该钱包。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"如果您之前拥有一个符合BIP44标准的HD钱包，可以用您之前记录的助记词序列和助记词密码来恢复该钱包。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         _desc2.attributedText = attributedText;
@@ -334,7 +334,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"会按着BIP-44的标准为您生成一个新的HD钱包（分层确定性钱包），在生成的过程中会显示若干个英文单词的助记词序列，您也可以选择性地设置一个助记词密码。有了助记词序列和助记词密码，你可以在未来重新生成私钥。由于拥有私钥就等于拥有了您的比特币，所以请务必记住助记码和密码并保存好。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"会按着BIP44的标准为您生成一个新的HD钱包（分层确定性钱包），在生成的过程中会显示若干个英文单词的助记词序列，您也可以选择性地设置一个助记词密码。有了助记词序列和助记词密码，你可以在未来重新生成私钥。由于拥有私钥就等于拥有了您的比特币，所以请务必记住助记码和密码并保存好。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         _desc1.attributedText = attributedText;

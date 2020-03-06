@@ -223,7 +223,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"会按着BIP-44的标准为您生成一个HD钱包（分层确定性钱包）。您可以从创建新钱包、恢复已有钱包和导入只读钱包这三个选项中选择一种来初始化您的钱包。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"会按着BIP44的标准为您生成一个HD钱包（分层确定性钱包）。您可以从创建新钱包、恢复已有钱包和导入只读钱包这三个选项中选择一种来初始化您的钱包。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         font = [UIFont fontWithName:@"SFProText-Regular" size:14];
