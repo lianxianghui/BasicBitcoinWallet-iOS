@@ -19,5 +19,9 @@
  如果已经有了钱包数据，就进入TabBar主页
  */
 + (void)reEnter;
+- (void)presentValidatePINViewController;//验证成功会自动dismiss
+- (void)pushValidatePINViewControllerIfNeeded;
+- (void)popValidatePINViewController;
++ (LXHRootViewController *)currentRootViewController;
 @end
 
