@@ -12,6 +12,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-
++ (UIViewController *)currentRootViewController;
 @end
 

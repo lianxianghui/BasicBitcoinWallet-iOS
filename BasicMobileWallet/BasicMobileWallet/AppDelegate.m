@@ -86,4 +86,9 @@
 }
 
 
++ (UIViewController *)currentRootViewController {
+    AppDelegate *appDelegate = (AppDelegate*)UIApplication.sharedApplication.delegate;
+    return appDelegate.window.rootViewController;
+}
+
 @end
