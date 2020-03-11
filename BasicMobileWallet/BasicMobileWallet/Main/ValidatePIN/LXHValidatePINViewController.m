@@ -76,8 +76,10 @@
          __weak typeof(self) weakSelf = self;
         UIAlertController *pinCodeInput = [UIUtils pinCodeInputOKAndForgotPINAlertWithMessage:nil textBlock:^(NSString *text) {
             if ([[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN]) {
-                if (weakSelf.successBlock)
+                if (weakSelf.successBlock) {
+                    [weakSelf dismissViewControllerAnimated:NO completion:nil];
                     weakSelf.successBlock();
+                }
             } else {
                 [self showOkAlertViewWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"PIN码不正确", nil) handler:^(UIAlertAction * _Nonnull action) {
                     [weakSelf showValidatePINOKAlert];//确定后再次显示
@@ -90,7 +92,7 @@
             } else {
                 viewController = [[LXHForgotPINBeforeWalletDataGeneratedViewController alloc] init];
             }
-            [self.navigationController pushViewController:viewController animated:YES];
+            [weakSelf.navigationController pushViewController:viewController animated:YES];
         }];
         [self presentViewController:pinCodeInput animated:YES completion:nil];
     }
