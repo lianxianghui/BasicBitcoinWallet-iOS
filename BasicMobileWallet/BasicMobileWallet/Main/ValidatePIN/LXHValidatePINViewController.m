@@ -57,7 +57,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self showValidatePINOKAlert];
+    [self showValidatePINAlertIfNeeded];
 }
 
 - (void)swipeView:(id)sender {
@@ -71,7 +71,7 @@
 }
 
 
-- (void)showValidatePINOKAlert {
+- (void)showValidatePINAlertIfNeeded {
     if ([LXHWallet hasPIN]) {
          __weak typeof(self) weakSelf = self;
         UIAlertController *pinCodeInput = [UIUtils pinCodeInputOKAndForgotPINAlertWithMessage:nil textBlock:^(NSString *text) {
@@ -82,7 +82,7 @@
                 }
             } else {
                 [self showOkAlertViewWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"PIN码不正确", nil) handler:^(UIAlertAction * _Nonnull action) {
-                    [weakSelf showValidatePINOKAlert];//确定后再次显示
+                    [weakSelf showValidatePINAlertIfNeeded];//确定后再次显示
                 }];
             }
         } forgotPINBlock:^{
