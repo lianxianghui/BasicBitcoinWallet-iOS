@@ -11,6 +11,7 @@
 #import "LXHKeychainStore.h"
 #import "UIUtils.h"
 #import "LXHWallet.h"
+#import "AppDelegate.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -88,6 +89,14 @@
     NSString *pin = self.contentView.inputPinTextFieldWithPlaceHolder.text;
     if (![LXHKeychainStore.sharedInstance encryptAndSetString:pin forKey:kLXHKeychainStorePIN]) {
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"保存PIN码失败", nil) handler:nil];
+    } else {
+        [self popOrDismiss];
+    }
+}
+
+- (void)popOrDismiss {
+    if ([AppDelegate currentRootViewController].presentedViewController) { //说明当前SetPinViewController是从忘记PIN码那个流程来的，需要dismiss
+        [[AppDelegate currentRootViewController] dismissViewControllerAnimated:YES completion:nil];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
     }
