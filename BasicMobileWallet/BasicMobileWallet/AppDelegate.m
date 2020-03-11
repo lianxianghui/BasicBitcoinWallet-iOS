@@ -10,6 +10,7 @@
 #import "LXHWallet.h"
 #import "LXHValidatePINViewController.h"
 #import "LXHMaskViewController.h"
+#import "LXHControllerUtils.h"
 
 @interface AppDelegate ()
 @property (nonatomic) LXHMaskViewController *maskViewController;
@@ -24,6 +25,11 @@
     //disable cache for privacy
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
+    
+    self.window = self.window ? : [[UIWindow alloc] init];
+    self.window.rootViewController = [LXHControllerUtils createRootViewController];
+    [self.window makeKeyAndVisible];
+
     return YES;
 }
 
