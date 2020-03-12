@@ -90,7 +90,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] postNotificationName:LXHRootControllerLoaded object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LXHRootControllerAppear object:self];
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {

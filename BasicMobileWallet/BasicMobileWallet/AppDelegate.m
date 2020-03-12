@@ -70,14 +70,14 @@
 
 - (void)appLaunchedLogicForViewController {
     //先注册rootViewController加载完成的逻辑，以便接下来必要的流程（目前是判断是否要显示验证PIN码的ViewController)
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(rootViewControllerLoadedForPINValidation:) name:LXHRootControllerLoaded object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(rootViewControllerAppearForPINValidation:) name:LXHRootControllerAppear object:nil];
     
     //执行进入rootViewController的流程
     [self enterRootViewController];
 }
 
-- (void)rootViewControllerLoadedForPINValidation:(NSNotification *)notification {
-    [NSNotificationCenter.defaultCenter removeObserver:self name:LXHRootControllerLoaded object:nil];
+- (void)rootViewControllerAppearForPINValidation:(NSNotification *)notification {
+    [NSNotificationCenter.defaultCenter removeObserver:self name:LXHRootControllerAppear object:nil];
     //如果是当前rootViewContrller就进入显示验证PIN码的ViewController的流程
     if (notification.object == [AppDelegate currentRootViewController]) {
         [self presentPINValidationViewControllerIfNeeded];

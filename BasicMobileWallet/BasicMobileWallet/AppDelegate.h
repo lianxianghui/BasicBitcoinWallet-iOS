@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define LXHRootControllerLoaded @"LXHRootControllerLoaded"
+#define LXHRootControllerAppear @"LXHRootControllerAppear"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

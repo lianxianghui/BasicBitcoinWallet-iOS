@@ -40,13 +40,11 @@
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
     [self setDelegates];
-    
-    //[[NSNotificationCenter defaultCenter] postNotificationName:LXHRootControllerLoaded object:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] postNotificationName:LXHRootControllerLoaded object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LXHRootControllerAppear object:self];
 }
 
 - (void)swipeView:(id)sender {
