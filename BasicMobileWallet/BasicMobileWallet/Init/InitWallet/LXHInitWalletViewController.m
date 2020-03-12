@@ -10,7 +10,7 @@
 #import "LXHScanQRViewController.h"
 #import "LXHSelectMnemonicWordLengthViewController.h"
 #import "LXHWallet.h"
-#import "LXHRootViewController.h"
+#import "AppDelegate.h"
 #import "Toast.h"
 
 
@@ -69,7 +69,7 @@
         [weakSelf.contentView.indicatorView startAnimating];
         [LXHWallet importReadOnlyWalletWithAccountExtendedPublicKey:message successBlock:^(NSDictionary * _Nonnull resultDic) {
             [weakSelf.contentView.indicatorView stopAnimating];
-            [LXHRootViewController reEnter];
+            [AppDelegate reEnterRootViewController];
          } failureBlock:^(NSDictionary * _Nonnull resultDic) {
              [weakSelf.contentView.indicatorView stopAnimating];
              [weakSelf.view makeToast:NSLocalizedString(@"导入只读钱包失败", nil)];

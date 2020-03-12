@@ -16,7 +16,7 @@
 #import "UIViewController+LXHAlert.h"
 #import "LXHWallet.h"
 #import "AppDelegate.h"
-#import "LXHRootViewController.h"
+#import "AppDelegate.h"
 #import "UIViewController+LXHBasicMobileWallet.h"
 #import "LXHTransactionDataManager.h"
 #import "LXHShowWalletMnemonicWordsViewController.h"
@@ -271,7 +271,7 @@
         [LXHWallet clearPIN];
         [[LXHTransactionDataManager sharedInstance] clearCachedData];
         //show welcome page
-        [LXHRootViewController reEnter];
+        [AppDelegate reEnterRootViewController];
     } cancelHandler:nil];
 }
 

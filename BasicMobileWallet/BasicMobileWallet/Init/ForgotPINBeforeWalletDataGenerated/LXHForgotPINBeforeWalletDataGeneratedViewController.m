@@ -7,7 +7,7 @@
 #import "LXHForgotPINBeforeWalletDataGeneratedViewController.h"
 #import "Masonry.h"
 #import "LXHForgotPINBeforeWalletDataGeneratedView.h"
-#import "LXHRootViewController.h"
+#import "AppDelegate.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -56,7 +56,7 @@
 
 //Actions
 - (void)buttonClicked:(UIButton *)sender {
-    [LXHRootViewController reEnter];
+    [AppDelegate reEnterRootViewController];
 }
 
 - (void)leftImageButtonClicked:(UIButton *)sender {

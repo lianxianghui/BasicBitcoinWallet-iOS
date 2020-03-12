@@ -9,7 +9,7 @@
 #import "LXHGenerateWalletView.h"
 #import "UIViewController+LXHAlert.h"
 #import "LXHGenerateWalletViewModel.h"
-#import "LXHRootViewController.h"
+#import "AppDelegate.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -96,7 +96,7 @@
     if (info) {
         BOOL willEnterTabBarPage = [info[@"willEnterTabBarPage"] boolValue];
         if (willEnterTabBarPage) {//will enter TabBarPage
-            [LXHRootViewController reEnter];
+            [AppDelegate reEnterRootViewController];
             return;
         }
         NSString *controllerName = info[@"controllerName"];

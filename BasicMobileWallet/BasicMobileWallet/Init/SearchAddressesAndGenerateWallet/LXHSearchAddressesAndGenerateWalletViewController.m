@@ -10,7 +10,7 @@
 #import "LXHSearchAddressesAndGenerateWalletViewModel.h"
 #import "UIViewController+LXHAlert.h"
 #import "LXHTabBarPageViewModel.h"
-#import "LXHRootViewController.h"
+#import "AppDelegate.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -69,7 +69,7 @@
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
     if([_viewModel generateExistWalletData]) {
-        [self pushTabBarViewController];
+        [self clearAndEnterTabBarViewController];
     } else {
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"发生了无法处理的错误，如果方便请联系并告知开发人员", nil) handler:nil];
     }
@@ -80,7 +80,7 @@
     __weak typeof(self) weakSelf = self;
     [_viewModel searchUsedAddressesAndGenerateExistWalletDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
         [weakSelf.contentView.indicatorView startAnimating];
-        [weakSelf pushTabBarViewController];
+        [weakSelf clearAndEnterTabBarViewController];
     } failureBlock:^(NSString * _Nonnull errorPrompt) {
         [weakSelf.contentView.indicatorView stopAnimating];
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(errorPrompt, nil) handler:nil];
@@ -100,8 +100,11 @@
     sender.alpha = 1;
 }
 
-- (void)pushTabBarViewController {
-    [LXHRootViewController reEnter];//之前的页面中含有助记词等信息。为了安全考虑，把之前的页面清除，然后再进入LXHTabBarPageViewController
+//由于之前的页面中含有助记词等信息。为了安全考虑，把之前的页面清除，然后再进入LXHTabBarPageViewController
+- (void)clearAndEnterTabBarViewController {
+    //[AppDelegate reEnterRootViewController]会把之前的页面都清除，重新进入rootViewController
+    //有钱包数据的情况下, rootViewController就是LXHTabBarPageViewController
+    [AppDelegate reEnterRootViewController];
 }
 
 @end

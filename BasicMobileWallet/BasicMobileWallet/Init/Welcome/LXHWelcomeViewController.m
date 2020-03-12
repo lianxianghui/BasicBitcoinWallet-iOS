@@ -8,6 +8,7 @@
 #import "Masonry.h"
 #import "LXHWelcomeView.h"
 #import "LXHInitSetupViewController.h"
+#import "AppDelegate.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -39,6 +40,13 @@
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
     [self setDelegates];
+    
+    //[[NSNotificationCenter defaultCenter] postNotificationName:LXHRootControllerLoaded object:self];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LXHRootControllerLoaded object:self];
 }
 
 - (void)swipeView:(id)sender {

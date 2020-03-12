@@ -10,6 +10,7 @@
 #import "LXHOthersViewController.h"
 #import "LXHSelectWayOfSendingBitcoinViewController.h"
 #import "LXHTabBarPageViewModel.h"
+#import "AppDelegate.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -85,10 +86,12 @@
     
     self.tabBar.translucent = NO;
     self.delegate = self;
-
-    
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LXHRootControllerLoaded object:self];
+}
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     UINavigationController *navigationController = (UINavigationController *)viewController;
