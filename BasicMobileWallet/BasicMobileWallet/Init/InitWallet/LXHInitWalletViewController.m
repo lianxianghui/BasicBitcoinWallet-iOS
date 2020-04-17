@@ -12,7 +12,7 @@
 #import "LXHWallet.h"
 #import "AppDelegate.h"
 #import "Toast.h"
-
+#import "LXHInitFlow.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -80,12 +80,14 @@
 }
 
 - (void)restoreWalletButtonClicked:(UIButton *)sender {
+    [LXHInitFlow startRestoringExistWalletFlow];
     LXHSelectMnemonicWordLengthViewController *controller = [LXHSelectMnemonicWordLengthViewController new];
     controller.type = LXHSelectMnemonicWordLengthViewControllerTypeForRestoringExistingWallet;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)createWalletButtonClicked:(UIButton *)sender {
+    [LXHInitFlow startCreatingNewWalletFlow];
     LXHSelectMnemonicWordLengthViewController *controller = [LXHSelectMnemonicWordLengthViewController new];
     controller.type = LXHSelectMnemonicWordLengthViewControllerTypeForCreatingNewWallet;
     [self.navigationController pushViewController:controller animated:YES];

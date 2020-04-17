@@ -19,6 +19,14 @@ static LXHInitFlow *currentFlow = nil;
     return currentFlow;
 }
 
++ (void)startCreatingNewWalletFlow {
+    currentFlow = [LXHInitFlowForCreatingNewWallet sharedInstance];
+}
+
++ (void)startRestoringExistWalletFlow {
+    currentFlow = [LXHInitFlowForRestoringWallet sharedInstance];
+}
+
 + (void)startResettingPINFlow {
     currentFlow = [LXHInitFlowForResettingPIN sharedInstance];
 }
@@ -28,6 +36,10 @@ static LXHInitFlow *currentFlow = nil;
 }
 
 - (id)checkWalletMnemonicWordsClickNextButtonNavigationInfo {
+    return nil;
+}
+
+- (nullable NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
     return nil;
 }
 @end

@@ -16,14 +16,17 @@ NS_ASSUME_NONNULL_BEGIN
 //init parameters
 @property (nonatomic) NSUInteger mnemonicWordsLength;
 @property (nonatomic) NSArray *mnemonicWords;
-@property (nonatomic) NSString *MnemonicPassphrase;
+@property (nonatomic) NSString *mnemonicPassphrase;
 @property (nonatomic) LXHBitcoinNetworkType networkType;
 
 + (LXHInitFlow *)currentFlow;
++ (void)startCreatingNewWalletFlow;
++ (void)startRestoringExistWalletFlow;
 + (void)startResettingPINFlow;
 + (void)endFlow;
 
 - (id)checkWalletMnemonicWordsClickNextButtonNavigationInfo;
+- (nullable NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -9,6 +9,7 @@
 #import "LXHSetPassphraseViewModel.h"
 #import "NSString+Base.h"
 #import "LXHGenerateWalletViewModel.h"
+#import "LXHInitFlow.h"
 
 @interface LXHSetPassphraseViewModel ()
 @end
@@ -42,9 +43,7 @@
 }
 
 - (NSDictionary *)clickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
-    NSString *controllerClassName = @"LXHGenerateWalletViewController";
-    id viewModel = [[LXHGenerateNewWalletViewModel alloc] initWithMnemonicCodeWords:self.words mnemonicPassphrase:passphrase];
-    return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
+    return [[LXHInitFlow currentFlow] setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:passphrase];
 }
 
 @end

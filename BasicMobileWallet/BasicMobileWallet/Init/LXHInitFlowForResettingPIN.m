@@ -8,6 +8,7 @@
 
 #import "LXHInitFlowForResettingPIN.h"
 #import "LXHWalletMnemonicPassphraseForResettingPINViewModel.h"
+#import "LXHWallet.h"
 
 @implementation LXHInitFlowForResettingPIN
 
@@ -23,5 +24,16 @@
 - (id)checkWalletMnemonicWordsClickNextButtonNavigationInfo {
     id viewModel = [[LXHWalletMnemonicPassphraseForResettingPINViewModel alloc] initWithWords:self.mnemonicWords];
     return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseForResettingPINViewController", @"viewModel":viewModel};
+}
+
+- (nullable NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
+    [LXHInitFlow currentFlow].mnemonicPassphrase = passphrase;
+    if ([LXHWallet isCurrentMnemonicCodeWords:self.mnemonicWords andMnemonicPassphrase:passphrase]) {
+        NSString *controllerClassName = @"LXHSetPinViewController";
+        id viewModel = [NSNull null];
+        return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
+    } else {
+        return @{@"errorInfo":@"您所输入的助记词或助记词密码有误"};
+    }
 }
 @end
