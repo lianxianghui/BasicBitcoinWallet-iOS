@@ -13,6 +13,7 @@
 #import "LXHWallet.h"
 #import "AppDelegate.h"
 #import "LXHValidatePINViewController.h"
+#import "LXHInitFlow.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -97,6 +98,7 @@
 
 - (void)popOrDismiss {
     if ([AppDelegate pinValidationViewControllerPresented]) { //说明当前SetPinViewController是从忘记PIN码那个流程过来的，需要dismiss LXHValidatePINViewController
+        [LXHInitFlow endFlow];
         [[AppDelegate currentRootViewController] dismissViewControllerAnimated:NO completion:nil];
     } else {
         [self.navigationController popViewControllerAnimated:YES];

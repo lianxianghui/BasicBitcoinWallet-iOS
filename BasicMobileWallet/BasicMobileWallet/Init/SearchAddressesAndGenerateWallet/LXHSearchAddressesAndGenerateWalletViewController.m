@@ -11,6 +11,7 @@
 #import "UIViewController+LXHAlert.h"
 #import "LXHTabBarPageViewModel.h"
 #import "AppDelegate.h"
+#import "LXHInitFlow.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -69,6 +70,7 @@
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
     if([_viewModel generateExistWalletData]) {
+        [LXHInitFlow endFlow];
         [self clearAndEnterTabBarViewController];
     } else {
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"发生了无法处理的错误，如果方便请联系并告知开发人员", nil) handler:nil];
@@ -80,6 +82,7 @@
     __weak typeof(self) weakSelf = self;
     [_viewModel searchUsedAddressesAndGenerateExistWalletDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
         [weakSelf.contentView.indicatorView startAnimating];
+        [LXHInitFlow endFlow];
         [weakSelf clearAndEnterTabBarViewController];
     } failureBlock:^(NSString * _Nonnull errorPrompt) {
         [weakSelf.contentView.indicatorView stopAnimating];
