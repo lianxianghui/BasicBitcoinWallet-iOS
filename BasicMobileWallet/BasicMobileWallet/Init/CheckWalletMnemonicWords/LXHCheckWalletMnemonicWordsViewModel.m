@@ -8,6 +8,7 @@
 
 #import "LXHCheckWalletMnemonicWordsViewModel.h"
 #import "LXHWalletMnemonicPassphraseViewModel.h"
+#import "LXHInitFlow.h"
 
 @implementation LXHCheckWalletMnemonicWordsViewModel
 
@@ -24,13 +25,9 @@
     return text;
 }
 
-- (id)walletMnemonicPassphraseViewModel {
-    return [[LXHWalletMnemonicPassphraseViewModel alloc] initWithWords:self.words];
-}
-
 - (NSDictionary *)clickNextButtonNavigationInfo {
-    id viewModel = [[LXHWalletMnemonicPassphraseViewModel alloc] initWithWords:self.words];
-    return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseViewController", @"viewModel":viewModel};
+    LXHInitFlow *currentFlow = [LXHInitFlow currentFlow];
+    return [currentFlow checkWalletMnemonicWordsClickNextButtonNavigationInfo];
 }
 
 @end

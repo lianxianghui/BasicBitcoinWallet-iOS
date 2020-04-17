@@ -13,8 +13,8 @@
 #import "LXHInputMnemonicWordsViewModel.h"
 #import "LXHWalletMnemonicWordsOneByOneViewController.h"
 #import "LXHWalletMnemonicWordsOneByOneViewModel.h"
-#import "LXHInputMnemonicWordsViewModelForResettingPIN.h"
-
+//#import "LXHInputMnemonicWordsViewModelForResettingPIN.h"
+#import "LXHInitFlow.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -196,12 +196,14 @@
         id viewModel = [[LXHWalletMnemonicWordsOneByOneViewModel alloc] initWithWordLength:selectedLength.integerValue];
         LXHWalletMnemonicWordsOneByOneViewController *controller = [[LXHWalletMnemonicWordsOneByOneViewController alloc] initWithViewModel:viewModel];
         [self.navigationController pushViewController:controller animated:YES];
-    } else if (self.type == LXHSelectMnemonicWordLengthViewControllerTypeForRestoringExistingWallet) {
-        id viewModel = [[LXHInputMnemonicWordsViewModel alloc] initWithWordLength:selectedLength.integerValue];
-        LXHInputMnemonicWordsViewController *controller = [[LXHInputMnemonicWordsViewController alloc] initWithViewModel:viewModel];
-        [self.navigationController pushViewController:controller animated:YES]; 
-    } else if (self.type == LXHSelectMnemonicWordLengthViewControllerTypeForResettingPIN) {
-        id viewModel = [[LXHInputMnemonicWordsViewModelForResettingPIN alloc] initWithWordLength:selectedLength.integerValue];
+//    } else if (self.type == LXHSelectMnemonicWordLengthViewControllerTypeForRestoringExistingWallet) {
+//        id viewModel = [[LXHInputMnemonicWordsViewModel alloc] initWithWordLength:selectedLength.integerValue];
+//        LXHInputMnemonicWordsViewController *controller = [[LXHInputMnemonicWordsViewController alloc] initWithViewModel:viewModel];
+//        [self.navigationController pushViewController:controller animated:YES];
+    } else {//} if (self.type == LXHSelectMnemonicWordLengthViewControllerTypeForResettingPIN) {
+        NSUInteger mnemonicWordsLength = selectedLength.integerValue;
+        [LXHInitFlow currentFlow].mnemonicWordsLength = mnemonicWordsLength;
+        id viewModel = [[LXHInputMnemonicWordsViewModel alloc] initWithWordLength:mnemonicWordsLength];
         LXHInputMnemonicWordsViewController *controller = [[LXHInputMnemonicWordsViewController alloc] initWithViewModel:viewModel];
         [self.navigationController pushViewController:controller animated:YES];
     }

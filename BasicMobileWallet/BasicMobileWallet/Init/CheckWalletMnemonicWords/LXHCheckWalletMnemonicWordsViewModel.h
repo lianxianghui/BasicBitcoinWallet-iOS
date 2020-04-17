@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)mnemonicWordsText;
 
 - (NSDictionary *)clickNextButtonNavigationInfo;
-- (id)walletMnemonicPassphraseViewModel;
 @end
 
 NS_ASSUME_NONNULL_END
