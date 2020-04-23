@@ -8,4 +8,5 @@
 
 @interface LXHForgotPINAfterWalletDataGeneratedViewController : UIViewController
 
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

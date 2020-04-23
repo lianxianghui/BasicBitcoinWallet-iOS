@@ -12,7 +12,7 @@
 #import "LXHWallet.h"
 #import "AppDelegate.h"
 #import "Toast.h"
-#import "LXHInitFlow.h"
+#import "LXHInitWalletViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -22,10 +22,18 @@
     
 @interface LXHInitWalletViewController()
 @property (nonatomic) LXHInitWalletView *contentView;
-
+@property (nonatomic) LXHInitWalletViewModel *viewModel;
 @end
 
 @implementation LXHInitWalletViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -80,16 +88,14 @@
 }
 
 - (void)restoreWalletButtonClicked:(UIButton *)sender {
-    [LXHInitFlow startRestoringExistWalletFlow];
-    LXHSelectMnemonicWordLengthViewController *controller = [LXHSelectMnemonicWordLengthViewController new];
-    controller.type = LXHSelectMnemonicWordLengthViewControllerTypeForRestoringExistingWallet;
+    id viewModel = [_viewModel restoreWalletButtonClicked];
+    LXHSelectMnemonicWordLengthViewController *controller = [[LXHSelectMnemonicWordLengthViewController alloc] initWithViewModel:viewModel];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)createWalletButtonClicked:(UIButton *)sender {
-    [LXHInitFlow startCreatingNewWalletFlow];
-    LXHSelectMnemonicWordLengthViewController *controller = [LXHSelectMnemonicWordLengthViewController new];
-    controller.type = LXHSelectMnemonicWordLengthViewControllerTypeForCreatingNewWallet;
+    id viewModel = [_viewModel createWalletButtonClicked];
+    LXHSelectMnemonicWordLengthViewController *controller = [[LXHSelectMnemonicWordLengthViewController alloc] initWithViewModel:viewModel];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

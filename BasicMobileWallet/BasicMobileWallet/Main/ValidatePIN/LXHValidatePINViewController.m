@@ -15,6 +15,7 @@
 #import "LXHForgotPINAfterWalletDataGeneratedViewController.h"
 #import "LXHForgotPINBeforeWalletDataGeneratedViewController.h"
 #import "AppDelegate.h"
+#import "LXHForgotPINAfterWalletDataGeneratedViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -86,13 +87,15 @@
                 }];
             }
         } forgotPINBlock:^{
-            UIViewController *viewController;
             if ([LXHWallet walletDataGenerated]) {
-                viewController = [[LXHForgotPINAfterWalletDataGeneratedViewController alloc] init];
+                id viewModel = [[LXHForgotPINAfterWalletDataGeneratedViewModel alloc] init];
+                UIViewController *viewController = [[LXHForgotPINAfterWalletDataGeneratedViewController alloc] initWithViewModel:viewModel];
+                [weakSelf.navigationController pushViewController:viewController animated:YES];
             } else {
-                viewController = [[LXHForgotPINBeforeWalletDataGeneratedViewController alloc] init];
+                UIViewController *viewController = [[LXHForgotPINBeforeWalletDataGeneratedViewController alloc] init];
+                [weakSelf.navigationController pushViewController:viewController animated:YES];
             }
-            [weakSelf.navigationController pushViewController:viewController animated:YES];
+            
         }];
         [self presentViewController:pinCodeInput animated:YES completion:nil];
     }

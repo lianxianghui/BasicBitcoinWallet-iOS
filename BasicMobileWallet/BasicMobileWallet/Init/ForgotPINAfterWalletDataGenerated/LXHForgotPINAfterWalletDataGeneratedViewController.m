@@ -12,7 +12,7 @@
 #import "LXHWallet.h"
 #import "Toast.h"
 #import "LXHSelectMnemonicWordLengthViewController.h"
-#import "LXHInitFlow.h"
+#import "LXHForgotPINAfterWalletDataGeneratedViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -22,10 +22,18 @@
     
 @interface LXHForgotPINAfterWalletDataGeneratedViewController()
 @property (nonatomic) LXHForgotPINAfterWalletDataGeneratedView *contentView;
-
+@property (nonatomic) LXHForgotPINAfterWalletDataGeneratedViewModel *viewModel;
 @end
 
 @implementation LXHForgotPINAfterWalletDataGeneratedViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -62,9 +70,8 @@
 
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
-    [LXHInitFlow startResettingPINFlow];
-    LXHSelectMnemonicWordLengthViewController *controller = [[LXHSelectMnemonicWordLengthViewController alloc] init];
-    controller.type = LXHSelectMnemonicWordLengthViewControllerTypeForResettingPIN;
+    id viewModel = [_viewModel inputMnemonicWordButtonClicked];
+    LXHSelectMnemonicWordLengthViewController *controller = [[LXHSelectMnemonicWordLengthViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 
 }

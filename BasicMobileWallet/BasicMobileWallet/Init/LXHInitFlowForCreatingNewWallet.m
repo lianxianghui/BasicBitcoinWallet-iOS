@@ -9,6 +9,7 @@
 #import "LXHInitFlowForCreatingNewWallet.h"
 #import "LXHWalletMnemonicPassphraseViewModel.h"
 #import "LXHGenerateWalletViewModel.h"
+#import "LXHWalletMnemonicWordsOneByOneViewModel.h"
 
 @implementation LXHInitFlowForCreatingNewWallet
 
@@ -26,10 +27,16 @@
     return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseViewController", @"viewModel":viewModel};
 }
 
-- (nullable NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
+- (NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
     self.mnemonicPassphrase = passphrase;
     NSString *controllerClassName = @"LXHGenerateWalletViewController";
     id viewModel = [[LXHGenerateNewWalletViewModel alloc] initWithMnemonicCodeWords:self.mnemonicWords mnemonicPassphrase:passphrase];
+    return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
+}
+
+- (NSDictionary *)selectMnemonicWordLengthViewClickRowNavigationInfo {
+    id viewModel = [[LXHWalletMnemonicWordsOneByOneViewModel alloc] initWithWordLength:self.mnemonicWordsLength];
+    NSString *controllerClassName = @"LXHWalletMnemonicWordsOneByOneViewController";
     return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
 }
 

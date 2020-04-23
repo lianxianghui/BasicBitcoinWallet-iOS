@@ -13,8 +13,8 @@
 #import "LXHInputMnemonicWordsViewModel.h"
 #import "LXHWalletMnemonicWordsOneByOneViewController.h"
 #import "LXHWalletMnemonicWordsOneByOneViewModel.h"
-//#import "LXHInputMnemonicWordsViewModelForResettingPIN.h"
 #import "LXHInitFlow.h"
+#import "LXHSelectMnemonicWordLengthViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -25,9 +25,18 @@
 @interface LXHSelectMnemonicWordLengthViewController() <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic) LXHSelectMnemonicWordLengthView *contentView;
+@property (nonatomic) LXHSelectMnemonicWordLengthViewModel *viewModel;
 @end
 
 @implementation LXHSelectMnemonicWordLengthViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -192,21 +201,14 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *dic = [self cellDataForTableView:tableView atIndexPath:indexPath];
     NSString *selectedLength = [dic valueForKey:@"text"];
-    if (self.type == LXHSelectMnemonicWordLengthViewControllerTypeForCreatingNewWallet) {
-        id viewModel = [[LXHWalletMnemonicWordsOneByOneViewModel alloc] initWithWordLength:selectedLength.integerValue];
-        LXHWalletMnemonicWordsOneByOneViewController *controller = [[LXHWalletMnemonicWordsOneByOneViewController alloc] initWithViewModel:viewModel];
-        [self.navigationController pushViewController:controller animated:YES];
-//    } else if (self.type == LXHSelectMnemonicWordLengthViewControllerTypeForRestoringExistingWallet) {
-//        id viewModel = [[LXHInputMnemonicWordsViewModel alloc] initWithWordLength:selectedLength.integerValue];
-//        LXHInputMnemonicWordsViewController *controller = [[LXHInputMnemonicWordsViewController alloc] initWithViewModel:viewModel];
-//        [self.navigationController pushViewController:controller animated:YES];
-    } else {//} if (self.type == LXHSelectMnemonicWordLengthViewControllerTypeForResettingPIN) {
-        NSUInteger mnemonicWordsLength = selectedLength.integerValue;
-        [LXHInitFlow currentFlow].mnemonicWordsLength = mnemonicWordsLength;
-        id viewModel = [[LXHInputMnemonicWordsViewModel alloc] initWithWordLength:mnemonicWordsLength];
-        LXHInputMnemonicWordsViewController *controller = [[LXHInputMnemonicWordsViewController alloc] initWithViewModel:viewModel];
-        [self.navigationController pushViewController:controller animated:YES];
-    }
+    NSUInteger mnemonicWordsLength = selectedLength.integerValue;
+    
+    NSDictionary *navigationInfo = [_viewModel clickRowWithWordsLength:mnemonicWordsLength];
+    NSString *controllerClassName = navigationInfo[@"controllerClassName"];
+    id viewModel = navigationInfo[@"viewModel"];
+    UIViewController *controller = [[NSClassFromString(controllerClassName) alloc] initWithViewModel:viewModel];
+    
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 

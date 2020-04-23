@@ -6,12 +6,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger, LXHSelectMnemonicWordLengthViewControllerType) {
-    LXHSelectMnemonicWordLengthViewControllerTypeForCreatingNewWallet,
-    LXHSelectMnemonicWordLengthViewControllerTypeForRestoringExistingWallet,
-    LXHSelectMnemonicWordLengthViewControllerTypeForResettingPIN,
-};
-
 @interface LXHSelectMnemonicWordLengthViewController : UIViewController
-@property (nonatomic) LXHSelectMnemonicWordLengthViewControllerType type;
+
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

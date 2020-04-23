@@ -25,8 +25,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)startResettingPINFlow;
 + (void)endFlow;
 
+//SelectMnemonicWordLengthView
+- (NSDictionary *)selectMnemonicWordLengthViewClickRowNavigationInfo;
+//CheckWalletMnemonicWordsView
 - (id)checkWalletMnemonicWordsClickNextButtonNavigationInfo;
-- (nullable NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase;
+//SetPassphraseView
+- (NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -39,7 +39,11 @@ static LXHInitFlow *currentFlow = nil;
     return nil;
 }
 
-- (nullable NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
+- (NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
+    return nil;
+}
+
+- (NSDictionary *)selectMnemonicWordLengthViewClickRowNavigationInfo {
     return nil;
 }
 @end
