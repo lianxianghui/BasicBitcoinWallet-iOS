@@ -71,6 +71,7 @@
 		8C7845882451A9D20010F86B /* LXHInitWalletViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7845872451A9D20010F86B /* LXHInitWalletViewModel.m */; };
 		8C78458E2452DBB20010F86B /* LXHWalletMnemonicPassphraseForRestoringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C78458C2452DBB20010F86B /* LXHWalletMnemonicPassphraseForRestoringView.m */; };
 		8C78458F2452DBB20010F86B /* LXHWalletMnemonicPassphraseForRestoringViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C78458D2452DBB20010F86B /* LXHWalletMnemonicPassphraseForRestoringViewController.m */; };
+		8C7845922452E4B20010F86B /* LXHSetPassphraseViewModelForResettingPIN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7845912452E4B20010F86B /* LXHSetPassphraseViewModelForResettingPIN.m */; };
 		8C7E10F22379496500B224ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C7E10F12379496400B224ED /* Assets.xcassets */; };
 		8C8FCABB238F972F0054016F /* LXHFeeCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8FCABA238F972F0054016F /* LXHFeeCalculator.m */; };
 		8C8FCABE2390B1320054016F /* LXHSelectInputViewModelForFixedOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8FCABD2390B1320054016F /* LXHSelectInputViewModelForFixedOutput.m */; };
@@ -434,6 +435,8 @@
 		8C78458B2452DBB20010F86B /* LXHWalletMnemonicPassphraseForRestoringViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicPassphraseForRestoringViewController.h; sourceTree = "<group>"; };
 		8C78458C2452DBB20010F86B /* LXHWalletMnemonicPassphraseForRestoringView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicPassphraseForRestoringView.m; sourceTree = "<group>"; };
 		8C78458D2452DBB20010F86B /* LXHWalletMnemonicPassphraseForRestoringViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicPassphraseForRestoringViewController.m; sourceTree = "<group>"; };
+		8C7845902452E4B20010F86B /* LXHSetPassphraseViewModelForResettingPIN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHSetPassphraseViewModelForResettingPIN.h; sourceTree = "<group>"; };
+		8C7845912452E4B20010F86B /* LXHSetPassphraseViewModelForResettingPIN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHSetPassphraseViewModelForResettingPIN.m; sourceTree = "<group>"; };
 		8C7E10F12379496400B224ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C8FCAB9238F972F0054016F /* LXHFeeCalculator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHFeeCalculator.h; sourceTree = "<group>"; };
 		8C8FCABA238F972F0054016F /* LXHFeeCalculator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHFeeCalculator.m; sourceTree = "<group>"; };
@@ -1438,6 +1441,8 @@
 				8CF8B6AF23AC704C00536C3A /* LXHSetPassphraseViewModel.m */,
 				8CF8B6B123AC738A00536C3A /* LXHSetPassphraseViewModelForRestoringWallet.h */,
 				8CF8B6B223AC738A00536C3A /* LXHSetPassphraseViewModelForRestoringWallet.m */,
+				8C7845902452E4B20010F86B /* LXHSetPassphraseViewModelForResettingPIN.h */,
+				8C7845912452E4B20010F86B /* LXHSetPassphraseViewModelForResettingPIN.m */,
 				8CA31F6622D98BAA00CEA828 /* LXHSetPassphraseViewController.h */,
 				8CA31F6822D98BAA00CEA828 /* LXHSetPassphraseViewController.m */,
 			);
@@ -2587,6 +2592,7 @@
 				8CA3210E22DC7C9C00CEA828 /* UIButton+LXHText.m in Sources */,
 				8C2CC6B6232F20E5005AA93C /* LXHEmptyWithSeparatorCell.m in Sources */,
 				8CA31FD622D9A41300CEA828 /* UIViewController+LXHAlert.m in Sources */,
+				8C7845922452E4B20010F86B /* LXHSetPassphraseViewModelForResettingPIN.m in Sources */,
 				8CA3227F22DEBE9900CEA828 /* BTCChainCom.m in Sources */,
 				8CECB00C23B454EC00742E36 /* LXHUnsignedTransactionTextView.m in Sources */,
 				8CA3229422DEBE9900CEA828 /* BTCKey+Tests.m in Sources */,

@@ -11,14 +11,12 @@
 
 @implementation LXHSetPassphraseViewModelForResettingPIN
 
-- (NSDictionary *)clickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
-    if ([LXHWallet isCurrentMnemonicCodeWords:self.words andMnemonicPassphrase:passphrase]) {
-        NSString *controllerClassName = @"LXHSetPinViewController";
-        id viewModel = [NSNull null];
-        return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
-    } else {
-        return @{@"errorInfo":@"您所输入的助记词或助记词密码有误"};
-    }
+- (NSString *)navigationBarTitle {
+    return NSLocalizedString(@"输入助记词密码", nil);
+}
+
+- (NSString *)prompt {
+    return NSLocalizedString(@"请输入助记词密码", nil);
 }
 
 @end
