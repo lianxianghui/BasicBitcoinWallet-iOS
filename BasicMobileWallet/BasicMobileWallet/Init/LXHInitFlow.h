@@ -13,11 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHInitFlow : NSObject
 
-//init parameters
 @property (nonatomic) NSUInteger mnemonicWordsLength;
 @property (nonatomic) NSArray *mnemonicWords;
 @property (nonatomic) NSString *mnemonicPassphrase;
-@property (nonatomic) LXHBitcoinNetworkType networkType;
+//@property (nonatomic) LXHBitcoinNetworkType networkType;//目前未使用
 
 + (LXHInitFlow *)currentFlow;
 + (void)startCreatingNewWalletFlow;
