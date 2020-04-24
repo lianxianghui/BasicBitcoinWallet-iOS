@@ -30,7 +30,7 @@
 - (NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
     self.mnemonicPassphrase = passphrase;
     NSString *controllerClassName = @"LXHGenerateWalletViewController";
-    id viewModel = [[LXHGenerateNewWalletViewModel alloc] initWithMnemonicCodeWords:self.mnemonicWords mnemonicPassphrase:passphrase];
+    id viewModel = [[LXHGenerateWalletViewModel alloc] initWithMnemonicCodeWords:self.mnemonicWords mnemonicPassphrase:passphrase];
     return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
 }
 
@@ -39,5 +39,24 @@
     NSString *controllerClassName = @"LXHWalletMnemonicWordsOneByOneViewController";
     return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
 }
+
+
+//GenerateWalletView
+- (NSDictionary *)generateWalletViewClickButtonNavigationInfoWithNetworkType:(LXHBitcoinNetworkType)networkType {
+    if ([LXHWallet generateWalletDataWithMnemonicCodeWords:self.mnemonicWords mnemonicPassphrase:self.mnemonicPassphrase netType:networkType]) {
+        return @{@"willEnterTabBarPage":@(YES)};
+    } else {
+        return nil;
+    }
+}
+
+- (NSDictionary *)generateWalletViewClickMainnetNavigationInfo {
+    return [self generateWalletViewClickButtonNavigationInfoWithNetworkType:LXHBitcoinNetworkTypeMainnet];
+}
+
+- (NSDictionary *)generateWalletViewClickTestnetButtonNavigationInfo {
+    return [self generateWalletViewClickButtonNavigationInfoWithNetworkType:LXHBitcoinNetworkTypeTestnet];
+}
+
 
 @end

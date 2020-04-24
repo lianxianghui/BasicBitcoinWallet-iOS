@@ -11,21 +11,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHGenerateWalletViewModel : NSObject
-@property (nonatomic) NSArray *mnemonicCodeWords;
-@property (nonatomic) NSString *mnemonicPassphrase;
 
 - (instancetype)initWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                   mnemonicPassphrase:(NSString *)mnemonicPassphrase;
 - (NSDictionary *)clickMainnetNavigationInfo;
 - (NSDictionary *)clickTestnetButtonNavigationInfo;
-@end
-
-@interface LXHGenerateNewWalletViewModel : LXHGenerateWalletViewModel
-
-@end
-
-@interface LXHRestoreExistWalletViewModel : LXHGenerateWalletViewModel
-
 @end
 
 

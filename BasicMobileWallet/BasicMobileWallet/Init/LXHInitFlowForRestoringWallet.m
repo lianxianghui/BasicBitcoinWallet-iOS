@@ -10,6 +10,7 @@
 #import "LXHWalletMnemonicPassphraseForRestoringViewModel.h"
 #import "LXHGenerateWalletViewModel.h"
 #import "LXHInputMnemonicWordsViewModel.h"
+#import "LXHSearchAddressesAndGenerateWalletViewModel.h"
 
 @implementation LXHInitFlowForRestoringWallet
 
@@ -30,7 +31,7 @@
 - (NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
     [LXHInitFlow currentFlow].mnemonicPassphrase = passphrase;
     NSString *controllerClassName = @"LXHGenerateWalletViewController";
-    id viewModel = [[LXHRestoreExistWalletViewModel alloc] initWithMnemonicCodeWords:self.mnemonicWords mnemonicPassphrase:passphrase];
+    id viewModel = [[LXHGenerateWalletViewModel alloc] initWithMnemonicCodeWords:self.mnemonicWords mnemonicPassphrase:passphrase];
     return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
 }
 
@@ -40,4 +41,16 @@
     return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
 }
 
+- (NSDictionary *)generateWalletViewClickButtonNavigationInfoWithNetworkType:(LXHBitcoinNetworkType)networkType {
+    LXHSearchAddressesAndGenerateWalletViewModel *viewModel = [[LXHSearchAddressesAndGenerateWalletViewModel alloc] initWithMnemonicCodeWords:self.mnemonicWords mnemonicPassphrase:self.mnemonicPassphrase networkType:networkType];
+    return @{@"controllerName":@"LXHSearchAddressesAndGenerateWalletViewController", @"viewModel":viewModel};
+}
+
+- (NSDictionary *)generateWalletViewClickMainnetNavigationInfo {
+    return [self generateWalletViewClickButtonNavigationInfoWithNetworkType:LXHBitcoinNetworkTypeMainnet];
+}
+
+- (NSDictionary *)generateWalletViewClickTestnetButtonNavigationInfo {
+    return [self generateWalletViewClickButtonNavigationInfoWithNetworkType:LXHBitcoinNetworkTypeTestnet];
+}
 @end

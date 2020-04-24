@@ -43,4 +43,5 @@
     NSString *controllerClassName = @"LXHInputMnemonicWordsViewController";
     return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
 }
+
 @end

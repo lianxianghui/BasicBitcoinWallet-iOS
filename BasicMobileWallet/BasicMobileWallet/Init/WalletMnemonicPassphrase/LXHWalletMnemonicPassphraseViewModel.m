@@ -29,7 +29,7 @@
 }
 
 - (id)generateWalletViewModelWithPassphrase:(NSString *)passphrase {
-    id viewModel = [[LXHGenerateNewWalletViewModel alloc] initWithMnemonicCodeWords:self.words mnemonicPassphrase:passphrase];
+    id viewModel = [[LXHGenerateWalletViewModel alloc] initWithMnemonicCodeWords:self.words mnemonicPassphrase:passphrase];
     return viewModel;
 }
 

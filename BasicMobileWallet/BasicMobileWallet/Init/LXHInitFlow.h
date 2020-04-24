@@ -31,7 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)checkWalletMnemonicWordsClickNextButtonNavigationInfo;
 //SetPassphraseView
 - (NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase;
-
+//GenerateWalletView
+- (NSDictionary *)generateWalletViewClickMainnetNavigationInfo;
+- (NSDictionary *)generateWalletViewClickTestnetButtonNavigationInfo;
 @end
 
 NS_ASSUME_NONNULL_END

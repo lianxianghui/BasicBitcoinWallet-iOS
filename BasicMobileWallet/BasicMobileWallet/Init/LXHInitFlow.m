@@ -46,4 +46,13 @@ static LXHInitFlow *currentFlow = nil;
 - (NSDictionary *)selectMnemonicWordLengthViewClickRowNavigationInfo {
     return nil;
 }
+
+- (NSDictionary *)generateWalletViewClickMainnetNavigationInfo {
+    return nil;
+}
+
+- (NSDictionary *)generateWalletViewClickTestnetButtonNavigationInfo {
+    return nil;
+}
+
 @end

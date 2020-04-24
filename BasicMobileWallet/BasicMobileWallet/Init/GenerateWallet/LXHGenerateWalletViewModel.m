@@ -8,11 +8,11 @@
 
 #import "LXHGenerateWalletViewModel.h"
 #import "LXHBitcoinNetwork.h"
-#import "LXHTabBarPageViewModel.h"
-#import "LXHWallet.h"
-#import "LXHSearchAddressesAndGenerateWalletViewModel.h"
+#import "LXHInitFlow.h"
 
 @interface LXHGenerateWalletViewModel ()
+@property (nonatomic) NSArray *mnemonicCodeWords;
+@property (nonatomic) NSString *mnemonicPassphrase;
 @end
 
 @implementation LXHGenerateWalletViewModel
@@ -28,50 +28,16 @@
 }
 
 - (NSDictionary *)clickMainnetNavigationInfo {
-    return nil;
+    LXHInitFlow *currentFlow = [LXHInitFlow currentFlow];
+    return [currentFlow generateWalletViewClickMainnetNavigationInfo];
 }
 
 - (NSDictionary *)clickTestnetButtonNavigationInfo {
-    return nil;
+    LXHInitFlow *currentFlow = [LXHInitFlow currentFlow];
+    return [currentFlow generateWalletViewClickTestnetButtonNavigationInfo];
 }
 
 @end
 
-@implementation LXHGenerateNewWalletViewModel
 
-- (NSDictionary *)clickButtonNavigationInfoWithNetworkType:(LXHBitcoinNetworkType)networkType {
-    if ([LXHWallet generateWalletDataWithMnemonicCodeWords:self.mnemonicCodeWords mnemonicPassphrase:self.mnemonicPassphrase netType:networkType]) {
-        return @{@"willEnterTabBarPage":@(YES)};
-    } else {
-        return nil;
-    }
-}
-
-- (NSDictionary *)clickMainnetNavigationInfo {
-    return [self clickButtonNavigationInfoWithNetworkType:LXHBitcoinNetworkTypeMainnet];
-}
-
-- (NSDictionary *)clickTestnetButtonNavigationInfo {
-    return [self clickButtonNavigationInfoWithNetworkType:LXHBitcoinNetworkTypeTestnet];
-}
-
-@end
-
-@implementation LXHRestoreExistWalletViewModel
-
-- (NSDictionary *)clickButtonNavigationInfoWithNetworkType:(LXHBitcoinNetworkType)networkType {
-    LXHSearchAddressesAndGenerateWalletViewModel *viewModel = [[LXHSearchAddressesAndGenerateWalletViewModel alloc] initWithMnemonicCodeWords:self.mnemonicCodeWords mnemonicPassphrase:self.mnemonicPassphrase networkType:networkType];
-    return @{@"controllerName":@"LXHSearchAddressesAndGenerateWalletViewController", @"viewModel":viewModel};
-}
-
-- (NSDictionary *)clickMainnetNavigationInfo {
-    return [self clickButtonNavigationInfoWithNetworkType:LXHBitcoinNetworkTypeMainnet];
-}
-
-- (NSDictionary *)clickTestnetButtonNavigationInfo {
-    return [self clickButtonNavigationInfoWithNetworkType:LXHBitcoinNetworkTypeTestnet];
-}
-
-
-@end
 
