@@ -10,6 +10,10 @@
 #import "LXHSetPassphraseViewModel.h"
 #import "LXHGenerateWalletViewModel.h"
 
+@interface LXHWalletMnemonicPassphraseViewModel ()
+@property (nonatomic) NSArray *words;
+@end
+
 @implementation LXHWalletMnemonicPassphraseViewModel
 
 - (instancetype)initWithWords:(NSArray *)words {
@@ -20,11 +24,7 @@
     return self;
 }
 
-- (NSString *)viewClassName {
-    return @"LXHWalletMnemonicPassphraseView";
-}
-
-- (id)setPassphraseViewModel{
+- (id)setPassphraseViewModel {
     return [[LXHSetPassphraseViewModel alloc] initWithWords:_words];
 }
 

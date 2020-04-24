@@ -12,8 +12,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface LXHWalletMnemonicPassphraseForRestoringViewModel : LXHWalletMnemonicPassphraseViewModel
+@interface LXHWalletMnemonicPassphraseForRestoringViewModel : NSObject
 
+- (instancetype)initWithWords:(NSArray *)words;
+- (id)setPassphraseViewModel;
+- (id)generateWalletViewModelWithPassphrase:(nullable NSString *)passphrase;
 @end
 
 NS_ASSUME_NONNULL_END

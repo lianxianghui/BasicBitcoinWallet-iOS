@@ -1,15 +1,15 @@
-// LXHWalletMnemonicPassphraseViewController.m
+// LXHWalletMnemonicPassphraseForRestoringViewController.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-07-13
-//  Copyright © 2019年 lianxianghui. All rights reserved.
+//  Created by lianxianghui on 20-04-24
+//  Copyright © 2020年 lianxianghui. All rights reserved.
 
-#import "LXHWalletMnemonicPassphraseViewController.h"
+#import "LXHWalletMnemonicPassphraseForRestoringViewController.h"
 #import "Masonry.h"
-#import "LXHWalletMnemonicPassphraseView.h"
+#import "LXHWalletMnemonicPassphraseForRestoringView.h"
 #import "LXHSetPassphraseViewController.h"
 #import "LXHGenerateWalletViewController.h"
-#import "LXHWalletMnemonicPassphraseViewModel.h"
+#import "LXHWalletMnemonicPassphraseForRestoringViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -17,28 +17,19 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
-@interface LXHWalletMnemonicPassphraseViewController()
-
-@property (nonatomic) LXHWalletMnemonicPassphraseView *contentView;
-@property (nonatomic) LXHWalletMnemonicPassphraseViewModel *viewModel;
+@interface LXHWalletMnemonicPassphraseForRestoringViewController()
+@property (nonatomic) LXHWalletMnemonicPassphraseForRestoringView *contentView;
+@property (nonatomic) LXHWalletMnemonicPassphraseForRestoringViewModel *viewModel;
 @end
 
-@implementation LXHWalletMnemonicPassphraseViewController
-
-- (instancetype)initWithViewModel:(id)viewModel {
-    self = [super init];
-    if (self) {
-        _viewModel = viewModel;
-    }
-    return self;
-}
+@implementation LXHWalletMnemonicPassphraseForRestoringViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColorFromRGBA(0xFAFAFAFF);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.contentView = [[LXHWalletMnemonicPassphraseView alloc] init];
+    self.contentView = [[LXHWalletMnemonicPassphraseForRestoringView alloc] init];
     [self.view addSubview:self.contentView];
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_topLayoutGuideBottom);
@@ -71,6 +62,7 @@
 }
 
 //Actions
+//Actions
 - (void)button2Clicked:(UIButton *)sender {
     sender.alpha = 1;
     id viewModel = [_viewModel generateWalletViewModelWithPassphrase:nil];
@@ -92,6 +84,7 @@
     LXHSetPassphraseViewController *controller = [[LXHSetPassphraseViewController alloc] initWithViewModel:viewModel];
     [self.navigationController pushViewController:controller animated:YES];
 }
+
 
 - (void)button1TouchDown:(UIButton *)sender {
     sender.alpha = 0.5;

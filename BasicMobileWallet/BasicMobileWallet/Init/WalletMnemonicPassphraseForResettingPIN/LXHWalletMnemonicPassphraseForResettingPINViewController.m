@@ -69,7 +69,6 @@
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
     if ([_viewModel isCurrentMnemonicWords]) {
-        //todo [self.navigationController popToRootViewControllerAnimated:NO];
         UIViewController *controller = [[LXHSetPinViewController alloc] initWithViewModel:nil];
         [self.navigationController pushViewController:controller animated:YES];
     } else {

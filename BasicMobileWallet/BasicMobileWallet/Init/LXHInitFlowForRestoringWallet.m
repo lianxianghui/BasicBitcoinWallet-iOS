@@ -24,7 +24,7 @@
 
 - (id)checkWalletMnemonicWordsClickNextButtonNavigationInfo {
     id viewModel = [[LXHWalletMnemonicPassphraseForRestoringViewModel alloc] initWithWords:self.mnemonicWords];
-    return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseViewController", @"viewModel":viewModel};
+    return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseForRestoringViewController", @"viewModel":viewModel};
 }
 
 - (NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
