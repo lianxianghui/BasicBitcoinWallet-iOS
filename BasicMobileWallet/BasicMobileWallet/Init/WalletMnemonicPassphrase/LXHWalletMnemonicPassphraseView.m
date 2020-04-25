@@ -135,7 +135,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"您可以选择设置或者略过这一步骤。如果您设置该密码，会用此密码和助记词一起生成整个钱包账户的根种子，用来增强账户的安全性。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"您可以选择设置密码或者略过这一步骤。如果您设置该密码，会用此密码和助记词一起生成整个钱包账户的根种子，用来增强账户的安全性。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
