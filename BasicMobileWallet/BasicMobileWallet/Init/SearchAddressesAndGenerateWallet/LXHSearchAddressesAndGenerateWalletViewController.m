@@ -81,7 +81,7 @@
     [self.contentView.indicatorView startAnimating];
     __weak typeof(self) weakSelf = self;
     [_viewModel searchUsedAddressesAndGenerateExistWalletDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
-        [weakSelf.contentView.indicatorView startAnimating];
+        [weakSelf.contentView.indicatorView stopAnimating];
         [LXHInitFlow endFlow];
         [weakSelf clearAndEnterTabBarViewController];
     } failureBlock:^(NSString * _Nonnull errorPrompt) {

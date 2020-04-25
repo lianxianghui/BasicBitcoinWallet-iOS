@@ -20,19 +20,29 @@ static LXHInitFlow *currentFlow = nil;
 }
 
 + (void)startCreatingNewWalletFlow {
+    [currentFlow clear];
     currentFlow = [LXHInitFlowForCreatingNewWallet sharedInstance];
 }
 
 + (void)startRestoringExistWalletFlow {
+    [currentFlow clear];
     currentFlow = [LXHInitFlowForRestoringWallet sharedInstance];
 }
 
 + (void)startResettingPINFlow {
+    [currentFlow clear];
     currentFlow = [LXHInitFlowForResettingPIN sharedInstance];
 }
 
 + (void)endFlow {
+    [currentFlow clear];
     currentFlow = nil;
+}
+
+- (void)clear {
+    _mnemonicWordsLength = 0;
+    _mnemonicWords = nil;
+    _mnemonicPassphrase = nil;
 }
 
 - (id)checkWalletMnemonicWordsClickNextButtonNavigationInfo {
