@@ -11,11 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * 作为TabBarController的"接收"Controller, 显示当前地址二维码, 单例
+ * 作为TabBarController的"接收"Controller, 显示当前地址二维码
  */
 @interface LXHCurrentReceivingAddressViewController : LXHAddressViewController
-
-+ (instancetype)sharedInstance;
 
 - (void)refreshViewWithCurrentReceivingAddress;
 

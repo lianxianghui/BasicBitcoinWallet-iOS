@@ -58,7 +58,7 @@
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
 
-    viewController = [LXHCurrentReceivingAddressViewController sharedInstance];
+    viewController = [[LXHCurrentReceivingAddressViewController alloc] initWithData:nil];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_unselected_icon"];
     itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_selected_icon"];
@@ -93,13 +93,13 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:LXHRootControllerAppear object:self];
 }
 
-- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    UINavigationController *navigationController = (UINavigationController *)viewController;
-    UIViewController *rootViewController = navigationController.viewControllers[0];
-    if (rootViewController == [LXHCurrentReceivingAddressViewController sharedInstance]) { //refresh current receiving address
-        //TODO 暂时留着 [[LXHCurrentReceivingAddressViewController sharedInstance] refreshViewWithCurrentReceivingAddress];
-    }
-    return YES;
-}
+//- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+//    UINavigationController *navigationController = (UINavigationController *)viewController;
+//    UIViewController *rootViewController = navigationController.viewControllers[0];
+//    if (rootViewController == [LXHCurrentReceivingAddressViewController sharedInstance]) { //refresh current receiving address
+//        //TODO 暂时留着 [[LXHCurrentReceivingAddressViewController sharedInstance] refreshViewWithCurrentReceivingAddress];
+//    }
+//    return YES;
+//}
 
 @end

@@ -17,15 +17,6 @@
 
 @implementation LXHCurrentReceivingAddressViewController
 
-+ (instancetype)sharedInstance {
-    static LXHCurrentReceivingAddressViewController *instance = nil;
-    static dispatch_once_t tokon;
-    dispatch_once(&tokon, ^{
-        instance = [[LXHCurrentReceivingAddressViewController alloc] init];
-    });
-    return instance;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.contentView.leftImageButton.hidden = YES;
@@ -33,7 +24,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self refreshViewWithCurrentReceivingAddress];
+    [self refreshViewWithCurrentReceivingAddress];//每次显示时都刷新
 }
 
 - (void)refreshViewWithCurrentReceivingAddress {
