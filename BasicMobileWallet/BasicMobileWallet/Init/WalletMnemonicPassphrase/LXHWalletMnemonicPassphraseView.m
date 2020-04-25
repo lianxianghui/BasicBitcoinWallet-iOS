@@ -165,7 +165,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"；此密码与PIN码不同，如果您不完全理解此密码的用途，请略过此步骤", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"；此密码与PIN码不同，如果您不完全理解此密码的用途，请略过此步骤。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         _prompt.attributedText = attributedText;

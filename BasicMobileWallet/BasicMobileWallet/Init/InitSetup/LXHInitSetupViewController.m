@@ -9,6 +9,7 @@
 #import "LXHInitSetupView.h"
 #import "LXHSetPinViewController.h"
 #import "LXHInitWalletViewController.h"
+#import "LXHInitWalletViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -59,13 +60,14 @@
 
 //Actions
 - (void)aInitWalletButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHInitWalletViewController alloc] init];
+    id viewModel = [[LXHInitWalletViewModel alloc] init];
+    UIViewController *controller = [[LXHInitWalletViewController alloc] initWithViewModel:viewModel];
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
 
 - (void)setPINButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHSetPinViewController alloc] init];
+    UIViewController *controller = [[LXHSetPinViewController alloc] initWithViewModel:[NSNull null]];
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 

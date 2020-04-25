@@ -89,6 +89,8 @@
 + (BOOL)generateWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                 mnemonicPassphrase:(NSString *)mnemonicPassphrase
                                            netType:(LXHBitcoinNetworkType)netType {
+    if (!mnemonicCodeWords || (netType == LXHBitcoinNetworkTypeUndefined))
+        return YES;
     BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:mnemonicCodeWords password:mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
     BTCKeychain *masterKeychain = [mnemonic.keychain copy];
     BTCKeychain *firstAccountKeychain = [self firstAccountKeychainWithMasterKeychain:masterKeychain netType:netType];

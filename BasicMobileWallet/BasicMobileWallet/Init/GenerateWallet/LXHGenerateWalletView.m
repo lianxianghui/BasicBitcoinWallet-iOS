@@ -159,7 +159,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"比特币网络分为主网络(Mainnet)和测试网络(Testnet3)，\n点击相应的按钮会生成比特币钱包。\n如果是创建新钱包，会根据助记词序列和可选的助记词密码生成钱包的根种子。\n如果是恢复已有的钱包，除了生成根种子以外还要确定哪些地址已经使用过。\n\n", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"比特币网络分为主网络(Mainnet)和测试网络(Testnet3)，\n点击相应的按钮会生成比特币钱包。\n如果您正在创建新钱包，会根据助记词序列和可选的助记词密码生成钱包的根种子。\n如果您正在恢复已有的钱包，除了生成根种子以外还要确定哪些地址已经使用过。\n\n", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         _desc1.attributedText = attributedText;

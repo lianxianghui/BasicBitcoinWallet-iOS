@@ -8,4 +8,5 @@
 
 @interface LXHInitWalletViewController : UIViewController
 
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

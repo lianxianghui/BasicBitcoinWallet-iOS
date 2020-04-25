@@ -27,6 +27,7 @@
 
 - (NSDictionary *)clickNextButtonNavigationInfo {
     LXHInitFlow *currentFlow = [LXHInitFlow currentFlow];
+    currentFlow.mnemonicWords = self.words;
     return [currentFlow checkWalletMnemonicWordsClickNextButtonNavigationInfo];
 }
 
