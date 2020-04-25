@@ -275,6 +275,10 @@
     return [[[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreWalletDataGenerated] isEqualToString:@"1"];
 }
 
++ (BOOL)isValid {
+    return [self walletDataGenerated] && ([self isWatchOnly] || [self isFullFunctional]);
+}
+
 
 + (NSData *)signatureWithNetType:(LXHBitcoinNetworkType)netType path:(NSString *)path hash:(NSData *)hash  {
     BTCNetwork *network;
@@ -297,7 +301,11 @@
 }
 
 + (BOOL)isWatchOnly {
-    return ![LXHKeychainStore.sharedInstance.store contains:kLXHKeychainStoreRootSeed];
+    return [LXHKeychainStore.sharedInstance.store contains:kLXHKeychainStoreExtendedPublicKey] && ![LXHKeychainStore.sharedInstance.store contains:kLXHKeychainStoreRootSeed];
+}
+
++ (BOOL)isFullFunctional {
+    return [LXHKeychainStore.sharedInstance.store contains:kLXHKeychainStoreRootSeed];
 }
 
 + (BOOL)hasPIN {

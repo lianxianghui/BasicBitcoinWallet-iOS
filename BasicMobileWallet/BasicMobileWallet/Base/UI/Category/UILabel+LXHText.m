@@ -11,6 +11,8 @@
 @implementation UILabel (LXHText)
 
 - (void)updateAttributedTextString:(NSString *)textString {
+    if (!textString)
+        return;
     NSMutableAttributedString *attributedString = [self.attributedText mutableCopy];
     [attributedString.mutableString setString:textString];
     self.attributedText = attributedString;
