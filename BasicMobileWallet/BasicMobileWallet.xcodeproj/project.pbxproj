@@ -2049,8 +2049,6 @@
 				8CA31F8522D98BAC00CEA828 /* Welcome */,
 				8CA31F5F22D98BAA00CEA828 /* InitSetup */,
 				8CA3212022DDE61900CEA828 /* SetPin */,
-				8CBCA8FD24121D7800655C9F /* ForgotPINBeforeWalletDataGenerated */,
-				8CBCA90224121D7800655C9F /* ForgotPINAfterWalletDataGenerated */,
 				8CA31F6E22D98BAA00CEA828 /* InitWallet */,
 				8CA3211922DDD99300CEA828 /* SelectMnemonicWordLength */,
 				8CA31F7B22D98BAB00CEA828 /* WalletMnemonicWordsOneByOne */,
@@ -2098,6 +2096,8 @@
 		8CAA6696230E468200B17222 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				8CBCA8FD24121D7800655C9F /* ForgotPINBeforeWalletDataGenerated */,
+				8CBCA90224121D7800655C9F /* ForgotPINAfterWalletDataGenerated */,
 				8CAA6697230E468200B17222 /* TabBarPage */,
 				8C23C1D123C9C14D00B801CF /* Mask */,
 				8CDCDE2023C998A6001F1287 /* ValidatePIN */,
