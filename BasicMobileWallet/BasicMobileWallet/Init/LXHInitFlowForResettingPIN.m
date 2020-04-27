@@ -29,12 +29,12 @@
 
 - (NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
     [LXHInitFlow currentFlow].mnemonicPassphrase = passphrase;
-    if ([LXHWallet isCurrentMnemonicCodeWords:self.mnemonicWords andMnemonicPassphrase:passphrase]) {
+    if ([LXHWallet isFullFunctional] && [LXHWallet isCurrentMnemonicCodeWords:self.mnemonicWords andMnemonicPassphrase:passphrase]) {
         NSString *controllerClassName = @"LXHSetPinViewController";
         id viewModel = [NSNull null];
         return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
     } else {
-        return @{@"errorInfo":@"您所输入的助记词或助记词密码有误"};
+        return @{@"errorInfo":@"您所输入的助记词或/和助记词密码有误，或者您选择的重置PIN码方式不对。"};
     }
 }
 

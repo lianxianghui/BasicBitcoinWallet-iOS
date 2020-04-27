@@ -82,11 +82,11 @@
     __weak typeof(self) weakSelf = self;
     UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *message) {
         [weakSelf.navigationController popViewControllerAnimated:NO];
-        if ([weakSelf.viewModel isExtenedPublicKeyWithQRString:message]) {
+        if ([weakSelf.viewModel checkExtenedPublicKeyWithQRString:message]) {
             UIViewController *controller = [[LXHSetPinViewController alloc] initWithViewModel:nil];
             [self.navigationController pushViewController:controller animated:YES];
         } else {
-            [self.view makeToast:NSLocalizedString(@"您扫描的扩展公钥与当前钱包的不符。", nil)];
+            [self.view makeToast:NSLocalizedString(@"您扫描的扩展公钥与当前钱包的不符或者您选择的重置PIN码方式不对。", nil)];
         }
     }];
     controller.hidesBottomBarWhenPushed = YES;

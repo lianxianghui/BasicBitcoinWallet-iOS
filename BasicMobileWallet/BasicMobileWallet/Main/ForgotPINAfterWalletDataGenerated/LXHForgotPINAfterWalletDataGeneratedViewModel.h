@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LXHForgotPINAfterWalletDataGeneratedViewModel : NSObject
 
 - (id)inputMnemonicWordButtonClicked;
-- (BOOL)isExtenedPublicKeyWithQRString:(NSString *)string;
+- (BOOL)checkExtenedPublicKeyWithQRString:(NSString *)string;
 @end
 
 NS_ASSUME_NONNULL_END

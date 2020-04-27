@@ -72,7 +72,7 @@
         UIViewController *controller = [[LXHSetPinViewController alloc] init];
         [self.navigationController pushViewController:controller animated:YES];
     } else {
-        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"您所输入的助记词有误", nil) handler:nil];
+        [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"您所输入的助记词有误，或者您选择的重置PIN码方式不对。", nil) handler:nil];
     }
 }
 
