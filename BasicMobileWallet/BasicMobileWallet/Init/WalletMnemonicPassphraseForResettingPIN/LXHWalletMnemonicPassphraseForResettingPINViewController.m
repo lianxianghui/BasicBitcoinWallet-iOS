@@ -69,7 +69,7 @@
 //Actions
 - (void)button2Clicked:(UIButton *)sender {
     if ([_viewModel isCurrentMnemonicWords]) {
-        UIViewController *controller = [[LXHSetPinViewController alloc] initWithViewModel:nil];
+        UIViewController *controller = [[LXHSetPinViewController alloc] init];
         [self.navigationController pushViewController:controller animated:YES];
     } else {
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"您所输入的助记词有误", nil) handler:nil];

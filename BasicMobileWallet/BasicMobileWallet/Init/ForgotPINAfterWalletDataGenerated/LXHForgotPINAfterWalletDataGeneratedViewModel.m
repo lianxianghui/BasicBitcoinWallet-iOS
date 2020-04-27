@@ -9,6 +9,7 @@
 #import "LXHForgotPINAfterWalletDataGeneratedViewModel.h"
 #import "LXHInitFlow.h"
 #import "LXHSelectMnemonicWordLengthViewModel.h"
+#import "LXHWallet.h"
 
 @implementation LXHForgotPINAfterWalletDataGeneratedViewModel
 
@@ -16,6 +17,11 @@
     [LXHInitFlow startResettingPINFlow];
     id viewModel = [[LXHSelectMnemonicWordLengthViewModel alloc] init];
     return viewModel;
+}
+
+- (BOOL)isExtenedPublicKeyWithQRString:(NSString *)string {
+    BOOL match = [string isEqualToString:[LXHWallet mainAccount].extendedPublicKey];
+    return match;
 }
 
 @end

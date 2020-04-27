@@ -13,6 +13,7 @@
 #import "Toast.h"
 #import "LXHSelectMnemonicWordLengthViewController.h"
 #import "LXHForgotPINAfterWalletDataGeneratedViewModel.h"
+#import "LXHSetPinViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -81,9 +82,8 @@
     __weak typeof(self) weakSelf = self;
     UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *message) {
         [weakSelf.navigationController popViewControllerAnimated:NO];
-        if ([message isEqualToString:[LXHWallet mainAccount].extendedPublicKey]) {
-            UIViewController *controller = [[LXHTabBarPageViewController alloc] init];
-            controller.hidesBottomBarWhenPushed = YES;
+        if ([weakSelf.viewModel isExtenedPublicKeyWithQRString:message]) {
+            UIViewController *controller = [[LXHSetPinViewController alloc] initWithViewModel:nil];
             [self.navigationController pushViewController:controller animated:YES];
         } else {
             [self.view makeToast:NSLocalizedString(@"您扫描的扩展公钥与当前钱包的不符。", nil)];

@@ -67,7 +67,7 @@
 
 
 - (void)setPINButtonClicked:(UIButton *)sender {
-    UIViewController *controller = [[LXHSetPinViewController alloc] initWithViewModel:[NSNull null]];
+    UIViewController *controller = [[LXHSetPinViewController alloc] init];
     [self.navigationController pushViewController:controller animated:YES]; 
 }
 
