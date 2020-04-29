@@ -11,6 +11,7 @@
 #import "LXHTitleCell.h"
 #import "LXHLocalAddressCell.h"
 #import "LXHWallet.h"
+#import "LXHAddressDetailViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -239,7 +240,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *cellDic = [self cellDataForTableView:tableView atIndexPath:indexPath];
     NSMutableDictionary *data = cellDic[@"data"];
-    UIViewController *controller = [[LXHAddressDetailViewController alloc] initWithData:data];
+    LXHAddressDetailViewModel *viewModel = [[LXHAddressDetailViewModel alloc] initWithData:data];
+    UIViewController *controller = [[LXHAddressDetailViewController alloc] initWithViewModel:viewModel];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

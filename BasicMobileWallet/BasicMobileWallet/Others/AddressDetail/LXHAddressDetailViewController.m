@@ -12,13 +12,8 @@
 #import "LXHAddressDetailCell.h"
 #import "LXHEmptyWithSeparatorCell.h"
 #import "LXHAddressDetailTextRightIconCell.h"
-#import "LXHWallet.h"
 #import "LXHTransactionListViewController.h"
-
-#import "LXHAddressViewModel.h"
-
-//临时
-#import "LXHTransactionListByAddressViewModel.h"
+#import "LXHAddressDetailViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -28,17 +23,15 @@
     
 @interface LXHAddressDetailViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHAddressDetailView *contentView;
-@property (nonatomic) NSDictionary *data;
-@property (nonatomic) NSMutableArray *cellDataArray;
+@property (nonatomic) LXHAddressDetailViewModel *viewModel;
 @end
 
 @implementation LXHAddressDetailViewController
 
-- (instancetype)initWithData:(NSDictionary *)data
-{
+- (instancetype)initWithViewModel:(id)viewModel {
     self = [super init];
     if (self) {
-        _data = data;
+        _viewModel = viewModel;
     }
     return self;
 }
@@ -92,52 +85,7 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    if (!_cellDataArray) {
-        _cellDataArray = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
-            LXHLocalAddressType type = [_data[@"addressType"] integerValue];
-            uint32_t index = [_data[@"addressIndex"] unsignedIntValue];
-            LXHAccount *account = LXHWallet.mainAccount;
-            //@{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE"};
-            NSDictionary *addressDetailCellDic = @{@"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell"};
-            
-            NSMutableDictionary *dic = addressDetailCellDic.mutableCopy;
-            dic[@"title"] = NSLocalizedString(@"地址Base58", nil); 
-            dic[@"text"] = [account addressWithType:type index:index];
-            [_cellDataArray addObject:dic];
-            
-            dic = addressDetailCellDic.mutableCopy;
-            dic[@"title"] = NSLocalizedString(@"本地路径", nil);
-            dic[@"text"] = [account addressPathWithType:type index:index];
-            [_cellDataArray addObject:dic];
-
-            dic = addressDetailCellDic.mutableCopy;
-            dic[@"title"] = NSLocalizedString(@"使用情况", nil);
-            dic[@"text"] = [account isUsedAddressWithType:type index:index] ? NSLocalizedString(@"用过的", nil) : NSLocalizedString(@"未用过的", nil);
-            [_cellDataArray addObject:dic];   
-            
-            dic = addressDetailCellDic.mutableCopy;
-            dic[@"title"] = NSLocalizedString(@"地址类型", nil);
-            dic[@"text"] = @"P2PKH (Pay-to-Public-Key-Hash)";
-            [_cellDataArray addObject:dic];
-            
-            dic = addressDetailCellDic.mutableCopy;
-            dic[@"title"] = NSLocalizedString(@"地址用途", nil);
-            dic[@"text"] = type == LXHLocalAddressTypeReceiving ? NSLocalizedString(@"接收", nil) : NSLocalizedString(@"找零", nil);
-            [_cellDataArray addObject:dic];
-            
-            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"}.mutableCopy;
-            [_cellDataArray addObject:dic];
-            dic = @{@"text":NSLocalizedString(@"相关交易", nil), @"isSelectable":@"1", @"cellType":@"LXHAddressDetailTextRightIconCell"}.mutableCopy;
-            [_cellDataArray addObject:dic];
-            
-            if (type == LXHLocalAddressTypeReceiving) { //找零地址不用于接送比特币，所以不显示二维码
-                dic = @{@"text":NSLocalizedString(@"地址二维码", nil), @"isSelectable":@"1", @"cellType":@"LXHAddressDetailTextRightIconCell"}.mutableCopy;
-                [_cellDataArray addObject:dic];
-            }
-        }
-    }
-    return _cellDataArray;
+    return _viewModel.cellDataArrayForListview;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -260,19 +208,14 @@
     switch(indexPath.row) {
         case 6:
         {
-            LXHLocalAddressType type = [_data[@"addressType"] integerValue];
-            uint32_t index = [_data[@"addressIndex"] unsignedIntValue];
-            NSString *address = [LXHWallet.mainAccount addressWithType:type index:index];
-            //显示地址相关的交易
-            //临时
-            LXHTransactionListByAddressViewModel *viewModel = [[LXHTransactionListByAddressViewModel alloc] initWithAddress:address];
+            id viewModel = [_viewModel transactionListByAddressViewModel];
             UIViewController *controller = [[LXHTransactionListViewController alloc] initWithViewModel:viewModel];
             [self.navigationController pushViewController:controller animated:YES];
         }
             break;
         case 7:
         {
-            id viewModel = [[LXHAddressViewModel  alloc] initWithData:_data];
+            id viewModel = [_viewModel addressViewModel];
             UIViewController *controller = [[LXHAddressViewController alloc] initWithViewModel:viewModel];
             [self.navigationController pushViewController:controller animated:YES];
         }

@@ -65,6 +65,7 @@
 		8C77F0CE245935FD0018A29C /* LXHCurrentReceivingAddressViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C77F0CD245935FD0018A29C /* LXHCurrentReceivingAddressViewModel.m */; };
 		8C77F0D124596B690018A29C /* LXHShowWalletMnemonicWordsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C77F0D024596B690018A29C /* LXHShowWalletMnemonicWordsViewModel.m */; };
 		8C77F0D424596D070018A29C /* LXHSettingViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C77F0D324596D070018A29C /* LXHSettingViewModel.m */; };
+		8C77F0D72459B9100018A29C /* LXHAddressDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C77F0D62459B9100018A29C /* LXHAddressDetailViewModel.m */; };
 		8C7845762449A5D10010F86B /* LXHInitFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7845752449A5D10010F86B /* LXHInitFlow.m */; };
 		8C7845792449A7500010F86B /* LXHInitFlowForCreatingNewWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7845782449A7500010F86B /* LXHInitFlowForCreatingNewWallet.m */; };
 		8C78457C2449A7D90010F86B /* LXHInitFlowForRestoringWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C78457B2449A7D90010F86B /* LXHInitFlowForRestoringWallet.m */; };
@@ -426,6 +427,8 @@
 		8C77F0D024596B690018A29C /* LXHShowWalletMnemonicWordsViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHShowWalletMnemonicWordsViewModel.m; sourceTree = "<group>"; };
 		8C77F0D224596D070018A29C /* LXHSettingViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHSettingViewModel.h; sourceTree = "<group>"; };
 		8C77F0D324596D070018A29C /* LXHSettingViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHSettingViewModel.m; sourceTree = "<group>"; };
+		8C77F0D52459B9100018A29C /* LXHAddressDetailViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHAddressDetailViewModel.h; sourceTree = "<group>"; };
+		8C77F0D62459B9100018A29C /* LXHAddressDetailViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHAddressDetailViewModel.m; sourceTree = "<group>"; };
 		8C7845742449A5D10010F86B /* LXHInitFlow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHInitFlow.h; sourceTree = "<group>"; };
 		8C7845752449A5D10010F86B /* LXHInitFlow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHInitFlow.m; sourceTree = "<group>"; };
 		8C7845772449A7500010F86B /* LXHInitFlowForCreatingNewWallet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHInitFlowForCreatingNewWallet.h; sourceTree = "<group>"; };
@@ -1182,6 +1185,8 @@
 				8C2CC691232F20E4005AA93C /* LXHEmptyWithSeparatorCell.m */,
 				8C2CC68E232F20E4005AA93C /* LXHAddressDetailView.h */,
 				8C2CC693232F20E4005AA93C /* LXHAddressDetailView.m */,
+				8C77F0D52459B9100018A29C /* LXHAddressDetailViewModel.h */,
+				8C77F0D62459B9100018A29C /* LXHAddressDetailViewModel.m */,
 				8C2CC692232F20E4005AA93C /* LXHAddressDetailViewController.h */,
 				8C2CC696232F20E4005AA93C /* LXHAddressDetailViewController.m */,
 			);
@@ -2780,6 +2785,7 @@
 				8CA701AC22D8713E00F42814 /* main.m in Sources */,
 				8CF405F9235B0456008639F5 /* LXHLockingScriptCell.m in Sources */,
 				8C2CC6BE232F20E5005AA93C /* LXHTransactionInfoCell.m in Sources */,
+				8C77F0D72459B9100018A29C /* LXHAddressDetailViewModel.m in Sources */,
 				8C45ACCA2375912B0038EAEA /* LXHAddress.m in Sources */,
 				8C23C1D723C9C14D00B801CF /* LXHMaskViewController.m in Sources */,
 				8C2CC6BA232F20E5005AA93C /* LXHAddressDetailViewController.m in Sources */,
