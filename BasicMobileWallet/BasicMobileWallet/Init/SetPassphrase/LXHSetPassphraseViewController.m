@@ -48,7 +48,7 @@
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
-    [self setViewProperties];
+    [self setContentViewProperties];
 }
 
 - (void)swipeView:(id)sender {
@@ -62,7 +62,7 @@
     [self.contentView.leftImageButton addTarget:self action:@selector(leftImageButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
-- (void)setViewProperties {
+- (void)setContentViewProperties {
     [self.contentView.title updateAttributedTextString:[_viewModel navigationBarTitle]];
     [self.contentView.promot updateAttributedTextString:[_viewModel prompt]];
     self.contentView.inputTextFieldWithPlaceHolder.secureTextEntry = YES;

@@ -51,7 +51,7 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
-    [self setViewProperties];
+    [self setContentViewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -72,7 +72,7 @@
 - (void)setDelegates {
 }
 
-- (void)setViewProperties {
+- (void)setContentViewProperties {
     self.contentView.textButton2.enabled = [_viewModel signButtonsEnabled];
     self.contentView.textButton3.enabled = [_viewModel signButtonsEnabled];
     [self.contentView.desc updateAttributedTextString:[_viewModel infoDescription]];

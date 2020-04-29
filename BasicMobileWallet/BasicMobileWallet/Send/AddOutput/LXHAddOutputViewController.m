@@ -60,7 +60,7 @@
     [self.view addGestureRecognizer:swipeRecognizer];
     [self addActions];
     [self setDelegates];
-    [self setViewProperties];
+    [self setContentViewProperties];
 }
 
 - (void)swipeView:(id)sender {
@@ -81,7 +81,7 @@
     self.contentView.listView.delegate = self;
 }
 
-- (void)setViewProperties {
+- (void)setContentViewProperties {
     [self.contentView.title updateAttributedTextString:[_viewModel naviBarTitle]];
 }
 

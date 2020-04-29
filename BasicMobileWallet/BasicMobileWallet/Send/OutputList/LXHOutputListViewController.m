@@ -52,7 +52,7 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
-    [self setViewProperties];
+    [self setContentViewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -83,7 +83,7 @@
     self.contentView.listView.delegate = self;
 }
 
-- (void)setViewProperties {
+- (void)setContentViewProperties {
     [self refreshHeaderInfo];
 }
 

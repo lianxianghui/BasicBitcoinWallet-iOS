@@ -53,12 +53,12 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
-    [self setViewProperties];
+    [self setContentViewProperties];
     [self addActions];
     [self requestFeeRate];
 }
 
-- (void)setViewProperties {
+- (void)setContentViewProperties {
     //set refreshing header
     LXHWeakSelf
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(requestFeeRate)];

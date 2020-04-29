@@ -49,6 +49,8 @@
     self.contentView.leftImageButton.hidden = [_viewModel leftButtonHidden];
 }
 
+
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self refreshView];

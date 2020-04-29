@@ -49,7 +49,7 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
-    [self setViewProperties];
+    [self setContentViewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -58,7 +58,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)setViewProperties {
+- (void)setContentViewProperties {
     self.contentView.textFieldWithPlaceHolder.keyboardType = UIKeyboardTypeNumberPad;
     NSString *feeRateString = [_viewModel inputFeeRateString];
     if (feeRateString)

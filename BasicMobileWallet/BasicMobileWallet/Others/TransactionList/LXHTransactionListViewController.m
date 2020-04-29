@@ -57,7 +57,7 @@
     
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
-    [self setViewProperties];
+    [self setContentViewProperties];
     [self addActions];
     [self setDelegates];
     [self addObservers];
@@ -75,7 +75,7 @@
     }];
 }
 
-- (void)setViewProperties {
+- (void)setContentViewProperties {
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(listViewRefresh)];
     self.contentView.listView.mj_header = header;
     LXHWeakSelf

@@ -59,7 +59,7 @@
     }];
     [self addActions];
     [self setDelegates];
-    [self setViewProperties];
+    [self setContentViewProperties];
     [self addObservers];
 }
 
@@ -71,7 +71,7 @@
     self.contentView.listView.delegate = self;
 }
 
-- (void)setViewProperties {
+- (void)setContentViewProperties {
     [self refreshBalance];
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(listViewRefresh)];
     self.contentView.listView.mj_header = header;
