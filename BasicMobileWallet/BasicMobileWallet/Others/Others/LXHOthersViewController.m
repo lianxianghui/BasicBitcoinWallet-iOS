@@ -17,6 +17,7 @@
 #import "UIViewController+LXHBasicMobileWallet.h"
 #import "Toast.h"
 #import "LXHOthersViewModel.h"
+#import "LXHAboutViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -85,6 +86,8 @@
             dic = @{@"text":@"扫描二维码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
             [dataForCells addObject:dic];
             dic = @{@"text":@"设置", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
+            [dataForCells addObject:dic];
+            dic = @{@"text":@"关于", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell"};
             [dataForCells addObject:dic];
         }
     }
@@ -241,6 +244,13 @@
         {
             id viewModel = [_viewModel settingViewModel];
             UIViewController *controller = [[LXHSettingViewController alloc] initWithViewModel:viewModel];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+            break;
+        case 5:
+        {
+            UIViewController *controller = [[LXHAboutViewController alloc] init];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }

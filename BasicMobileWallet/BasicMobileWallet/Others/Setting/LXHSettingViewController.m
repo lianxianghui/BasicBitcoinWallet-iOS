@@ -8,7 +8,6 @@
 #import "Masonry.h"
 #import "LXHSettingView.h"
 #import "LXHSetPinViewController.h"
-#import "LXHAboutViewController.h"
 #import "LXHCurrentAccountInfoViewController.h"
 #import "LXHTextRightIconCell.h"
 #import "UIUtils.h"
@@ -225,13 +224,6 @@
         {
             id viewModel = [_viewModel currentAccountInfoViewModel];
             UIViewController *controller = [[LXHCurrentAccountInfoViewController alloc] initWithViewModel:viewModel];
-            controller.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:controller animated:YES];
-        }
-            break;
-        case 5:
-        {
-            UIViewController *controller = [[LXHAboutViewController alloc] init];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }

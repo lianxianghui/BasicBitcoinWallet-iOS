@@ -47,8 +47,6 @@
         }
         dic = @{@"text":@"账户信息", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(4)};
         [cellDataArrayForListview addObject:dic];
-        dic = @{@"text":@"关于", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(5)};
-        [cellDataArrayForListview addObject:dic];
         
         _cellDataArrayForListview = cellDataArrayForListview;
     }
