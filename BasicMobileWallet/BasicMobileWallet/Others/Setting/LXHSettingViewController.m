@@ -12,13 +12,9 @@
 #import "LXHCurrentAccountInfoViewController.h"
 #import "LXHTextRightIconCell.h"
 #import "UIUtils.h"
-#import "LXHKeychainStore.h"
 #import "UIViewController+LXHAlert.h"
-#import "LXHWallet.h"
-#import "AppDelegate.h"
 #import "AppDelegate.h"
 #import "UIViewController+LXHBasicMobileWallet.h"
-#import "LXHTransactionDataManager.h"
 #import "LXHShowWalletMnemonicWordsViewController.h"
 #import "LXHSettingViewModel.h"
 
@@ -31,7 +27,6 @@
 @interface LXHSettingViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSettingView *contentView;
 @property (nonatomic) LXHSettingViewModel *viewModel;
-@property (nonatomic) NSMutableArray *dataForCells;
 @end
 
 @implementation LXHSettingViewController
@@ -64,7 +59,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self refreshData];
+    [self refreshListView];
 }
 
 - (void)swipeView:(id)sender {
@@ -98,32 +93,7 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    if (!_dataForCells) {
-        NSMutableArray *dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            dic = @{@"text":@"重置钱包", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(0)};
-            [dataForCells addObject:dic];
-            
-            NSString *text = [LXHWallet hasPIN] ? NSLocalizedString(@"修改PIN码", nil) : NSLocalizedString(@"设置PIN码", nil);
-            dic = @{@"text":text, @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(1)};
-            [dataForCells addObject:dic];
-            if ([LXHWallet hasPIN]) {
-                dic = @{@"text":@"清除PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(2)};
-                [dataForCells addObject:dic];
-            }
-            if (![LXHWallet isWatchOnly]) {//只读钱包没有助记词
-                dic = @{@"text":@"钱包助记词", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(3)};
-                [dataForCells addObject:dic];
-            }
-            dic = @{@"text":@"账户信息", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(4)};
-            [dataForCells addObject:dic];
-            dic = @{@"text":@"关于", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(5)};
-            [dataForCells addObject:dic];
-        }
-        _dataForCells = dataForCells;
-    }
-    return _dataForCells;
+    return [_viewModel cellDataArrayForListview];
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -237,7 +207,7 @@
         case 2:
         {
             [self validatePINWithPassedHandler:^{
-                [self clearPin];
+                [self clearPIN];
             }];
         }
         case 3:
@@ -276,26 +246,24 @@
 }
 
 - (void)resetWallet {
-    NSString *message = [LXHWallet isWatchOnly] ? NSLocalizedString(@"重置将会清除本地的钱包数据与PIN码，您确定现在要重置吗？", nil) : NSLocalizedString(@"重要：重置将会清除本地的钱包数据与PIN码，请务必保证已经备份了钱包助记词，否则会导致比特币丢失。您确定现在要重置吗？", nil);
+    NSString *message = [_viewModel alertMessageForResettingWallet];
+    __weak typeof(self) weakSelf = self;
     [self showOkCancelAlertViewWithTitle:NSLocalizedString(@"警告", nil) message:message okHandler:^(UIAlertAction * _Nonnull action) {
-        //clear data
-        [LXHWallet clearAccount];
-        [LXHWallet clearPIN];
-        [[LXHTransactionDataManager sharedInstance] clearCachedData];
-        //show welcome page
-        [AppDelegate reEnterRootViewController];
+        [weakSelf.viewModel clearWalletData];
+        [AppDelegate reEnterRootViewController]; //show welcome pages
     } cancelHandler:nil];
 }
 
-- (void)refreshData {
-    _dataForCells = nil;
+- (void)refreshListView {
+    [_viewModel resetCellDataArrayForListview];
     [self.contentView.listView reloadData];
 }
 
-- (void)clearPin {
+- (void)clearPIN {
+    __weak typeof(self) weakSelf = self;
     [self showOkCancelAlertViewWithTitle:NSLocalizedString(@"警告", nil) message:NSLocalizedString(@"清除PIN码将会带来一定的安全隐患，您确定吗？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
-        [LXHWallet clearPIN];
-        [self refreshData];
+        [weakSelf.viewModel clearPIN];
+        [weakSelf refreshListView];
     } cancelHandler:nil];
 }
 

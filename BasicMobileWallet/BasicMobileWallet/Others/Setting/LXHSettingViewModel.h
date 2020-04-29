@@ -12,7 +12,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHSettingViewModel : NSObject
 
+@property (nonatomic, readonly) NSMutableArray *cellDataArrayForListview;
+
+- (void)resetCellDataArrayForListview;
+
 - (id)showWalletMnemonicWordsViewModel;
+
+- (NSString *)alertMessageForResettingWallet;
+
+- (void)clearWalletData;
+- (void)clearPIN;
 @end
 
 NS_ASSUME_NONNULL_END
