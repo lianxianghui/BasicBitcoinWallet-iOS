@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)resetCellDataArrayForListview;
 
 - (id)showWalletMnemonicWordsViewModel;
+- (id)currentAccountInfoViewModel;
 
 - (NSString *)alertMessageForResettingWallet;
 

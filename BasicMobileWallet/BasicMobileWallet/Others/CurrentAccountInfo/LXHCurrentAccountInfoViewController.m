@@ -29,11 +29,10 @@ alpha:(rgbaValue & 0x000000FF)/255.0]
 
 @implementation LXHCurrentAccountInfoViewController
 
-- (instancetype)init
-{
+- (instancetype)initWithViewModel:(id)viewModel {
     self = [super init];
     if (self) {
-        _viewModel = [LXHCurrentAccountInfoViewModel new];
+        _viewModel = viewModel;
     }
     return self;
 }

@@ -8,4 +8,5 @@
 
 @interface LXHCurrentAccountInfoViewController : UIViewController
 
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

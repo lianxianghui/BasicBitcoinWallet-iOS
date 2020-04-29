@@ -223,7 +223,8 @@
             break;
         case 4:
         {
-            UIViewController *controller = [[LXHCurrentAccountInfoViewController alloc] init];
+            id viewModel = [_viewModel currentAccountInfoViewModel];
+            UIViewController *controller = [[LXHCurrentAccountInfoViewController alloc] initWithViewModel:viewModel];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }
