@@ -45,18 +45,22 @@
         make.left.right.equalTo(self.view);
         make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
     }];
+    [self setContentViewProperties];
     [self addActions];
+
+}
+
+- (void)setContentViewProperties {
     self.contentView.leftImageButton.hidden = [_viewModel leftButtonHidden];
 }
 
 
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self refreshView];
+    [self refreshContentView];
 }
 
-- (void)refreshView {
+- (void)refreshContentView {
     [_viewModel refreshData];
     NSString *address = [_viewModel addressText];
     //地址文本
