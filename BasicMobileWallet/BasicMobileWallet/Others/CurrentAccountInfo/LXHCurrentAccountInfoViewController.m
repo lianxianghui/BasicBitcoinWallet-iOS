@@ -200,9 +200,9 @@ alpha:(rgbaValue & 0x000000FF)/255.0]
         if ([cellType isEqualToString:@"LXHTwoColumnTextCell"])
             return 47;
         if ([cellType isEqualToString:@"LXHEmptyWithSeparatorCell"])
-            return 18.00000000000011;
+            return 18;
         if ([cellType isEqualToString:@"LXHSmallSizeTextRightIconCell"])
-            return 47.00000000000011;
+            return 47;
     }
     return 0;
 }
