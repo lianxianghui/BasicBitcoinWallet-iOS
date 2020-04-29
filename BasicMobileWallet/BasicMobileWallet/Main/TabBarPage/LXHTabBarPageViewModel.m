@@ -10,11 +10,16 @@
 #import "LXHSelectWayOfSendingBitcoinViewModel.h"
 #import "LXHOthersViewModel.h"
 #import "LXHBalanceViewModel.h"
+#import "LXHCurrentReceivingAddressViewModel.h"
 
 @implementation LXHTabBarPageViewModel
 
 - (id)selectWayOfSendingBitcoinViewModel {
     return [[LXHSelectWayOfSendingBitcoinViewModel alloc] init];
+}
+
+- (id)currentReceivingAddressViewModel {
+    return [[LXHCurrentReceivingAddressViewModel alloc] initWithData:nil];
 }
 
 - (id)balanceViewModel {

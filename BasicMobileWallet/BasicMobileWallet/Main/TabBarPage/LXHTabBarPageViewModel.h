@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LXHTabBarPageViewModel : NSObject
 
 - (id)selectWayOfSendingBitcoinViewModel;
+- (id)currentReceivingAddressViewModel;
 - (id)balanceViewModel;
 - (id)othersViewModel;
 @end

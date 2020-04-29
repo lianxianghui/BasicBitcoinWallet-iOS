@@ -15,6 +15,8 @@
 #import "LXHWallet.h"
 #import "LXHTransactionListViewController.h"
 
+#import "LXHAddressViewModel.h"
+
 //临时
 #import "LXHTransactionListByAddressViewModel.h"
 
@@ -270,7 +272,8 @@
             break;
         case 7:
         {
-            UIViewController *controller = [[LXHAddressViewController alloc] initWithData:_data];
+            id viewModel = [[LXHAddressViewModel  alloc] initWithData:_data];
+            UIViewController *controller = [[LXHAddressViewController alloc] initWithViewModel:viewModel];
             [self.navigationController pushViewController:controller animated:YES];
         }
             break;

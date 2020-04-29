@@ -6,7 +6,7 @@
 
 #import "LXHTabBarPageViewController.h"
 #import "LXHBalanceViewController.h"
-#import "LXHCurrentReceivingAddressViewController.h"
+#import "LXHAddressViewController.h"
 #import "LXHOthersViewController.h"
 #import "LXHSelectWayOfSendingBitcoinViewController.h"
 #import "LXHTabBarPageViewModel.h"
@@ -58,7 +58,8 @@
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
 
-    viewController = [[LXHCurrentReceivingAddressViewController alloc] initWithData:nil];
+    viewModel = [_viewModel currentReceivingAddressViewModel];
+    viewController = [[LXHAddressViewController alloc] initWithViewModel:viewModel];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_unselected_icon"];
     itemSelectedImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_selected_icon"];

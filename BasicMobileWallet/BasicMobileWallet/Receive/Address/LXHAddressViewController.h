@@ -14,6 +14,5 @@
 
 @property (nonatomic) LXHAddressView *contentView;
 
-- (instancetype)initWithData:(NSDictionary *)data;
-- (void)refreshViewWithData:(NSDictionary *)data;
+- (instancetype)initWithViewModel:(id)viewModel;
 @end
