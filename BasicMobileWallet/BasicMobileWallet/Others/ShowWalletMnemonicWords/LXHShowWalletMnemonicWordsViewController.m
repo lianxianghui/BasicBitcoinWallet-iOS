@@ -7,8 +7,8 @@
 #import "LXHShowWalletMnemonicWordsViewController.h"
 #import "Masonry.h"
 #import "LXHShowWalletMnemonicWordsView.h"
-#import "LXHWallet.h"
 #import "UILabel+LXHText.h"
+#import "LXHShowWalletMnemonicWordsViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -18,10 +18,18 @@
     
 @interface LXHShowWalletMnemonicWordsViewController()
 @property (nonatomic) LXHShowWalletMnemonicWordsView *contentView;
-
+@property (nonatomic) LXHShowWalletMnemonicWordsViewModel *viewModel;
 @end
 
 @implementation LXHShowWalletMnemonicWordsViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,18 +45,13 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
+    [self setContentViewProperties];
     [self addActions];
     [self setDelegates];
-    [self setMnemonicWordsText];
 }
 
-- (void)setMnemonicWordsText {
-    NSArray *mnemonicCodeWords = [LXHWallet mnemonicCodeWordsWithErrorPointer:nil];
-    NSString *text = [mnemonicCodeWords componentsJoinedByString:@" "];
-    if (text)
-        [self.contentView.text updateAttributedTextString:text];
-    else
-        [self.contentView.text updateAttributedTextString:@""];
+- (void)setContentViewProperties {
+    [self.contentView.text updateAttributedTextString:[_viewModel mnemonicWordsText]];
 }
 
 - (void)swipeView:(id)sender {

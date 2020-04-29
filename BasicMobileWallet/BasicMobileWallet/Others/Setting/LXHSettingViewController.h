@@ -8,4 +8,5 @@
 
 @interface LXHSettingViewController : UIViewController
 
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

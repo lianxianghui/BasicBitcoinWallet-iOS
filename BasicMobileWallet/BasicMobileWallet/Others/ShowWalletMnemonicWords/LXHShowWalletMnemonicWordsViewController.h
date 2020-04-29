@@ -8,4 +8,5 @@
 
 @interface LXHShowWalletMnemonicWordsViewController : UIViewController
 
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

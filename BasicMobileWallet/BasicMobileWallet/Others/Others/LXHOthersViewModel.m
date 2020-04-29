@@ -15,6 +15,7 @@
 #import "LXHTextViewModel.h"
 #import "LXHWallet.h"
 #import "LXHBitcoinNetwork.h"
+#import "LXHSettingViewModel.h"
 
 @implementation LXHOthersViewModel
 
@@ -27,7 +28,7 @@
 }
 
 - (id)settingViewModel {
-    return nil;
+    return [[LXHSettingViewModel alloc] init];
 }
 
 - (NSDictionary *)jsonWithScannedText:(NSString *)text {

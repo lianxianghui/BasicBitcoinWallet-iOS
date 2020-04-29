@@ -20,6 +20,7 @@
 #import "UIViewController+LXHBasicMobileWallet.h"
 #import "LXHTransactionDataManager.h"
 #import "LXHShowWalletMnemonicWordsViewController.h"
+#import "LXHSettingViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -29,10 +30,19 @@
     
 @interface LXHSettingViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSettingView *contentView;
+@property (nonatomic) LXHSettingViewModel *viewModel;
 @property (nonatomic) NSMutableArray *dataForCells;
 @end
 
 @implementation LXHSettingViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -232,8 +242,10 @@
         }
         case 3:
         {
+            __weak typeof(self) weakSelf = self;
             [self validatePINWithPassedHandler:^{
-                UIViewController *controller = [[LXHShowWalletMnemonicWordsViewController alloc] init];
+                id viewModel = [weakSelf.viewModel showWalletMnemonicWordsViewModel];
+                UIViewController *controller = [[LXHShowWalletMnemonicWordsViewController alloc] initWithViewModel:viewModel];
                 controller.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:controller animated:YES];
             }];

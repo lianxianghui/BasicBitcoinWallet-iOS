@@ -45,7 +45,7 @@
 
 - (NSDecimalNumber *)minFeeForNextSelection {
     LXHTransactionOutput *utxoOfMinFeeForNextSelection = [self utxoOfMinFeeForNextSelection];
-    NSMutableArray *array = [self.selectedUtxos mutableCopy] ?: [NSMutableArray array];;
+    NSMutableArray *array = [self.selectedUtxos mutableCopy] ?: [NSMutableArray array];
     if (utxoOfMinFeeForNextSelection) {
         [array addObject:utxoOfMinFeeForNextSelection];
     }

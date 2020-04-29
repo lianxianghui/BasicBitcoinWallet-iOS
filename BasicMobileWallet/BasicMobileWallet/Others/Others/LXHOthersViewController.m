@@ -239,7 +239,8 @@
             break;
         case 4:
         {
-            UIViewController *controller = [[LXHSettingViewController alloc] init];
+            id viewModel = [_viewModel settingViewModel];
+            UIViewController *controller = [[LXHSettingViewController alloc] initWithViewModel:viewModel];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }
