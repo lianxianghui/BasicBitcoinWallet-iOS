@@ -18,6 +18,7 @@
 #import "Toast.h"
 #import "LXHOthersViewModel.h"
 #import "LXHAboutViewController.h"
+#import "LXHAddressListViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -204,7 +205,8 @@
             break;
         case 2:
         {
-            UIViewController *controller = [[LXHAddressListViewController alloc] init];
+            id viewModel = [[LXHAddressListViewModel alloc] init];
+            UIViewController *controller = [[LXHAddressListViewController alloc] initWithViewModel:viewModel];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }

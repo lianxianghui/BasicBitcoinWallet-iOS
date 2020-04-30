@@ -10,8 +10,7 @@
 #import "LXHAddressDetailViewController.h"
 #import "LXHTitleCell.h"
 #import "LXHLocalAddressCell.h"
-#import "LXHWallet.h"
-#import "LXHAddressDetailViewModel.h"
+#import "LXHAddressListViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -21,10 +20,18 @@
     
 @interface LXHAddressListViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHAddressListView *contentView;
-@property (nonatomic) NSMutableArray *dataForCells;
+@property (nonatomic) LXHAddressListViewModel *viewModel;
 @end
 
 @implementation LXHAddressListViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -75,42 +82,8 @@
 
 //Delegate Methods
 
-- (NSArray *)localAddressCellDicArrayWithAddressType:(LXHLocalAddressType)addressType {
-    NSMutableArray *ret = [NSMutableArray array];
-    LXHAccount *account = LXHWallet.mainAccount;
-    NSArray *usedAndCurrentAddresses = [account usedAndCurrentAddressesWithType:addressType];
-    NSDictionary *localAddressCellFixedData = @{ @"isSelectable":@"1", @"type":@"P2PKH ", @"cellType":@"LXHLocalAddressCell"};
-    //使用过的在前面，当前未用过的在最后一个
-    for (NSInteger i = 0; i < usedAndCurrentAddresses.count; i++) {
-        NSMutableDictionary *localAddressCellDic = localAddressCellFixedData.mutableCopy;
-        localAddressCellDic[@"addressText"] = usedAndCurrentAddresses[i];
-        localAddressCellDic[@"used"] = i < [account currentAddressIndexWithType:addressType] ? @"用过的" : @"未用过的";
-        localAddressCellDic[@"localPath"] = [account addressPathWithType:addressType index:(uint32_t)i];
-        localAddressCellDic[@"type"] = @"P2PKH";
-        localAddressCellDic[@"data"] =  @{@"addressType":@(addressType), @"addressIndex":@(i)};
-        [ret addObject:localAddressCellDic];
-    } 
-    return ret;
-}
-
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    if (!_dataForCells) {
-        _dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            //receiving addresses title
-            dic = @{@"title":@"接收地址", @"isSelectable":@"0", @"cellType":@"LXHTitleCell"};
-            [_dataForCells addObject:dic];
-            //receiving addresses info cells
-            [_dataForCells addObjectsFromArray:[self localAddressCellDicArrayWithAddressType:LXHLocalAddressTypeReceiving]];
-            //change addresses title
-            dic = @{@"title":@"找零地址", @"isSelectable":@"0", @"cellType":@"LXHTitleCell"};
-            [_dataForCells addObject:dic];
-            //change addresses info cells
-            [_dataForCells addObjectsFromArray:[self localAddressCellDicArrayWithAddressType:LXHLocalAddressTypeChange]];
-        }
-    }
-    return _dataForCells;
+    return _viewModel.cellDataArrayForListview;
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -120,7 +93,6 @@
     else
         return nil;
 }
-
 
 - (NSString *)tableView:(UITableView *)tableView cellTypeAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentView.listView) {
@@ -211,6 +183,9 @@
         NSMutableAttributedString *typeAttributedString = [cellView.type.attributedText mutableCopy];
         [typeAttributedString.mutableString setString:type];
         cellView.type.attributedText = typeAttributedString;
+        
+        BOOL hidden = [[dataForRow valueForKey:@"hidden"] boolValue];
+        cellView.disclosureIndicator.hidden = hidden;
     }
     return cell;
 }
@@ -238,11 +213,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSDictionary *cellDic = [self cellDataForTableView:tableView atIndexPath:indexPath];
-    NSMutableDictionary *data = cellDic[@"data"];
-    LXHAddressDetailViewModel *viewModel = [[LXHAddressDetailViewModel alloc] initWithData:data];
-    UIViewController *controller = [[LXHAddressDetailViewController alloc] initWithViewModel:viewModel];
-    [self.navigationController pushViewController:controller animated:YES];
+    if (_addressSelectedCallback) {
+        LXHAddress *address = [_viewModel addressAtIndex:indexPath.row];
+        _addressSelectedCallback(address);
+    }
+    NSDictionary *navigationInfo = [_viewModel clickCellNavigationInfoAtIndex:indexPath.row];
+    NSString *navigationType = navigationInfo[@"navigationType"];
+    if ([navigationType isEqualToString:@"push"]) {
+        NSString *controllerClassName = navigationInfo[@"controllerClassName"];
+        id viewModel = navigationInfo[@"viewModel"];
+        //目前是LXHAddressDetailViewController
+        UIViewController *controller = [[NSClassFromString(controllerClassName) alloc] initWithViewModel:viewModel];
+        [self.navigationController pushViewController:controller animated:YES];
+    } else if ([navigationType isEqualToString:@"pop"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+
 }
 
 @end

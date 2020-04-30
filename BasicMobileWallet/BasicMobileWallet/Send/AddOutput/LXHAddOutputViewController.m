@@ -12,12 +12,13 @@
 #import "LXHInputAmountCell.h"
 #import "BTCQRCode.h"
 #import "LXHGlobalHeader.h"
-#import "LXHAddressListForSelectionViewController.h"
+#import "LXHAddressListViewController.h"
 #import "Toast.h"
 #import "LXHAddOutputViewModel.h"
 #import "UILabel+LXHText.h"
 #import "UIViewController+LXHAlert.h"
 #import "LXHScanQRViewController.h"
+#import "LXHAddressListForSelectionViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -338,10 +339,12 @@
     }];
     
     UIAlertAction *selectAddressAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"选择本地地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        LXHAddressListForSelectionViewController *controller = [[LXHAddressListForSelectionViewController alloc] initWithAddressSelectedCallback:^(LXHAddress *localAddress) {
+        id viewModel = [[LXHAddressListForSelectionViewModel alloc] init];
+        LXHAddressListViewController *controller = [[LXHAddressListViewController alloc] initWithViewModel:viewModel];
+        controller.addressSelectedCallback = ^(LXHAddress *localAddress) {
             [weakSelf.viewModel setAddress:localAddress];
             [weakSelf refreshListView];
-        }];
+        };
         [self.navigationController pushViewController:controller animated:YES];
     }];
     
