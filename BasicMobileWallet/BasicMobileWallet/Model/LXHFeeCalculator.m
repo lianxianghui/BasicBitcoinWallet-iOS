@@ -15,7 +15,7 @@
 {
     self = [super init];
     if (self) {
-        _feeRateInSat = 0;
+//        _feeRate.value = 0;
     }
     return self;
 }
@@ -25,37 +25,37 @@
 }
 
 - (LXHBTCAmount)estimatedFeeInSatWithOutputs:(NSArray *)outputs {
-    if (_inputs.count == 0 || outputs.count == 0 || _feeRateInSat == 0)
+    if (_inputs.count == 0 || outputs.count == 0 || _feeRate.value == 0)
         return LXHBTCAmountError;
-    return [LXHFeeCalculator estimatedFeeInSatWithFeeRate:_feeRateInSat inputCount:_inputs.count outputCount:outputs.count];
+    return [LXHFeeCalculator estimatedFeeInSatWithFeeRate:_feeRate.value inputCount:_inputs.count outputCount:outputs.count];
 }
 
 - (nullable NSDecimalNumber *)estimatedFeeInBTC {
-    if (_inputs.count == 0 || _outputs.count == 0 || _feeRateInSat == 0)
+    if (_inputs.count == 0 || _outputs.count == 0 || _feeRate.value == 0)
         return nil;
-    return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRateInSat inputCount:_inputs.count outputCount:_outputs.count];
+    return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRate.value inputCount:_inputs.count outputCount:_outputs.count];
 }
 
 //- (nullable NSDecimalNumber *)estimatedFeeInBTCWithInputs:(NSArray *)inputs {
-//    if (inputs.count == 0 || _outputs.count == 0 || _feeRateInSat == 0)
+//    if (inputs.count == 0 || _outputs.count == 0 || _feeRate.value == 0)
 //        return nil;
-//    return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRateInSat inputCount:inputs.count outputCount:_outputs.count];
+//    return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRate.value inputCount:inputs.count outputCount:_outputs.count];
 //}
 
 - (nullable NSDecimalNumber *)estimatedFeeInBTCWithOutputs:(NSArray *)outputs {
-    if (_inputs.count == 0 || outputs.count == 0 || _feeRateInSat == 0)
+    if (_inputs.count == 0 || outputs.count == 0 || _feeRate.value == 0)
         return nil;
-    return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRateInSat inputCount:_inputs.count outputCount:outputs.count];
+    return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRate.value inputCount:_inputs.count outputCount:outputs.count];
 }
 
 - (BOOL)feeGreaterThanValueWithInput:(LXHTransactionInputOutputCommon *)input {
     //目前不支持隔离见证输入输出，所以目前与输入无关
-    LXHBTCAmount feePerInputInSat = 148 * _feeRateInSat;//目前不支持隔离见证输入输出
+    LXHBTCAmount feePerInputInSat = 148 * _feeRate.value;//目前不支持隔离见证输入输出
     return feePerInputInSat > input.valueSat;
 }
 
 - (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output {
-    LXHBTCAmount fee = [LXHFeeCalculator feeInSatWithOutput:output feeRateInSat:_feeRateInSat];
+    LXHBTCAmount fee = [LXHFeeCalculator feeInSatWithOutput:output feeRateInSat:_feeRate.value];
     return fee > output.valueSat;
 }
 

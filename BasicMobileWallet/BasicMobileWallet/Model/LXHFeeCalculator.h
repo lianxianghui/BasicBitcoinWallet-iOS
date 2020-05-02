@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "LXHGlobalHeader.h"
+#import "LXHFeeRate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,8 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) NSArray *inputs;
 @property (nonatomic) NSArray *outputs;
-@property (nonatomic) NSUInteger feeRateInSat;
-
+@property (nonatomic) LXHFeeRate *feeRate;
 
 - (LXHBTCAmount)estimatedFeeInSat;
 - (LXHBTCAmount)estimatedFeeInSatWithOutputs:(NSArray *)outputs;

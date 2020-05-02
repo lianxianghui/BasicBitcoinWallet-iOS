@@ -68,7 +68,7 @@
 - (LXHFeeCalculator *)feeCalculator {
     LXHFeeCalculator *feeCalculator = [[LXHFeeCalculator alloc] init];
     feeCalculator.outputs = [self outputs];
-    feeCalculator.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
+    feeCalculator.feeRate = [self feeRate];
     return feeCalculator;
 }
 

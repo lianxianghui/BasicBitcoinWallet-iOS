@@ -83,7 +83,7 @@
     if (!_feeCalculator) {
         _feeCalculator = [LXHFeeCalculator new];
         _feeCalculator.inputs = self.inputs;
-        _feeCalculator.feeRateInSat = self.feeRateInSat;
+        _feeCalculator.feeRate = self.feeRate;
     }
     return _feeCalculator;
 }

@@ -19,11 +19,13 @@
 #import "LXHWallet.h"
 #import "LXHTransactionInfoViewModel.h"
 #import "NSDecimalNumber+LXHBTCSatConverter.h"
+#import "LXHFeeRate.h"
 
 @interface LXHBuildTransactionViewModel ()
 @property (nonatomic, readwrite) LXHOutputListViewModel *outputListViewModel;
 @property (nonatomic, readwrite) LXHSelectFeeRateViewModel *selectFeeRateViewModel;
 @property (nonatomic, readwrite) LXHInputFeeViewModel *inputFeeViewModel;
+@property (nonatomic, readwrite) LXHFeeRate *feeRate;
 @end
 
 @implementation LXHBuildTransactionViewModel
@@ -84,6 +86,22 @@
     return dic;
 }
 
+- (LXHFeeRate *)feeRate {
+    //这个_feeRate因为会在多个类中引用，所以只能创建一次，不要重新生成对象。
+    if (!_feeRate)
+        _feeRate = [[LXHFeeRate alloc] init];
+    [self updateFeeRate];
+    return _feeRate;
+}
+
+- (void)updateFeeRate {
+    NSNumber *feeRateValue = [self feeRateValue];
+    if (feeRateValue)
+        _feeRate.value = [feeRateValue longLongValue];
+    else
+        _feeRate.value = LXHBTCAmountError;
+}
+
 - (NSNumber *)feeRateValue {
     NSNumber *feeRateValue = nil;
     if (self.inputFeeViewModel.inputFeeRateSat)
@@ -120,7 +138,7 @@
 - (LXHBTCAmount)estimatedFeeValueInSat {
     LXHFeeCalculator *feeCalculator = [LXHFeeCalculator new];
     feeCalculator.inputs = [self inputs];
-    feeCalculator.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
+    feeCalculator.feeRate = [self feeRate];
     feeCalculator.outputs = [self outputs];
     LXHBTCAmount estimatedFeeValueSat = [feeCalculator estimatedFeeInSat];//从费率和估计的字节数算出的手续费
     return estimatedFeeValueSat;
@@ -237,6 +255,7 @@
 
 - (void)resetSelectFeeRateViewModel {
     _selectFeeRateViewModel = nil;
+    [self updateFeeRate];
 }
 
 - (LXHInputFeeViewModel *)inputFeeViewModel {
@@ -251,6 +270,7 @@
 
 - (void)resetInputFeeViewModel {
     _inputFeeViewModel = nil;
+    [self updateFeeRate];
 }
 
 - (void)addChangeOutputAtRandomPosition {
@@ -377,14 +397,12 @@
 - (LXHBTCAmount)feeOfNewChangeOutput {
     LXHFeeCalculator *feeCalculator = [LXHFeeCalculator new];
     feeCalculator.inputs = [self inputs];
-    feeCalculator.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
+    feeCalculator.feeRate = [self feeRate];
     LXHTransactionOutput *newChangeOutput = [LXHTransactionOutput new];
     NSMutableArray *outputs = [self outputs].mutableCopy;
     [outputs addObject:newChangeOutput];
     feeCalculator.outputs = outputs;
     return [feeCalculator estimatedFeeInSat];
-    
-    
 }
 
 @end

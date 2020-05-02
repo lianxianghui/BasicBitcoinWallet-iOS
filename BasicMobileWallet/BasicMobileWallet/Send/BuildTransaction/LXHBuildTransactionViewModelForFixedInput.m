@@ -74,7 +74,7 @@
         _outputListViewModel = [[LXHOutputListViewModelForFixedInput alloc] init];
     LXHOutputListViewModelForFixedInput *outputListViewModelForFixedInput = (LXHOutputListViewModelForFixedInput *)_outputListViewModel;
     outputListViewModelForFixedInput.inputs = [self inputs];
-    outputListViewModelForFixedInput.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
+    outputListViewModelForFixedInput.feeRate = [self feeRate];
     return _outputListViewModel;
 }
 

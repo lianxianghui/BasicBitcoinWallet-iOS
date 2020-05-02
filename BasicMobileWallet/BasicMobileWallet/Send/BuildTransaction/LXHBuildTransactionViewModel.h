@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class LXHTransactionInputOutputCommon, LXHSelectInputViewModel, LXHOutputListViewModel,LXHSelectFeeRateViewModel, LXHInputFeeViewModel, LXHTransactionInfoViewModel;
+@class LXHTransactionInputOutputCommon, LXHSelectInputViewModel, LXHOutputListViewModel,LXHSelectFeeRateViewModel, LXHInputFeeViewModel, LXHTransactionInfoViewModel, LXHFeeRate;
 
 
 /**
@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)outputCellDataArray;
 - (NSDictionary *)feeRateCellData;
 - (NSNumber *)feeRateValue;
+- (LXHFeeRate *)feeRate;
 
 - (void)resetSelectFeeRateViewModel;
 - (void)resetInputFeeViewModel;
