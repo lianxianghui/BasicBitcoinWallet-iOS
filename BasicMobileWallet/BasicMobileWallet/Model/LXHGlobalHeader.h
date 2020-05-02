@@ -11,6 +11,12 @@
 
 #import "LXHBitcoinNetwork.h"
 
+
+typedef long long LXHBTCAmount;
+static const LXHBTCAmount LXHBTCCoin = 100000000;
+static const LXHBTCAmount LXHBTC_MAX_MONEY = 21000000 * LXHBTCCoin;
+static const LXHBTCAmount LXHBTCAmountError = -1;
+
 #define LXHAESPassword @"serefddetggg" //TODO 随便写的，用你自己的代替
 #define LXHCacheFileDir [NSSearchPathForDirectoriesInDomains(NSCachesDirectory ,NSUserDomainMask, YES) objectAtIndex:0]
 #define LXHTranactionTimeDateFormat @"yyyy-MM-dd HH:mm:ss"
