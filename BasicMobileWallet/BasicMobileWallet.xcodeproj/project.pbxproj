@@ -2116,11 +2116,11 @@
 		8CAA6696230E468200B17222 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				8CBCA8FD24121D7800655C9F /* ForgotPINBeforeWalletDataGenerated */,
-				8CBCA90224121D7800655C9F /* ForgotPINAfterWalletDataGenerated */,
 				8CAA6697230E468200B17222 /* TabBarPage */,
 				8C23C1D123C9C14D00B801CF /* Mask */,
 				8CDCDE2023C998A6001F1287 /* ValidatePIN */,
+				8CBCA8FD24121D7800655C9F /* ForgotPINBeforeWalletDataGenerated */,
+				8CBCA90224121D7800655C9F /* ForgotPINAfterWalletDataGenerated */,
 			);
 			path = Main;
 			sourceTree = "<group>";
