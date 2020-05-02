@@ -30,9 +30,10 @@ typedef NS_ENUM(NSInteger, LXHLockingScriptType) {
 @interface LXHTransactionInputOutputCommon : NSObject <NSSecureCoding>
 @property (nonatomic) LXHAddress *address;
 @property (nonatomic) NSDecimalNumber *valueBTC;
-@property (nonatomic, readonly) LXHBTCAmount valueSat;
 @property (nonatomic) NSString *txid;//作为输出，所在交易的Id
 @property (nonatomic) NSUInteger index;
+
+@property (nonatomic, readonly) LXHBTCAmount valueSat;
 + (NSDecimalNumber *)valueSumOfInputsOrOutputs:(NSArray<LXHTransactionInputOutputCommon *> *)inputsOrOutputs;
 + (LXHBTCAmount)valueSatSumOfInputsOrOutputs:(NSArray<LXHTransactionInputOutputCommon *> *)inputsOrOutputs;
 @end

@@ -109,7 +109,9 @@
     NSUInteger outputCount = [self outputs].count;
     if (inputCount == 0 || outputCount == 0)
         return LXHBTCAmountError;
-    LXHBTCAmount fee = [LXHFeeCalculator differenceBetweenSumOfInputs:[self inputs] sumOfOutputs:[self outputs]];
+    LXHBTCAmount inputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:[self inputs]];
+    LXHBTCAmount outputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:[self outputs]];
+    LXHBTCAmount fee = inputsValueSum - outputsValueSum;
     if (fee >= 0) //todo  >=0 ?
         return fee;
     return LXHBTCAmountError;
