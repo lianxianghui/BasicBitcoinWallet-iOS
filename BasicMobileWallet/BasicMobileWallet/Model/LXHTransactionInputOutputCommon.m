@@ -49,7 +49,7 @@
 - (void)setValueBTC:(NSDecimalNumber *)valueBTC {
     _valueSat = [[valueBTC decimalNumberByMultiplyingByPowerOf10:8] longLongValue];//todo 关注一下 Starting iOS 8.0.2, the longLongValue method returns 0 for some non rounded values.
     if (_valueSat >= LXHBTC_MAX_MONEY) {
-        _valueSat = -1;
+        _valueSat = LXHBTCAmountError;
         _valueBTC = nil;
     } else {
         _valueBTC = valueBTC;

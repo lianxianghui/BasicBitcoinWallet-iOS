@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LXHGlobalHeader.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,16 +18,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSArray *outputs;
 @property (nonatomic) NSUInteger feeRateInSat;
 
+
+- (LXHBTCAmount)estimatedFeeInSat;
 - (nullable NSDecimalNumber *)estimatedFeeInBTC;
 - (nullable NSDecimalNumber *)estimatedFeeInBTCWithOutputs:(NSArray *)outputs;
 //判断某个输入或输出，是不是消耗的Fee比它的值还大
 - (BOOL)feeGreaterThanValueWithInput:(LXHTransactionInputOutputCommon *)input;
 - (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output;
 
-+ (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output feeRateInSat:(NSUInteger)feeRateInSat;
+//+ (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output feeRateInSat:(NSUInteger)feeRateInSat;
 
-+ (NSDecimalNumber *)feeInBTCWithOutput:(LXHTransactionInputOutputCommon *)output feeRateInSat:(NSUInteger)feeRateInSat;//该输出带来的手续费
+//+ (NSDecimalNumber *)feeInBTCWithOutput:(LXHTransactionInputOutputCommon *)output feeRateInSat:(NSUInteger)feeRateInSat;//该输出带来的手续费
 + (NSDecimalNumber *)differenceBetweenInputs:(NSArray<LXHTransactionInputOutputCommon *> *)inputs outputs:(NSArray<LXHTransactionInputOutputCommon *> *)outputs;
+
++ (LXHBTCAmount)differenceBetweenSumOfInputs:(NSArray<LXHTransactionInputOutputCommon *> *)inputs sumOfOutputs:(NSArray<LXHTransactionInputOutputCommon *> *)outputs;
 @end
 
 NS_ASSUME_NONNULL_END
