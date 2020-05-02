@@ -10,6 +10,7 @@
 #import "LXHFeeCalculator.h"
 #import "LXHTransactionOutput.h"
 #import "LXHAddOutputViewModel.h"
+#import "NSDecimalNumber+LXHBTCSatConverter.h"
 
 @interface LXHOutputListViewModelForFixedInput ()
 @property (nonatomic) LXHFeeCalculator *feeCalculator;
@@ -25,33 +26,30 @@
 }
 
 - (NSString *)headerInfoText {
-    return  [NSString stringWithFormat:@"%@BTC", [self maxValueForNewOutput]];
+    LXHBTCAmount maxValueForNewOutput = [self maxValueForNewOutput];
+    return  [NSString stringWithFormat:@"%@BTC", [NSDecimalNumber decimalBTCValueWithSatValue:maxValueForNewOutput]];
 }
 
-- (nullable NSDecimalNumber *)maxValueForNewOutput {
+- (LXHBTCAmount)maxValueForNewOutput {
     //计算可输入的最大值
-    NSDecimalNumber *differenceBetweenInputsAndOuputs = [LXHFeeCalculator differenceBetweenInputs:self.inputs outputs:self.outputs];
+    LXHBTCAmount inputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:self.inputs];
+    LXHBTCAmount outputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:self.outputs];
     
     LXHTransactionOutput *output = [LXHTransactionOutput new];
     NSMutableArray *outputs = [self.outputs mutableCopy] ?: [NSMutableArray array];
     [outputs addObject:output];
-    NSDecimalNumber *estimatedFeeInBTC = [self.feeCalculator estimatedFeeInBTCWithOutputs:outputs];
+    LXHBTCAmount estimatedFee = [self.feeCalculator estimatedFeeInSatWithOutputs:outputs];
     
-    NSDecimalNumber *maxValueOfNewOutput = [differenceBetweenInputsAndOuputs decimalNumberBySubtracting:estimatedFeeInBTC];
-    
-    if ([maxValueOfNewOutput compare:[NSDecimalNumber zero]] == NSOrderedDescending) {
-        return maxValueOfNewOutput;
-    } else {
-        return [NSDecimalNumber zero];
-    }
+    LXHBTCAmount maxValueOfNewOutput = inputsValueSum - outputsValueSum - estimatedFee;
+    return MAX(maxValueOfNewOutput, 0);
 }
 
 - (LXHAddOutputViewModel *)getNewOutputViewModel {
-    NSDecimalNumber *maxValueOfNewOutput = [self maxValueForNewOutput];
-    if ([maxValueOfNewOutput compare:[NSDecimalNumber zero]] == NSOrderedDescending) {
+    LXHBTCAmount maxValueForNewOutput = [self maxValueForNewOutput];
+    if (maxValueForNewOutput > 0) {
         //返回viewModel
         LXHAddOutputViewModel *ret = [LXHAddOutputViewModel new];
-        ret.maxValue = maxValueOfNewOutput;
+        ret.maxValue = [NSDecimalNumber decimalBTCValueWithSatValue:maxValueForNewOutput];
         return ret;
     } else {
         return nil;

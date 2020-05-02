@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 - (LXHBTCAmount)estimatedFeeInSat;
+- (LXHBTCAmount)estimatedFeeInSatWithOutputs:(NSArray *)outputs;
 - (nullable NSDecimalNumber *)estimatedFeeInBTC;
 - (nullable NSDecimalNumber *)estimatedFeeInBTCWithOutputs:(NSArray *)outputs;
 //判断某个输入或输出，是不是消耗的Fee比它的值还大

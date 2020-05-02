@@ -48,10 +48,6 @@
     return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRateInSat inputCount:_inputs.count outputCount:outputs.count];
 }
 
-
-
-
-
 - (BOOL)feeGreaterThanValueWithInput:(LXHTransactionInputOutputCommon *)input {
     //目前不支持隔离见证输入输出，所以目前与输入无关
     LXHBTCAmount feePerInputInSat = 148 * _feeRateInSat;//目前不支持隔离见证输入输出
