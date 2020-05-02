@@ -7,6 +7,7 @@
 //
 
 #import "LXHSelectInputViewModel.h"
+#import "LXHGlobalHeader.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LXHSelectInputViewModelForFixedOutput : LXHSelectInputViewModel
 
 @property (nonatomic) LXHFeeCalculator *feeCalculator;
-@property (nonatomic) NSDecimalNumber *fixedOutputValueSum;
+//@property (nonatomic) NSDecimalNumber *fixedOutputValueSum;
+
+@property (nonatomic) LXHBTCAmount fixedOutputValueSum;
 
 @end
 

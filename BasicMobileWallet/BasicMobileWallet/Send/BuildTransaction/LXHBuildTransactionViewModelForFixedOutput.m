@@ -76,7 +76,7 @@
     if (!_selectInputViewModel)
         _selectInputViewModel = [[LXHSelectInputViewModelForFixedOutput alloc] init];
     LXHSelectInputViewModelForFixedOutput *ret = (LXHSelectInputViewModelForFixedOutput *)_selectInputViewModel;
-    ret.fixedOutputValueSum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:[self outputs]];
+    ret.fixedOutputValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:[self outputs]];
     ret.feeCalculator = [self feeCalculator];
     return ret;
 }
