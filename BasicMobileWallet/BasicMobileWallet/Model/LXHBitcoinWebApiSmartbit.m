@@ -100,7 +100,7 @@
             [inputDic eliminateAllNullObjectValues];
             LXHTransactionInput *input = [LXHTransactionInput new];
             input.index = idx;
-            input.value =  [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", inputDic[@"value"]]];
+            input.valueBTC =  [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", inputDic[@"value"]]];
             input.txid = inputDic[@"txid"];
             input.vout = [inputDic[@"vout"] unsignedIntegerValue];
             NSArray *inputAddresses = [inputDic valueForKey:@"addresses"];
@@ -118,7 +118,7 @@
             [outputDic eliminateAllNullObjectValues];
             LXHTransactionOutput *output = [LXHTransactionOutput new];
             output.index = [outputDic[@"n"] unsignedIntegerValue];
-            output.value = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", outputDic[@"value"]]];
+            output.valueBTC = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", outputDic[@"value"]]];
             output.spendTxid = outputDic[@"spend_txid"];
             NSArray *outputAddresses = [outputDic valueForKey:@"addresses"];
             if (outputAddresses.count == 1) //目前只处理每个输出只有一个输出地址的情况

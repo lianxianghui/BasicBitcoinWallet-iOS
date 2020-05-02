@@ -108,7 +108,7 @@
         }];
         [_outputs enumerateObjectsUsingBlock:^(LXHTransactionOutput * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             BTCAddress *address = [BTCAddress addressWithString:obj.address.base58String];
-            NSDecimalNumber *valueInSat = [obj.value decimalNumberByMultiplyingByPowerOf10:8];
+            NSDecimalNumber *valueInSat = [obj.valueBTC decimalNumberByMultiplyingByPowerOf10:8];
             BTCAmount value = BTCAmountFromDecimalNumber(valueInSat);
             BTCTransactionOutput *output = [[BTCTransactionOutput alloc] initWithValue:value address:address];
             [transaction addOutput:output];

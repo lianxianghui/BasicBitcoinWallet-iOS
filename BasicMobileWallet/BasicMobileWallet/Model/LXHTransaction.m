@@ -82,7 +82,7 @@
             return sum;
         if (![usedAndCurrentAddresses containsObject:address])
             return sum;
-        NSDecimalNumber *value = input.value;
+        NSDecimalNumber *value = input.valueBTC;
         if (!value)
             return sum;
         sum = [sum decimalNumberByAdding:value];
@@ -103,7 +103,7 @@
             return sum;
         if (![usedAndCurrentAddresses containsObject:address])
             return sum;
-        NSDecimalNumber *value = output.value;
+        NSDecimalNumber *value = output.valueBTC;
         if (!value)
             return sum;
         sum = [sum decimalNumberByAdding:value];

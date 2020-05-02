@@ -41,7 +41,7 @@
 - (BOOL)feeGreaterThanValueWithInput:(LXHTransactionInputOutputCommon *)input {
     NSUInteger feePerInputInSat = 148 * _feeRateInSat;//目前不支持隔离见证输入输出
     NSDecimalNumber *feePerInputInBTC = [NSDecimalNumber decimalNumberWithMantissa:feePerInputInSat exponent:-8 isNegative:NO];
-    return [feePerInputInBTC compare:input.value] == NSOrderedDescending;
+    return [feePerInputInBTC compare:input.valueBTC] == NSOrderedDescending;
 }
 
 - (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output {
@@ -50,7 +50,7 @@
 
 + (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output feeRateInSat:(NSUInteger)feeRateInSat {
     NSDecimalNumber *feeInBTC = [self feeInBTCWithOutput:output feeRateInSat:feeRateInSat];
-    return [feeInBTC compare:output.value] == NSOrderedDescending;
+    return [feeInBTC compare:output.valueBTC] == NSOrderedDescending;
 }
 
 + (NSDecimalNumber *)feeInBTCWithOutput:(LXHTransactionInputOutputCommon *)output feeRateInSat:(NSUInteger)feeRateInSat {

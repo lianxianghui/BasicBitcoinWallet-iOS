@@ -114,15 +114,15 @@
 }
 
 - (NSString *)valueString {
-    if (self.output.value)
-        return [NSString stringWithFormat:@"%@", self.output.value];
+    if (self.output.valueBTC)
+        return [NSString stringWithFormat:@"%@", self.output.valueBTC];
     else
         return @"";
 }
 
 - (BOOL)setValueString:(NSString *)valueString {
     if ([self valueIsValid:valueString]) {
-        self.output.value = [[NSDecimalNumber alloc] initWithString:valueString];
+        self.output.valueBTC = [[NSDecimalNumber alloc] initWithString:valueString];
         [self resetCellDataArrayForListView];
         return YES;
     } else {

@@ -51,7 +51,7 @@
             LXHTransactionOutput *output = self.outputViewModels[i].output;
             NSMutableDictionary *dic = @{@"cellType":@"LXHSelectedOutputCell", @"deleteImage":@"send_outputlist_delete_image", @"address":@"地址:", @"isSelectable":@"1"}.mutableCopy;
             
-            NSString *valueText = [NSString stringWithFormat:@"%@ BTC", output.value];
+            NSString *valueText = [NSString stringWithFormat:@"%@ BTC", output.valueBTC];
             dic[@"btcValue"] = valueText;
             
             dic[@"addressText"] = output.address.base58String ?: @"";

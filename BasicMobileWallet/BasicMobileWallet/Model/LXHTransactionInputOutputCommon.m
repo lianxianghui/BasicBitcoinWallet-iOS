@@ -25,7 +25,7 @@
     }
     LXHDecodeObjectOfStringClassStament(address);
     [_address refreshLocalProperties];
-    LXHDecodeObjectOfDecimalNumberClassStament(value);
+    LXHDecodeObjectOfDecimalNumberClassStament(valueBTC);
     LXHDecodeObjectOfStringClassStament(txid);
     LXHDecodeUnsignedIntegerTypeStament(index);
     return self;
@@ -33,7 +33,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
     LXHEncodeObjectStament(address);
-    LXHEncodeObjectStament(value);
+    LXHEncodeObjectStament(valueBTC);
     LXHEncodeObjectStament(txid);
     LXHEncodeIntegerStament(index);
 }
@@ -47,7 +47,7 @@
         return [NSDecimalNumber zero];
     else
         return [inputsOrOutputs bk_reduce:[NSDecimalNumber zero] withBlock:^id(NSDecimalNumber *sum, LXHTransactionInputOutputCommon *inputOrOutput) {
-            return [sum decimalNumberByAdding:inputOrOutput.value];
+            return [sum decimalNumberByAdding:inputOrOutput.valueBTC];
         }];
 }
 

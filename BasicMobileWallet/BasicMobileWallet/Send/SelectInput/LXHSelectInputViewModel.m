@@ -33,7 +33,7 @@
         //utxos 按value从大到小排序
         NSMutableArray<LXHTransactionOutput *> *utxos = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
         [utxos sortUsingComparator:^NSComparisonResult(LXHTransactionOutput *  _Nonnull obj1, LXHTransactionOutput *  _Nonnull obj2) {
-            return -[obj1.value compare:obj2.value];
+            return -[obj1.valueBTC compare:obj2.valueBTC];
         }];
         
         //构造cellDataArray
@@ -41,7 +41,7 @@
         dic = @{@"isSelectable":@"0", @"cellType":@"LXHTopLineCell"};
         [cellDataArrayForListView addObject:dic];
         for (LXHTransactionOutput *utxo in utxos) {
-            NSString *valueText = [NSString stringWithFormat:@"%@ BTC", utxo.value];
+            NSString *valueText = [NSString stringWithFormat:@"%@ BTC", utxo.valueBTC];
             
             static NSDateFormatter *formatter = nil;
             if (!formatter) {

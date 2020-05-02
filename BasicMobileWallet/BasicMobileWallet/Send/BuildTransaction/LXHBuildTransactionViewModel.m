@@ -40,7 +40,7 @@
         NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
         mutableDic[@"addressText"] = utxo.address.base58String;
         mutableDic[@"text"] = [NSString stringWithFormat:@"%ld.", i];
-        mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", utxo.value];
+        mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", utxo.valueBTC];
         [ret addObject:mutableDic];
     }
     return ret;
@@ -63,7 +63,7 @@
             address = output.address.base58String;
         mutableDic[@"addressText"] = address;
         
-        mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", output.value];
+        mutableDic[@"btcValue"] = [NSString stringWithFormat:@"%@ BTC", output.valueBTC];
         [ret addObject:mutableDic];
     }
     return ret;
@@ -316,7 +316,7 @@
     NSDecimalNumber *value = [differenceBetweenInputsAndOutputs decimalNumberBySubtracting:feeWithANewChangeOutput];
     if ([value compare:[NSDecimalNumber zero]] == NSOrderedDescending) {
         LXHTransactionOutput *changeOutput = [LXHTransactionOutput new];
-        changeOutput.value = value;
+        changeOutput.valueBTC = value;
         changeOutput.address = [LXHWallet.mainAccount currentChangeAddress];
         return changeOutput;
     } else {

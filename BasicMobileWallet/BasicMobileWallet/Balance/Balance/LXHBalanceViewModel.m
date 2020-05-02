@@ -26,7 +26,7 @@
         dic = @{@"isSelectable":@"0", @"cellType":@"LXHLineCell"};
         [_dataForCells addObject:dic];
         for (LXHTransactionOutput *utxo in [self utxos]) {
-            NSString *valueText = [NSString stringWithFormat:@"%@ BTC", utxo.value];
+            NSString *valueText = [NSString stringWithFormat:@"%@ BTC", utxo.valueBTC];
             dic = @{@"text1": utxo.address.base58String ?: @"", @"isSelectable":@"1", @"text2": valueText, @"cellType":@"LXHBalanceLeftRightTextCell", @"model": utxo};
             [_dataForCells addObject:dic];
         }
@@ -38,7 +38,7 @@
 - (NSMutableArray<LXHTransactionOutput *> *)utxos {
     NSMutableArray<LXHTransactionOutput *> *ret = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
     [ret sortUsingComparator:^NSComparisonResult(LXHTransactionOutput *  _Nonnull obj1, LXHTransactionOutput *  _Nonnull obj2) {
-        return -[obj1.value compare:obj2.value];
+        return -[obj1.valueBTC compare:obj2.valueBTC];
     }];
     return ret;
 }

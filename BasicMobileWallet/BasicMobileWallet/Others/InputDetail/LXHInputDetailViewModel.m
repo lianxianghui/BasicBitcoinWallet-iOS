@@ -34,7 +34,7 @@
         dic = @{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": _input.address.base58String ?: @" "};
         [_dataForCells addObject:dic];
         
-        NSString *text = _input.value ? [NSString stringWithFormat:@"%@ BTC", _input.value] : @" ";
+        NSString *text = _input.valueBTC ? [NSString stringWithFormat:@"%@ BTC", _input.valueBTC] : @" ";
         dic = @{@"title":@"输入数量 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": text};
         [_dataForCells addObject:dic];
         

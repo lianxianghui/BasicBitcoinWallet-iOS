@@ -114,7 +114,7 @@
             LXHTransactionInput *input = [_transaction.inputs objectAtIndex:i];
             dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
             dataForCell[@"text1"] = [NSString stringWithFormat:@"%ld. %@", i, input.address];
-            dataForCell[@"text2"] = [NSString stringWithFormat:@"%@ BTC", input.value];
+            dataForCell[@"text2"] = [NSString stringWithFormat:@"%@ BTC", input.valueBTC];
             dataForCell[@"data"] = input;
             [dataForCells addObject:dataForCell];
         }
@@ -129,7 +129,7 @@
             LXHTransactionOutput *output = [_transaction.outputs objectAtIndex:i];
             dataForCell = @{@"isSelectable":@"1", @"cellType":@"LXHTransDetailLeftRightTextCell"}.mutableCopy;
             dataForCell[@"text1"] = [NSString stringWithFormat:@"%ld. %@", i, output.address];
-            dataForCell[@"text2"] = [NSString stringWithFormat:@"%@ BTC", output.value];
+            dataForCell[@"text2"] = [NSString stringWithFormat:@"%@ BTC", output.valueBTC];
             dataForCell[@"data"] = output;
             [dataForCells addObject:dataForCell];
         }

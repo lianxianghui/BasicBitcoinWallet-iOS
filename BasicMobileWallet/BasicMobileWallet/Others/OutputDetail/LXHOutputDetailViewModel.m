@@ -34,7 +34,7 @@
         NSDictionary *dic = nil;
         dic = @{@"title":@"地址Base58 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": _model.address.base58String ?: @""};
         [_dataForCells addObject:dic];
-        NSString *valueText = _model.value ? [NSString stringWithFormat:@"%@ BTC", _model.value] : @"";
+        NSString *valueText = _model.valueBTC ? [NSString stringWithFormat:@"%@ BTC", _model.valueBTC] : @"";
         dic = @{@"title":@"输出数量 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": valueText};
         [_dataForCells addObject:dic];
         dic = @{@"content":_model.lockingScript ?: @"", @"isSelectable":@"1", @"title":@"锁定脚本", @"cellType":@"LXHLockingScriptCell"};
