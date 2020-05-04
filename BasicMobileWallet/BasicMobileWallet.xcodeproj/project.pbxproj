@@ -55,6 +55,7 @@
 		8C2CC6E9233236A9005AA93C /* LXHShowWalletMnemonicWordsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC6E5233236A9005AA93C /* LXHShowWalletMnemonicWordsView.m */; };
 		8C2CC6EC2334C0D8005AA93C /* LXHWalletChangeLevelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC6EB2334C0D8005AA93C /* LXHWalletChangeLevelModel.m */; };
 		8C420C0C2398F117009D02E7 /* UITextView+LXHText.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C420C0B2398F117009D02E7 /* UITextView+LXHText.m */; };
+		8C421311245FCDB9007F4D04 /* LXHAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C421310245FCDB9007F4D04 /* LXHAmount.m */; };
 		8C44C81F23A208E00091EC72 /* LXHEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C44C81D23A208DF0091EC72 /* LXHEmptyCell.m */; };
 		8C45ACCA2375912B0038EAEA /* LXHAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C45ACC92375912B0038EAEA /* LXHAddress.m */; };
 		8C563A60238CD014009BD8EF /* LXHSelectFeeRateViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C563A5F238CD014009BD8EF /* LXHSelectFeeRateViewModel.m */; };
@@ -408,6 +409,8 @@
 		8C2CC6EB2334C0D8005AA93C /* LXHWalletChangeLevelModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHWalletChangeLevelModel.m; sourceTree = "<group>"; };
 		8C420C0A2398F116009D02E7 /* UITextView+LXHText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+LXHText.h"; sourceTree = "<group>"; };
 		8C420C0B2398F117009D02E7 /* UITextView+LXHText.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+LXHText.m"; sourceTree = "<group>"; };
+		8C42130F245FCDB9007F4D04 /* LXHAmount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHAmount.h; sourceTree = "<group>"; };
+		8C421310245FCDB9007F4D04 /* LXHAmount.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHAmount.m; sourceTree = "<group>"; };
 		8C44C81D23A208DF0091EC72 /* LXHEmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHEmptyCell.m; sourceTree = "<group>"; };
 		8C44C81E23A208E00091EC72 /* LXHEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHEmptyCell.h; sourceTree = "<group>"; };
 		8C45ACC82375912B0038EAEA /* LXHAddress.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHAddress.h; sourceTree = "<group>"; };
@@ -1264,6 +1267,8 @@
 				8C8FCABA238F972F0054016F /* LXHFeeCalculator.m */,
 				8C26EDE4245D8EEE0086BD94 /* LXHFeeRate.h */,
 				8C26EDE5245D8EEE0086BD94 /* LXHFeeRate.m */,
+				8C42130F245FCDB9007F4D04 /* LXHAmount.h */,
+				8C421310245FCDB9007F4D04 /* LXHAmount.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2732,6 +2737,7 @@
 				8CA3227D22DEBE9900CEA828 /* BTCPriceSource+Tests.m in Sources */,
 				8CA322A022DEBE9900CEA828 /* BTCData+Tests.m in Sources */,
 				8CF8B6B623AC847300536C3A /* LXHWalletMnemonicPassphraseViewModel.m in Sources */,
+				8C421311245FCDB9007F4D04 /* LXHAmount.m in Sources */,
 				8C78458224519F040010F86B /* LXHSelectMnemonicWordLengthViewModel.m in Sources */,
 				8CE9A94023AB1F52007A58EF /* LXHSelectWayOfSendingBitcoinViewModel.m in Sources */,
 				8CA322A122DEBE9900CEA828 /* BTCFancyEncryptedMessage+Tests.m in Sources */,

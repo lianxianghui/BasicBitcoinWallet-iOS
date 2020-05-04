@@ -7,6 +7,9 @@
 //
 
 #import "LXHInputFeeViewModel.h"
+#import "LXHAmount.h"
+#import "LXHFeeRate.h"
+#import "NSString+Base.h"
 
 @interface LXHInputFeeViewModel ()
 @property (nonatomic, readwrite) NSNumber *inputFeeRateSat;
@@ -15,9 +18,10 @@
 @implementation LXHInputFeeViewModel
 
 - (BOOL)setInputFeeRateString:(NSString *)inputFeeRateString errorDesc:(NSString **)errorDesc {
-    BOOL inputFeeRateIsValid = [LXHInputFeeViewModel isIntegerWithString:inputFeeRateString];
+    BOOL inputFeeRateIsValid = [LXHAmount isValidWithString:inputFeeRateString] && [LXHFeeRate isValidWithFeeRateValue:[inputFeeRateString longLongValue]];
     if (inputFeeRateIsValid) {
-        _inputFeeRateSat = @(inputFeeRateString.integerValue);
+        NSDecimalNumber *inputFeeRate = [NSDecimalNumber decimalNumberWithString:inputFeeRateString];
+        _inputFeeRateSat = inputFeeRate;
         *errorDesc = nil;
         return YES;
     } else {
