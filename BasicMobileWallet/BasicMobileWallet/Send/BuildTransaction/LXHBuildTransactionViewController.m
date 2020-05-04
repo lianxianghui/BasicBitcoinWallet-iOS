@@ -132,24 +132,25 @@
             case -1:
             {
                 LXHWeakSelf
-                NSString *prompt = NSLocalizedString(@"实际手续费过多，有可能造成浪费，是否调整？", nil);
+                NSString *note = [weakSelf.viewModel hasChangeOutput] ? NSLocalizedString(@"您可以通过修改或重新添加找零的方式进行调整", nil) :
+                NSLocalizedString(@"您可以通过添加找零的方式进行调整", nil);
+                NSString *promptFomat = NSLocalizedString(@"实际手续费大于根据费率估算的手续费，有可能造成浪费，您确定要进入下一步吗？(%@)", nil);
+                NSString *prompt = [NSString stringWithFormat:promptFomat, note];
                 [self showOkCancelAlertViewWithMessage:prompt okHandler:^(UIAlertAction * _Nonnull action) {
-//                    NSString *toast = [weakSelf.viewModel hasChangeOutput] ? NSLocalizedString(@"您可以通过修改或重新添加找零的方式进行调整", nil) :
-//                    NSLocalizedString(@"您可以通过添加找零的方式进行调整", nil);
-//                    [weakSelf.view makeToast:toast];
-                } cancelHandler:^(UIAlertAction * _Nonnull action) {
                     [weakSelf pushLXHTransactionInfoViewController];
+                } cancelHandler:^(UIAlertAction * _Nonnull action) {
+                    
                 }];
                 break;
             }
             case -2:
             {
                 LXHWeakSelf
-                NSString *prompt = NSLocalizedString(@"实际手续费小于根据费率估算的手续费，有可能影响到账时间，是否调整？", nil);
+                NSString *prompt = NSLocalizedString(@"实际手续费小于根据费率估算的手续费，有可能影响到账时间，您确定要进入下一步吗？", nil);
                 [self showOkCancelAlertViewWithMessage:prompt okHandler:^(UIAlertAction * _Nonnull action) {
-                    //do nothing
-                } cancelHandler:^(UIAlertAction * _Nonnull action) {
                     [weakSelf pushLXHTransactionInfoViewController];
+                } cancelHandler:^(UIAlertAction * _Nonnull action) {
+                    
                 }];
                 break;
             }
@@ -177,6 +178,7 @@
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
+
 
 //Actions
 - (void)LXHFeeCellInputFeeValueButtonClicked:(UIButton *)sender {

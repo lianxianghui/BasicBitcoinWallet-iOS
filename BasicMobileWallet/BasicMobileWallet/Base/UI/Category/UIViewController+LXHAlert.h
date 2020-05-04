@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showOkAlertViewWithTitle:(NSString *)title message:(NSString *)message handler:(void (^ __nullable)(UIAlertAction *action))handler;
 
 - (void)showOkCancelAlertViewWithTitle:(NSString *)title message:(NSString *)message okHandler:(void (^ __nullable)(UIAlertAction *action))okHandler cancelHandler:(void (^ __nullable)(UIAlertAction *action))cancelHandler;
+
+- (void)showYesNoAlertViewWithMmessage:(NSString *)message yesHandler:(void (^ __nullable)(UIAlertAction *action))yesHandler noHandler:(void (^ __nullable)(UIAlertAction *action))noHandler;
 @end
 
 NS_ASSUME_NONNULL_END

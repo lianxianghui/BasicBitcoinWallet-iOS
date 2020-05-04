@@ -157,40 +157,17 @@
         if (estimatedFeeValueInSat == actualFeeValueInSat) {
             title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), actualFeeValueInBTC];
         } else if (actualFeeValueInSat > estimatedFeeValueInSat) {
-            if ([self changeTooSmallToAdd]) //找零太小，归到手续费里的情况
+            if ([self changeIsTooSmallToAdd]) //找零太小，归到手续费里的情况
                 title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), actualFeeValueInBTC];
-            else //实际手续费过多，有可能造成浪费。起到提醒作用
+            else //实际手续费过多，有可能造成浪费。title文字起提醒作用
                 title = [NSString stringWithFormat:NSLocalizedString(@"估计的手续费 %@BTC  实际的手续费 %@BTC", nil), estimatedFeeValueInBTC, actualFeeValueInBTC];
-        } else { //actualFeeValueInSat < estimatedFeeValueInSat。实际手续费过少，有可能影响到账时间。起到提醒作用
+        } else { //actualFeeValueInSat < estimatedFeeValueInSat。实际手续费过少，有可能影响到账时间。title文字起提醒作用
             title = [NSString stringWithFormat:NSLocalizedString(@"估计的手续费 %@BTC  实际的手续费 %@BTC", nil), estimatedFeeValueInBTC, actualFeeValueInBTC];
         }
     }
     NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
     return dic;
 }
-
-//- (NSDictionary *)titleCell2DataForGroup2 {
-//    NSDecimalNumber *estimatedFeeValueInBTC = [self estimatedFeeValueInBTC];
-//    NSDecimalNumber *actualFeeValueInBTC = [self actualFeeValueInBTC];
-//    NSString *title = nil;
-//    if (!estimatedFeeValueInBTC || !actualFeeValueInBTC) {
-//        title = NSLocalizedString(@"手续费", nil); //为nil时代表无意义，不显示具体数值
-//    } else {
-//        NSComparisonResult comparisonResult = [actualFeeValueInBTC compare:estimatedFeeValueInBTC];
-//        if (comparisonResult == NSOrderedSame)
-//            title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), actualFeeValueInBTC];
-//        else if (comparisonResult == NSOrderedDescending) { //actualFeeValueInBTC > estimatedFeeValueInBTC
-//            if ([self changeTooSmallToAdd]) //找零太小，归到手续费里的情况
-//                title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), actualFeeValueInBTC];
-//            else //实际手续费过多，有可能造成浪费。起到提醒作用
-//                title = [NSString stringWithFormat:NSLocalizedString(@"估计的手续费 %@BTC  实际的手续费 %@BTC", nil), estimatedFeeValueInBTC, actualFeeValueInBTC];
-//        } else { //actualFeeValueInBTC < estimatedFeeValueInBTC。实际手续费过少，有可能影响到账时间。起到提醒作用
-//            title = [NSString stringWithFormat:NSLocalizedString(@"估计的手续费 %@BTC  实际的手续费 %@BTC", nil), estimatedFeeValueInBTC, actualFeeValueInBTC];
-//        }
-//    }
-//    NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
-//    return dic;
-//}
 
 #pragma mark - for subclass overriding
 - (NSArray *)cellDataForListview {
@@ -282,7 +259,7 @@
     if ([self hasUnallocatedValue]) {
         BOOL worth;
         NSString *info;
-        if ([self changeTooSmallToAdd]) {
+        if ([self changeIsTooSmallToAdd]) {
             worth = NO;
             info = NSLocalizedString(@"因为找零过小，带来的手续费比它的值还大，已经被归到手续费里", nil);
         } else {
@@ -330,7 +307,7 @@
         if (actualFeeValueInSat == estimatedFeeValueInSat) {
             return 0;
         } else if (actualFeeValueInSat > estimatedFeeValueInSat) {
-            if ([self changeTooSmallToAdd])
+            if ([self changeIsTooSmallToAdd])
                 return 1;
             else
                 return -1;
@@ -340,7 +317,7 @@
     }
 }
 
-- (BOOL)changeTooSmallToAdd {
+- (BOOL)changeIsTooSmallToAdd {
     LXHTransactionOutput *changeOutput = [self getANewChangeOutput];
     return changeOutput == nil;
 }

@@ -15,6 +15,8 @@
 + (UIAlertController *)okAlertViewWithTitle:(NSString *)title message:(NSString *)message handler:(void (^ __nullable)(UIAlertAction *action))handler;
 + (UIAlertController *)okCancelAlertViewWithTitle:(NSString *)title message:(NSString *)message okHandler:(void (^ __nullable)(UIAlertAction *action))okHandler cancelHandler:(void (^ __nullable)(UIAlertAction *action))cancelHandler;
 
++ (UIAlertController *)yesNoAlertViewWithTitle:(NSString *)title message:(NSString *)message yesHandler:(void (^ __nullable)(UIAlertAction *action))yesHandler noHandler:(void (^ __nullable)(UIAlertAction *action))noHandler;
+
 + (UIAlertController *)pinCodeInputOKCancelAlertWithMessage:(NSString *)message textBlock:(void (^)(NSString *text))textBlock;
 + (UIAlertController *)pinCodeInputOKAndForgotPINAlertWithMessage:(NSString *)message textBlock:(void (^)(NSString *text))textBlock forgotPINBlock:(void (^)(void))forgotPINBlock;
 @end

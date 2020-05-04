@@ -30,6 +30,15 @@
     return alert;
 }
 
++ (UIAlertController *)yesNoAlertViewWithTitle:(NSString *)title message:(NSString *)message yesHandler:(void (^ __nullable)(UIAlertAction *action))yesHandler noHandler:(void (^ __nullable)(UIAlertAction *action))noHandler {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"是", nil) style:UIAlertActionStyleDefault handler:yesHandler];
+    [alert addAction:yesAction];
+    UIAlertAction *noAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"否", nil) style:UIAlertActionStyleDefault handler:noHandler];
+    [alert addAction:noAction];
+    return alert;
+}
+
 
 + (UIAlertController *)pinCodeInputOKCancelAlertWithMessage:(NSString *)message textBlock:(void (^)(NSString *text))textBlock {
     

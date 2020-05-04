@@ -31,5 +31,16 @@
     [self showOkCancelAlertViewWithTitle:title message:message okHandler:okHandler cancelHandler:cancelHandler];
 }
 
+- (void)showYesNoAlertViewWithTitle:(NSString *)title message:(NSString *)message yesHandler:(void (^ __nullable)(UIAlertAction *action))yesHandler noHandler:(void (^ __nullable)(UIAlertAction *action))noHandler {
+    UIAlertController *alert = [UIUtils yesNoAlertViewWithTitle:title message:message yesHandler:yesHandler noHandler:noHandler];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)showYesNoAlertViewWithMmessage:(NSString *)message yesHandler:(void (^ __nullable)(UIAlertAction *action))yesHandler noHandler:(void (^ __nullable)(UIAlertAction *action))noHandler {
+    NSString *title = NSLocalizedString(@"提醒", @"Warning");
+    [self showYesNoAlertViewWithTitle:title message:message yesHandler:yesHandler noHandler:noHandler];
+}
+
+
 
 @end
