@@ -144,27 +144,6 @@
     return estimatedFeeValueSat;
 }
 
-//- (NSDecimalNumber *)actualFeeValueInBTC {
-//    NSUInteger inputCount = [self inputs].count;
-//    NSUInteger outputCount = [self outputs].count;
-//    if (inputCount == 0 || outputCount == 0)
-//        return nil;
-//    NSDecimalNumber *difference = [LXHFeeCalculator differenceBetweenInputs:[self inputs] outputs:[self outputs]];
-//    if ([difference compare:[NSDecimalNumber zero]] == NSOrderedDescending) {//输入和大于输出和
-//        return difference;
-//    }
-//    return nil;
-//}
-
-//- (NSDecimalNumber *)estimatedFeeValueInBTC {
-//    LXHFeeCalculator *feeCalculator = [LXHFeeCalculator new];
-//    feeCalculator.inputs = [self inputs];
-//    feeCalculator.feeRateInSat = [self feeRateValue].unsignedIntegerValue;
-//    feeCalculator.outputs = [self outputs];
-//    NSDecimalNumber *estimatedFeeValueInBTC = [feeCalculator estimatedFeeInBTC];//从费率和估计的字节数算出的手续费
-//    return estimatedFeeValueInBTC;
-//}
-
 - (NSDictionary *)titleCell2DataForGroup2 {
     LXHBTCAmount estimatedFeeValueInSat = [self estimatedFeeValueInSat];
     LXHBTCAmount actualFeeValueInSat = [self actualFeeValueInSat];
