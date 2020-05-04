@@ -12,23 +12,23 @@
 
 @implementation LXHAmount
 
++ (BOOL)isValidWithValue:(LXHBTCAmount)value {
+    if (value >= 0 && value <= LXHBTC_MAX_MONEY)
+        return YES;
+    return NO;
+}
+
 + (BOOL)isValidWithDecimalValue:(NSDecimalNumber *)value {
     NSDecimalNumber *longlongValue =  [NSDecimalNumber decimalNumberWithMantissa:[value longLongValue] exponent:0 isNegative:NO];
     if ([value compare:longlongValue] != NSOrderedSame)
         return NO;
-    if ([value lessThanZero])
-        return NO;
-    NSDecimalNumber *maxMoney = [NSDecimalNumber decimalNumberWithMantissa:LXHBTC_MAX_MONEY exponent:0 isNegative:NO];
-    if ([value greaterThan:maxMoney])
-        return NO;
-    return YES;
+    return [self isValidWithValue:[value longLongValue]];
 }
 
 + (BOOL)isValidWithNumberValue:(NSNumber *)value {
     NSDecimalNumber *decimalValue = [[NSDecimalNumber alloc] initWithDecimal:value.decimalValue];
     return [self isValidWithDecimalValue:decimalValue];
 }
-
 
 + (BOOL)isValidWithString:(NSString *)string {
     if (![string isLongLong])

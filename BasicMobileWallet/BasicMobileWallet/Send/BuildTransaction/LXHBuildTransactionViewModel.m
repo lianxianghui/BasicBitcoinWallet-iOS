@@ -130,9 +130,10 @@
     LXHBTCAmount inputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:[self inputs]];
     LXHBTCAmount outputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:[self outputs]];
     LXHBTCAmount fee = inputsValueSum - outputsValueSum;
-    if (fee >= 0) //todo  >=0 ?
+    if ([LXHFeeRate isValidWithFeeRateValue:fee])
         return fee;
-    return LXHBTCAmountError;
+    else
+        return LXHBTCAmountError;
 }
 
 - (LXHBTCAmount)estimatedFeeValueInSat {
@@ -148,8 +149,8 @@
     LXHBTCAmount estimatedFeeValueInSat = [self estimatedFeeValueInSat];
     LXHBTCAmount actualFeeValueInSat = [self actualFeeValueInSat];
     NSString *title = nil;
-    if (estimatedFeeValueInSat == LXHBTCAmountError || actualFeeValueInSat <= 0) {//todo ?
-        title = NSLocalizedString(@"手续费", nil); //这时候不显示具体数值
+    if (estimatedFeeValueInSat == LXHBTCAmountError || actualFeeValueInSat == LXHBTCAmountError) {
+        title = NSLocalizedString(@"手续费", nil); //这时候不显示具体数值。点下一步时会提示具体的问题
     } else {
         NSDecimalNumber *estimatedFeeValueInBTC = [NSDecimalNumber decimalBTCValueWithSatValue:estimatedFeeValueInSat];
         NSDecimalNumber *actualFeeValueInBTC = [NSDecimalNumber decimalBTCValueWithSatValue:actualFeeValueInSat];

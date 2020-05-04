@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHAmount : NSObject
 
++ (BOOL)isValidWithValue:(LXHBTCAmount)value;
 + (BOOL)isValidWithDecimalValue:(NSDecimalNumber *)value;
 + (BOOL)isValidWithString:(NSString *)string;
 + (BOOL)isValidWithNumberValue:(NSNumber *)value;
