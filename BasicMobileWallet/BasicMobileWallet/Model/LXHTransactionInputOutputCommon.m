@@ -10,6 +10,7 @@
 #import "BlocksKit.h"
 #import "LXHAddress+LXHAccount.h"
 #import "LXHGlobalHeader.h"
+#import "NSDecimalNumber+LXHBTCSatConverter.h"
 
 @interface LXHTransactionInputOutputCommon ()
 @property (nonatomic, readwrite) LXHBTCAmount valueSat;
@@ -64,7 +65,7 @@
 + (NSDecimalNumber *)valueSumOfInputsOrOutputs:(NSArray<LXHTransactionInputOutputCommon *> *)inputsOrOutputs {
     LXHBTCAmount valueSatSum = [self valueSatSumOfInputsOrOutputs:inputsOrOutputs];
     if (valueSatSum != LXHBTCAmountError)
-        return [NSDecimalNumber decimalNumberWithMantissa:valueSatSum exponent:-8 isNegative:NO];
+        return [NSDecimalNumber decimalBTCValueWithSatValue:valueSatSum];
     else
         return nil;
 }

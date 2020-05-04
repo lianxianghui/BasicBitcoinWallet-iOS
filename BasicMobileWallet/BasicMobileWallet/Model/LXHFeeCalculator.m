@@ -8,6 +8,7 @@
 
 #import "LXHFeeCalculator.h"
 #import "LXHTransactionInputOutputCommon.h"
+#import "NSDecimalNumber+LXHBTCSatConverter.h"
 
 @implementation LXHFeeCalculator
 
@@ -25,13 +26,13 @@
 }
 
 - (LXHBTCAmount)estimatedFeeInSatWithOutputs:(NSArray *)outputs {
-    if (_inputs.count == 0 || outputs.count == 0 || _feeRate.value == 0)
+    if (_inputs.count == 0 || outputs.count == 0)
         return LXHBTCAmountError;
     return [LXHFeeCalculator estimatedFeeInSatWithFeeRate:_feeRate.value inputCount:_inputs.count outputCount:outputs.count];
 }
 
 - (nullable NSDecimalNumber *)estimatedFeeInBTC {
-    if (_inputs.count == 0 || _outputs.count == 0 || _feeRate.value == 0)
+    if (_inputs.count == 0 || _outputs.count == 0)
         return nil;
     return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRate.value inputCount:_inputs.count outputCount:_outputs.count];
 }
@@ -43,7 +44,7 @@
 //}
 
 - (nullable NSDecimalNumber *)estimatedFeeInBTCWithOutputs:(NSArray *)outputs {
-    if (_inputs.count == 0 || outputs.count == 0 || _feeRate.value == 0)
+    if (_inputs.count == 0 || outputs.count == 0)
         return nil;
     return [LXHFeeCalculator esmitatedFeeInBTCWithFeeRate:_feeRate.value inputCount:_inputs.count outputCount:outputs.count];
 }
@@ -86,7 +87,7 @@
 
 + (NSDecimalNumber *)esmitatedFeeInBTCWithFeeRate:(NSUInteger)feeRateInSat inputCount:(NSUInteger)inputCount outputCount:(NSUInteger)outputCount {
     unsigned long long estimatedFeeInSat = [self estimatedFeeInSatWithFeeRate:feeRateInSat inputCount:inputCount outputCount:outputCount];
-    NSDecimalNumber *ret = [NSDecimalNumber decimalNumberWithMantissa:estimatedFeeInSat exponent:-8 isNegative:NO];
+    NSDecimalNumber *ret = [NSDecimalNumber decimalBTCValueWithSatValue:estimatedFeeInSat];
     return ret;
 }
 

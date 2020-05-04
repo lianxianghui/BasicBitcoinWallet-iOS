@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LXHOutputListViewModelForFixedInput : LXHOutputListViewModel
 
 @property (nonatomic) NSArray *inputs;
-//@property (nonatomic) NSUInteger feeRateInSat;
 @property (nonatomic) LXHFeeRate *feeRate;
 @end
 

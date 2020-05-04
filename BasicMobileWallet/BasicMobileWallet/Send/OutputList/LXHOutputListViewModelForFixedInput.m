@@ -65,17 +65,16 @@
 - (void)refreshViewModeMaxValueAtIndex:(NSUInteger)index {
     if (index < self.outputViewModels.count) {
         LXHAddOutputViewModel *viewModel = self.outputViewModels[index];
-        NSDecimalNumber *inputsValueSum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:self.inputs];
-        NSDecimalNumber *estimatedFeeInBTC = [self.feeCalculator estimatedFeeInBTCWithOutputs:self.outputs];
+        LXHBTCAmount inputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:self.inputs];
+        LXHBTCAmount estimatedFeeInBTC = [self.feeCalculator estimatedFeeInSatWithOutputs:self.outputs];
         
         NSMutableArray *otherOutputs = [self.outputs mutableCopy];
         [otherOutputs removeObject:viewModel.output];
-        NSDecimalNumber *otherOutputsValueSum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:otherOutputs];
+        LXHBTCAmount otherOutputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:otherOutputs];
 
-        NSDecimalNumber *maxValueOfCurrentOutput = [[inputsValueSum decimalNumberBySubtracting:estimatedFeeInBTC] decimalNumberBySubtracting:otherOutputsValueSum];
-        if ([maxValueOfCurrentOutput compare:[NSDecimalNumber zero]] == NSOrderedAscending)
-            maxValueOfCurrentOutput = [NSDecimalNumber zero];
-        viewModel.maxValue = maxValueOfCurrentOutput;
+        LXHBTCAmount maxValueOfCurrentOutput = inputsValueSum - estimatedFeeInBTC - otherOutputsValueSum;
+        maxValueOfCurrentOutput = MAX(maxValueOfCurrentOutput, 0);
+        viewModel.maxValue = [NSDecimalNumber decimalBTCValueWithSatValue:maxValueOfCurrentOutput];
     }
 }
 
