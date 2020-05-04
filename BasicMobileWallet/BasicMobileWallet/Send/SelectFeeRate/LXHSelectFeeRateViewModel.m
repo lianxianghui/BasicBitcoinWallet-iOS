@@ -25,10 +25,11 @@
             _cellDataListForListView = [NSMutableArray array];
             NSArray *keys = @[@"fastestFee", @"halfHourFee", @"hourFee"];
             for (NSString *key in keys) {
-                NSString *feeRateTitle = [key firstLetterCapitalized];
-                id value = _feeRateOptionsDic[key];
+                //todo 这里假设_feeRateOptionsDic里的数据都是没问题的。如果进行一下校验会更严谨
+                NSNumber *value = _feeRateOptionsDic[key];//数据形式，@"fastestFee":@(30)
                 if (!value)
                     continue;
+                NSString *feeRateTitle = [key firstLetterCapitalized];
                 NSString *feeRateValueText = [NSString stringWithFormat:@"%@ sat/byte", value];
                 NSMutableDictionary *dic = @{@"feeRate":feeRateValueText, @"isSelectable":@"1", @"title":feeRateTitle, @"circleImage":@"check_circle", @"cellType":@"LXHFeeOptionCell", @"checkedImage":@"checked_circle"}.mutableCopy;
                 NSDictionary *feeRateItem = @{key : value};

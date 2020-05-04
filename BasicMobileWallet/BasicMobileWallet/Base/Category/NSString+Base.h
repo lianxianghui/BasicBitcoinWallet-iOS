@@ -15,4 +15,6 @@
 - (NSString *)firstLetterLowercase;
 - (NSString *)md5;
 - (NSDecimalNumber *)decimalValue;
+- (BOOL)isInteger;
+- (BOOL)isLongLong;
 @end

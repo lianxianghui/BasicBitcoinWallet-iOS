@@ -1561,12 +1561,12 @@
 			children = (
 				8CA31FBA22D9A37600CEA828 /* NSDictionary+Enumerate.m */,
 				8CA31FBB22D9A37600CEA828 /* NSMutableArray+Base.m */,
+				8CA31FC122D9A37600CEA828 /* NSString+Base.h */,
 				8CA31FBC22D9A37600CEA828 /* NSString+Base.m */,
 				8CA31FBD22D9A37600CEA828 /* NSArray+Base.h */,
 				8CA31FBE22D9A37600CEA828 /* NSJSONSerialization+VLBase.m */,
 				8CA31FBF22D9A37600CEA828 /* NSArray+FunStyle.h */,
 				8CA31FC022D9A37600CEA828 /* NSMutableDictionary+Base.m */,
-				8CA31FC122D9A37600CEA828 /* NSString+Base.h */,
 				8CA31FC222D9A37600CEA828 /* NSMutableArray+Base.h */,
 				8CA31FC322D9A37600CEA828 /* NSDictionary+Enumerate.h */,
 				8CA31FC422D9A37600CEA828 /* NSArray+Base.m */,

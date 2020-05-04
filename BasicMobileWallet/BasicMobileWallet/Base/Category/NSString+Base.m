@@ -54,4 +54,14 @@
         return nil;
 }
 
+- (BOOL)isInteger {
+    NSScanner* scanner = [NSScanner scannerWithString:self];
+    return [scanner scanInteger:nil] && [scanner isAtEnd];
+}
+
+- (BOOL)isLongLong {
+    NSScanner* scanner = [NSScanner scannerWithString:self];
+    return [scanner scanLongLong:nil] && [scanner isAtEnd];
+}
+
 @end

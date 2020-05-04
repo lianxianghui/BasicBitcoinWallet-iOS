@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LXHFeeRate : NSObject
 
 @property (nonatomic) LXHBTCAmount value;
+
++ (BOOL)isValidWithFeeRateValue:(LXHBTCAmount)feeRateValue;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -53,7 +53,7 @@
     NSMutableArray *ret = [NSMutableArray array];
     NSDictionary *dic = @{@"isSelectable":@"1", @"disclosureIndicator":@"disclosure_indicator", @"cellType":@"LXHSelectionCell", @"text":@"选择输出", @"id":@"selectOutput"};
     [ret addObject:dic];
-    NSArray *outputs = [self.outputListViewModel outputs];
+    NSArray *outputs = [_outputListViewModel outputs];
     for (NSUInteger i = 0 ; i < outputs.count; i++) {
         LXHTransactionOutput *output = outputs[i];
         NSMutableDictionary *mutableDic =  @{@"isSelectable":@"1", @"cellType":@"LXHInputOutputCell"}.mutableCopy;
@@ -96,9 +96,9 @@
 
 - (void)updateFeeRate {
     NSNumber *feeRateValue = [self feeRateValue];
-    if (feeRateValue)
+    if (feeRateValue) {
         _feeRate.value = [feeRateValue longLongValue];
-    else
+    } else
         _feeRate.value = LXHBTCAmountError;
 }
 
