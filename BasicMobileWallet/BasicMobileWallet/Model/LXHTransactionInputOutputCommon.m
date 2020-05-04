@@ -50,11 +50,12 @@
 
 - (void)setValueBTC:(NSDecimalNumber *)valueBTC {
     NSDecimalNumber *valueSat = [valueBTC decimalNumberByMultiplyingByPowerOf10:8];
-    if (![LXHAmount isValidWithDecimalValue:valueSat]) {
+    if ([LXHAmount isValidWithDecimalValue:valueSat]) {
+        _valueSat = [valueSat longLongValue];
+        _valueBTC = valueBTC;
+    } else {
         _valueSat = LXHBTCAmountError;
         _valueBTC = nil;
-    } else {
-        _valueBTC = valueBTC;
     }
 }
 
