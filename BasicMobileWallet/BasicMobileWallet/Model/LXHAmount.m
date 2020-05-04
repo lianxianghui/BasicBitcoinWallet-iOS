@@ -13,13 +13,22 @@
 @implementation LXHAmount
 
 + (BOOL)isValidWithDecimalValue:(NSDecimalNumber *)value {
+    NSDecimalNumber *longlongValue =  [NSDecimalNumber decimalNumberWithMantissa:[value longLongValue] exponent:0 isNegative:NO];
+    if ([value compare:longlongValue] != NSOrderedSame)
+        return NO;
     if ([value lessThanZero])
         return NO;
-    NSDecimalNumber *maxMoney = [NSDecimalNumber decimalNumberWithMantissa:LXHBTC_MAX_MONEY exponent:1 isNegative:NO];
+    NSDecimalNumber *maxMoney = [NSDecimalNumber decimalNumberWithMantissa:LXHBTC_MAX_MONEY exponent:0 isNegative:NO];
     if ([value greaterThan:maxMoney])
         return NO;
     return YES;
 }
+
++ (BOOL)isValidWithNumberValue:(NSNumber *)value {
+    NSDecimalNumber *decimalValue = [[NSDecimalNumber alloc] initWithDecimal:value.decimalValue];
+    return [self isValidWithDecimalValue:decimalValue];
+}
+
 
 + (BOOL)isValidWithString:(NSString *)string {
     if (![string isLongLong])

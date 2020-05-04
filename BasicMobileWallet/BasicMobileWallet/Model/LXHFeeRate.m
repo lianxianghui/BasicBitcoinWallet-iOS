@@ -8,6 +8,7 @@
 
 #import "LXHFeeRate.h"
 #import "LXHWallet.h"
+#import "LXHAmount.h"
 
 @implementation LXHFeeRate
 
@@ -33,5 +34,17 @@
     LXHFeeRate *feeRate = [[LXHFeeRate alloc] init];
     feeRate.value = feeRateValue;
     return [feeRate isValid];
+}
+
++ (BOOL)isValidWithFeeRateString:(NSString *)feeRateString {
+    if (![LXHAmount isValidWithString:feeRateString])
+        return NO;
+    return [self isValidWithFeeRateValue:[feeRateString longLongValue]];
+}
+
++ (BOOL)isValidWithFeeRateNumber:(NSNumber *)feeRateNumber {
+    if (![LXHAmount isValidWithNumberValue:feeRateNumber])
+        return NO;
+    return [self isValidWithFeeRateValue:[feeRateNumber longLongValue]];
 }
 @end

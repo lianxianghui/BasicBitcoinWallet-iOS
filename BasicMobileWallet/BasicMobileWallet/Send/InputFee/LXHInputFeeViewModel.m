@@ -18,7 +18,7 @@
 @implementation LXHInputFeeViewModel
 
 - (BOOL)setInputFeeRateString:(NSString *)inputFeeRateString errorDesc:(NSString **)errorDesc {
-    BOOL inputFeeRateIsValid = [LXHAmount isValidWithString:inputFeeRateString] && [LXHFeeRate isValidWithFeeRateValue:[inputFeeRateString longLongValue]];
+    BOOL inputFeeRateIsValid = [LXHFeeRate isValidWithFeeRateString:inputFeeRateString];
     if (inputFeeRateIsValid) {
         NSDecimalNumber *inputFeeRate = [NSDecimalNumber decimalNumberWithString:inputFeeRateString];
         _inputFeeRateSat = inputFeeRate;

@@ -10,6 +10,7 @@
 #import "LXHBitcoinfeesNetworkRequest.h"
 #import "NSString+Base.h"
 #import "LXHGlobalHeader.h"
+#import "LXHFeeRate.h"
 
 @interface LXHSelectFeeRateViewModel()
 @property (nonatomic) NSDictionary *feeRateOptionsDic;// keys = @[@"fastestFee", @"halfHourFee", @"hourFee"];
@@ -25,9 +26,10 @@
             _cellDataListForListView = [NSMutableArray array];
             NSArray *keys = @[@"fastestFee", @"halfHourFee", @"hourFee"];
             for (NSString *key in keys) {
-                //todo 这里假设_feeRateOptionsDic里的数据都是没问题的。如果进行一下校验会更严谨
                 NSNumber *value = _feeRateOptionsDic[key];//数据形式，@"fastestFee":@(30)
                 if (!value)
+                    continue;
+                if (![LXHFeeRate isValidWithFeeRateNumber:value])
                     continue;
                 NSString *feeRateTitle = [key firstLetterCapitalized];
                 NSString *feeRateValueText = [NSString stringWithFormat:@"%@ sat/byte", value];
