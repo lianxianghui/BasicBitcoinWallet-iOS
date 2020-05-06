@@ -78,10 +78,12 @@
         if (isWorthAdding) {
             NSString *info = infoForAddingChange[@"info"];
             LXHWeakSelf
-            [self showOkCancelAlertViewWithMessage:info okHandler:^(UIAlertAction * _Nonnull action) {
+            [self showYesNoAlertViewWithMmessage:info yesHandler:^(UIAlertAction * _Nonnull action) {
                 [weakSelf.viewModel addChangeOutputAtRandomPosition];
                 [weakSelf refreshListView];
-            } cancelHandler:nil];
+            } noHandler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
         } else {
             NSString *info = infoForAddingChange[@"info"];
             [self showOkAlertViewWithMessage:info handler:nil];
@@ -124,51 +126,51 @@
 }
 
 - (void)rightTextButtonClicked:(UIButton *)sender {
-    NSInteger code = [_viewModel codeForClickingNextStep];
-    if (code >= 0) { //没问题
-        [self pushLXHTransactionInfoViewController];
-    } else {
-        switch (code) {
-            case -1:
-            {
-                LXHWeakSelf
-                NSString *note = [weakSelf.viewModel hasChangeOutput] ? NSLocalizedString(@"您可以通过修改或重新添加找零的方式进行调整", nil) :
-                NSLocalizedString(@"您可以通过添加找零的方式进行调整", nil);
-                NSString *promptFomat = NSLocalizedString(@"实际手续费大于根据费率估算的手续费，有可能造成浪费，您确定要进入下一步吗？(%@)", nil);
-                NSString *prompt = [NSString stringWithFormat:promptFomat, note];
-                [self showOkCancelAlertViewWithMessage:prompt okHandler:^(UIAlertAction * _Nonnull action) {
-                    [weakSelf pushLXHTransactionInfoViewController];
-                } cancelHandler:^(UIAlertAction * _Nonnull action) {
-                    
-                }];
-                break;
-            }
-            case -2:
-            {
-                LXHWeakSelf
-                NSString *prompt = NSLocalizedString(@"实际手续费小于根据费率估算的手续费，有可能影响到账时间，您确定要进入下一步吗？", nil);
-                [self showOkCancelAlertViewWithMessage:prompt okHandler:^(UIAlertAction * _Nonnull action) {
-                    [weakSelf pushLXHTransactionInfoViewController];
-                } cancelHandler:^(UIAlertAction * _Nonnull action) {
-                    
-                }];
-                break;
-            }
-            case -3:
-            {
-                NSString *prompt = NSLocalizedString(@"输入无法满足输出", nil);
-                [self showOkAlertViewWithMessage:prompt handler:nil];
-                break;
-            }
-            case -4:
-            {
-                NSString *prompt = NSLocalizedString(@"输入、输出或费率未正确选择或填写", nil);
-                [self showOkAlertViewWithMessage:prompt handler:nil];
-                break;
-            }
-            default:
-                break;
+    NSInteger code = [_viewModel currentStatusCode];
+    switch (code) {
+        case 0:
+        case 1:
+            [self pushLXHTransactionInfoViewController];
+            break;
+        case -1:
+        {
+            LXHWeakSelf
+            NSString *note = [weakSelf.viewModel hasChangeOutput] ? NSLocalizedString(@"您可以通过修改或重新添加找零的方式进行调整", nil) :
+            NSLocalizedString(@"您可以通过添加找零的方式进行调整", nil);
+            NSString *promptFomat = NSLocalizedString(@"实际手续费大于根据费率估算的手续费，有可能造成浪费，您确定要进入下一步吗？(%@)", nil);
+            NSString *prompt = [NSString stringWithFormat:promptFomat, note];
+            [self showOkCancelAlertViewWithMessage:prompt okHandler:^(UIAlertAction * _Nonnull action) {
+                [weakSelf pushLXHTransactionInfoViewController];
+            } cancelHandler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            break;
         }
+        case -2:
+        {
+            LXHWeakSelf
+            NSString *prompt = NSLocalizedString(@"实际手续费小于根据费率估算的手续费，有可能影响到账时间，您确定要进入下一步吗？", nil);
+            [self showOkCancelAlertViewWithMessage:prompt okHandler:^(UIAlertAction * _Nonnull action) {
+                [weakSelf pushLXHTransactionInfoViewController];
+            } cancelHandler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            break;
+        }
+        case -3:
+        {
+            NSString *prompt = NSLocalizedString(@"输入无法满足输出", nil);
+            [self showOkAlertViewWithMessage:prompt handler:nil];
+            break;
+        }
+        case -4:
+        {
+            NSString *prompt = NSLocalizedString(@"输入、输出或费率未正确选择或填写", nil);
+            [self showOkAlertViewWithMessage:prompt handler:nil];
+            break;
+        }
+        default:
+            break;
     }
 }
 
