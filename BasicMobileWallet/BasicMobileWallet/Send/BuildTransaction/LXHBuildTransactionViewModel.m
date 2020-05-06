@@ -222,39 +222,6 @@
     return _selectInputViewModel.selectedUtxos.count > 0 && [self feeRateValue] && [self.outputListViewModel outputCount] > 0;
 }
 
-/**
- 关于是否需要添加找零的信息
- 两种情况显示或不显示
- 如果显示分两种情况
- 1.如果剩余的值 值得添加一个找零。提示用户是否添加找零输出。
- 2.如果不值得，提示用户。（会被包含到手续费里）
- @return 字典 key0 showInfo value YES or No, key1 worth : value YES or No, key2 info
- */
-- (NSDictionary *)infoForAddingChange {
-    NSDictionary *doNotShowInfo = @{@"showInfo":@(NO)};
-    if ([self.outputListViewModel hasChangeOutput])
-        return doNotShowInfo;
-    NSInteger statusCode = [self currentStatusCode];
-    switch (statusCode) {
-        case 1://实际手续费大于估计的手续费，但是加一个找零又不值得（带来的手续费比其值还大）
-        {
-            BOOL worth = NO;
-            NSString *info = NSLocalizedString(@"因为找零过小，带来的手续费比它的值还大，已经被归到手续费里", nil);
-            return @{@"showInfo":@(YES), @"worth":@(worth), @"info":info};
-        }
-            break;
-        case -1://实际手续费过多，有可能造成浪费的情况。
-        {
-            BOOL worth = YES;
-            NSString *info = NSLocalizedString(@"是否添加找零?", nil);
-            return @{@"showInfo":@(YES), @"worth":@(worth), @"info":info};
-        }
-        default:
-            return doNotShowInfo;
-            break;
-    }
-}
-
 - (BOOL)hasChangeOutput {
     return [self.outputListViewModel hasChangeOutput];
 }

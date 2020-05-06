@@ -40,16 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 //把一个找零输出加到outputs数组(位置随机)
 - (void)addChangeOutputAtRandomPosition;
 
-/**
- 关于是否需要添加找零的信息
- 两种情况显示或不显示
- 如果显示分两种情况
- 1.如果剩余的值 值得添加一个找零。提示用户是否添加找零输出。
- 2.如果不值得，提示用户。（会被包含到手续费里）
- @return 字典 key0 showInfo value YES or No, key1 worth : value YES or No, key2 info
- */
-- (NSDictionary *)infoForAddingChange;
-
 - (NSInteger)currentStatusCode;
 
 - (BOOL)hasChangeOutput;

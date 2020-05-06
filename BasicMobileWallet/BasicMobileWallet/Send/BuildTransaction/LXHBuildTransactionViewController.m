@@ -71,23 +71,31 @@
 }
 
 - (void)showPromptIfNeeded {
-    NSDictionary *infoForAddingChange = [_viewModel infoForAddingChange];
-    BOOL showInfo = [infoForAddingChange[@"showInfo"] boolValue];
-    if (showInfo) {
-        BOOL isWorthAdding = [infoForAddingChange[@"worth"] boolValue];
-        if (isWorthAdding) {
-            NSString *info = infoForAddingChange[@"info"];
+    NSInteger statusCode = [_viewModel currentStatusCode];
+    switch (statusCode) {
+        case 1://实际手续费大于估计的手续费，但是加一个找零又不值得（带来的手续费比其值还大）
+        {
+            if ([_viewModel hasChangeOutput])
+                return;
+            NSString *prompt = NSLocalizedString(@"因为找零过小，带来的手续费比它的值还大，已经被归到手续费里", nil);
+            [self.view makeToast:prompt];
+        }
+            break;
+        case -1://实际手续费过多，有可能造成浪费的情况。
+        {
+            if ([_viewModel hasChangeOutput])
+                return;
+            NSString *prompt = NSLocalizedString(@"是否添加找零?", nil);
             LXHWeakSelf
-            [self showYesNoAlertViewWithMessage:info yesHandler:^(UIAlertAction * _Nonnull action) {
+            [self showYesNoAlertViewWithMessage:prompt yesHandler:^(UIAlertAction * _Nonnull action) {
                 [weakSelf.viewModel addChangeOutputAtRandomPosition];
                 [weakSelf refreshListView];
             } noHandler:^(UIAlertAction * _Nonnull action) {
                 
             }];
-        } else {
-            NSString *info = infoForAddingChange[@"info"];
-            [self showOkAlertViewWithMessage:info handler:nil];
         }
+        default:
+            break;
     }
 }
 
