@@ -25,7 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 //ViewModell可以用来在几个页面之间传递构造交易数据
 @property (nonatomic, readonly) LXHSelectFeeRateViewModel *selectFeeRateViewModel;
 @property (nonatomic, readonly) LXHInputFeeViewModel *inputFeeViewModel;
-@property (nonatomic, readonly) LXHTransactionInfoViewModel *transactionInfoViewModel;
+
+- (LXHTransactionInfoViewModel *)transactionInfoViewModel;
 
 - (NSArray *)inputs;
 - (NSArray *)outputs;
