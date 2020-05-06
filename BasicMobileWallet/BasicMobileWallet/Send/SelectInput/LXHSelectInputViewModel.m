@@ -88,11 +88,11 @@
         BOOL isChecked =  [dic[@"isChecked"] boolValue];
         isChecked = !isChecked;
         dic[@"isChecked"] = @(isChecked);
-        [self refershSelectedUtxosFromCellDataArray];
+        [self refreshSelectedUtxosFromCellDataArray];
     }
 }
 
-- (void)refershSelectedUtxosFromCellDataArray {
+- (void)refreshSelectedUtxosFromCellDataArray {
     _selectedUtxos = [[self.cellDataArrayForListview bk_select:^BOOL(NSDictionary *dic) {
         return [dic[@"isChecked"] boolValue];
     }] bk_map:^id(NSDictionary *dic) {
@@ -102,7 +102,7 @@
 
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex {
     [self.cellDataArrayForListview exchangeObjectAtIndex:sourceIndex withObjectAtIndex:destinationIndex];
-    [self refershSelectedUtxosFromCellDataArray];
+    [self refreshSelectedUtxosFromCellDataArray];
 }
 
 - (id)outputDetailViewModelAtIndex:(NSInteger)index {

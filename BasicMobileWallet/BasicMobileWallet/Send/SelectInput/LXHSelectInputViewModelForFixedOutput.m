@@ -78,20 +78,20 @@
   */
  - (NSString *)infoText {
     if ([self allUtxosIsNotEnough])
-        return NSLocalizedString(@"余额不足(可选择的输入总和小于所有输出与手续费的总和)", nil);
+        return NSLocalizedString(@"余额不足", nil);//(可选择的输入总和小于所有输出与手续费的总和)
     LXHBTCAmount minNeedValueForFutherSelection = [self minNeedValueForFutherSelection];
     if (minNeedValueForFutherSelection > 0) {
         NSString *format = nil;
         if (self.selectedUtxos.count == 0)
-            format = @"至少需要选择总和为  %@BTC的输入";
+            format = @"至少需要选择总和为 %@BTC的输入";
         else
-            format = @"至少还需要选择总和为  %@BTC的输入";
+            format = @"至少还需要选择总和为 %@BTC的输入";
         format = NSLocalizedString(format, nil);
         NSDecimalNumber *btcValue = [NSDecimalNumber decimalBTCValueWithSatValue:minNeedValueForFutherSelection];
         return [NSString stringWithFormat:format, btcValue];
     } else { //小于等于0，说明够了
         NSDecimalNumber *seletedInputValueSum = [LXHTransactionOutput valueSumOfOutputs:self.selectedUtxos];
-        NSString *format = NSLocalizedString(@"所选总和为  %@BTC，已满足当前输出与手续费", nil);
+        NSString *format = NSLocalizedString(@"所选总和为 %@BTC，已满足输出与手续费", nil);
         return [NSString stringWithFormat:format, seletedInputValueSum];
     }
 }
