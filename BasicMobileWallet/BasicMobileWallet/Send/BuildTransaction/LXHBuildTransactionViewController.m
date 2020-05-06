@@ -170,6 +170,12 @@
             break;
         }
         default:
+        {
+            NSString *prompt = NSLocalizedString(@"出现未知错误", nil);
+            [self showOkAlertViewWithMessage:prompt handler:nil];
+            break;
+            
+        }
             break;
     }
 }
