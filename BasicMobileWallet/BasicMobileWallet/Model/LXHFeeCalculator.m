@@ -25,7 +25,7 @@
 
 - (BOOL)feeGreaterThanValueWithInput:(LXHTransactionInputOutputCommon *)input {
     //目前不支持隔离见证输入输出，所以目前与输入内容无关
-    LXHBTCAmount feePerInputInSat = 148 * _feeRate.value;//目前不支持隔离见证输入输出
+    LXHBTCAmount feePerInputInSat = 148 * _feeRate.value;
     return feePerInputInSat > input.valueSat;
 }
 
