@@ -78,7 +78,7 @@
         if (isWorthAdding) {
             NSString *info = infoForAddingChange[@"info"];
             LXHWeakSelf
-            [self showYesNoAlertViewWithMmessage:info yesHandler:^(UIAlertAction * _Nonnull action) {
+            [self showYesNoAlertViewWithMessage:info yesHandler:^(UIAlertAction * _Nonnull action) {
                 [weakSelf.viewModel addChangeOutputAtRandomPosition];
                 [weakSelf refreshListView];
             } noHandler:^(UIAlertAction * _Nonnull action) {
