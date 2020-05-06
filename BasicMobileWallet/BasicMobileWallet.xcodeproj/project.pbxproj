@@ -1340,11 +1340,11 @@
 		8C93345C235DB14C00FBF238 /* Send */ = {
 			isa = PBXGroup;
 			children = (
-				8CEAECA22383D507005754B3 /* BuildTransaction */,
 				8CEAECB92383D507005754B3 /* SelectWayOfSendingBitcoin */,
+				8CEAECA22383D507005754B3 /* BuildTransaction */,
 				8CEAEC9D2383D507005754B3 /* TransactionInfo */,
-				8CECB00623B454EC00742E36 /* SignedTransactionText */,
 				8CECB00123B454EB00742E36 /* UnsignedTransactionText */,
+				8CECB00623B454EC00742E36 /* SignedTransactionText */,
 				8C93345D235DB14C00FBF238 /* SelectInput */,
 				8C933466235DB14C00FBF238 /* SelectFeeRate */,
 				8C933491235DB14C00FBF238 /* InputFee */,
