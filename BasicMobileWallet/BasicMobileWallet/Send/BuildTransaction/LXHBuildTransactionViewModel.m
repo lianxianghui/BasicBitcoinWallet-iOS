@@ -295,7 +295,7 @@
         if (actualFeeValueInSat == estimatedFeeValueInSat) {
             return 0;
         } else if (actualFeeValueInSat > estimatedFeeValueInSat) {
-            if ([self changeIsTooSmallToAdd])
+            if (![self isWorthToAddChangeOutput])
                 return 1;
             else
                 return -1;
@@ -335,30 +335,26 @@
     return title;
 }
 
-- (BOOL)changeIsTooSmallToAdd {
-    LXHTransactionOutput *changeOutput = [self getANewChangeOutput];
-    return changeOutput == nil;
+//判断剩余的值，相比其带来的手续费，是否值得添加一个找零
+- (BOOL)isWorthToAddChangeOutput {
+    LXHBTCAmount value = [self valueForAddingANewChangeOutput];
+    return value > 0;
 }
 
-- (BOOL)hasUnallocatedValue {
+- (LXHBTCAmount)valueForAddingANewChangeOutput {
     LXHBTCAmount inputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:[self inputs]];
     LXHBTCAmount outputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:[self outputs]];
-    LXHBTCAmount estimatedFeeValueInSat = [self estimatedFeeValueInSat];
-    if (inputsValueSum == LXHBTCAmountError || outputsValueSum == LXHBTCAmountError || estimatedFeeValueInSat == LXHBTCAmountError)
-        return NO;//todo ?
-    return inputsValueSum - outputsValueSum - estimatedFeeValueInSat > 0;
+    LXHBTCAmount feeOfNewChangeOutput = [self feeOfNewChangeOutput];
+    LXHBTCAmount value = inputsValueSum - outputsValueSum - feeOfNewChangeOutput;
+    return value;
 }
-
 
 /**
  按着目前的的情况返回一个找零LXHTransactionOutput
  如果计算得到的值大于零，返回找零对象，否则返回nil
  */
 - (LXHTransactionOutput *)getANewChangeOutput {
-    LXHBTCAmount inputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:[self inputs]];
-    LXHBTCAmount outputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:[self outputs]];
-    LXHBTCAmount feeOfNewChangeOutput = [self feeOfNewChangeOutput];
-    LXHBTCAmount value = inputsValueSum - outputsValueSum - feeOfNewChangeOutput;
+    LXHBTCAmount value = [self valueForAddingANewChangeOutput];
     if (value > 0) {
         LXHTransactionOutput *changeOutput = [LXHTransactionOutput new];
         changeOutput.valueBTC = [NSDecimalNumber decimalBTCValueWithSatValue:value];
