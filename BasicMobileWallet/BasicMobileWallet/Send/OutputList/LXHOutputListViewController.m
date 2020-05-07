@@ -57,12 +57,6 @@
     [self setDelegates];
 }
 
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//    [self refreshHeaderInfo];
-//    [self refreshListView];
-//}
-
 - (void)swipeView:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -152,11 +146,15 @@
     sender.alpha = 1;
 }
 
+//delete button clicked
 - (void)LXHSelectedOutputCellButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
-    NSInteger index = sender.tag;
-    [_viewModel deleteRowAtIndex:index];
-    [self refreshView];
+    LXHWeakSelf
+    [self showOkCancelAlertViewWithMessage:NSLocalizedString(@"您确定要删除该输出吗？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
+        NSInteger index = sender.tag;
+        [weakSelf.viewModel deleteRowAtIndex:index];
+        [weakSelf refreshView];
+    } cancelHandler:nil];
 }
 
 - (void)LXHSelectedOutputCellButtonTouchDown:(UIButton *)sender {
@@ -221,9 +219,8 @@
         UIView *view = [[NSClassFromString(viewClass) alloc] init];
         view.tag = tag;
         [cell.contentView addSubview:view];
-        //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
-        cell.contentView.backgroundColor = view.backgroundColor;
-        cell.backgroundColor = view.backgroundColor;
+        cell.contentView.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(cell.contentView);
         }];
