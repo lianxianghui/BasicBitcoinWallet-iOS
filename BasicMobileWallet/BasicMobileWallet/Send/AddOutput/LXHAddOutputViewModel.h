@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setAddress:(LXHAddress *)address;
 - (BOOL)hasAddress;
 - (BOOL)setValueString:(NSString *)valueString;
-- (BOOL)valueIsZero:(NSString *)valueString;
+//- (BOOL)valueIsZero:(NSString *)valueString;
 - (BOOL)isChangeOutput;
 @end
 

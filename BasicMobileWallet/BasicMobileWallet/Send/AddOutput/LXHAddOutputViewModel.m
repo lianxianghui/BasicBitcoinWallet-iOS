@@ -124,7 +124,7 @@
 
 - (BOOL)setValueString:(NSString *)valueString {
     if ([self valueIsValid:valueString]) {
-        self.output.valueBTC = [[NSDecimalNumber alloc] initWithString:valueString];
+        self.output.valueBTC = [valueString decimalValue];
         [self resetCellDataArrayForListView];
         return YES;
     } else {
@@ -132,10 +132,10 @@
     }
 }
 
-- (BOOL)valueIsZero:(NSString *)valueString {
-    NSDecimalNumber *decimalNumber = [valueString decimalValue];
-    return decimalNumber && ([decimalNumber compare:[NSDecimalNumber zero]] == NSOrderedSame);
-}
+//- (BOOL)valueIsZero:(NSString *)valueString {
+//    NSDecimalNumber *decimalNumber = [valueString decimalValue];
+//    return decimalNumber && ([decimalNumber compare:[NSDecimalNumber zero]] == NSOrderedSame);
+//}
 
 - (BOOL)valueIsValid:(NSString *)valueString {
     NSDecimalNumber *decimalNumber = [valueString decimalValue];
