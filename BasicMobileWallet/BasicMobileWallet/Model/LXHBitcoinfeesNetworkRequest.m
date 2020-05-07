@@ -39,15 +39,10 @@ static NSString *const cacheFileName = @"LXHBitcoinfeesNetworkRequestCache";
     }];
 }
 
-- (NSMutableDictionary *)dataHasTimeWithResultDic:(NSDictionary *)resultDic {
+- (NSMutableDictionary *)cacheResultDic:(NSDictionary *)resultDic {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     dic[@"responseTime"] = [NSDate date];
     dic[@"responseData"] = resultDic;
-    return dic;
-}
-
-- (NSMutableDictionary *)cacheResultDic:(NSDictionary *)resultDic {
-    NSMutableDictionary *dic = [self dataHasTimeWithResultDic:resultDic];
     NSData *data =  [NSKeyedArchiver archivedDataWithRootObject:dic];
     [data writeToFile:LXHBitcoinfeesNetworkRequestCacheFilePath atomically:YES];
     return dic;

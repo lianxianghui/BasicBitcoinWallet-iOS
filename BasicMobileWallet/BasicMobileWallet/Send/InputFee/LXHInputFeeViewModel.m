@@ -37,10 +37,4 @@
         return [NSString stringWithFormat:@"%@", _inputFeeRateSat];
 }
 
-+ (BOOL)isIntegerWithString:(NSString *)string {
-    NSScanner* scanner = [NSScanner scannerWithString:string];
-    return [scanner scanInt:nil] && [scanner isAtEnd];
-}
-
-
 @end
