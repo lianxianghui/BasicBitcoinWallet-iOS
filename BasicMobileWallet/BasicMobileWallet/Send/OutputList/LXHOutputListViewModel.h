@@ -14,8 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LXHOutputListViewModel : NSObject
 @property (nonatomic, readonly) NSMutableArray *cellDataArrayForListview;
 
-- (NSString *)headerInfoTitle;
-- (NSString *)headerInfoText;
+- (NSString *)headerInfoTitle;//子类覆盖
+- (NSString *)headerInfoText;//子类覆盖
 
 - (void)resetCellDataArrayForListview;
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex;

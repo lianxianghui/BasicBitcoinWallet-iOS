@@ -11,6 +11,15 @@
 
 @implementation LXHOutputListViewModelForFixedOutput
 
+- (NSString *)headerInfoTitle {
+    return @"输出总值";
+}
+
+- (NSString *)headerInfoText {
+    NSDecimalNumber *sum = [LXHTransactionOutput valueSumOfOutputs:[self outputs]];
+    return  [NSString stringWithFormat:@"%@BTC", sum];
+}
+
 - (LXHAddOutputViewModel *)getNewOutputViewModel {
     return [[LXHAddOutputViewModel alloc] init];
 }

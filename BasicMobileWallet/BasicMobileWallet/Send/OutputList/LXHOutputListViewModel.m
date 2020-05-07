@@ -29,12 +29,11 @@
 }
 
 - (NSString *)headerInfoTitle {
-    return @"输出总值";
+    return nil;
 }
 
 - (NSString *)headerInfoText {
-    NSDecimalNumber *sum = [LXHTransactionOutput valueSumOfOutputs:[self outputs]];
-    return  [NSString stringWithFormat:@"%@BTC", sum];
+    return nil;
 }
 
 - (void)resetCellDataArrayForListview {
@@ -71,6 +70,7 @@
     return [_outputViewModels[index] warningText];
 }
 
+//输出到本地地址时需要显示警告
 - (BOOL)addressWarningDescHiddenAtIndex:(NSInteger)index {
     return !_outputViewModels[index].output.address.isLocalAddress;
 }
