@@ -117,7 +117,8 @@
         return;
     }
     LXHWeakSelf
-    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:newOutputViewModel addOutputCallback:^{
+    //添加
+    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:newOutputViewModel addOrEditOutputCallback:^{
         [weakSelf.viewModel addOutputViewModel:newOutputViewModel];
         [self refreshView];
     }];
@@ -306,10 +307,7 @@
     LXHAddOutputViewModel *existOutputViewModel = [_viewModel outputViewModels][index];
     [_viewModel refreshViewModelAtIndex:index];
     existOutputViewModel.isEditing = YES;
-    LXHWeakSelf
-    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:existOutputViewModel editOutputCallback:^(BOOL needDelete) {
-        if (needDelete)
-            [weakSelf.viewModel deleteRowAtIndex:indexPath.row];
+    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:existOutputViewModel addOrEditOutputCallback:^{
         [self refreshView];
     }];
     [self.navigationController pushViewController:controller animated:YES];

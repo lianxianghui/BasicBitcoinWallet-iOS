@@ -28,8 +28,8 @@
     
 @interface LXHAddOutputViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHAddOutputView *contentView;
-@property (nonatomic, copy) editOutputCallback editOutputCallback;
-@property (nonatomic, copy) addOutputCallback addOutputCallback;
+//@property (nonatomic, copy) editOutputCallback editOutputCallback;
+@property (nonatomic, copy) addOrEditOutputCallback addOrEditOutputCallback;
 @property (nonatomic) LXHAddOutputViewModel *viewModel;
 @property (nonatomic) UIView *scanerView;
 @property (nonatomic) UITextField *textField;
@@ -37,20 +37,20 @@
 
 @implementation LXHAddOutputViewController
 
-- (instancetype)initWithViewModel:(id)viewModel editOutputCallback:(editOutputCallback)editOutputCallback {
-    self = [super init];
-    if (self) {
-        _viewModel = viewModel;
-        _editOutputCallback = editOutputCallback;
-    }
-    return self;
-}
+//- (instancetype)initWithViewModel:(id)viewModel editOutputCallback:(editOutputCallback)editOutputCallback {
+//    self = [super init];
+//    if (self) {
+//        _viewModel = viewModel;
+//        _editOutputCallback = editOutputCallback;
+//    }
+//    return self;
+//}
 
-- (instancetype)initWithViewModel:(id)viewModel addOutputCallback:(addOutputCallback)addOutputCallback {
+- (instancetype)initWithViewModel:(id)viewModel addOrEditOutputCallback:(addOrEditOutputCallback)addOutputCallback {
     self = [super init];
     if (self) {
         _viewModel = viewModel;
-        _addOutputCallback = addOutputCallback;
+        _addOrEditOutputCallback = addOutputCallback;
     }
     return self;
     
@@ -100,25 +100,23 @@
 //Actions
 - (void)rightTextButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
-    LXHWeakSelf
+//    LXHWeakSelf
     if (![_viewModel hasAddress]) {
         [self showOkAlertViewWithMessage:NSLocalizedString(@"请设置地址", nil) handler:nil];
         return;
     }
     NSString *value = _textField.text;
-    if (_viewModel.isEditing && [_viewModel valueIsZero:value]) {
-        [self showOkCancelAlertViewWithMessage:NSLocalizedString(@"您所输入的值为0，你是否要删除该输出？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
-            weakSelf.editOutputCallback(YES);
-            [self.navigationController popViewControllerAnimated:YES];
-        } cancelHandler:nil];
-        return;
-    }
+//    if (_viewModel.isEditing && [_viewModel valueIsZero:value]) {
+//        [self showOkCancelAlertViewWithMessage:NSLocalizedString(@"您所输入的值为0，你是否要删除该输出？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
+//            weakSelf.editOutputCallback(YES);
+//            [self.navigationController popViewControllerAnimated:YES];
+//        } cancelHandler:nil];
+//        return;
+//    }
     
     if ([_viewModel setValueString:value]) {
-        if (_viewModel.isEditing)
-            _editOutputCallback(NO);
-        else
-            _addOutputCallback();
+        if (_addOrEditOutputCallback)
+            _addOrEditOutputCallback();
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self showOkAlertViewWithMessage:NSLocalizedString(@"您所输入的值无效，请检查后重新输入", nil) handler:nil];
