@@ -28,7 +28,8 @@
     
 @interface LXHAddOutputViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHAddOutputView *contentView;
-@property (nonatomic, copy) addOrEditOutputCallback addOrEditOutputCallback;
+@property (nonatomic, copy) editOutputCallback editOutputCallback;
+@property (nonatomic, copy) addOutputCallback addOutputCallback;
 @property (nonatomic) LXHAddOutputViewModel *viewModel;
 @property (nonatomic) UIView *scanerView;
 @property (nonatomic) UITextField *textField;
@@ -36,13 +37,23 @@
 
 @implementation LXHAddOutputViewController
 
-- (instancetype)initWithViewModel:(id)viewModel addOrEditOutputCallback:(addOrEditOutputCallback)addOrEditOutputCallback {
+- (instancetype)initWithViewModel:(id)viewModel editOutputCallback:(editOutputCallback)editOutputCallback {
     self = [super init];
     if (self) {
         _viewModel = viewModel;
-        _addOrEditOutputCallback = addOrEditOutputCallback;
+        _editOutputCallback = editOutputCallback;
     }
     return self;
+}
+
+- (instancetype)initWithViewModel:(id)viewModel addOutputCallback:(addOutputCallback)addOutputCallback {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+        _addOutputCallback = addOutputCallback;
+    }
+    return self;
+    
 }
 
 - (void)viewDidLoad {
@@ -97,14 +108,17 @@
     NSString *value = _textField.text;
     if (_viewModel.isEditing && [_viewModel valueIsZero:value]) {
         [self showOkCancelAlertViewWithMessage:NSLocalizedString(@"您所输入的值为0，你是否要删除该输出？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
-            weakSelf.addOrEditOutputCallback(YES);
+            weakSelf.editOutputCallback(YES);
             [self.navigationController popViewControllerAnimated:YES];
         } cancelHandler:nil];
         return;
     }
     
     if ([_viewModel setValueString:value]) {
-        _addOrEditOutputCallback(NO);
+        if (_viewModel.isEditing)
+            _editOutputCallback(NO);
+        else
+            _addOutputCallback();
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self showOkAlertViewWithMessage:NSLocalizedString(@"您所输入的值无效，请检查后重新输入", nil) handler:nil];

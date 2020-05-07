@@ -117,9 +117,7 @@
         return;
     }
     LXHWeakSelf
-    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:newOutputViewModel addOrEditOutputCallback:^(BOOL needDeleteWhenEditing) {
-        if (needDeleteWhenEditing) //应该不会发生
-            return;
+    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:newOutputViewModel addOutputCallback:^{
         [weakSelf.viewModel addOutputViewModel:newOutputViewModel];
         [self refreshView];
     }];
@@ -309,7 +307,7 @@
     [_viewModel refreshViewModelAtIndex:index];
     existOutputViewModel.isEditing = YES;
     LXHWeakSelf
-    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:existOutputViewModel addOrEditOutputCallback:^(BOOL needDelete) {
+    UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:existOutputViewModel editOutputCallback:^(BOOL needDelete) {
         if (needDelete)
             [weakSelf.viewModel deleteRowAtIndex:indexPath.row];
         [self refreshView];

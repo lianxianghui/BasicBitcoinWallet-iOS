@@ -8,13 +8,11 @@
 
 #import "LXHTransactionOutput.h"
 
-typedef NS_ENUM(NSUInteger, LXHAddOutputViewControllerType) {
-    LXHAddOutputViewControllerTypeAdd,
-    LXHAddOutputViewControllerTypeEdit,
-};
+typedef void(^addOutputCallback)(void);
+typedef void(^editOutputCallback)(BOOL needDelete);
 
-typedef void(^addOrEditOutputCallback)(BOOL needDeleteWhenEditing);
 
 @interface LXHAddOutputViewController : UIViewController
-- (instancetype)initWithViewModel:(id)viewModel addOrEditOutputCallback:(addOrEditOutputCallback)addOutputCallback;
+- (instancetype)initWithViewModel:(id)viewModel addOutputCallback:(addOutputCallback)addOutputCallback;
+- (instancetype)initWithViewModel:(id)viewModel editOutputCallback:(editOutputCallback)addOutputCallback;
 @end
