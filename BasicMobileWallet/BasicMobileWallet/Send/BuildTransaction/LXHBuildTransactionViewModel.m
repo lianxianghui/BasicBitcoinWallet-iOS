@@ -284,8 +284,13 @@
             title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), actualFeeValueInBTC];
             break;
         case 1:
-            //找零太小，归到手续费里的情况
-            title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC", nil), actualFeeValueInBTC];
+        {
+            LXHBTCAmount inputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:[self inputs]];
+            LXHBTCAmount outputsValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:[self outputs]];
+            NSDecimalNumber *remainingValue = [NSDecimalNumber decimalBTCValueWithSatValue:inputsValueSum-outputsValueSum-estimatedFeeValueInSat];
+            //剩余的值太小，归到手续费里的情况
+            title = [NSString stringWithFormat:NSLocalizedString(@"手续费 %@BTC(剩余%@因为太小已经被归到手续费里）", nil), actualFeeValueInBTC, remainingValue];
+        }
             break;
         case -1:
             //实际手续费过多，有可能造成浪费。title文字起提醒作用
