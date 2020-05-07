@@ -15,4 +15,8 @@
     return [NSDecimalNumber decimalNumberWithMantissa:satValue exponent:-8 isNegative:NO];
 }
 
++ (LXHBTCAmount)amountSatValueWithBTCValue:(NSDecimalNumber *)btcValue {
+    return [[btcValue decimalNumberByMultiplyingByPowerOf10:8] longLongValue];
+}
+
 @end

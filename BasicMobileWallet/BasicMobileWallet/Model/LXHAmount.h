@@ -11,6 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+//这里的value都是以Sat为单位
 @interface LXHAmount : NSObject
 
 + (BOOL)isValidWithValue:(LXHBTCAmount)value;

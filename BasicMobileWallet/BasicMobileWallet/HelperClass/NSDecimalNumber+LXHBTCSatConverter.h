@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSDecimalNumber (LXHBTCSatConverter)
 
 + (NSDecimalNumber *)decimalBTCValueWithSatValue:(LXHBTCAmount)sat;
++ (LXHBTCAmount)amountSatValueWithBTCValue:(NSDecimalNumber *)btcValue;
 @end
 
 NS_ASSUME_NONNULL_END

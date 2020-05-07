@@ -12,6 +12,8 @@
 #import "NSString+Base.h"
 #import "BTCAddress.h"
 #import "LXHWallet.h"
+#import "LXHAmount.h"
+#import "NSDecimalNumber+LXHBTCSatConverter.h"
 
 @interface LXHAddOutputViewModel ()
 @property (nonatomic, readwrite) NSMutableArray *cellDataArrayForListView;
@@ -136,17 +138,20 @@
 }
 
 - (BOOL)valueIsValid:(NSString *)valueString {
-    if (valueString.length == 0)
-        return NO;
     NSDecimalNumber *decimalNumber = [valueString decimalValue];
     if (!decimalNumber)
         return NO;
-    if (!([decimalNumber compare:[NSDecimalNumber zero]] == NSOrderedDescending)) //不大于，即小于或等于0时无效
+    LXHBTCAmount valueInSat = [NSDecimalNumber amountSatValueWithBTCValue:decimalNumber];
+    if (![LXHAmount isValidWithValue:valueInSat])
         return NO;
-    if (_maxValue)
-        return !([decimalNumber compare:_maxValue] == NSOrderedDescending);//不大于，即小于或等于
-    else
+    if (valueInSat == 0)
+        return NO;
+    if (_maxValue) {
+        LXHBTCAmount maxValueInSat = [NSDecimalNumber amountSatValueWithBTCValue:_maxValue];
+        return valueInSat <= maxValueInSat;
+    } else {
         return YES;
+    }
 }
 
 /**
