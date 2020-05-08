@@ -11,7 +11,6 @@
 #import "LXHValidatePINViewController.h"
 #import "LXHMaskViewController.h"
 #import "LXHTabBarPageViewController.h"
-#import "LXHTabBarPageViewModel.h"
 #import "LXHWelcomeViewController.h"
 #import "LXHValidatePINViewController.h"
 #import "LXHMaskViewController.h"
@@ -113,8 +112,7 @@
         UIViewController *welcomeController = [[LXHWelcomeViewController alloc] init];//Welcome page for init wallet data
         self.rootViewController = [[UINavigationController alloc] initWithRootViewController:welcomeController];
     } else {
-        LXHTabBarPageViewModel *viewModel = [[LXHTabBarPageViewModel alloc] init];
-        self.rootViewController = [[LXHTabBarPageViewController alloc] initWithViewModel:viewModel];
+        self.rootViewController = [[LXHTabBarPageViewController alloc] init];
     }
     
     self.window = self.window ? : [[UIWindow alloc] init];

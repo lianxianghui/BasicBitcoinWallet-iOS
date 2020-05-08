@@ -20,7 +20,7 @@
 static NSString *const cacheFileName = @"LXHTransactionDataManagerCacheFile.aes";
 static NSString *const aesPassword = LXHAESPassword;
 
-#define LXHTransactionDataManagerCacheFilePath [NSString stringWithFormat:@"%@/%@",  LXHCacheFileDir, cacheFileName]
+#define LXHTransactionDataManagerCacheFilePath [NSString stringWithFormat:@"%@/%@",  LXHCacheFileDir, cacheFileName]//todo 交易数据不应该保存到缓存目录下
 
 @interface LXHTransactionDataManager ()
 @property (nonatomic) NSDictionary *transactionData;

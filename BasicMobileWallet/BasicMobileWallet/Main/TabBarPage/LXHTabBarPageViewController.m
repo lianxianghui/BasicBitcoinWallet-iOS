@@ -9,8 +9,12 @@
 #import "LXHAddressViewController.h"
 #import "LXHOthersViewController.h"
 #import "LXHSelectWayOfSendingBitcoinViewController.h"
-#import "LXHTabBarPageViewModel.h"
 #import "AppDelegate.h"
+
+#import "LXHSelectWayOfSendingBitcoinViewModel.h"
+#import "LXHOthersViewModel.h"
+#import "LXHBalanceViewModel.h"
+#import "LXHCurrentReceivingAddressViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -19,21 +23,9 @@
         alpha:(rgbaValue & 0x000000FF)/255.0]
 
 @interface LXHTabBarPageViewController()<UITabBarControllerDelegate>
-@property (nonatomic) LXHTabBarPageViewModel *viewModel;
 @end
 
 @implementation LXHTabBarPageViewController
-
-- (instancetype)initWithViewModel:(id)viewModel {
-    //这里比较特殊，因为UITabBarController会在init方法里调用viewDidLoad，而viewDidLoad由需要用到viewModel，
-    //所以在[super init]之前设置好_viewModel
-    _viewModel = viewModel;
-    self = [super init];
-    if (self) {
- 
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,7 +41,7 @@
     UIViewController *viewController = nil;
     UINavigationController *navigationController = nil;
     
-    id viewModel = [_viewModel selectWayOfSendingBitcoinViewModel];
+    id viewModel = [[LXHSelectWayOfSendingBitcoinViewModel alloc] init];
     viewController = [[LXHSelectWayOfSendingBitcoinViewController alloc] initWithViewModel:viewModel];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_1inner_unselected_icon"];
@@ -58,7 +50,7 @@
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
 
-    viewModel = [_viewModel currentReceivingAddressViewModel];
+    viewModel = [[LXHCurrentReceivingAddressViewModel alloc] init];
     viewController = [[LXHAddressViewController alloc] initWithViewModel:viewModel];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_2inner_unselected_icon"];
@@ -67,7 +59,7 @@
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
 
-    viewModel = [_viewModel balanceViewModel];
+    viewModel = [[LXHBalanceViewModel alloc] init];
     viewController = [[LXHBalanceViewController alloc] initWithViewModel:viewModel];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_3inner_unselected_icon"];
@@ -76,7 +68,7 @@
     navigationController.tabBarItem = item;
     [self addChildViewController:navigationController];
     
-    viewModel = [_viewModel othersViewModel];
+    viewModel = [[LXHOthersViewModel alloc] init];
     viewController = [[LXHOthersViewController alloc] initWithViewModel:viewModel];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     itemImage = [UIImage imageNamed:@"main_tabbarpage_item_4inner_unselected_icon"];

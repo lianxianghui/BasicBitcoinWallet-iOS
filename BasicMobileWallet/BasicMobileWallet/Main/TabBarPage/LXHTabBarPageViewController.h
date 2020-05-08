@@ -8,5 +8,4 @@
 
 @interface LXHTabBarPageViewController : UITabBarController
 
-- (instancetype)initWithViewModel:(id)viewModel;
 @end

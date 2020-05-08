@@ -7,7 +7,6 @@
 #import "LXHForgotPINAfterWalletDataGeneratedViewController.h"
 #import "Masonry.h"
 #import "LXHForgotPINAfterWalletDataGeneratedView.h"
-#import "LXHTabBarPageViewController.h"
 #import "LXHScanQRViewController.h"
 #import "LXHWallet.h"
 #import "Toast.h"
