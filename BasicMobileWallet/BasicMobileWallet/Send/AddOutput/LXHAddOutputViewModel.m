@@ -57,8 +57,8 @@
         [_cellDataArrayForListView addObject:dic];
         
         NSString *maxValueString = _maxValue ? [NSString stringWithFormat:NSLocalizedString(@"可输入最大值: %@", nil), _maxValue] : @" ";
-        BOOL maxValueHidden = [self maxValuePromptLabelHidden];
-        BOOL textButtonHidden = [self maxValueButtonHidden];
+        BOOL maxValueHidden = (_maxValue == nil);
+        BOOL maxValueButtonHidden = (_maxValue == nil);
         dic = @{@"maxValue":maxValueString,
                 @"text1":@"数量:",
                 @"isSelectable":@"0",
@@ -67,7 +67,7 @@
                 @"BTC":@" BTC",
                 @"textFieldText":[self valueString],
                 @"maxValueHidden":@(maxValueHidden),
-                @"textButtonHidden":@(textButtonHidden),
+                @"textButtonHidden":@(maxValueButtonHidden),
                 };
         [_cellDataArrayForListView addObject:dic];
     }
@@ -87,14 +87,6 @@
 
 - (void)resetCellDataArrayForListView {
     _cellDataArrayForListView = nil;
-}
-
-- (BOOL)maxValuePromptLabelHidden {
-    return _maxValue == nil;
-}
-
-- (BOOL)maxValueButtonHidden {
-    return _maxValue == nil;
 }
 
 - (BOOL)setBase58Address:(NSString *)address {
@@ -131,11 +123,6 @@
         return NO;
     }
 }
-
-//- (BOOL)valueIsZero:(NSString *)valueString {
-//    NSDecimalNumber *decimalNumber = [valueString decimalValue];
-//    return decimalNumber && ([decimalNumber compare:[NSDecimalNumber zero]] == NSOrderedSame);
-//}
 
 - (BOOL)valueIsValid:(NSString *)valueString {
     NSDecimalNumber *decimalNumber = [valueString decimalValue];

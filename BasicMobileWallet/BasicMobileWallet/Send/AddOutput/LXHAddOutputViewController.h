@@ -9,8 +9,6 @@
 #import "LXHTransactionOutput.h"
 
 typedef void(^addOrEditOutputCallback)(void);
-//typedef void(^editOutputCallback)(BOOL needDelete);
-
 
 @interface LXHAddOutputViewController : UIViewController
 - (instancetype)initWithViewModel:(id)viewModel addOrEditOutputCallback:(addOrEditOutputCallback)addOutputCallback;

@@ -28,7 +28,6 @@
     
 @interface LXHAddOutputViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHAddOutputView *contentView;
-//@property (nonatomic, copy) editOutputCallback editOutputCallback;
 @property (nonatomic, copy) addOrEditOutputCallback addOrEditOutputCallback;
 @property (nonatomic) LXHAddOutputViewModel *viewModel;
 @property (nonatomic) UIView *scanerView;
@@ -36,15 +35,6 @@
 @end
 
 @implementation LXHAddOutputViewController
-
-//- (instancetype)initWithViewModel:(id)viewModel editOutputCallback:(editOutputCallback)editOutputCallback {
-//    self = [super init];
-//    if (self) {
-//        _viewModel = viewModel;
-//        _editOutputCallback = editOutputCallback;
-//    }
-//    return self;
-//}
 
 - (instancetype)initWithViewModel:(id)viewModel addOrEditOutputCallback:(addOrEditOutputCallback)addOutputCallback {
     self = [super init];
@@ -105,16 +95,6 @@
         return;
     }
     NSString *value = _textField.text;
-    
-//    LXHWeakSelf
-//    if (_viewModel.isEditing && [_viewModel valueIsZero:value]) {
-//        [self showOkCancelAlertViewWithMessage:NSLocalizedString(@"您所输入的值为0，你是否要删除该输出？", nil) okHandler:^(UIAlertAction * _Nonnull action) {
-//            weakSelf.editOutputCallback(YES);
-//            [self.navigationController popViewControllerAnimated:YES];
-//        } cancelHandler:nil];
-//        return;
-//    }
-    
     if ([_viewModel setValueString:value]) {
         if (_addOrEditOutputCallback)
             _addOrEditOutputCallback();
@@ -219,9 +199,6 @@
         UIView *view = [[NSClassFromString(viewClass) alloc] init];
         view.tag = tag;
         [cell.contentView addSubview:view];
-        //if view.backgroudColor is clearColor, need to set backgroundColor of contentView and cell.
-        //cell.contentView.backgroundColor = view.backgroundColor;
-        //cell.backgroundColor = view.backgroundColor;
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
