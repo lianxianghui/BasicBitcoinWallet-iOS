@@ -29,7 +29,7 @@
 
 - (NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
     [LXHInitFlow currentFlow].mnemonicPassphrase = passphrase;
-    if ([LXHWallet isFullFunctional] && [LXHWallet isCurrentMnemonicCodeWords:self.mnemonicWords andMnemonicPassphrase:passphrase]) {
+    if ([LXHWallet isCurrentMnemonicCodeWords:self.mnemonicWords andMnemonicPassphrase:passphrase]) {
         NSString *controllerClassName = @"LXHSetPinViewController";
         id viewModel = [NSNull null];
         return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};

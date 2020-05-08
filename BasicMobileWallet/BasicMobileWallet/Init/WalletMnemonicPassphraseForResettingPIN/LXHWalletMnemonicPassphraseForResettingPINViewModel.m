@@ -26,7 +26,7 @@
 }
 
 - (BOOL)isCurrentMnemonicWords {
-    return [LXHWallet isFullFunctional] && [LXHWallet isCurrentMnemonicCodeWords:_words andMnemonicPassphrase:nil];
+    return [LXHWallet isCurrentMnemonicCodeWords:_words andMnemonicPassphrase:nil];
 }
 
 @end

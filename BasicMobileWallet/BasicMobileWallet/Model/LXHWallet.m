@@ -198,9 +198,21 @@
 
 + (BOOL)isCurrentMnemonicCodeWords:(NSArray *)mnemonicCodeWords
              andMnemonicPassphrase:(nullable NSString *)mnemonicPassphrase {
+    
     BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:mnemonicCodeWords password:mnemonicPassphrase wordListType:BTCMnemonicWordListTypeEnglish];
-    NSData *seedToCompare = [mnemonic seed].copy;
-    return [LXHKeychainStore.sharedInstance data:seedToCompare isEqualToEncryptedDataForKey:kLXHKeychainStoreRootSeed];
+    if ([self isFullFunctional]) {
+        NSData *seedToCompare = [mnemonic seed].copy;
+        return [LXHKeychainStore.sharedInstance data:seedToCompare isEqualToEncryptedDataForKey:kLXHKeychainStoreRootSeed];
+    } else if ([self isWatchOnly]) {
+        BTCKeychain *masterKeychain = [mnemonic.keychain copy];
+        LXHBitcoinNetworkType netType = [self currentNetworkType];
+        if (netType == LXHBitcoinNetworkTypeUndefined)
+            return NO;
+        BTCKeychain *firstAccountKeychain = [self firstAccountKeychainWithMasterKeychain:masterKeychain netType:netType];
+        return [LXHKeychainStore.sharedInstance string:firstAccountKeychain.extendedPublicKey isEqualToEncryptedStringForKey:kLXHKeychainStoreExtendedPublicKey];
+    } else { //不应该发生这种情况
+        return NO;
+    }
 }
 
 + (void)restoreExistWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
@@ -253,10 +265,10 @@
     return saveResult;
 }
 
-- (LXHBitcoinNetworkType)currentNetworkType {
++ (LXHBitcoinNetworkType)currentNetworkType {
     NSString *typeString = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreBitcoinNetType];
     if (!typeString)
-        return LXHBitcoinNetworkTypeTestnet;
+        return LXHBitcoinNetworkTypeUndefined;
     else
         return typeString.integerValue;
 }
