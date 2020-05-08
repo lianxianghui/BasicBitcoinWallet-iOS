@@ -18,12 +18,7 @@
 #define kLXHKeychainStoreMnemonicCodeWords @"MnemonicCodeWords" //AES encrypt
 #define kLXHKeychainStoreRootSeed @"RootSeed" //AES encrypt
 #define kLXHKeychainStoreExtendedPublicKey @"ExtendedPublicKey"
-#define kLXHKeychainStoreBitcoinNetType @"kLXHKeychainStoreBitcoinNetType"
 #define kLXHKeychainStoreWalletDataGenerated @"kLXHKeychainStoreWalletDataGenerated"
-
-
-//#define kLXHKeychainStoreMaxAddressCount  @"kLXHKeychainStoreMaxAddressCount"
-
 #define MainAccountIndex 0
 
 @interface LXHWallet ()
@@ -134,11 +129,6 @@
     BOOL saveResult = [LXHKeychainStore.sharedInstance encryptAndSetString:extendedPublicKey forKey:kLXHKeychainStoreExtendedPublicKey];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@(currentReceivingAddressIndex).stringValue forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@(currentChangeAddressIndex).stringValue forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
-    
-    //get netType from extendedPublicKey
-    BTCNetwork *network = [[BTCKeychain alloc] initWithExtendedKey:extendedPublicKey].network;
-    LXHBitcoinNetworkType netType = network.isMainnet ? LXHBitcoinNetworkTypeMainnet : LXHBitcoinNetworkTypeTestnet;
-    saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:@(netType).stringValue forKey:kLXHKeychainStoreBitcoinNetType];
     return saveResult;
 }
 
@@ -234,17 +224,19 @@
     saveResult = saveResult && [LXHKeychainStore.sharedInstance encryptAndSetData:nil forKey:kLXHKeychainStoreExtendedPublicKey];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreCurrentChangeAddressIndex];
-    saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreBitcoinNetType];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreWalletDataGenerated];
     return saveResult;
 }
 
 + (LXHBitcoinNetworkType)currentNetworkType {
-    NSString *typeString = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreBitcoinNetType];
-    if (!typeString)
+    //get netType from extendedPublicKey
+    NSString *extendedPublicKey = [[LXHKeychainStore sharedInstance] decryptedStringForKey:kLXHKeychainStoreExtendedPublicKey error:nil];
+    if (!extendedPublicKey)
         return LXHBitcoinNetworkTypeUndefined;
-    else
-        return typeString.integerValue;
+    
+    BTCNetwork *network = [[BTCKeychain alloc] initWithExtendedKey:extendedPublicKey].network;
+    LXHBitcoinNetworkType netType = network.isMainnet ? LXHBitcoinNetworkTypeMainnet : LXHBitcoinNetworkTypeTestnet;
+    return netType;
 }
 
 + (BOOL)encryptAndSetMnemonicCodeWords:(NSArray *)mnemonicCodeWords {
