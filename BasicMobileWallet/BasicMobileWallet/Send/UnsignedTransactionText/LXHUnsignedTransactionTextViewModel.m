@@ -56,7 +56,7 @@
     return _data[@"transactionData"];
 }
 
-- (BTCTransaction *)signedTransaction {
+- (nullable BTCTransaction *)signedTransaction {
     BTCTransaction *unsiginedTransaction = [[BTCTransaction alloc] initWithDictionary:self.transactionDictionary];
     BTCTransaction *signedTransaction = [LXHSignatureUtils signBTCTransaction:unsiginedTransaction];
     return signedTransaction;
@@ -76,7 +76,7 @@
 }
 
 - (BOOL)signTransactionButtonEnabled {
-    return ![LXHWallet isWatchOnly];
+    return [LXHWallet isFullFunctional];
 }
 
 @end
