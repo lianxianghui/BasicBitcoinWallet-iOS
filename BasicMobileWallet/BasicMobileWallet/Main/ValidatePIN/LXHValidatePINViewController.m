@@ -10,12 +10,11 @@
 #import "UIViewController+LXHBasicMobileWallet.h"
 #import "UIUtils.h"
 #import "UIViewController+LXHAlert.h"
-#import "LXHWallet.h"
-#import "LXHKeychainStore.h"
 #import "LXHForgotPINAfterWalletDataGeneratedViewController.h"
 #import "LXHForgotPINBeforeWalletDataGeneratedViewController.h"
 #import "AppDelegate.h"
 #import "LXHForgotPINAfterWalletDataGeneratedViewModel.h"
+#import "LXHValidatePINViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -25,15 +24,17 @@
     
 @interface LXHValidatePINViewController()
 @property (nonatomic) LXHValidatePINView *contentView;
+@property (nonatomic) LXHValidatePINViewModel *viewModel;
 @property (nonatomic, copy) LXHValidatePINSuccessBlock successBlock;
 @end
 
 @implementation LXHValidatePINViewController
 
-- (instancetype)initWithValidatePINSuccessBlock:(LXHValidatePINSuccessBlock)successBlock {
+- (instancetype)initWithViewModel:(id)viewModel validatePINSuccessBlock:(LXHValidatePINSuccessBlock)successBlock {
     self = [super init];
     if (self) {
-        _successBlock = successBlock;
+        _viewModel = viewModel;
+        self.successBlock = successBlock;
     }
     return self;
 }
@@ -73,30 +74,31 @@
 
 
 - (void)showValidatePINAlertIfNeeded {
-    if ([LXHWallet hasPIN]) {
+    if ([_viewModel needShowValidatePINAlert]) {
          __weak typeof(self) weakSelf = self;
-        UIAlertController *pinCodeInput = [UIUtils pinCodeInputOKAndForgotPINAlertWithMessage:nil textBlock:^(NSString *text) {
-            if ([[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN]) {
-                if (weakSelf.successBlock) {
-                    [weakSelf dismissViewControllerAnimated:NO completion:nil];
-                    weakSelf.successBlock();
+        UIAlertController *pinCodeInput =
+            [UIUtils pinCodeInputOKAndForgotPINAlertWithMessage:nil textBlock:^(NSString *text) {
+                if ([weakSelf.viewModel isCurrentPIN:text]) {
+                    if (weakSelf.successBlock) {
+                        [weakSelf dismissViewControllerAnimated:NO completion:nil];
+                        weakSelf.successBlock();
+                    }
+                } else {
+                    [self showOkAlertViewWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"PIN码不正确", nil) handler:^(UIAlertAction * _Nonnull action) {
+                        [weakSelf showValidatePINAlertIfNeeded];//确定后再次显示
+                    }];
                 }
-            } else {
-                [self showOkAlertViewWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"PIN码不正确", nil) handler:^(UIAlertAction * _Nonnull action) {
-                    [weakSelf showValidatePINAlertIfNeeded];//确定后再次显示
-                }];
-            }
-        } forgotPINBlock:^{
-            if ([LXHWallet walletDataGenerated]) {
-                id viewModel = [[LXHForgotPINAfterWalletDataGeneratedViewModel alloc] init];
-                UIViewController *viewController = [[LXHForgotPINAfterWalletDataGeneratedViewController alloc] initWithViewModel:viewModel];
-                [weakSelf.navigationController pushViewController:viewController animated:YES];
-            } else {
-                UIViewController *viewController = [[LXHForgotPINBeforeWalletDataGeneratedViewController alloc] init];
-                [weakSelf.navigationController pushViewController:viewController animated:YES];
-            }
-            
-        }];
+            } forgotPINBlock:^{
+                if ([weakSelf.viewModel walletDataGenerated]) {
+                    id viewModel = [[LXHForgotPINAfterWalletDataGeneratedViewModel alloc] init];
+                    UIViewController *viewController = [[LXHForgotPINAfterWalletDataGeneratedViewController alloc] initWithViewModel:viewModel];
+                    [weakSelf.navigationController pushViewController:viewController animated:YES];
+                } else {
+                    UIViewController *viewController = [[LXHForgotPINBeforeWalletDataGeneratedViewController alloc] init];
+                    [weakSelf.navigationController pushViewController:viewController animated:YES];
+                }
+                
+            }];
         [self presentViewController:pinCodeInput animated:YES completion:nil];
     }
 }

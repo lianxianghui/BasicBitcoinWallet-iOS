@@ -7,7 +7,6 @@
 //
 
 #import "LXHSearchAddressesAndGenerateWalletViewModel.h"
-#import "LXHTabBarPageViewModel.h"
 #import "LXHWallet.h"
 
 @interface LXHSearchAddressesAndGenerateWalletViewModel ()

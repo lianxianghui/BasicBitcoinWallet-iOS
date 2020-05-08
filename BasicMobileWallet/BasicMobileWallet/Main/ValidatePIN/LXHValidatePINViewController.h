@@ -10,5 +10,5 @@ typedef void(^LXHValidatePINSuccessBlock)(void);
 
 @interface LXHValidatePINViewController : UIViewController
 
-- (instancetype)initWithValidatePINSuccessBlock:(LXHValidatePINSuccessBlock)successBlock;
+- (instancetype)initWithViewModel:(id)viewModel validatePINSuccessBlock:(LXHValidatePINSuccessBlock)successBlock;
 @end

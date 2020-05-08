@@ -13,6 +13,7 @@
 #import "LXHTabBarPageViewController.h"
 #import "LXHWelcomeViewController.h"
 #import "LXHValidatePINViewController.h"
+#import "LXHValidatePINViewModel.h"
 #import "LXHMaskViewController.h"
 #import "LXHWallet.h"
 
@@ -131,7 +132,8 @@
     if ([AppDelegate pinValidationViewControllerPresented])
         return;
     __weak UIViewController *rootViewController = [AppDelegate currentRootViewController];
-    UIViewController *validatePINViewController = [[LXHValidatePINViewController alloc] initWithValidatePINSuccessBlock:^{
+    id viewModel = [[LXHValidatePINViewModel alloc] init];
+    UIViewController *validatePINViewController = [[LXHValidatePINViewController alloc] initWithViewModel:viewModel validatePINSuccessBlock:^{
         //验证成功, dismiss
         [rootViewController dismissViewControllerAnimated:NO completion:nil];
     }];

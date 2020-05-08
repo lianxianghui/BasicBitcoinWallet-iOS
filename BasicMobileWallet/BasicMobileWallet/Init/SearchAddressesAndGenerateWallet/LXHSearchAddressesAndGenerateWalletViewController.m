@@ -9,7 +9,6 @@
 #import "LXHSearchAddressesAndGenerateWalletView.h"
 #import "LXHSearchAddressesAndGenerateWalletViewModel.h"
 #import "UIViewController+LXHAlert.h"
-#import "LXHTabBarPageViewModel.h"
 #import "AppDelegate.h"
 #import "LXHInitFlow.h"
 
