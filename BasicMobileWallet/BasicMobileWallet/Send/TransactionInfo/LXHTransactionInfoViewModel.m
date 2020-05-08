@@ -134,7 +134,7 @@
     [LXHTransactionDataManager pushTransactionsWithHex:self.signedBTCTransaction.hex successBlock:successBlock failureBlock:failureBlock];
 }
 
-- (BOOL)signButtonsEnabled {
+- (BOOL)signatureButtonsEnabled {
     return [LXHWallet isFullFunctional];
 }
 

@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 - (NSString *)infoDescription;
-- (BOOL)signButtonsEnabled;
+- (BOOL)signatureButtonsEnabled;
 - (void)pushSignedTransactionWithSuccessBlock:(void (^)(NSDictionary *resultDic))successBlock
                                  failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 
