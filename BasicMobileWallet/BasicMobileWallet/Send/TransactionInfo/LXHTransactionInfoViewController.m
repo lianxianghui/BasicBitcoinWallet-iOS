@@ -103,7 +103,7 @@
 - (void)textButton2Clicked:(UIButton *)sender {//显示签名过的交易文本
     LXHWeakSelf
     [self validatePINWithPassedHandler:^{
-        id viewModel = weakSelf.viewModel.signedTransactionTextViewModel;
+        id viewModel = [weakSelf.viewModel signedTransactionTextViewModel];
         UIViewController *controller = [[LXHSignedTransactionTextViewController alloc] initWithViewModel:viewModel];
         controller.hidesBottomBarWhenPushed = YES;
         [weakSelf.navigationController pushViewController:controller animated:YES];
@@ -111,7 +111,7 @@
 }
 
 - (void)textButton1Clicked:(UIButton *)sender {//显示未签名的交易文本
-    id viewModel = _viewModel.unsignedTransactionTextViewModel;
+    id viewModel = [_viewModel unsignedTransactionTextViewModel];
     UIViewController *controller = [[LXHUnsignedTransactionTextViewController alloc] initWithViewModel:viewModel];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES]; 

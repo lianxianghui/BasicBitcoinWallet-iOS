@@ -135,7 +135,7 @@
 }
 
 - (BOOL)signButtonsEnabled {
-    return ![LXHWallet isWatchOnly];
+    return [LXHWallet isFullFunctional];
 }
 
 @end
