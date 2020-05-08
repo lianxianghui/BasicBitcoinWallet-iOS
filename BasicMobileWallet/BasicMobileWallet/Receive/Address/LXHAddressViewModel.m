@@ -23,6 +23,10 @@
     return self;
 }
 
+- (NSString *)navigationBarTitle {
+    return @"地址二维码";
+}
+
 - (BOOL)leftButtonHidden {
     return NO;
 }

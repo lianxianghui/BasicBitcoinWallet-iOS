@@ -11,6 +11,10 @@
 
 @implementation LXHCurrentReceivingAddressViewModel
 
+- (NSString *)navigationBarTitle {
+    return @"接收地址";
+}
+
 - (BOOL)leftButtonHidden {
     return YES;
 }

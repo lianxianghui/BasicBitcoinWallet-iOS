@@ -51,6 +51,7 @@
 }
 
 - (void)setContentViewProperties {
+    [self.contentView.title updateAttributedTextString:[_viewModel navigationBarTitle]];
     self.contentView.leftImageButton.hidden = [_viewModel leftButtonHidden];
 }
 
