@@ -212,10 +212,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [_viewModel selectWordAtIndex:indexPath.row];
-    if ([_viewModel selectWordsUnfinshed]) {
+    if ([_viewModel selectWordsUnfinshed]) {//选词未完成，清理、刷新以准备输入下一个
         [self clearTextFieldAndPromptWordList];
         [self refreshTextFieldPlaceholder];
-    } else {
+    } else {//选词完成，进入核对助记词页面
         id viewModel = [_viewModel checkWalletMnemonicWordsViewModel];
         LXHCheckWalletMnemonicWordsViewController *controller = [[LXHCheckWalletMnemonicWordsViewController alloc] initWithViewModel:viewModel];
         [self.navigationController pushViewController:controller animated:YES];
