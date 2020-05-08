@@ -19,7 +19,7 @@
     return viewModel;
 }
 
-- (BOOL)checkExtenedPublicKeyWithQRString:(NSString *)string {
+- (BOOL)checkExtendedPublicKeyWithQRString:(NSString *)string {
     if ([LXHWallet isFullFunctional]) //是全功能钱包，不应该检查扩展公钥
         return NO;
     BOOL match = [string isEqualToString:[LXHWallet mainAccount].extendedPublicKey];

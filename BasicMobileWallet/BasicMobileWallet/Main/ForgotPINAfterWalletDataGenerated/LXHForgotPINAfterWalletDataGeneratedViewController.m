@@ -81,7 +81,7 @@
     __weak typeof(self) weakSelf = self;
     UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *message) {
         [weakSelf.navigationController popViewControllerAnimated:NO];
-        if ([weakSelf.viewModel checkExtenedPublicKeyWithQRString:message]) {
+        if ([weakSelf.viewModel checkExtendedPublicKeyWithQRString:message]) {
             UIViewController *controller = [[LXHSetPinViewController alloc] initWithViewModel:nil];
             [self.navigationController pushViewController:controller animated:YES];
         } else {
