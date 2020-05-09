@@ -19,6 +19,9 @@
 #import "LXHOthersViewModel.h"
 #import "LXHAboutViewController.h"
 #import "LXHAddressListViewModel.h"
+#import "LXHTransactionListViewModel.h"
+#import "LXHSettingViewModel.h"
+
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -191,13 +194,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch(indexPath.row) {
-        case 0:
+        case 0: //LineCell
         {
         }
             break;
         case 1:
         {
-            id viewModel = [_viewModel transactionListViewModel];
+            id viewModel = [[LXHTransactionListViewModel alloc] init];;
             UIViewController *controller = [[LXHTransactionListViewController alloc] initWithViewModel:viewModel];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
@@ -244,7 +247,7 @@
             break;
         case 4:
         {
-            id viewModel = [_viewModel settingViewModel];
+            id viewModel = [[LXHSettingViewModel alloc] init];
             UIViewController *controller = [[LXHSettingViewController alloc] initWithViewModel:viewModel];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];

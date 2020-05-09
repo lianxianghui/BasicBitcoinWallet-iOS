@@ -7,7 +7,6 @@
 //
 
 #import "LXHOthersViewModel.h"
-#import "LXHTransactionListViewModel.h"
 #import "LXHSignatureUtils.h"
 #import "NSJSONSerialization+VLBase.h"
 #import "LXHSignedTransactionTextViewModel.h"
@@ -15,36 +14,25 @@
 #import "LXHTextViewModel.h"
 #import "LXHWallet.h"
 #import "LXHBitcoinNetwork.h"
-#import "LXHSettingViewModel.h"
 
 @implementation LXHOthersViewModel
-
-- (id)transactionListViewModel {
-    return [[LXHTransactionListViewModel alloc] init];
-}
-
-- (id)addressListViewModel {
-    return nil;
-}
-
-- (id)settingViewModel {
-    return [[LXHSettingViewModel alloc] init];
-}
 
 - (NSDictionary *)jsonWithScannedText:(NSString *)text {
     NSDictionary *data = [NSJSONSerialization objectWithJsonString:text];
     return data;
 }
 
+
+//检查通过扫描获得的交易数据，如果有问题返回错误字符串，没问题返回nil
 //数据格式
 //@"dataType" : @"signedTransaction" or @"unsignedTransaction"
-//NSDictionary *dataForCheckingOutputAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
-//return @{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
+//dataForCheckingOutputAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
+//@{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
 - (NSString *)checkScannedData:(NSDictionary *)data {
     NSString *dataType = data[@"dataType"];
     if (dataType) {
         if ([dataType isEqualToString:@"unsignedTransaction"] || [dataType isEqualToString:@"signedTransaction"]) {
-            //检查交易: 1.检查网络类型 2.检查交易输出与校验字段是否一致
+            //1.检查数据网络类型是否与当前钱包的网络类型一致 2.检查交易输出与校验字段是否一致
             NSString *network = [data valueForKeyPath:@"dataForCheckingOutputAddresses.network"];
             NSString *errorMessage = nil;
             errorMessage = [self checkNetwork:network];
@@ -59,14 +47,13 @@
     return nil;
 }
 
+
+//未签名的数据需要签名，由于当前钱包是离线的，签名前需要知道地址对应的私钥。
+//离线钱包需要更新CurrentAddressIndex，这样能确定查找私钥的范围（否则如果在所有可能的私钥范围内查找，时间会太长）
 - (BOOL)needUpdateCurrentAddressIndexDataWithData:(NSDictionary *)data {
     NSString *dataType = data[@"dataType"];
     return [dataType isEqualToString:@"unsignedTransaction"];
 }
-
-//- (BOOL)needAsynchronousUpdateCurrentAddressIndexData:(NSDictionary *)data {
-//
-//}
 
 - (void)updateCurrentAddressIndexData:(NSDictionary *)data
                           successBlock:(nullable void (^)(void))successBlock

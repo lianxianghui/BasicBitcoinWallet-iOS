@@ -12,11 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHOthersViewModel : NSObject
 
-- (id)transactionListViewModel;
-- (id)addressListViewModel;
-- (id)settingViewModel;
-
-
 - (NSDictionary *)jsonWithScannedText:(NSString *)text;
 - (NSString *)checkScannedData:(NSDictionary *)data;
 
