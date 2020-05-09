@@ -1273,7 +1273,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		8C2CC6DC23321484005AA93C /* HelperClass */ = {
+		8C2CC6DC23321484005AA93C /* Helper */ = {
 			isa = PBXGroup;
 			children = (
 				8CECB01823B46C0300742E36 /* LXHSignatureUtils.h */,
@@ -1285,7 +1285,7 @@
 				8C26EDE1245D55320086BD94 /* NSDecimalNumber+LXHBTCSatConverter.h */,
 				8C26EDE2245D55320086BD94 /* NSDecimalNumber+LXHBTCSatConverter.m */,
 			);
-			path = HelperClass;
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		8C2CC6E3233236A9005AA93C /* ShowWalletMnemonicWords */ = {
@@ -2061,7 +2061,7 @@
 				8C9332CC235D8BD600FBF238 /* Balance */,
 				8C2CC66A232F20E4005AA93C /* Others */,
 				8C2CC6C7232F670A005AA93C /* Model */,
-				8C2CC6DC23321484005AA93C /* HelperClass */,
+				8C2CC6DC23321484005AA93C /* Helper */,
 				8CA31F9B22D9A21600CEA828 /* Base */,
 			);
 			path = BasicMobileWallet;
