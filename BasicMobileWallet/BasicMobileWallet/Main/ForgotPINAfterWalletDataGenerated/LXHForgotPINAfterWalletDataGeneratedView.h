@@ -1,7 +1,7 @@
 // LXHForgotPINAfterWalletDataGeneratedView.h
 // BasicWallet
 //
-//  Created by lianxianghui on 20-03-6
+//  Created by lianxianghui on 20-05-8
 //  Copyright © 2020年 lianxianghui. All rights reserved.
 
 #import <UIKit/UIKit.h>

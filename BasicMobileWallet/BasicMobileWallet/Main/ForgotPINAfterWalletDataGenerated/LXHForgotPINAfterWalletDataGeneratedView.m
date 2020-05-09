@@ -1,7 +1,7 @@
 // LXHForgotPINAfterWalletDataGeneratedView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 20-03-6
+//  Created by lianxianghui on 20-05-8
 //  Copyright © 2020年 lianxianghui. All rights reserved.
 
 
@@ -53,7 +53,8 @@
     [self.desc1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(19);
         make.right.equalTo(self.mas_right).offset(-19);
-        make.top.equalTo(self.customNavigationBar.mas_bottom).offset(19);
+        make.top.equalTo(self.customNavigationBar.mas_bottom).offset(10);
+        make.bottom.equalTo(self.button1.mas_top).offset(-4);
     }];
     [self.customNavigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top);
@@ -177,7 +178,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请找到之前您生成钱包时扫描过的扩展公钥(xpub)二维码，点击“扫描扩展公钥”按钮，扫描后将会与目前钱包的扩展公钥进行对比，如果相同，则接下来可以重置PIN码。\n", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请找到之前您生成钱包时扫描过的扩展公钥(xpub)二维码，点击“扫描扩展公钥”按钮，扫描后将会与目前钱包的扩展公钥进行对比，如果相同，则接下来可以重置PIN码。(因为通过助记词可以产生扩展公钥，所以也可以通过输入钱包助记词来重置，但出于安全考虑不推荐使用这种方法)", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         font = [UIFont fontWithName:@"PingFangSC-Regular" size:18];
@@ -192,37 +193,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
-        if (!font) font = [UIFont systemFontOfSize:14];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"2", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"PingFangSC-Regular" size:18];
-        if (!font) font = [UIFont systemFontOfSize:18];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@".全功能钱包:", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n2.全功能钱包:", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
