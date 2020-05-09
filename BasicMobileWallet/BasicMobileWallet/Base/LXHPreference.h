@@ -7,9 +7,6 @@
 
 #import <Foundation/Foundation.h>
 
-
-#define kLXHPreferenceBitcoinNetworkType @"kLXHPreferenceBitcoinNetworkType"
-
 @interface LXHPreference : NSObject
 
 @property (nonatomic, readonly) NSUserDefaults *mainPreference;
