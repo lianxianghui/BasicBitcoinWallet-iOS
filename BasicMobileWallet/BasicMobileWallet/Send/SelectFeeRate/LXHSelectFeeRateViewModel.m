@@ -104,7 +104,7 @@
             formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
         }
         NSString *dateString = [formatter stringFromDate:updatedTime];
-        return [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
+        return [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"更新ß时间", nil), dateString];
     } else {
         return @"";
     }

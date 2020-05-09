@@ -32,7 +32,7 @@
     NSDate *updatedTime = [LXHTransactionDataManager sharedInstance].dataUpdatedTime;
     if (updatedTime) {
         NSString *dateString = [formatter stringFromDate:updatedTime];
-        return [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
+        return [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"更新时间", nil), dateString];
     } else {
         return @"";
     }
