@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSString *)updatedTimeText;
-- (NSMutableArray *)dataForCells;
 - (void)resetDataForCells;
 
 - (void)addObserverForUpdatedTransactinListWithCallback:(void (^)(void))updatedCallback;
@@ -30,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)transactionDetailViewModelAtIndex:(NSInteger)index;
 
 #pragma mark - for overriding
+- (NSMutableArray *)dataForCells;
 - (NSArray<LXHTransaction *> *)transactionList;//默认实现是全部交易，子类可以根据需要重新实现
 @end
 
