@@ -48,8 +48,9 @@
 }
 
 
-//未签名的数据需要签名，由于当前钱包是离线的，签名前需要知道地址对应的私钥。
-//离线钱包需要更新CurrentAddressIndex，这样能确定查找私钥的范围（否则如果在所有可能的私钥范围内查找，时间会太长）
+//未签名的数据需要签名，签名前需要知道地址对应的私钥。
+//如果是离线钱包需要更新CurrentAddressIndex，这样能确定查找私钥的范围（否则如果在所有可能的私钥范围内查找，时间会太长）
+//todo 这里有一个问题：如果扫描到的数据来自一个不与当前钱包相对应的只读钱包，这里有可能会把当前地址更新成错误的。（在地址列表里，会显示哪些地址已经使用过，这个错误会带来这个信息不准确）
 - (BOOL)needUpdateCurrentAddressIndexDataWithData:(NSDictionary *)data {
     NSString *dataType = data[@"dataType"];
     return [dataType isEqualToString:@"unsignedTransaction"];
