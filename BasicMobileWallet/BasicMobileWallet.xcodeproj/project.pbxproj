@@ -1235,40 +1235,9 @@
 		8C2CC6C7232F670A005AA93C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8C2CC6CA232F679A005AA93C /* LXHWallet.h */,
-				8C2CC6CD232F679A005AA93C /* LXHWallet.m */,
-				8C2CC6D0232F679A005AA93C /* LXHAccount.h */,
-				8C2CC6CF232F679A005AA93C /* LXHAccount.m */,
-				8C2CC6CB232F679A005AA93C /* LXHAccountAddressSearcher.h */,
-				8C2CC6C9232F6799005AA93C /* LXHAccountAddressSearcher.m */,
-				8C2CC6C8232F6799005AA93C /* LXHGlobalHeader.h */,
-				8C2CC6CE232F679A005AA93C /* LXHTransactionDataManager.h */,
-				8C2CC6CC232F679A005AA93C /* LXHTransactionDataManager.m */,
-				8C2CC6EA2334C0D8005AA93C /* LXHWalletChangeLevelModel.h */,
-				8C2CC6EB2334C0D8005AA93C /* LXHWalletChangeLevelModel.m */,
-				8C45ACC82375912B0038EAEA /* LXHAddress.h */,
-				8C45ACC92375912B0038EAEA /* LXHAddress.m */,
-				8CDF9129239637350004A229 /* LXHAddress+LXHAccount.h */,
-				8CDF912A239637350004A229 /* LXHAddress+LXHAccount.m */,
-				8C6ACE8823574EA100511D5E /* LXHBitcoinWebApi.h */,
-				8C6ACE8B23574F8300511D5E /* LXHBitcoinWebApiSmartbit.h */,
-				8C6ACE8C23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m */,
-				8C2CC6D5232F67F6005AA93C /* LXHTransaction.h */,
-				8C2CC6D6232F67F6005AA93C /* LXHTransaction.m */,
-				8C03E2DA235970E700936B31 /* LXHTransactionInput.h */,
-				8C03E2DB235970E700936B31 /* LXHTransactionInput.m */,
-				8C03E2DD2359710100936B31 /* LXHTransactionOutput.h */,
-				8C03E2DE2359710100936B31 /* LXHTransactionOutput.m */,
-				8C0BAA4C23609C88001D029B /* LXHBitcoinfeesNetworkRequest.h */,
-				8C0BAA4D23609C88001D029B /* LXHBitcoinfeesNetworkRequest.m */,
-				8C6A115A237E571E0055C9F4 /* LXHTransactionInputOutputCommon.h */,
-				8C6A115B237E571E0055C9F4 /* LXHTransactionInputOutputCommon.m */,
-				8C8FCAB9238F972F0054016F /* LXHFeeCalculator.h */,
-				8C8FCABA238F972F0054016F /* LXHFeeCalculator.m */,
-				8C26EDE4245D8EEE0086BD94 /* LXHFeeRate.h */,
-				8C26EDE5245D8EEE0086BD94 /* LXHFeeRate.m */,
-				8C42130F245FCDB9007F4D04 /* LXHAmount.h */,
-				8C421310245FCDB9007F4D04 /* LXHAmount.m */,
+				8C839FCD2466C69100E5A73A /* DataModel */,
+				8C839FCC2466C68700E5A73A /* Request */,
+				8C2CC6DC23321484005AA93C /* Helper */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1276,12 +1245,17 @@
 		8C2CC6DC23321484005AA93C /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				8CECB01823B46C0300742E36 /* LXHSignatureUtils.h */,
-				8CECB01923B46C0300742E36 /* LXHSignatureUtils.m */,
-				8C2CC6E023321615005AA93C /* UIViewController+LXHBasicMobileWallet.h */,
-				8C2CC6E123321615005AA93C /* UIViewController+LXHBasicMobileWallet.m */,
+				8C2CC6C8232F6799005AA93C /* LXHGlobalHeader.h */,
+				8C8FCAB9238F972F0054016F /* LXHFeeCalculator.h */,
+				8C8FCABA238F972F0054016F /* LXHFeeCalculator.m */,
+				8C26EDE4245D8EEE0086BD94 /* LXHFeeRate.h */,
+				8C26EDE5245D8EEE0086BD94 /* LXHFeeRate.m */,
 				8CA0B17723C5E66D00B3739B /* LXHBitcoinNetwork.h */,
 				8CA0B17823C5E66D00B3739B /* LXHBitcoinNetwork.m */,
+				8C42130F245FCDB9007F4D04 /* LXHAmount.h */,
+				8C421310245FCDB9007F4D04 /* LXHAmount.m */,
+				8CECB01823B46C0300742E36 /* LXHSignatureUtils.h */,
+				8CECB01923B46C0300742E36 /* LXHSignatureUtils.m */,
 				8C26EDE1245D55320086BD94 /* NSDecimalNumber+LXHBTCSatConverter.h */,
 				8C26EDE2245D55320086BD94 /* NSDecimalNumber+LXHBTCSatConverter.m */,
 			);
@@ -1312,6 +1286,56 @@
 				8C78458D2452DBB20010F86B /* LXHWalletMnemonicPassphraseForRestoringViewController.m */,
 			);
 			path = WalletMnemonicPassphraseForRestoring;
+			sourceTree = "<group>";
+		};
+		8C839FCC2466C68700E5A73A /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				8C6ACE8823574EA100511D5E /* LXHBitcoinWebApi.h */,
+				8C6ACE8B23574F8300511D5E /* LXHBitcoinWebApiSmartbit.h */,
+				8C6ACE8C23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m */,
+				8C0BAA4C23609C88001D029B /* LXHBitcoinfeesNetworkRequest.h */,
+				8C0BAA4D23609C88001D029B /* LXHBitcoinfeesNetworkRequest.m */,
+				8C2CC6CB232F679A005AA93C /* LXHAccountAddressSearcher.h */,
+				8C2CC6C9232F6799005AA93C /* LXHAccountAddressSearcher.m */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		8C839FCD2466C69100E5A73A /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				8C2CC6CA232F679A005AA93C /* LXHWallet.h */,
+				8C2CC6CD232F679A005AA93C /* LXHWallet.m */,
+				8C2CC6D0232F679A005AA93C /* LXHAccount.h */,
+				8C2CC6CF232F679A005AA93C /* LXHAccount.m */,
+				8C2CC6CE232F679A005AA93C /* LXHTransactionDataManager.h */,
+				8C2CC6CC232F679A005AA93C /* LXHTransactionDataManager.m */,
+				8C2CC6EA2334C0D8005AA93C /* LXHWalletChangeLevelModel.h */,
+				8C2CC6EB2334C0D8005AA93C /* LXHWalletChangeLevelModel.m */,
+				8C45ACC82375912B0038EAEA /* LXHAddress.h */,
+				8C45ACC92375912B0038EAEA /* LXHAddress.m */,
+				8CDF9129239637350004A229 /* LXHAddress+LXHAccount.h */,
+				8CDF912A239637350004A229 /* LXHAddress+LXHAccount.m */,
+				8C2CC6D5232F67F6005AA93C /* LXHTransaction.h */,
+				8C2CC6D6232F67F6005AA93C /* LXHTransaction.m */,
+				8C03E2DA235970E700936B31 /* LXHTransactionInput.h */,
+				8C03E2DB235970E700936B31 /* LXHTransactionInput.m */,
+				8C03E2DD2359710100936B31 /* LXHTransactionOutput.h */,
+				8C03E2DE2359710100936B31 /* LXHTransactionOutput.m */,
+				8C6A115A237E571E0055C9F4 /* LXHTransactionInputOutputCommon.h */,
+				8C6A115B237E571E0055C9F4 /* LXHTransactionInputOutputCommon.m */,
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
+		8C839FCE2466C8D500E5A73A /* ViewHelper */ = {
+			isa = PBXGroup;
+			children = (
+				8C2CC6E023321615005AA93C /* UIViewController+LXHBasicMobileWallet.h */,
+				8C2CC6E123321615005AA93C /* UIViewController+LXHBasicMobileWallet.m */,
+			);
+			path = ViewHelper;
 			sourceTree = "<group>";
 		};
 		8C9332CC235D8BD600FBF238 /* Balance */ = {
@@ -2061,7 +2085,7 @@
 				8C9332CC235D8BD600FBF238 /* Balance */,
 				8C2CC66A232F20E4005AA93C /* Others */,
 				8C2CC6C7232F670A005AA93C /* Model */,
-				8C2CC6DC23321484005AA93C /* Helper */,
+				8C839FCE2466C8D500E5A73A /* ViewHelper */,
 				8CA31F9B22D9A21600CEA828 /* Base */,
 			);
 			path = BasicMobileWallet;
@@ -3059,7 +3083,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/BasicMobileWallet/ThirdPartyCode/openssl/lib",
 					"$(PROJECT_DIR)/BasicMobileWallet/Base/ThirdPartyCode/openssl/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.lianxianghui.BasicMobileWallet;
@@ -3090,7 +3113,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/BasicMobileWallet/ThirdPartyCode/openssl/lib",
 					"$(PROJECT_DIR)/BasicMobileWallet/Base/ThirdPartyCode/openssl/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.lianxianghui.BasicMobileWallet;
