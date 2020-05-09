@@ -16,6 +16,8 @@
 #import "UIViewController+LXHBasicMobileWallet.h"
 #import "LXHShowWalletMnemonicWordsViewController.h"
 #import "LXHSettingViewModel.h"
+#import "LXHShowWalletMnemonicWordsViewModel.h"
+#import "LXHCurrentAccountInfoViewModel.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -211,9 +213,8 @@
         }
         case 3:
         {
-            __weak typeof(self) weakSelf = self;
             [self validatePINWithPassedHandler:^{
-                id viewModel = [weakSelf.viewModel showWalletMnemonicWordsViewModel];
+                id viewModel = [[LXHShowWalletMnemonicWordsViewModel alloc] init];
                 UIViewController *controller = [[LXHShowWalletMnemonicWordsViewController alloc] initWithViewModel:viewModel];
                 controller.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:controller animated:YES];
@@ -222,7 +223,7 @@
             break;
         case 4:
         {
-            id viewModel = [_viewModel currentAccountInfoViewModel];
+            id viewModel = [[LXHCurrentAccountInfoViewModel alloc] init];
             UIViewController *controller = [[LXHCurrentAccountInfoViewController alloc] initWithViewModel:viewModel];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];

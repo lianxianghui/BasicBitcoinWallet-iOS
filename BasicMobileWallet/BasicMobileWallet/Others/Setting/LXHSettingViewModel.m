@@ -7,8 +7,6 @@
 //
 
 #import "LXHSettingViewModel.h"
-#import "LXHShowWalletMnemonicWordsViewModel.h"
-#import "LXHCurrentAccountInfoViewModel.h"
 #import "LXHWallet.h"
 #import "LXHTransactionDataManager.h"
 #import "LXHKeychainStore.h"
@@ -18,14 +16,6 @@
 @end
 
 @implementation LXHSettingViewModel
-
-- (id)showWalletMnemonicWordsViewModel {
-    return [[LXHShowWalletMnemonicWordsViewModel alloc] init];
-}
-
-- (id)currentAccountInfoViewModel {
-    return [[LXHCurrentAccountInfoViewModel alloc] init];
-}
 
 - (NSMutableArray *)cellDataArrayForListview {
     if (!_cellDataArrayForListview) {
