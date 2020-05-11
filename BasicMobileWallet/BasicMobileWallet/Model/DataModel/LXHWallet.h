@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define kLXHKeychainStorePIN @"PIN" //AES encrypt
+#define kLXHKeychainStorePIN @"PIN" //Using AES encrypt
 
 /**
  * 按着BIP44标准管理地址钱包对象 
@@ -27,8 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
  * 3.提供一个根据当前数据生成LXHWallet实例的方法
  */
 @interface LXHWallet : NSObject
-@property (nonatomic, readonly) LXHAccount *mainAccount;
 
++ (LXHWallet *)sharedInstance;
++ (LXHAccount *)mainAccount;
 
 + (BOOL)generateWalletDataWithMnemonicCodeWords:(NSArray *)mnemonicCodeWords
                                 mnemonicPassphrase:(NSString *)mnemonicPassphrase
@@ -55,9 +56,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)clearAccount;
 + (BOOL)walletDataGenerated;
-
-+ (LXHWallet *)sharedInstance;
-+ (LXHAccount *)mainAccount;
 
 + (NSArray *)mnemonicCodeWordsWithErrorPointer:(NSError **)error;
 

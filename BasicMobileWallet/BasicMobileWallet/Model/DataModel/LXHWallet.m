@@ -17,12 +17,12 @@
 //for wallet
 #define kLXHKeychainStoreMnemonicCodeWords @"MnemonicCodeWords" //AES encrypt
 #define kLXHKeychainStoreRootSeed @"RootSeed" //AES encrypt
-#define kLXHKeychainStoreExtendedPublicKey @"ExtendedPublicKey"
+#define kLXHKeychainStoreExtendedPublicKey @"ExtendedPublicKey" //AES encrypt
 #define kLXHKeychainStoreWalletDataGenerated @"kLXHKeychainStoreWalletDataGenerated"
 #define MainAccountIndex 0
 
 @interface LXHWallet ()
-@property (nonatomic, readwrite) LXHAccount *mainAccount;
+@property (nonatomic) LXHAccount *mainAccount;
 @end
 
 @implementation LXHWallet
@@ -47,7 +47,7 @@
         NSString *changeAddressIndex = [[LXHKeychainStore sharedInstance].store stringForKey:kLXHKeychainStoreCurrentChangeAddressIndex];
         if (extendedPublicKey && receivingAddressIndex && changeAddressIndex) {
             _mainAccount = [[LXHAccount alloc] initWithAccountExtendedPublicKey:extendedPublicKey
-                                                                   accountIndex:0 //first account
+                                                                   accountIndex:MainAccountIndex
                                                    currentReceivingAddressIndex:receivingAddressIndex.integerValue
                                                       currentChangeAddressIndex:changeAddressIndex.integerValue];
         }
@@ -190,7 +190,7 @@
     BTCKeychain *masterKeychain = [mnemonic.keychain copy];
     BTCKeychain *firstAccountKeychain = [self firstAccountKeychainWithMasterKeychain:masterKeychain netType:netType];
     
-    LXHAccount *account = [[LXHAccount alloc] initWithAccountExtendedPublicKey:firstAccountKeychain.extendedPublicKey accountIndex:0 currentReceivingAddressIndex:0 currentChangeAddressIndex:0];
+    LXHAccount *account = [[LXHAccount alloc] initWithAccountExtendedPublicKey:firstAccountKeychain.extendedPublicKey accountIndex:MainAccountIndex currentReceivingAddressIndex:0 currentChangeAddressIndex:0];
     
     LXHAccountAddressSearcher *searcher = [[LXHAccountAddressSearcher alloc] initWithAccount:account];
     [searcher searchWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
