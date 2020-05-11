@@ -58,6 +58,7 @@
 		8C421311245FCDB9007F4D04 /* LXHAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C421310245FCDB9007F4D04 /* LXHAmount.m */; };
 		8C44C81F23A208E00091EC72 /* LXHEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C44C81D23A208DF0091EC72 /* LXHEmptyCell.m */; };
 		8C45ACCA2375912B0038EAEA /* LXHAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C45ACC92375912B0038EAEA /* LXHAddress.m */; };
+		8C49361A246944790099A306 /* LXHTransactionDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C493619246944790099A306 /* LXHTransactionDataRequest.m */; };
 		8C563A60238CD014009BD8EF /* LXHSelectFeeRateViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C563A5F238CD014009BD8EF /* LXHSelectFeeRateViewModel.m */; };
 		8C563A63238CD9E8009BD8EF /* LXHInputFeeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C563A62238CD9E8009BD8EF /* LXHInputFeeViewModel.m */; };
 		8C6A115C237E571E0055C9F4 /* LXHTransactionInputOutputCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C6A115B237E571E0055C9F4 /* LXHTransactionInputOutputCommon.m */; };
@@ -414,6 +415,8 @@
 		8C44C81E23A208E00091EC72 /* LXHEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHEmptyCell.h; sourceTree = "<group>"; };
 		8C45ACC82375912B0038EAEA /* LXHAddress.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHAddress.h; sourceTree = "<group>"; };
 		8C45ACC92375912B0038EAEA /* LXHAddress.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHAddress.m; sourceTree = "<group>"; };
+		8C493618246944790099A306 /* LXHTransactionDataRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHTransactionDataRequest.h; sourceTree = "<group>"; };
+		8C493619246944790099A306 /* LXHTransactionDataRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHTransactionDataRequest.m; sourceTree = "<group>"; };
 		8C563A5E238CD014009BD8EF /* LXHSelectFeeRateViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHSelectFeeRateViewModel.h; sourceTree = "<group>"; };
 		8C563A5F238CD014009BD8EF /* LXHSelectFeeRateViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHSelectFeeRateViewModel.m; sourceTree = "<group>"; };
 		8C563A61238CD9E8009BD8EF /* LXHInputFeeViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHInputFeeViewModel.h; sourceTree = "<group>"; };
@@ -1291,10 +1294,12 @@
 				8C6ACE8823574EA100511D5E /* LXHBitcoinWebApi.h */,
 				8C6ACE8B23574F8300511D5E /* LXHBitcoinWebApiSmartbit.h */,
 				8C6ACE8C23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m */,
-				8C0BAA4C23609C88001D029B /* LXHBitcoinfeesNetworkRequest.h */,
-				8C0BAA4D23609C88001D029B /* LXHBitcoinfeesNetworkRequest.m */,
 				8C2CC6CB232F679A005AA93C /* LXHAccountAddressSearcher.h */,
 				8C2CC6C9232F6799005AA93C /* LXHAccountAddressSearcher.m */,
+				8C493618246944790099A306 /* LXHTransactionDataRequest.h */,
+				8C493619246944790099A306 /* LXHTransactionDataRequest.m */,
+				8C0BAA4C23609C88001D029B /* LXHBitcoinfeesNetworkRequest.h */,
+				8C0BAA4D23609C88001D029B /* LXHBitcoinfeesNetworkRequest.m */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -2768,6 +2773,7 @@
 				8C2CC6C3232F30D4005AA93C /* LXHNetworkRequest.m in Sources */,
 				8CA3227322DEBE9900CEA828 /* BTCMnemonic.m in Sources */,
 				8CA31F9022D98BAC00CEA828 /* LXHInitWalletView.m in Sources */,
+				8C49361A246944790099A306 /* LXHTransactionDataRequest.m in Sources */,
 				8C8FCABB238F972F0054016F /* LXHFeeCalculator.m in Sources */,
 				8CA3229822DEBE9900CEA828 /* BTCPaymentMethod.m in Sources */,
 				8CA31FCF22D9A37600CEA828 /* NSMutableDictionary+Base.m in Sources */,

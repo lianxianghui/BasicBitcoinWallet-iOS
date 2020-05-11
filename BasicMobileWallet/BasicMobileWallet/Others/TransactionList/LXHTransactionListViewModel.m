@@ -8,6 +8,7 @@
 
 #import "LXHTransactionListViewModel.h"
 #import "LXHTransactionDataManager.h"
+#import "LXHTransactionDataRequest.h"
 #import "LXHTransaction.h"
 #import "BlocksKit.h"
 #import "LXHTransactionDetailViewModel.h"
@@ -105,7 +106,7 @@
 
 - (void)updateTransactionListDataWithSuccessBlock:(nullable void (^)(void))successBlock
                                      failureBlock:(nullable void (^)(NSString *errorPrompt))failureBlock {
-    [[LXHTransactionDataManager sharedInstance] requestDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+    [LXHTransactionDataRequest requestDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
         successBlock();
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         NSError *error = resultDic[@"error"];

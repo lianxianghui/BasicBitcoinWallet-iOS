@@ -239,8 +239,6 @@
     NSData *publicKey = [self publicKeyAtIndex:index];
     NSData *publicKeyHash = BTCHash160(publicKey);
     return publicKeyHash;
-//    NSData *publicKey = [self publicKeyAtIndex:(uint32_t)index];
-//    NSData *publicKeyHash = BTCHash160(publicKey);
 }
 
 - (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet {

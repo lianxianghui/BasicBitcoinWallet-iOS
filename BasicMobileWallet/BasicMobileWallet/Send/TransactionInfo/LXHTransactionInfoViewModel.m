@@ -14,7 +14,7 @@
 #import "LXHSignedTransactionTextViewModel.h"
 #import "LXHUnsignedTransactionTextViewModel.h"
 #import "LXHWallet.h"
-#import "LXHTransactionDataManager.h"
+#import "LXHTransactionDataRequest.h"
 #import "LXHSignatureUtils.h"
 
 @interface LXHTransactionInfoViewModel ()
@@ -131,7 +131,7 @@
                                  failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     
     NSLog(@"正在发送的签名交易：%@", [self.signedBTCTransaction dictionary]);
-    [LXHTransactionDataManager pushTransactionsWithHex:self.signedBTCTransaction.hex successBlock:successBlock failureBlock:failureBlock];
+    [LXHTransactionDataRequest pushTransactionsWithHex:self.signedBTCTransaction.hex successBlock:successBlock failureBlock:failureBlock];
 }
 
 - (BOOL)signatureButtonsEnabled {

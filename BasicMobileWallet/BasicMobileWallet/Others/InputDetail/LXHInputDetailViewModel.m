@@ -9,6 +9,7 @@
 #import "LXHInputDetailViewModel.h"
 #import "LXHTransactionInput.h"
 #import "LXHTransactionDataManager.h"
+#import "LXHTransactionDataRequest.h"
 #import "LXHTransactionDetailViewModel.h"
 #import "LXHOutputDetailViewModel.h"
 
@@ -82,7 +83,7 @@
 
 - (void)asynchronousTransactionDetailViewModelWithSuccessBlock:(nullable void (^)(id viewModel))successBlock
                                                   failureBlock:(nullable void (^)(NSString *errorPrompt))failureBlock {
-    [LXHTransactionDataManager requestTransactionsWithTxids:@[_input.txid] successBlock:^(NSDictionary * _Nonnull resultDic) {
+    [LXHTransactionDataRequest requestTransactionsWithTxids:@[_input.txid] successBlock:^(NSDictionary * _Nonnull resultDic) {
         LXHTransaction *transaction = resultDic[@"transaction"];
         LXHTransactionDetailViewModel *viewModel = nil;
         if (transaction)

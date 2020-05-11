@@ -9,7 +9,7 @@
 #import "LXHSignedTransactionTextViewModel.h"
 #import "NSJSONSerialization+VLBase.h"
 #import "LXHQRCodeAndTextViewModel.h"
-#import "LXHTransactionDataManager.h"
+#import "LXHTransactionDataRequest.h"
 #import "CoreBitcoin.h"
 
 @interface LXHSignedTransactionTextViewModel ()
@@ -62,6 +62,6 @@
                                  failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     
     NSLog(@"正在发送的签名交易：%@", [self.signedBTCTransaction dictionary]);
-    [LXHTransactionDataManager pushTransactionsWithHex:self.signedBTCTransaction.hex successBlock:successBlock failureBlock:failureBlock];
+    [LXHTransactionDataRequest pushTransactionsWithHex:self.signedBTCTransaction.hex successBlock:successBlock failureBlock:failureBlock];
 }
 @end

@@ -67,9 +67,9 @@ static NSString *const aesPassword = LXHAESPassword;
     [self saveTransactionListToCacheFileWithDic:dic];
 }
 
-+ (NSMutableSet *)allBase58AddressesWithTransactions:(NSArray *)transactions {
+- (NSMutableSet *)allBase58Addresses {
     NSMutableSet *ret = [NSMutableSet set];
-    for (LXHTransaction *transaction in transactions) {
+    for (LXHTransaction *transaction in [self transactionList]) {
         for (LXHTransactionOutput *output in transaction.outputs) {
             if (output.address.base58String)
                 [ret addObject:output.address.base58String];
@@ -100,80 +100,6 @@ static NSString *const aesPassword = LXHAESPassword;
                                                error:nil];
     if (encryptedData)
         [encryptedData writeToFile:LXHTransactionDataManagerCacheFilePath atomically:YES];
-}
-
-- (void)requestDataWithSuccessBlock:(nullable void (^)(NSDictionary *resultDic))successBlock
-                       failureBlock:(nullable void (^)(NSDictionary *resultDic))failureBlock {
-    NSArray *addresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
-    [LXHTransactionDataManager requestTransactionsWithNetworkType:LXHWallet.mainAccount.currentNetworkType addresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
-        NSArray *transactions = resultDic[@"transactions"];
-        [self setTransactionList:transactions];
-        //更新钱包的当前地址
-        NSSet *allUsedBase58Addresses = [LXHTransactionDataManager allBase58AddressesWithTransactions:transactions];
-        if ([LXHWallet.mainAccount updateUsedBase58AddressesIfNeeded:allUsedBase58Addresses])
-            ;//[LXHWallet saveMainAccountCurrentAddressIndexes];
-        if (successBlock)
-            successBlock(resultDic);
-    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
-        if (failureBlock)
-            failureBlock(resultDic);
-    }];
-}
-
-+ (void)requestTransactionsWithNetworkType:(LXHBitcoinNetworkType)type
-                            addresses:(NSArray *)addresses
-                            successBlock:(void (^)(NSDictionary *resultDic))successBlock
-                            failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    id<LXHBitcoinWebApi> webApi = [self webApiWithType:type];
-    [webApi requestAllTransactionsWithAddresses:addresses successBlock:successBlock failureBlock:failureBlock];
-}
-
-+ (void)requestTransactionsWithTxids:(NSArray *)txids
-                        successBlock:(void (^)(NSDictionary *resultDic))successBlock
-                        failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    id<LXHBitcoinWebApi> webApi = [LXHTransactionDataManager webApiWithType:LXHWallet.mainAccount.currentNetworkType];
-    [webApi requestTransactionsByIds:txids successBlock:successBlock failureBlock:failureBlock];
-}
-
-+ (void)pushTransactionsWithHex:(NSString *)hex
-                              successBlock:(void (^)(NSDictionary *resultDic))successBlock
-                              failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    id<LXHBitcoinWebApi> webApi = [LXHTransactionDataManager webApiWithType:LXHWallet.mainAccount.currentNetworkType];
-    [webApi pushTransactionWithHex:hex successBlock:^(NSDictionary * _Nonnull resultDic) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            //发送成功了更新一下交易列表（只请求一次，如果失败了，用户需要手动刷新交易列表
-            [[self sharedInstance] requestDataWithSuccessBlock:nil failureBlock:nil];
-        });
-        successBlock(resultDic);
-    } failureBlock:failureBlock];
-}
-
-//bitpay insight code
-//+ (void)requestTransactionsWithNetworkType:(LXHBitcoinNetworkType)type
-//                                 addresses:(NSArray *)addresses
-//                              successBlock:(void (^)(NSDictionary *resultDic))successBlock
-//                              failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-//    NSString *baseUrl;
-//    if (type == LXHBitcoinNetworkTypeMainnet)
-//        baseUrl = @"https://insight.bitpay.com/";
-//    else
-//        baseUrl = @"https://test-insight.bitpay.com/";
-//    NSString *url = [NSString stringWithFormat:@"%@%@", baseUrl, @"api/addrs/txs"];
-//    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-//    parameters[@"addrs"] = [addresses componentsJoinedByString:@","];
-//    [LXHNetworkRequest POSTWithUrlString:url parameters:parameters
-//                         successCallback:^(NSDictionary * _Nonnull resultDic) {
-//                             successBlock(resultDic);
-//                         } failureCallback:^(NSDictionary * _Nonnull resultDic) {
-//                             NSError *error = resultDic[@"error"];
-//                             failureBlock(@{@"error":error.localizedDescription});
-//                         }];
-//
-//}
-
-+ (id<LXHBitcoinWebApi>)webApiWithType:(LXHBitcoinNetworkType)type {
-    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiSmartbit alloc] initWithType:type];
-    return ret;
 }
 
 //从全部交易列表里过滤出 输入地址或输出地址为address的交易
