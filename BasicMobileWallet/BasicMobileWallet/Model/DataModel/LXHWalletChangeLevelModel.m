@@ -253,7 +253,7 @@
 }
 
 - (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash {
-    const uint32_t maxScanCount = 200;
+    const uint32_t maxScanCount = 0x80000000;//will scan between 0 and 2^31-1 (normal deriviation indexes)
     return [self scanLocalAddressWithPublicKeyHash:publicKeyHash maxScanCount:maxScanCount];
 }
 

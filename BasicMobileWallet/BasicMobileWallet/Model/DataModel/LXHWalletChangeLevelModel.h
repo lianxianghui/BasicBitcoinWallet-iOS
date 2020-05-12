@@ -41,7 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  从本地查找该公钥哈希，找到了就返回一个LXHAddress对象。
- 目前最大扫描数量都为200
  */
 - (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash;
 - (LXHAddress *)localAddressWithPublicKeyHash:(NSData *)publicKeyHash;
