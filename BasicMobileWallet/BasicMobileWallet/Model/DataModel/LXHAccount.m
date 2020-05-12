@@ -10,6 +10,7 @@
 #import "CoreBitcoin.h"
 #import "NSMutableArray+Base.h"
 #import "LXHWalletChangeLevelModel.h"
+#import "BlocksKit.h"
 
 @interface LXHAccount ()
 @property (nonatomic) NSUInteger accountIndex;
@@ -107,48 +108,43 @@
     return [[self changeLeveWithType:LXHLocalAddressTypeReceiving] currentLocalAddress];
 }
 
-- (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet {
-    __block BOOL ret = NO;
-    NSArray *types = @[@(LXHLocalAddressTypeReceiving), @(LXHLocalAddressTypeChange)];
-    [types enumerateObjectsUsingBlock:^(NSNumber  * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSUInteger type = obj.unsignedIntegerValue;
-        ret = ret || [[self changeLeveWithType:type] updateUsedBase58AddressesIfNeeded:usedBase58AddressesSet];
-    }];
-    return ret;
-}
-
 - (NSString *)extendedPublicKey {
     return _accountKeychain.extendedPublicKey;
 }
 
-- (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash {
-    NSArray *types = @[@(LXHLocalAddressTypeReceiving), @(LXHLocalAddressTypeChange)];
-    __block LXHAddress *ret = nil;
-    [types enumerateObjectsUsingBlock:^(NSNumber  * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSUInteger type = obj.unsignedIntegerValue;
-        ret = [[self changeLeveWithType:type] scanLocalAddressWithPublicKeyHash:publicKeyHash];
-        if (ret)
-            *stop = YES;
-    }];
+- (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet {
+    BOOL ret = NO;
+    for (NSNumber *type in @[@(LXHLocalAddressTypeReceiving), @(LXHLocalAddressTypeChange)]) {
+        ret = ret || [[self changeLeveWithType:type.unsignedIntegerValue] updateUsedBase58AddressesIfNeeded:usedBase58AddressesSet];
+    }
     return ret;
+}
+
+- (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash {
+    LXHAddress *ret = nil;
+    for (NSNumber *type in @[@(LXHLocalAddressTypeReceiving), @(LXHLocalAddressTypeChange)]) {
+        ret = [[self changeLeveWithType:type.unsignedIntegerValue] scanLocalAddressWithPublicKeyHash:publicKeyHash];
+        if (ret)
+            return ret;
+    };
+    return nil;
 }
 
 - (LXHAddress *)localAddressWithPublicKeyHash:(NSData *)publicKeyHash {
-    NSArray *types = @[@(LXHLocalAddressTypeReceiving), @(LXHLocalAddressTypeChange)];
-    __block LXHAddress *ret = nil;
-    [types enumerateObjectsUsingBlock:^(NSNumber  * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSUInteger type = obj.unsignedIntegerValue;
-        ret = [[self changeLeveWithType:type] localAddressWithPublicKeyHash:publicKeyHash];
+    LXHAddress *ret = nil;
+    for (NSNumber *type in @[@(LXHLocalAddressTypeReceiving), @(LXHLocalAddressTypeChange)]) {
+        ret = [[self changeLeveWithType:type.unsignedIntegerValue] localAddressWithPublicKeyHash:publicKeyHash];
         if (ret)
-            *stop = YES;
-    }];
-    return ret;
+            return ret;
+    }
+    return nil;
 }
 
 - (void)clearSavedPublicKeys {
-    for (NSInteger type = LXHLocalAddressTypeReceiving; type <= LXHLocalAddressTypeChange; type++) {
-        [[self changeLeveWithType:type] clearSavedPublicKeys];
-    }
+    [@[@(LXHLocalAddressTypeReceiving), @(LXHLocalAddressTypeChange)] bk_each:^(NSNumber *type) {
+        [[self changeLeveWithType:type.unsignedIntegerValue] clearSavedPublicKeys];
+    }];
+
 }
 
 @end

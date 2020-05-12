@@ -1311,8 +1311,6 @@
 				8C2CC6CD232F679A005AA93C /* LXHWallet.m */,
 				8C2CC6D0232F679A005AA93C /* LXHAccount.h */,
 				8C2CC6CF232F679A005AA93C /* LXHAccount.m */,
-				8C2CC6CE232F679A005AA93C /* LXHTransactionDataManager.h */,
-				8C2CC6CC232F679A005AA93C /* LXHTransactionDataManager.m */,
 				8C2CC6EA2334C0D8005AA93C /* LXHWalletChangeLevelModel.h */,
 				8C2CC6EB2334C0D8005AA93C /* LXHWalletChangeLevelModel.m */,
 				8C45ACC82375912B0038EAEA /* LXHAddress.h */,
@@ -1327,6 +1325,8 @@
 				8C03E2DE2359710100936B31 /* LXHTransactionOutput.m */,
 				8C6A115A237E571E0055C9F4 /* LXHTransactionInputOutputCommon.h */,
 				8C6A115B237E571E0055C9F4 /* LXHTransactionInputOutputCommon.m */,
+				8C2CC6CE232F679A005AA93C /* LXHTransactionDataManager.h */,
+				8C2CC6CC232F679A005AA93C /* LXHTransactionDataManager.m */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
