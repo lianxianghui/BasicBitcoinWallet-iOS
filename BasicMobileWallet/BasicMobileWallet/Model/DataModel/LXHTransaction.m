@@ -57,6 +57,15 @@
     LXHEncodeObjectStament(outputs);
 }
 
+//- (BOOL)isEqual:(id)object {
+//    if (object == self)
+//        return YES;
+//    if (![object isMemberOfClass:[LXHTransaction class]])
+//        return NO;
+//    LXHTransaction *transaction = (LXHTransaction *)object;
+//    return [self.txid isEqualToString:transaction.txid];
+//}
+
 - (LXHTransactionSendOrReceiveType)sendOrReceiveType {
     NSDecimalNumber *sentValueSumFromLocalAddress = [self sentValueSumFromLocalAddress];
     NSDecimalNumber *receivedValueSumFromLocalAddress = [self receivedValueSumFromLocalAddress];

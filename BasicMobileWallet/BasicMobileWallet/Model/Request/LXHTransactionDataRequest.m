@@ -10,6 +10,7 @@
 #import "LXHNetworkRequest.h"
 #import "LXHTransactionDataManager.h"
 #import "LXHWallet.h"
+#import "BlocksKit.h"
 
 @implementation LXHTransactionDataRequest
 
@@ -45,16 +46,31 @@
     [webApi requestTransactionsByIds:txids successBlock:successBlock failureBlock:failureBlock];
 }
 
+//successBlock
+//code 0 代表 发送交易和更新交易列表都成功
+//code 1 代表 发送交易成功和更新交易列表失败
 + (void)pushTransactionsWithHex:(NSString *)hex
                    successBlock:(void (^)(NSDictionary *resultDic))successBlock
                    failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     id<LXHBitcoinWebApi> webApi = [self webApiWithType:LXHWallet.mainAccount.currentNetworkType];
     [webApi pushTransactionWithHex:hex successBlock:^(NSDictionary * _Nonnull resultDic) {
+        //发送成功了更新一下交易（只请求一次，如果失败了，用户需要手动刷新余额或交易列表）
+        //立刻请求会没有新交易，需要延迟一会儿再请求
+        NSString *txid = resultDic[@"txid"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            //发送成功了更新一下交易列表（只请求一次，如果失败了，用户需要手动刷新交易列表
-            [self requestDataWithSuccessBlock:nil failureBlock:nil];
+            [self requestDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+                NSArray *transactions = resultDic[@"transactions"];
+                NSArray *txids = [transactions bk_map:^id(LXHTransaction *obj) {
+                    return obj.txid;
+                }];
+                if ([txids containsObject:txid])//包含刚发送的交易，说明更新成功
+                    successBlock(@{@"code":@(0)});
+                else //还是旧数据
+                    successBlock(@{@"code":@(1)});
+            } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+                successBlock(@{@"code":@(1)});
+            }];
         });
-        successBlock(resultDic);
     } failureBlock:failureBlock];
 }
 

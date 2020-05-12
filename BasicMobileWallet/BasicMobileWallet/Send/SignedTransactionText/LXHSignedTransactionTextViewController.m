@@ -78,7 +78,8 @@
     __weak typeof(self) weakSelf = self;
     [_viewModel pushSignedTransactionWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
         [self.contentView.indicatorView stopAnimating];
-        NSString *prompt = NSLocalizedString(@"发送成功.", nil);
+        NSInteger code = [resultDic[@"code"] integerValue];
+        NSString *prompt = (code == 0) ? NSLocalizedString(@"发送成功.", nil) : NSLocalizedString(@"发送成功，请稍后刷新余额或交易列表以更新交易数据", nil);
         [weakSelf.view makeToast:prompt];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.navigationController popToRootViewControllerAnimated:YES];

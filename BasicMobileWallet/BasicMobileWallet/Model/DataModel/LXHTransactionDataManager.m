@@ -60,11 +60,31 @@ static NSString *const aesPassword = LXHAESPassword;
 - (void)setTransactionList:(NSArray *)transactionList {
     if (!transactionList || transactionList.count == 0)
         return;
+//    NSLog(@"[self transactionList].count %ld", [[self transactionList] count]);
+//    NSLog(@"transactionList.count %ld", [transactionList count]);
+//    if ([[self transactionList] isEqualToArray:transactionList])
+//        return;
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     dic[@"date"] = [NSDate date];
     dic[@"transactions"] = transactionList;
     _transactionData = dic;
     [self saveTransactionListToCacheFileWithDic:dic];
+}
+
+- (void)addTransaction:(LXHTransaction *)transaction {
+    if (!transaction)
+        return;
+    NSArray *txids = [[self transactionList] bk_map:^id(LXHTransaction *obj) {
+        return obj.txid;
+    }];
+    if ([txids containsObject:transaction.txid])
+        return;
+    else {
+        NSMutableArray *newTransactionList = [[self transactionList] mutableCopy];
+        [newTransactionList addObject:transaction];
+        [self setTransactionList:newTransactionList];
+    }
+        
 }
 
 - (NSMutableSet *)allBase58Addresses {
