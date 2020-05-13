@@ -365,7 +365,7 @@
     NSString *cellType = [self tableView:tableView cellTypeAtIndexPath:indexPath];
     if (tableView == self.contentView.listView) {
         if ([cellType isEqualToString:@"LXHTitleCell1"])
-            return 26;
+            return 38;
         if ([cellType isEqualToString:@"LXHSelectionCell"])
             return 50;
         if ([cellType isEqualToString:@"LXHInputOutputCell"])

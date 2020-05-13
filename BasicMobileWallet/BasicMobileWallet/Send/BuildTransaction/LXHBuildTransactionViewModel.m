@@ -147,7 +147,7 @@
 
 - (NSDictionary *)titleCell2DataForGroup2 {
     NSString *title = [self titleForFeeCell];
-    NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
+    NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell1"};
     return dic;
 }
 

@@ -23,11 +23,12 @@
 
 - (NSArray *)cellDataForListview {
     NSMutableArray *cellDataListForListView = [NSMutableArray array];
-    [cellDataListForListView addObject:[self titleCell1DataForGroup1]];
-    [cellDataListForListView addObjectsFromArray:[self outputCellDataArray]];
-
+    
     [cellDataListForListView addObject:[self titleCell2DataForGroup2]];
     [cellDataListForListView addObject:[self feeRateCellData]];
+    
+    [cellDataListForListView addObject:[self titleCell1DataForGroup1]];
+    [cellDataListForListView addObjectsFromArray:[self outputCellDataArray]];
 
     [cellDataListForListView addObject:[self titleCell2DataForGroup3]];
     [cellDataListForListView addObjectsFromArray:[self inputCellDataArray]];
@@ -45,7 +46,7 @@
 - (NSDictionary *)titleCell2DataForGroup3 {
     NSDecimalNumber *sum = [LXHTransactionInputOutputCommon valueSumOfInputsOrOutputs:[self inputs]];
     NSString *title = [NSString stringWithFormat:NSLocalizedString(@"输入 %@BTC", nil), sum];
-    NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell2"};
+    NSDictionary *dic = @{@"title":title, @"isSelectable":@"0", @"cellType":@"LXHTitleCell1"};
     return dic;
 }
 
