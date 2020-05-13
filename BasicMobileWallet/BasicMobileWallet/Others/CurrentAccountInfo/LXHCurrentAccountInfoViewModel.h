@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LXHCurrentAccountInfoViewModel : NSObject
 
 - (NSString *)netTypeText;
-- (NSString *)isWatchOnlyText;
+- (NSString *)walletTypeText;
 - (LXHQRCodeAndTextViewModel *)qrCodeAndTextViewModel;
 - (void)searchAndUpdateCurrentAddressIndexWithSuccessBlock:(void (^)(NSString *prompt))successBlock
                                               failureBlock:(void (^)(NSString *errorPrompt))failureBlock;

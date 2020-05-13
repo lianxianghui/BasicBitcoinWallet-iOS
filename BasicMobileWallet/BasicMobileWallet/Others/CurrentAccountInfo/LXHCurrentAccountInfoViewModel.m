@@ -19,8 +19,8 @@
     return text;
 }
 
-- (NSString *)isWatchOnlyText {
-    return [LXHWallet isWatchOnly] ? @"是" : @"否";
+- (NSString *)walletTypeText {
+    return [LXHWallet isFullFunctional] ? @"全功能" : @"只读";
 }
 
 - (LXHQRCodeAndTextViewModel *)qrCodeAndTextViewModel {

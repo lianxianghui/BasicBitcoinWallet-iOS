@@ -91,7 +91,7 @@ alpha:(rgbaValue & 0x000000FF)/255.0]
         if (tableView == self.contentView.listView) {
             NSDictionary *dic = @{@"title":@"网络类型", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":[_viewModel netTypeText]};
             [dataForCells addObject:dic];
-            dic = @{@"title":@"Watch only", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":[_viewModel isWatchOnlyText]};
+            dic = @{@"title":@"钱包类型", @"isSelectable":@"1", @"cellType":@"LXHTwoColumnTextCell", @"text":[_viewModel walletTypeText]};
             [dataForCells addObject:dic];
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
             [dataForCells addObject:dic];
