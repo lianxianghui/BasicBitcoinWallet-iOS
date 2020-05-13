@@ -51,9 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  从本地接收和找零地址空间（不管是否用过）里查找该公钥哈希，找到了就返回一个LXHAddress对象。
- 目前接收和找零的最大扫描数量都为200
  */
-- (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash;
+- (LXHAddress *)scanLocalAddressWithPublicKeyHash:(NSData *)publicKeyHash;//目前未使用
 
 - (LXHAddress *)localAddressWithPublicKeyHash:(NSData *)publicKeyHash;
 

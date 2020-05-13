@@ -42,7 +42,7 @@
         NSData *publicKeyHash = [lockingScript.scriptChunks[2] pushdata];//第三项是公钥哈希
         if (!publicKeyHash)
             return nil;
-        LXHAddress *address = [LXHWallet.mainAccount scanLocalAddressWithPublicKeyHash:publicKeyHash];
+        LXHAddress *address = [LXHWallet.mainAccount localAddressWithPublicKeyHash:publicKeyHash];//只从已经生成的范围内查找
         if (!address)
             return nil;
         NSData *signature = [LXHWallet signatureWithNetType:LXHWallet.mainAccount.currentNetworkType path:address.localAddressPath hash:hash];
