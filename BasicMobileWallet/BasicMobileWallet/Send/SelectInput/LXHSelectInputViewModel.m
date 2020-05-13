@@ -51,10 +51,10 @@
             LXHTransaction *transaction = [[LXHTransactionDataManager sharedInstance] transactionByTxid:utxo.txid];
             
             NSString *transactionTime = nil;
-            if (!transaction.time) { //还没有打进包
+            if (!transaction.firstSeen) { //应该不会出现这种情况
                 transactionTime = @" ";
             } else {
-                NSInteger time = [transaction.time integerValue];
+                NSInteger time = [transaction.firstSeen integerValue];
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
                 transactionTime = [formatter stringFromDate:date];
             }
