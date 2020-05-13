@@ -346,6 +346,7 @@
 		8C26EDE2245D55320086BD94 /* NSDecimalNumber+LXHBTCSatConverter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+LXHBTCSatConverter.m"; sourceTree = "<group>"; };
 		8C26EDE4245D8EEE0086BD94 /* LXHFeeRate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHFeeRate.h; sourceTree = "<group>"; };
 		8C26EDE5245D8EEE0086BD94 /* LXHFeeRate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHFeeRate.m; sourceTree = "<group>"; };
+		8C2978AC246B8278002FBCA3 /* LXHPerf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHPerf.h; sourceTree = "<group>"; };
 		8C2B281123863CF4007C74FA /* LXHSelectInputViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHSelectInputViewModel.h; sourceTree = "<group>"; };
 		8C2B281223863CF4007C74FA /* LXHSelectInputViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHSelectInputViewModel.m; sourceTree = "<group>"; };
 		8C2CC66C232F20E4005AA93C /* LXHTransactionDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHTransactionDetailView.m; sourceTree = "<group>"; };
@@ -1583,6 +1584,7 @@
 				8CA3212722DEB85900CEA828 /* LXHPreference.m */,
 				8C2CC6C1232F30D4005AA93C /* LXHNetworkRequest.h */,
 				8C2CC6C2232F30D4005AA93C /* LXHNetworkRequest.m */,
+				8C2978AC246B8278002FBCA3 /* LXHPerf.h */,
 			);
 			path = Base;
 			sourceTree = "<group>";

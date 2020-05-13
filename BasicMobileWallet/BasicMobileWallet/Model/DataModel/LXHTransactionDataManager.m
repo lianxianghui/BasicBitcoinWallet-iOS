@@ -64,27 +64,37 @@ static NSString *const aesPassword = LXHAESPassword;
 //    NSLog(@"transactionList.count %ld", [transactionList count]);
 //    if ([[self transactionList] isEqualToArray:transactionList])
 //        return;
+    NSArray *sortedArray = [transactionList sortedArrayUsingComparator:^NSComparisonResult(LXHTransaction * _Nonnull obj1, LXHTransaction * _Nonnull obj2) {
+        return [@(obj2.firstSeen.longLongValue) compare:@(obj1.firstSeen.longLongValue)];
+    }];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     dic[@"date"] = [NSDate date];
-    dic[@"transactions"] = transactionList;
+    dic[@"transactions"] = sortedArray;
     _transactionData = dic;
-    [self saveTransactionListToCacheFileWithDic:dic];
+    [self saveTransactionListToCacheFile];
 }
 
-- (void)addTransaction:(LXHTransaction *)transaction {
++ (void)addTransaction:(LXHTransaction *)transaction toArray:(NSMutableArray *)array {
     if (!transaction)
         return;
-    NSArray *txids = [[self transactionList] bk_map:^id(LXHTransaction *obj) {
+    NSArray *txids = [array bk_map:^id(LXHTransaction *obj) {
         return obj.txid;
     }];
     if ([txids containsObject:transaction.txid])
         return;
     else {
-        NSMutableArray *newTransactionList = [[self transactionList] mutableCopy];
-        [newTransactionList addObject:transaction];
-        [self setTransactionList:newTransactionList];
+        [array addObject:transaction];
     }
-        
+}
+
++ (void)updateOldTransactionToNewTransaction:(LXHTransaction *)newTransaction inArray:(NSMutableArray *)array {
+    LXHTransaction *oldTransaction = [array bk_match:^BOOL(LXHTransaction *transaction) {
+        return [transaction.txid isEqualToString:newTransaction.txid];
+    }];
+    if (oldTransaction) {
+        [array removeObject:oldTransaction];
+        [array addObject:newTransaction];
+    }
 }
 
 - (NSMutableSet *)allBase58Addresses {
@@ -112,8 +122,8 @@ static NSString *const aesPassword = LXHAESPassword;
     return ret;
 }
 
-- (void)saveTransactionListToCacheFileWithDic:(NSDictionary *)dic {
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+- (void)saveTransactionListToCacheFile {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_transactionData];
     NSData *encryptedData = [RNEncryptor encryptData:data
                                         withSettings:kRNCryptorAES256Settings
                                             password:aesPassword

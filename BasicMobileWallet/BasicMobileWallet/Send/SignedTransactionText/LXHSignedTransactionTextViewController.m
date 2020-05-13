@@ -11,6 +11,7 @@
 #import "LXHSignedTransactionTextViewModel.h"
 #import "Toast.h"
 #import "UITextView+LXHText.h"
+#import "UIViewController+LXHAlert.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -79,11 +80,17 @@
     [_viewModel pushSignedTransactionWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
         [self.contentView.indicatorView stopAnimating];
         NSInteger code = [resultDic[@"code"] integerValue];
-        NSString *prompt = (code == 0) ? NSLocalizedString(@"发送成功.", nil) : NSLocalizedString(@"发送成功，请稍后刷新余额或交易列表以更新交易数据", nil);
-        [weakSelf.view makeToast:prompt];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        });
+        if (code == 0) {
+            NSString *prompt = NSLocalizedString(@"发送成功.", nil);
+            [weakSelf.view makeToast:prompt];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            });
+        } else if (code == 1) { //发送交易成功，但更新交易数据失败
+            [self showOkAlertViewWithMessage:NSLocalizedString(@"发送成功，请稍后刷新余额或交易列表以更新到最新数据", nil) handler:^(UIAlertAction * _Nonnull action) {
+                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            }];
+        }
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         [self.contentView.indicatorView stopAnimating];
         NSError *error = resultDic[@"error"];

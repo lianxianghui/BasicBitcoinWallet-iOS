@@ -30,7 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableArray<LXHTransactionOutput *> *)utxosOfAllTransactions;
 - (NSDecimalNumber *)balance;
 - (NSMutableSet *)allBase58Addresses;
-- (void)addTransaction:(LXHTransaction *)transaction;
+
++ (void)addTransaction:(LXHTransaction *)transaction toArray:(NSMutableArray *)array;
++ (void)updateOldTransactionToNewTransaction:(LXHTransaction *)newTransaction inArray:(NSMutableArray *)array;
 @end
 
 NS_ASSUME_NONNULL_END

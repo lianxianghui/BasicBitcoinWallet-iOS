@@ -11,6 +11,7 @@
 #import "LXHTransactionDataManager.h"
 #import "LXHWallet.h"
 #import "BlocksKit.h"
+#import "CoreBitcoin.h"
 
 @implementation LXHTransactionDataRequest
 
@@ -53,23 +54,64 @@
                    successBlock:(void (^)(NSDictionary *resultDic))successBlock
                    failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     id<LXHBitcoinWebApi> webApi = [self webApiWithType:LXHWallet.mainAccount.currentNetworkType];
+    CFAbsoluteTime start = CFAbsoluteTimeGetCurrent();
     [webApi pushTransactionWithHex:hex successBlock:^(NSDictionary * _Nonnull resultDic) {
         //发送成功了更新一下交易（只请求一次，如果失败了，用户需要手动刷新余额或交易列表）
         //立刻请求会没有新交易，需要延迟一会儿再请求
         NSString *txid = resultDic[@"txid"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self requestDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
+            CFTimeInterval took = CFAbsoluteTimeGetCurrent() - start;
                 NSArray *transactions = resultDic[@"transactions"];
                 NSArray *txids = [transactions bk_map:^id(LXHTransaction *obj) {
                     return obj.txid;
                 }];
-                if ([txids containsObject:txid])//包含刚发送的交易，说明更新成功
+                if ([txids containsObject:txid]) {//包含刚发送的交易，说明更新成功
+                    NSLog(@"%@ %0.3f", @"transaction list updated", took);
                     successBlock(@{@"code":@(0)});
-                else //还是旧数据
+                } else {//还是旧数据
+                    NSLog(@"%@ %0.3f", @"transaction list not updated", took);
                     successBlock(@{@"code":@(1)});
+                }
             } failureBlock:^(NSDictionary * _Nonnull resultDic) {
                 successBlock(@{@"code":@(1)});
             }];
+        
+/*
+            BTCTransaction *transaction = [[BTCTransaction alloc] initWithHex:hex];
+            NSArray *inputsTransactionIds = [transaction.inputs bk_map:^id(BTCTransactionInput *input) {
+                return input.previousTransactionID;
+            }];
+            NSSet *inputsTransactionIdSet = [NSSet setWithArray:inputsTransactionIds];
+            inputsTransactionIds = inputsTransactionIdSet.allObjects;
+            if (!txid || inputsTransactionIds.count == 0)
+                return failureBlock(nil);
+
+            NSMutableArray *allTxids = [NSMutableArray arrayWithArray:inputsTransactionIds];
+            [allTxids addObject:txid];
+            [webApi requestTransactionsByIds:allTxids successBlock:^(NSDictionary * _Nonnull resultDic) {
+                NSArray<LXHTransaction *> *array = resultDic[@"transactions"];
+                if (array.count != allTxids.count) {
+                    CFTimeInterval took = CFAbsoluteTimeGetCurrent() - start;
+                    NSLog(@"%@ %0.3f", @"only transaction, related transactions not updated", took);
+                    successBlock(@{@"code":@(1)});
+                } else {
+                    NSMutableArray *transactionList = [[LXHTransactionDataManager sharedInstance] transactionList].mutableCopy;
+                    [array enumerateObjectsUsingBlock:^(LXHTransaction * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if (![obj.txid isEqualToString:txid]) {
+                            [LXHTransactionDataManager updateOldTransactionToNewTransaction:obj inArray:transactionList];
+                        } else {
+                            [LXHTransactionDataManager addTransaction:obj toArray:transactionList];
+                        }
+                    }];
+                    [[LXHTransactionDataManager sharedInstance] setTransactionList:transactionList];
+                    CFTimeInterval took = CFAbsoluteTimeGetCurrent() - start;
+                    NSLog(@"%@ %0.3f", @"only transaction, related transactions updated", took);
+                    successBlock(@{@"code":@(0)});
+                }
+            } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+                successBlock(@{@"code":@(1)});
+            }];*/
         });
     } failureBlock:failureBlock];
 }
