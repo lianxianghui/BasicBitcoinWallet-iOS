@@ -30,8 +30,8 @@ static NSString *const aesPassword = LXHAESPassword;
 
 + (instancetype)sharedInstance {
     static LXHTransactionDataManager *instance = nil;
-    static dispatch_once_t tokon;
-    dispatch_once(&tokon, ^{
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         instance = [[LXHTransactionDataManager alloc] init];
     });
     return instance;

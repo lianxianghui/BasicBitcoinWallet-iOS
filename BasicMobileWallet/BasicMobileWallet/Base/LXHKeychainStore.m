@@ -26,8 +26,8 @@ static NSString *const aesPassword = LXHAESPassword;
 
 + (instancetype)sharedInstance {
     static LXHKeychainStore *instance = nil;
-    static dispatch_once_t tokon;
-    dispatch_once(&tokon, ^{
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         instance = [[LXHKeychainStore alloc] init];
     });
     return instance;

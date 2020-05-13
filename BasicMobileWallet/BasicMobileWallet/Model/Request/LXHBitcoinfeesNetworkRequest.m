@@ -19,8 +19,8 @@ static NSString *const cacheFileName = @"LXHBitcoinfeesNetworkRequestCache";
 
 + (instancetype)sharedInstance {
     static LXHBitcoinfeesNetworkRequest *instance = nil;
-    static dispatch_once_t tokon;
-    dispatch_once(&tokon, ^{
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
         instance = [[LXHBitcoinfeesNetworkRequest alloc] init];
     });
     return instance;
