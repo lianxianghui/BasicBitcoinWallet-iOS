@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class LXHTransactionInputOutputCommon;
+@class LXHTransactionOutput;
 @interface LXHFeeCalculator : NSObject
 
 @property (nonatomic) NSArray *inputs;
@@ -22,8 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (LXHBTCAmount)estimatedFeeInSat;
 - (LXHBTCAmount)estimatedFeeInSatWithOutputs:(NSArray *)outputs;
 //判断某个输入或输出，是不是消耗的Fee比它的值还大
-- (BOOL)feeGreaterThanValueWithInput:(LXHTransactionInputOutputCommon *)input;
-- (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output;
+- (BOOL)feeGreaterThanValueWithInput:(LXHTransactionOutput *)utxoAsInput;
+//- (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionOutput *)output;
 @end
 
 NS_ASSUME_NONNULL_END

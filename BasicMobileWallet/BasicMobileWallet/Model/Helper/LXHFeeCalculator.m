@@ -7,7 +7,7 @@
 //
 
 #import "LXHFeeCalculator.h"
-#import "LXHTransactionInputOutputCommon.h"
+#import "LXHTransactionOutput.h"
 #import "NSDecimalNumber+LXHBTCSatConverter.h"
 #import "LXHAmount.h"
 
@@ -23,17 +23,17 @@
     return [LXHFeeCalculator estimatedFeeInSatWithFeeRate:_feeRate.value inputCount:_inputs.count outputCount:outputs.count];
 }
 
-- (BOOL)feeGreaterThanValueWithInput:(LXHTransactionInputOutputCommon *)input {
+- (BOOL)feeGreaterThanValueWithInput:(LXHTransactionOutput *)utxoAsInput {
     //目前不支持隔离见证输入输出，所以目前与输入内容无关
     LXHBTCAmount feePerInputInSat = 148 * _feeRate.value;
-    return feePerInputInSat > input.valueSat;
+    return feePerInputInSat > utxoAsInput.valueSat;
 }
 
-- (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionInputOutputCommon *)output {
-    //目前不支持隔离见证输入输出，所以目前与输出内容无关
-    LXHBTCAmount feeOfOutput = 34 * _feeRate.value;//目前不支持隔离见证输入输出
-    return feeOfOutput > output.valueSat;
-}
+//- (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionOutput *)output {
+//    //目前不支持隔离见证输入输出，所以目前与输出内容无关
+//    LXHBTCAmount feeOfOutput = 34 * _feeRate.value;//目前不支持隔离见证输入输出
+//    return feeOfOutput > output.valueSat;
+//}
 
 //参考 https://bitcoin.stackexchange.com/questions/1195/how-to-calculate-transaction-size-before-sending-legacy-non-segwit-p2pkh-p2sh
 + (LXHBTCAmount)estimatedFeeInSatWithFeeRate:(NSUInteger)feeRateInSat inputCount:(NSUInteger)inputCount outputCount:(NSUInteger)outputCount  {

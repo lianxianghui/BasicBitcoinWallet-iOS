@@ -63,8 +63,8 @@
 - (NSArray *)allUsableUtxos {
     LXHWeakSelf
     NSArray *allUtxos = [[LXHTransactionDataManager sharedInstance] utxosOfAllTransactions];
-    NSArray<LXHTransactionOutput *> *allUsableUtxos = [allUtxos bk_reject:^BOOL(LXHTransactionOutput *obj) {
-        return [weakSelf.feeCalculator feeGreaterThanValueWithInput:obj];//把消耗的Fee比它的值还大的滤掉
+    NSArray<LXHTransactionOutput *> *allUsableUtxos = [allUtxos bk_reject:^BOOL(LXHTransactionOutput *obj) {//reject 把消耗的Fee比它的值还大的滤掉
+        return [weakSelf.feeCalculator feeGreaterThanValueWithInput:obj];
     }];
     return allUsableUtxos;
 }
