@@ -10,6 +10,7 @@
 #import "LXHTransactionDataManager.h"
 #import "BlocksKit.h"
 #import "LXHOutputDetailViewModel.h"
+#import "LXHFeeCalculator.h"
 
 @interface LXHSelectInputViewModel ()
 @property (nonatomic, readwrite) NSArray *selectedUtxos;
@@ -60,12 +61,16 @@
             }
             NSMutableDictionary *dic = @{@"circleImage":@"check_circle",
                                          @"cellType":@"LXHSelectInputCell",
-                                         @"time": NSLocalizedString(@"交易时间:", nil),
+                                         @"time": NSLocalizedString(@"交易发起时间:", nil),
                                          @"btcValue":@"0.00000004 BTC",
                                          @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ",
                                          @"checkedImage":@"checked_circle", @"isSelectable":@"1",
                                          @"timeValue":@"2019-09-01 12:36"}.mutableCopy;
+            BOOL btcValueHidden = [self showBTCValueForWarningWithUtxo:utxo];
             dic[@"btcValue"] = valueText;
+            dic[@"btcValueHidden"] = @(btcValueHidden);
+            dic[@"btcValueForWarning"] = valueText;
+            dic[@"btcValueForWarningHidden"] = @(!btcValueHidden);
             dic[@"addressText"] = utxo.address.base58String ?: @"";
             dic[@"timeValue"] = transactionTime;
             dic[@"model"] = utxo;
@@ -77,6 +82,9 @@
     return _cellDataArrayForListview;
 }
 
+- (void)resetCellDataArrayForListview {
+    _cellDataArrayForListview = nil;
+}
 
 - (NSString *)infoText {
     return nil;
@@ -113,6 +121,12 @@
         return nil;
     id viewModel = [[LXHOutputDetailViewModel alloc] initWithOutput:output];
     return viewModel;
+}
+
+- (BOOL)showBTCValueForWarningWithUtxo:(LXHTransactionOutput *)utxo {
+    LXHBTCAmount feeRateValue = _feeCalculator.feeRate.value;
+    feeRateValue = MAX(feeRateValue, 1);//最小feeRate为1
+    return [LXHFeeCalculator feeGreaterThanValueWithInput:utxo feeRateValue:feeRateValue];
 }
 
 @end

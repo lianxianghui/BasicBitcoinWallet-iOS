@@ -202,6 +202,16 @@
         NSMutableAttributedString *btcValueAttributedString = [cellView.btcValue.attributedText mutableCopy];
         [btcValueAttributedString.mutableString setString:btcValue];
         cellView.btcValue.attributedText = btcValueAttributedString;
+        cellView.btcValue.hidden = [[dataForRow valueForKey:@"btcValueHidden"] boolValue];
+        
+        NSString *btcValueForWarning = [dataForRow valueForKey:@"btcValueForWarning"];
+        if (!btcValueForWarning)
+            btcValueForWarning = @"";
+        NSMutableAttributedString *btcValueForWarningAttributedString = [cellView.btcValueForWarning.attributedText mutableCopy];
+        [btcValueForWarningAttributedString.mutableString setString:btcValueForWarning];
+        cellView.btcValueForWarning.attributedText = btcValueForWarningAttributedString;
+        cellView.btcValueForWarning.hidden = [[dataForRow valueForKey:@"btcValueForWarningHidden"] boolValue];
+        
         NSString *addressText = [dataForRow valueForKey:@"addressText"];
         if (!addressText)
             addressText = @"";

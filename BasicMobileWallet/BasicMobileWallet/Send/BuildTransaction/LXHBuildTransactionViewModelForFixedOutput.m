@@ -65,19 +65,13 @@
     return NSLocalizedString(@"构建固定输出交易", nil);
 }
 
-- (LXHFeeCalculator *)feeCalculator {
-    LXHFeeCalculator *feeCalculator = [[LXHFeeCalculator alloc] init];
-    feeCalculator.outputs = [self outputs];
-    feeCalculator.feeRate = [self feeRate];
-    return feeCalculator;
-}
-
 - (LXHSelectInputViewModel *)selectInputViewModel {
     if (!_selectInputViewModel)
         _selectInputViewModel = [[LXHSelectInputViewModelForFixedOutput alloc] init];
     LXHSelectInputViewModelForFixedOutput *ret = (LXHSelectInputViewModelForFixedOutput *)_selectInputViewModel;
     ret.fixedOutputValueSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:[self outputs]];
-    ret.feeCalculator = [self feeCalculator];
+    ret.feeCalculator = [self feeCalculatorForSelectInput];
+    [ret resetCellDataArrayForListview];
     return ret;
 }
 

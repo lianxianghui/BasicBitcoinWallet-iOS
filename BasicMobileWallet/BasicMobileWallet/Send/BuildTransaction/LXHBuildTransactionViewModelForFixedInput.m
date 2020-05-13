@@ -66,6 +66,8 @@
         LXHSelectInputViewModelForFixedInput *selectInputViewModel = [[LXHSelectInputViewModelForFixedInput alloc] init];
         _selectInputViewModel = selectInputViewModel;
     }
+    [_selectInputViewModel resetCellDataArrayForListview];
+    _selectInputViewModel.feeCalculator = [self feeCalculatorForSelectInput];
     return _selectInputViewModel;
 }
 

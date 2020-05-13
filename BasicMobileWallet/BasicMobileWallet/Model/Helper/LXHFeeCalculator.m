@@ -24,8 +24,12 @@
 }
 
 - (BOOL)feeGreaterThanValueWithInput:(LXHTransactionOutput *)utxoAsInput {
+    return [LXHFeeCalculator feeGreaterThanValueWithInput:utxoAsInput feeRateValue:_feeRate.value];
+}
+
++ (BOOL)feeGreaterThanValueWithInput:(LXHTransactionOutput *)utxoAsInput feeRateValue:(LXHBTCAmount)feeRateValue {
     //目前不支持隔离见证输入输出，所以目前与输入内容无关
-    LXHBTCAmount feePerInputInSat = 148 * _feeRate.value;
+    LXHBTCAmount feePerInputInSat = 148 * feeRateValue;
     return feePerInputInSat > utxoAsInput.valueSat;
 }
 

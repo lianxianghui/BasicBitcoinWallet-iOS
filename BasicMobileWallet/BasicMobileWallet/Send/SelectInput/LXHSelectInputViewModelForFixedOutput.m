@@ -18,8 +18,8 @@
 - (BOOL)allUtxosIsNotEnough {
     //todo 校验LXHBTCAmountError
     NSArray *allUsableUtxos = [self allUsableUtxos];
-    _feeCalculator.inputs = allUsableUtxos;
-    LXHBTCAmount estimatedFee = [_feeCalculator estimatedFeeInSat];
+    self.feeCalculator.inputs = allUsableUtxos;
+    LXHBTCAmount estimatedFee = [self.feeCalculator estimatedFeeInSat];
     LXHBTCAmount sumOfOutputsAndFee = _fixedOutputValueSum + estimatedFee;
     LXHBTCAmount allUtxosSum = [LXHTransactionInputOutputCommon valueSatSumOfInputsOrOutputs:allUsableUtxos];
     return allUtxosSum < sumOfOutputsAndFee;
@@ -38,8 +38,8 @@
     if (utxoOfMinFeeForNextSelection) {
         [array addObject:utxoOfMinFeeForNextSelection];
     }
-    _feeCalculator.inputs = array;
-    LXHBTCAmount estimatedFee = [_feeCalculator estimatedFeeInSat];
+    self.feeCalculator.inputs = array;
+    LXHBTCAmount estimatedFee = [self.feeCalculator estimatedFeeInSat];
     return estimatedFee;
 }
 

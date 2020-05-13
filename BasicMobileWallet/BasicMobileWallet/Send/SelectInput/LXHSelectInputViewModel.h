@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LXHFeeCalculator.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,7 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LXHSelectInputViewModel : NSObject
 @property (nonatomic, readonly) NSArray *selectedUtxos;
 @property (nonatomic, readonly) NSMutableArray *cellDataArrayForListview;
+@property (nonatomic) LXHFeeCalculator *feeCalculator;
 
+- (void)resetCellDataArrayForListview;
 - (void)toggleCheckedStateOfRow:(NSInteger)row;
 - (void)moveRowAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex;
 

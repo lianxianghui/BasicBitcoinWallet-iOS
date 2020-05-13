@@ -1,8 +1,8 @@
 // LXHSelectInputCell.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-10-21
-//  Copyright © 2019年 lianxianghui. All rights reserved.
+//  Created by lianxianghui on 20-05-13
+//  Copyright © 2020年 lianxianghui. All rights reserved.
 
 
 #import "LXHSelectInputCell.h"
@@ -59,6 +59,10 @@
         make.right.equalTo(self.utxo.mas_right);
         make.centerY.equalTo(self.addressText.mas_centerY);
     }];
+    [self.btcValueForWarning mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.btcValue.mas_right);
+        make.centerY.equalTo(self.btcValue.mas_centerY);
+    }];
     [self.addressText mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.utxo.mas_left);
         make.top.equalTo(self.utxo.mas_top);
@@ -108,6 +112,7 @@
         _utxo.alpha = 1;
         [_utxo addSubview:self.button];
         [_utxo addSubview:self.btcValue];
+        [_utxo addSubview:self.btcValueForWarning];
         [_utxo addSubview:self.addressText];
         [_utxo addSubview:self.timeValue];
         [_utxo addSubview:self.time];
@@ -121,7 +126,6 @@
         _button.backgroundColor = UIColorFromRGBA(0x009688FF);
         _button.layer.cornerRadius = 2;
         _button.alpha = 1;
-        _button.titleLabel.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -145,7 +149,6 @@
 - (UILabel *)btcValue {
     if (!_btcValue) {
         _btcValue = [[UILabel alloc] init];
-        _btcValue.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -165,10 +168,31 @@
     return _btcValue;
 }
 
+- (UILabel *)btcValueForWarning {
+    if (!_btcValueForWarning) {
+        _btcValueForWarning = [[UILabel alloc] init];
+        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
+        if (!font) font = [UIFont systemFontOfSize:11];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentLeft;
+        paragraphStyle.maximumLineHeight = 0;
+        paragraphStyle.minimumLineHeight = 0;
+        paragraphStyle.paragraphSpacing = 0;
+
+        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
+        [textAttributes setObject:UIColorFromRGBA(0xFE3824FF) forKey:NSForegroundColorAttributeName];
+        [textAttributes setObject:font forKey:NSFontAttributeName];
+        [textAttributes setObject:@(-0.2652941) forKey:NSKernAttributeName];
+        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"0.00000004 BTC", nil) attributes:textAttributes];
+        _btcValueForWarning.attributedText = text;
+    }
+    return _btcValueForWarning;
+}
+
 - (UILabel *)addressText {
     if (!_addressText) {
         _addressText = [[UILabel alloc] init];
-        _addressText.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -191,7 +215,6 @@
 - (UILabel *)timeValue {
     if (!_timeValue) {
         _timeValue = [[UILabel alloc] init];
-        _timeValue.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -214,7 +237,6 @@
 - (UILabel *)time {
     if (!_time) {
         _time = [[UILabel alloc] init];
-        _time.numberOfLines = 0;
         UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
         if (!font) font = [UIFont systemFontOfSize:11];
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];

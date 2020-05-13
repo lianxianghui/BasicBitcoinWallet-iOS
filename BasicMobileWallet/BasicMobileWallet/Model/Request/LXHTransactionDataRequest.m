@@ -59,7 +59,7 @@
         //发送成功了更新一下交易（只请求一次，如果失败了，用户需要手动刷新余额或交易列表）
         //立刻请求会没有新交易，需要延迟一会儿再请求
         NSString *txid = resultDic[@"txid"];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self requestDataWithSuccessBlock:^(NSDictionary * _Nonnull resultDic) {
             CFTimeInterval took = CFAbsoluteTimeGetCurrent() - start;
                 NSArray *transactions = resultDic[@"transactions"];

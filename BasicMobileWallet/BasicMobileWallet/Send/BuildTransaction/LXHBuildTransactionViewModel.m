@@ -348,4 +348,11 @@
     return [feeCalculator estimatedFeeInSat];
 }
 
+- (LXHFeeCalculator *)feeCalculatorForSelectInput {
+    LXHFeeCalculator *feeCalculator = [[LXHFeeCalculator alloc] init];
+    feeCalculator.outputs = [self outputs];
+    feeCalculator.feeRate = [self feeRate];
+    return feeCalculator;
+}
+
 @end

@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (LXHBTCAmount)estimatedFeeInSatWithOutputs:(NSArray *)outputs;
 //判断某个输入或输出，是不是消耗的Fee比它的值还大
 - (BOOL)feeGreaterThanValueWithInput:(LXHTransactionOutput *)utxoAsInput;
++ (BOOL)feeGreaterThanValueWithInput:(LXHTransactionOutput *)utxoAsInput feeRateValue:(LXHBTCAmount)feeRateValue;
 //- (BOOL)feeGreaterThanValueWithOutput:(LXHTransactionOutput *)output;
 @end
 
