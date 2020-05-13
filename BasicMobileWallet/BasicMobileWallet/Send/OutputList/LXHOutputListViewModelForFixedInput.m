@@ -80,10 +80,10 @@
 
 - (LXHFeeCalculator *)feeCalculator {
     if (!_feeCalculator) {
-        _feeCalculator = [LXHFeeCalculator new];
-        _feeCalculator.inputs = self.inputs;
-        _feeCalculator.feeRate = self.feeRate;
+        _feeCalculator = [[LXHFeeCalculator alloc] init];
     }
+    _feeCalculator.inputs = self.inputs;
+    _feeCalculator.feeRate = self.feeRate;
     return _feeCalculator;
 }
 

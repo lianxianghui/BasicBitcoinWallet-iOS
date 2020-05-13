@@ -137,7 +137,7 @@
 }
 
 - (LXHBTCAmount)estimatedFeeValueInSat {
-    LXHFeeCalculator *feeCalculator = [LXHFeeCalculator new];
+    LXHFeeCalculator *feeCalculator = [[LXHFeeCalculator alloc] init];
     feeCalculator.inputs = [self inputs];
     feeCalculator.feeRate = [self feeRate];
     feeCalculator.outputs = [self outputs];
@@ -338,7 +338,7 @@
 }
 
 - (LXHBTCAmount)feeOfNewChangeOutput {
-    LXHFeeCalculator *feeCalculator = [LXHFeeCalculator new];
+    LXHFeeCalculator *feeCalculator = [[LXHFeeCalculator alloc] init];
     feeCalculator.inputs = [self inputs];
     feeCalculator.feeRate = [self feeRate];
     LXHTransactionOutput *newChangeOutput = [LXHTransactionOutput new];

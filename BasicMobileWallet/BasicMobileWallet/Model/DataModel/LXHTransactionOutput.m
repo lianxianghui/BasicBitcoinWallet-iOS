@@ -47,7 +47,13 @@
     if (![object isMemberOfClass:[LXHTransactionOutput class]])
         return NO;
     LXHTransactionOutput *output = (LXHTransactionOutput *)object;
-    return [self.lockingScript isEqualToString:output.lockingScript];
+    if (![self.txid isEqualToString:output.txid])
+        return NO;
+    if (self.index != output.index)
+         return NO;
+    if (![self.lockingScript isEqualToString:output.lockingScript])
+        return NO;
+    return YES;
 }
 
 - (NSMutableDictionary *)tempData {
