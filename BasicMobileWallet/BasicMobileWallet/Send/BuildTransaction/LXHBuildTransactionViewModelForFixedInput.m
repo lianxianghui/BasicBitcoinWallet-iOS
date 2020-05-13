@@ -47,6 +47,8 @@
 }
 
 - (nullable NSString *)clickSelectInputPrompt {
+    if (![self feeRateValue])
+        return NSLocalizedString(@"请先选择或输入费率", nil);
     return nil;
 }
 
