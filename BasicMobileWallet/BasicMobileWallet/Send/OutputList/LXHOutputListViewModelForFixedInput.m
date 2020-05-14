@@ -48,15 +48,13 @@
     LXHBTCAmount maxValueForNewOutput = [self maxValueForNewOutput];
     if (maxValueForNewOutput > 0) {
         //返回viewModel
-        LXHAddOutputViewModel *ret = [LXHAddOutputViewModel new];
+        LXHAddOutputViewModel *ret = [[LXHAddOutputViewModel alloc] init];
         ret.maxValue = [NSDecimalNumber decimalBTCValueWithSatValue:maxValueForNewOutput];
         return ret;
     } else {
         return nil;
     }
 }
-
-
 
 - (void)refreshViewModelAtIndex:(NSUInteger)index {
     [self refreshViewModeMaxValueAtIndex:index];
