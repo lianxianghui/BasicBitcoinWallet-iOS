@@ -15,6 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 + (LXHAddress *)addressWithBase58String:(NSString *)base58String;
 
 - (void)refreshLocalProperties;
+
+/**
+ 返回有效的地址，如果无效返回nil
+ */
++ (NSString *)validAddress:(NSString *)address;
 @end
 
 NS_ASSUME_NONNULL_END

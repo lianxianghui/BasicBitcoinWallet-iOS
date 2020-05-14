@@ -14,6 +14,7 @@
 #import "LXHWallet.h"
 #import "LXHAmount.h"
 #import "NSDecimalNumber+LXHBTCSatConverter.h"
+#import "LXHAddress+LXHAccount.h"
 
 @interface LXHAddOutputViewModel ()
 @property (nonatomic, readwrite) NSMutableArray *cellDataArrayForListView;
@@ -90,7 +91,7 @@
 }
 
 - (BOOL)setBase58Address:(NSString *)address {
-    NSString *validAddress = [LXHAddOutputViewModel validAddress:address];
+    NSString *validAddress = [LXHAddress validAddress:address];
     if (validAddress) {
         self.output.address = [LXHAddress addressWithBase58String:validAddress];
         return YES;
@@ -139,18 +140,6 @@
     } else {
         return YES;
     }
-}
-
-/**
- 返回有效的地址，如果无效返回nil
- */
-+ (NSString *)validAddress:(NSString *)address { //todo 放到一个公共的地方，比如AddressUtil
-    address = [address stringByTrimmingWhiteSpace];
-    address = [address stringByReplacingOccurrencesOfString:@"bitcoin:" withString:@""];
-    if ([BTCAddress addressWithString:address]) //有效
-        return address;
-    else
-        return nil;
 }
 
 - (void)setOutput:(LXHTransactionOutput *)output {

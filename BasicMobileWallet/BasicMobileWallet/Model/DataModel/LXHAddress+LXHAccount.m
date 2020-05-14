@@ -8,6 +8,8 @@
 
 #import "LXHAddress+LXHAccount.h"
 #import "LXHWallet.h"
+#import "BTCAddress.h"
+#import "NSString+Base.h"
 
 @implementation LXHAddress (LXHAccount)
 
@@ -30,6 +32,21 @@
         self.localAddressPath = address.localAddressPath;
         self.localAddressType = address.localAddressType;
     }
+}
+
+/**
+ 返回有效的地址，如果无效返回nil
+ */
++ (NSString *)validAddress:(NSString *)address {
+    address = [address stringByTrimmingWhiteSpace];
+    address = [address stringByReplacingOccurrencesOfString:@"bitcoin:" withString:@""];
+    BTCAddress *btcAddress = [BTCAddress addressWithString:address];
+    if (btcAddress) {
+        LXHBitcoinNetworkType addressNetworkType = btcAddress.isTestnet ? LXHBitcoinNetworkTypeTestnet : LXHBitcoinNetworkTypeMainnet;
+        if (addressNetworkType == [LXHWallet mainAccount].currentNetworkType)
+            return address;
+    }
+    return nil;
 }
 
 @end
