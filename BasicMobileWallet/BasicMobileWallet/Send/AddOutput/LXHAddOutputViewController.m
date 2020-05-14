@@ -40,10 +40,14 @@
     self = [super init];
     if (self) {
         _viewModel = viewModel;
+        [_viewModel setTempTextToValueString];
         _addOrEditOutputCallback = addOutputCallback;
     }
     return self;
-    
+}
+
+- (void)dealloc {
+    [_viewModel setTempText:@""];
 }
 
 - (void)viewDidLoad {
@@ -94,8 +98,7 @@
         [self showOkAlertViewWithMessage:NSLocalizedString(@"请设置地址", nil) handler:nil];
         return;
     }
-    NSString *value = _textField.text;
-    if ([_viewModel setValueString:value]) {
+    if ([_viewModel setValueString:_textField.text]) {
         if (_addOrEditOutputCallback)
             _addOrEditOutputCallback();
         [self.navigationController popViewControllerAnimated:YES];
@@ -127,6 +130,7 @@
 
 - (void)LXHInputAmountCellTextButtonClicked:(UIButton *)sender {
     _textField.text = [_viewModel.maxValue description];
+    [_viewModel setTempText:_textField.text];
     sender.alpha = 1;
 }
 
@@ -265,6 +269,7 @@
         cellView.textButton.hidden = [[dataForRow valueForKey:@"textButtonHidden"] boolValue];
         
         _textField = cellView.textFieldWithPlaceHolder;
+        [_textField addTarget:self action:@selector(textFieldEditingChanged:) forControlEvents:UIControlEventEditingChanged];
         _textField.text = [dataForRow valueForKey:@"textFieldText"];
     }
     return cell;
@@ -346,6 +351,8 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-
+- (void)textFieldEditingChanged:(UITextField *)textField {//用户手动编辑时会触发
+    [_viewModel setTempText:textField.text];
+}
 
 @end

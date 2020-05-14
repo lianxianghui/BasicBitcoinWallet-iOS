@@ -18,21 +18,18 @@
 
 @interface LXHAddOutputViewModel ()
 @property (nonatomic, readwrite) NSMutableArray *cellDataArrayForListView;
+@property (nonatomic) NSString *tempText;
 @end
 
 @implementation LXHAddOutputViewModel
 @synthesize output = _output;
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        //TODO 临时的
-        [self setBase58Address:@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx"];
- //       [self setBase58Address:@"2NAQtG5iToBy64FjpHGsRhxZjTFxvgr3E7Q"];
-        [self setValueString:@"0.0001"];
-    }
-    return self;
+- (void)setTempText:(NSString *)tempText {
+    _tempText = tempText;
+}
+
+- (void)setTempTextToValueString {
+    [self setTempText:[self valueString]];
 }
 
 - (NSString *)naviBarTitle {
@@ -60,13 +57,14 @@
         NSString *maxValueString = _maxValue ? [NSString stringWithFormat:NSLocalizedString(@"可输入最大值: %@", nil), _maxValue] : @" ";
         BOOL maxValueHidden = (_maxValue == nil);
         BOOL maxValueButtonHidden = (_maxValue == nil);
+        NSString *textFieldText = self.tempText ?: @"";
         dic = @{@"maxValue":maxValueString,
                 @"text1":@"数量:",
                 @"isSelectable":@"0",
                 @"text":@"输入最大值",
                 @"cellType":@"LXHInputAmountCell",
                 @"BTC":@" BTC",
-                @"textFieldText":[self valueString],
+                @"textFieldText":textFieldText,
                 @"maxValueHidden":@(maxValueHidden),
                 @"textButtonHidden":@(maxValueButtonHidden),
                 };

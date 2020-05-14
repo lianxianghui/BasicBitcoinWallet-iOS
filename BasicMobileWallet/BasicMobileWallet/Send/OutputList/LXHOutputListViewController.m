@@ -111,7 +111,10 @@
         return;
     }
     LXHWeakSelf
-    //添加
+    //todo 去掉测试用代码
+//    [newOutputViewModel setBase58Address:@"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx"];
+//    //[newOutputViewModel setBase58Address:@"2NAQtG5iToBy64FjpHGsRhxZjTFxvgr3E7Q"];
+//    [newOutputViewModel setValueString:@"0.0001"];
     UIViewController *controller = [[LXHAddOutputViewController alloc] initWithViewModel:newOutputViewModel addOrEditOutputCallback:^{
         [weakSelf.viewModel addOutputViewModel:newOutputViewModel];
         [self refreshView];
