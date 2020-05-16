@@ -56,7 +56,9 @@
 
 - (void)setContentViewProperties {
     self.contentView.inputPinTextFieldWithPlaceHolder.keyboardType = UIKeyboardTypeNumberPad;
+    self.contentView.inputPinTextFieldWithPlaceHolder.secureTextEntry = YES;
     self.contentView.inputPinAgainTextFieldWithPlaceHolder.keyboardType = UIKeyboardTypeNumberPad;
+    self.contentView.inputPinAgainTextFieldWithPlaceHolder.secureTextEntry = YES;
 }
 
 - (void)swipeView:(id)sender {
