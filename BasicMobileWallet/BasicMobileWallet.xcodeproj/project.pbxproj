@@ -406,6 +406,7 @@
 		8C2CC6E7233236A9005AA93C /* LXHShowWalletMnemonicWordsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHShowWalletMnemonicWordsView.h; sourceTree = "<group>"; };
 		8C2CC6EA2334C0D8005AA93C /* LXHWalletChangeLevelModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHWalletChangeLevelModel.h; sourceTree = "<group>"; };
 		8C2CC6EB2334C0D8005AA93C /* LXHWalletChangeLevelModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHWalletChangeLevelModel.m; sourceTree = "<group>"; };
+		8C30F08224753B1600B8C56F /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		8C420C0A2398F116009D02E7 /* UITextView+LXHText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+LXHText.h"; sourceTree = "<group>"; };
 		8C420C0B2398F117009D02E7 /* UITextView+LXHText.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+LXHText.m"; sourceTree = "<group>"; };
 		8C42130F245FCDB9007F4D04 /* LXHAmount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHAmount.h; sourceTree = "<group>"; };
@@ -2077,6 +2078,7 @@
 				8CA701A722D8713E00F42814 /* LaunchScreen.storyboard */,
 				8CA701AA22D8713E00F42814 /* Info.plist */,
 				8CA701AB22D8713E00F42814 /* main.m */,
+				8C30F08224753B1600B8C56F /* PrefixHeader.pch */,
 				8CA701C822D8747F00F42814 /* Init */,
 				8CAA6696230E468200B17222 /* Main */,
 				8C93345C235DB14C00FBF238 /* Send */,
@@ -3068,6 +3070,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W269QP82T8;
 				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/BasicMobileWallet/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -3098,6 +3102,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W269QP82T8;
 				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/BasicMobileWallet/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
