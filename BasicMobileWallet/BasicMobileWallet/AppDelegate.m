@@ -26,8 +26,6 @@
 #pragma mark -- default events
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//    [LXHPreference sharedInstance];//init default preference
-    //application.statusBarStyle = UIStatusBarStyleLightContent;
     //disable cache for privacy
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
@@ -65,6 +63,11 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (BOOL)application:(UIApplication *)application shouldAllowExtensionPointIdentifier:(UIApplicationExtensionPointIdentifier)extensionPointIdentifier {
+    if ([extensionPointIdentifier isEqualToString:UIApplicationKeyboardExtensionPointIdentifier]) //For security
+        return NO;
+    return YES;
+}
 
 #pragma mark -- 界面流程相关的自定义事件处理方法
 
@@ -86,7 +89,7 @@
 
 //App离开活动状态（进入后台等情况）
 - (void)appWillResignActiveLogicForViewController {
-    //为了隐私
+    //For security and privacy
     //进入后台时，ios系统会截屏，这里在截屏前先把原有的界面挡住(防止敏感信息被截屏，进而泄露出去)
     //如果当前设置了PIN码，进入PIN码验证页面（从后台返回时需要先输入PIN码），如果没设置PIN码就只显示一个遮挡页面
     if ([LXHWallet hasPIN]) {
