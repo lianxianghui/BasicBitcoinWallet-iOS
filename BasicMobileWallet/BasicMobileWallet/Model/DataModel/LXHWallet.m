@@ -116,8 +116,10 @@
             NSArray *allTransactions = resultDic[@"allTransactions"];
             if ([[LXHTransactionDataManager sharedInstance] setAndSaveTransactionList:allTransactions])
                 successBlock(resultDic);//has @"allTransactions":allTransaction
-            else
+            else {
+                [self clearAccount];
                 failureBlock(nil);
+            }
         }
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         failureBlock(resultDic);
@@ -215,8 +217,10 @@
             NSArray *allTransactions = resultDic[@"allTransactions"];
             if ([[LXHTransactionDataManager sharedInstance] setAndSaveTransactionList:allTransactions])
                 successBlock(resultDic);//has @"allTransactions":allTransaction
-            else
+            else {
+                [self clearAccount];
                 failureBlock(nil);
+            }
         }
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         failureBlock(resultDic);
