@@ -26,6 +26,7 @@
 #pragma mark -- default events
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+//    NSLog(@"ProtctedDataAvaliable:%@", @([[UIApplication sharedApplication] isProtectedDataAvailable]));
     //disable cache for privacy
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
@@ -68,6 +69,14 @@
         return NO;
     return YES;
 }
+
+//- (void)applicationProtectedDataDidBecomeAvailable:(UIApplication *)application {
+//    NSLog(@"%@", @"applicationProtectedDataDidBecomeAvailable");
+//}
+//
+//- (void)applicationProtectedDataWillBecomeUnavailable:(UIApplication *)application {
+//    NSLog(@"%@", @"applicationProtectedDataWillBecomeUnavailable");
+//}
 
 #pragma mark -- 界面流程相关的自定义事件处理方法
 

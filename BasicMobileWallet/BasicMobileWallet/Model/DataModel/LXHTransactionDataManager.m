@@ -133,13 +133,17 @@ static NSString *const aesPassword = LXHAESPassword;
                                         withSettings:kRNCryptorAES256Settings
                                             password:aesPassword
                                                error:nil];
-    BOOL success = encryptedData && [encryptedData writeToFile:LXHTransactionDataManagerCacheFilePath atomically:YES];
+
+    NSString *filePath = LXHTransactionDataManagerCacheFilePath;
+    //for privacy, using FileProtectionComplete
+    BOOL success = encryptedData && [encryptedData writeToFile:filePath options:NSDataWritingFileProtectionComplete error:nil];
+    success = success && [[NSFileManager defaultManager] setAttributes:@{NSFileProtectionKey : NSFileProtectionComplete} ofItemAtPath:filePath error:nil];
     if (!success)
         return NO;
-    NSURL *fileUrl = [NSURL fileURLWithPath:LXHTransactionDataManagerCacheFilePath];
+    NSURL *fileUrl = [NSURL fileURLWithPath:filePath];
     success = [self addSkipBackupAttributeToItemAtURL:fileUrl];//for privacy, not backup to iCloud
     if (!success) {
-        [[NSFileManager defaultManager] removeItemAtPath:LXHTransactionDataManagerCacheFilePath error:nil];
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
         return NO;
     } else {
         return YES;

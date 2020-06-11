@@ -20,8 +20,12 @@
     NSArray *addresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
     [self requestTransactionsWithNetworkType:LXHWallet.mainAccount.currentNetworkType addresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
         NSArray *transactions = resultDic[@"transactions"];
-        if (![[LXHTransactionDataManager sharedInstance] setAndSaveTransactionList:transactions])
-            failureBlock(nil);
+        if (![[LXHTransactionDataManager sharedInstance] setAndSaveTransactionList:transactions]) {
+            NSMutableDictionary* info = [NSMutableDictionary dictionary];
+            [info setValue:NSLocalizedString(@"保存交易列表数据失败", nil) forKey:NSLocalizedDescriptionKey];
+            NSError *error = [NSError errorWithDomain:@"LXHErrorDomain" code:-1 userInfo:info];
+            failureBlock(@{@"error":error});
+        }
         //更新钱包的当前地址
         NSSet *allUsedBase58Addresses = [[LXHTransactionDataManager sharedInstance] allBase58Addresses];
         [LXHWallet.mainAccount updateUsedBase58AddressesIfNeeded:allUsedBase58Addresses];
