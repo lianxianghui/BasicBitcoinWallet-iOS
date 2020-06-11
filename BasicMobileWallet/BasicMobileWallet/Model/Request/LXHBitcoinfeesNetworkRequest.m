@@ -33,9 +33,14 @@ static NSString *const cacheFileName = @"LXHBitcoinfeesNetworkRequestCache";
         NSMutableDictionary *dic = [self cacheResultDic:resultDic];
         successBlock(dic);
     } failureCallback:^(NSDictionary * _Nonnull resultDic) {
-        NSMutableDictionary *dic = [resultDic mutableCopy];
-        dic[@"cachedResult"] = [self cachedData];
-        failureBlock(dic);
+        NSDictionary *cachedData = [self cachedData];
+        if (cachedData) {
+            NSMutableDictionary *dic = [resultDic mutableCopy];
+            dic[@"cachedResult"] = cachedData;
+            failureBlock(dic);
+        } else {
+            failureBlock(nil);
+        }
     }];
 }
 

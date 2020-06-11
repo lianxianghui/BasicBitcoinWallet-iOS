@@ -60,7 +60,7 @@
         if (resultDic) {
             NSDictionary *cachedResult = resultDic[@"cachedResult"];
             weakSelf.feeRateOptionsDic = cachedResult[@"responseData"];
-            weakSelf.feeRateUpdatedTime = resultDic[@"responseTime"];
+            weakSelf.feeRateUpdatedTime = cachedResult[@"responseTime"];
 
             NSError *error = resultDic[@"error"];
             NSString *format = NSLocalizedString(@"由于%@请求费率失败，目前的显示费率有可能是过时的.", nil);
