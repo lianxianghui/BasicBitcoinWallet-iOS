@@ -39,24 +39,24 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-    [self appWillResignActiveLogicForViewController];
 }
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [self hideCurrentApplicationContent];
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    [self restoreApplicationContent];
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [self appDidBecomeActiveLogicForViewController];
 }
 
 
@@ -96,8 +96,7 @@
     }
 }
 
-//App离开活动状态（进入后台等情况）
-- (void)appWillResignActiveLogicForViewController {
+- (void)hideCurrentApplicationContent {
     //For security and privacy
     //进入后台时，ios系统会截屏，这里在截屏前先把原有的界面挡住(防止敏感信息被截屏，进而泄露出去)
     //如果当前设置了PIN码，进入PIN码验证页面（从后台返回时需要先输入PIN码），如果没设置PIN码就只显示一个遮挡页面
@@ -108,9 +107,9 @@
     }
 }
 
-//App恢复为活动状态
-- (void)appDidBecomeActiveLogicForViewController {
+- (void)restoreApplicationContent {
     //如果是Mask, dismiss
+    //如果是PIN码验证页面, 什么都不做，PIN码验证页面会自己处理dismiss的逻辑
     UIViewController *rootViewController = [AppDelegate currentRootViewController];
     if ([rootViewController.presentedViewController isMemberOfClass:[LXHMaskViewController class]]) {
         [rootViewController dismissViewControllerAnimated:NO completion:nil];
