@@ -114,8 +114,10 @@
         } else {
             //充分利用已经请求到的数据，不用重新请求交易数据
             NSArray *allTransactions = resultDic[@"allTransactions"];
-            [[LXHTransactionDataManager sharedInstance] setTransactionList:allTransactions];
-            successBlock(resultDic);//has @"allTransactions":allTransaction
+            if ([[LXHTransactionDataManager sharedInstance] setAndSaveTransactionList:allTransactions])
+                successBlock(resultDic);//has @"allTransactions":allTransaction
+            else
+                failureBlock(nil);
         }
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         failureBlock(resultDic);
@@ -153,8 +155,11 @@
         }
         //充分利用已经请求到的数据，不用重新请求交易数据
         NSArray *allTransactions = resultDicCopy[@"allTransactions"];
-        [[LXHTransactionDataManager sharedInstance] setTransactionList:allTransactions];
-        successBlock(resultDicCopy);//has @"allTransactions":allTransaction
+        if ([[LXHTransactionDataManager sharedInstance] setAndSaveTransactionList:allTransactions])
+            successBlock(resultDicCopy);//has @"allTransactions":allTransaction
+        else
+            failureBlock(nil);
+        
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         failureBlock(resultDic);
     }];
@@ -208,8 +213,10 @@
         } else {
             //充分利用已经请求到的数据，不用重新请求交易数据
             NSArray *allTransactions = resultDic[@"allTransactions"];
-            [[LXHTransactionDataManager sharedInstance] setTransactionList:allTransactions];
-            successBlock(resultDic);//has @"allTransactions":allTransaction
+            if ([[LXHTransactionDataManager sharedInstance] setAndSaveTransactionList:allTransactions])
+                successBlock(resultDic);//has @"allTransactions":allTransaction
+            else
+                failureBlock(nil);
         }
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         failureBlock(resultDic);

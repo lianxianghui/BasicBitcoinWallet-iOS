@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 管理交易数据：持有数据、缓存数据到本地文件、从本地缓存文件加载数据 等功能
  */
 @interface LXHTransactionDataManager : NSObject
-@property (nonatomic) NSArray *transactionList;
+@property (nonatomic, readonly) NSArray *transactionList;
 @property (nonatomic) NSDate *dataUpdatedTime;
 
 - (void)clearCachedData;
@@ -30,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableArray<LXHTransactionOutput *> *)utxosOfAllTransactions;
 - (NSDecimalNumber *)balance;
 - (NSMutableSet *)allBase58Addresses;
+
+- (BOOL)setAndSaveTransactionList:(NSArray *)transactionList;
 
 + (void)addTransaction:(LXHTransaction *)transaction toArray:(NSMutableArray *)array;
 + (void)updateOldTransactionToNewTransaction:(LXHTransaction *)newTransaction inArray:(NSMutableArray *)array;

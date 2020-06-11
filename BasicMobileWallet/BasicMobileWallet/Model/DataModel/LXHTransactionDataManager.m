@@ -20,10 +20,11 @@
 static NSString *const cacheFileName = @"LXHTransactionDataManagerCacheFile.aes";
 static NSString *const aesPassword = LXHAESPassword;
 
-#define LXHTransactionDataManagerCacheFilePath [NSString stringWithFormat:@"%@/%@",  LXHCacheFileDir, cacheFileName]//todo 交易数据不应该保存到缓存目录下
+#define LXHTransactionDataManagerCacheFilePath [NSString stringWithFormat:@"%@/%@",  LXHDocumentDir, cacheFileName]//由于交易数据涉及隐私，所以加密后存到Document目录下
 
 @interface LXHTransactionDataManager ()
 @property (nonatomic) NSDictionary *transactionData;
+@property (nonatomic, readwrite) NSArray *transactionList;
 @end
 
 @implementation LXHTransactionDataManager
@@ -57,9 +58,9 @@ static NSString *const aesPassword = LXHAESPassword;
     return self.transactionData[@"date"];
 }
 
-- (void)setTransactionList:(NSArray *)transactionList {
+- (BOOL)setAndSaveTransactionList:(NSArray *)transactionList {
     if (!transactionList || transactionList.count == 0)
-        return;
+        return NO;
 //    NSLog(@"[self transactionList].count %ld", [[self transactionList] count]);
 //    NSLog(@"transactionList.count %ld", [transactionList count]);
 //    if ([[self transactionList] isEqualToArray:transactionList])
@@ -70,8 +71,12 @@ static NSString *const aesPassword = LXHAESPassword;
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     dic[@"date"] = [NSDate date];
     dic[@"transactions"] = sortedArray;
-    _transactionData = dic;
-    [self saveTransactionListToCacheFile];
+    if ([self saveTransactionListToCacheFile]) {
+        _transactionData = dic;
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 + (void)addTransaction:(LXHTransaction *)transaction toArray:(NSMutableArray *)array {
@@ -122,14 +127,23 @@ static NSString *const aesPassword = LXHAESPassword;
     return ret;
 }
 
-- (void)saveTransactionListToCacheFile {
+- (BOOL)saveTransactionListToCacheFile {
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_transactionData];
     NSData *encryptedData = [RNEncryptor encryptData:data
                                         withSettings:kRNCryptorAES256Settings
                                             password:aesPassword
                                                error:nil];
-    if (encryptedData)
-        [encryptedData writeToFile:LXHTransactionDataManagerCacheFilePath atomically:YES];
+    BOOL success = encryptedData && [encryptedData writeToFile:LXHTransactionDataManagerCacheFilePath atomically:YES];
+    if (!success)
+        return NO;
+    NSURL *fileUrl = [NSURL fileURLWithPath:LXHTransactionDataManagerCacheFilePath];
+    success = [self addSkipBackupAttributeToItemAtURL:fileUrl];//for privacy, not backup to iCloud
+    if (!success) {
+        [[NSFileManager defaultManager] removeItemAtPath:LXHTransactionDataManagerCacheFilePath error:nil];
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 //从全部交易列表里过滤出 输入地址或输出地址为address的交易
@@ -162,6 +176,18 @@ static NSString *const aesPassword = LXHAESPassword;
 - (NSDecimalNumber *)balance {
     NSArray *utxos = [self utxosOfAllTransactions];
     return [LXHTransactionOutput valueSumOfOutputs:utxos];
+}
+
+- (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL {
+    assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
+    
+    NSError *error = nil;
+    BOOL success = [URL setResourceValue:[NSNumber numberWithBool: YES]
+                                  forKey: NSURLIsExcludedFromBackupKey error: &error];
+    if(!success){
+        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+    }
+    return success;
 }
 
 @end

@@ -20,7 +20,8 @@
     NSArray *addresses = [[LXHWallet mainAccount] usedAndCurrentAddresses];
     [self requestTransactionsWithNetworkType:LXHWallet.mainAccount.currentNetworkType addresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
         NSArray *transactions = resultDic[@"transactions"];
-        [[LXHTransactionDataManager sharedInstance] setTransactionList:transactions];
+        if (![[LXHTransactionDataManager sharedInstance] setAndSaveTransactionList:transactions])
+            failureBlock(nil);
         //更新钱包的当前地址
         NSSet *allUsedBase58Addresses = [[LXHTransactionDataManager sharedInstance] allBase58Addresses];
         [LXHWallet.mainAccount updateUsedBase58AddressesIfNeeded:allUsedBase58Addresses];
@@ -104,7 +105,7 @@
                             [LXHTransactionDataManager addTransaction:obj toArray:transactionList];
                         }
                     }];
-                    [[LXHTransactionDataManager sharedInstance] setTransactionList:transactionList];
+                    [[LXHTransactionDataManager sharedInstance] setAndSaveTransactionList:transactionList];
                     CFTimeInterval took = CFAbsoluteTimeGetCurrent() - start;
                     NSLog(@"%@ %0.3f", @"only transaction, related transactions updated", took);
                     successBlock(@{@"code":@(0)});
