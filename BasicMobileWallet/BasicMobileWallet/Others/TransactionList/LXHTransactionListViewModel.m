@@ -94,7 +94,7 @@
 }
 
 - (void)addObserverForUpdatedTransactinListWithCallback:(void (^)(void))updatedCallback {
-    _observerToken =  [[LXHTransactionDataManager sharedInstance] bk_addObserverForKeyPath:@"transactionList" task:^(id target) {
+    _observerToken =  [[LXHTransactionDataManager sharedInstance] bk_addObserverForKeyPath:@"transactionData" task:^(id target) {
         updatedCallback();
     }];
 }

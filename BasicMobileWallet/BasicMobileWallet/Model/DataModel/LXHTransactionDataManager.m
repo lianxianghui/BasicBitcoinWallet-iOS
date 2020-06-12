@@ -23,8 +23,7 @@ static NSString *const aesPassword = LXHAESPassword;
 #define LXHTransactionDataManagerCacheFilePath [NSString stringWithFormat:@"%@/%@",  LXHDocumentDir, cacheFileName]//由于交易数据涉及隐私，所以加密后存到Document目录下
 
 @interface LXHTransactionDataManager ()
-@property (nonatomic) NSDictionary *transactionData;
-@property (nonatomic, readwrite) NSArray *transactionList;
+@property (nonatomic, readwrite) NSDictionary *transactionData;
 @end
 
 @implementation LXHTransactionDataManager
@@ -72,7 +71,7 @@ static NSString *const aesPassword = LXHAESPassword;
     dic[@"date"] = [NSDate date];
     dic[@"transactions"] = sortedArray;
     if ([self saveTransactionListToCacheFile]) {
-        _transactionData = dic;
+        self.transactionData = dic;
         return YES;
     } else {
         return NO;
