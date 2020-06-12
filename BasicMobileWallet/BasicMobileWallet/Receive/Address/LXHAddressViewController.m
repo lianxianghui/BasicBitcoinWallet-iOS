@@ -63,13 +63,13 @@
 
 - (void)refreshContentView {
     [_viewModel refreshData];
-    NSString *address = [_viewModel addressText];
     //地址文本
-    [self.contentView.addressText updateAttributedTextString:address];
+    [self.contentView.addressText updateAttributedTextString:[_viewModel addressText]];
     //地址二维码
     CGSize imageSize = {198, 198};
     //这里的字符串转成二进制后，如果大于 2,953 bytes, image会为nil。不过这里不会发生。
-    UIImage *qrImage = [BTCQRCode imageForString:address size:imageSize scale:1];
+    NSString *addressUrl = [_viewModel addressUrl];
+    UIImage *qrImage = [BTCQRCode imageForString:addressUrl size:imageSize scale:1];
     self.contentView.qrImage.image = qrImage;
     //地址路径
     NSString *path = [_viewModel path];
@@ -91,12 +91,12 @@
 //Actions
 - (void)shareButtonClicked:(UIButton *)sender {
     sender.alpha = 1;
-    NSString *addressText = [_viewModel addressText];
-    if (addressText) {
+    NSString *addressUrl = [_viewModel addressUrl];
+    if (addressUrl) {
         __weak typeof(self) weakSelf = self;
         NSString *message = NSLocalizedString(@"分享地址到其它应用程序有可能导致泄漏隐私，您确定要分享吗？", nil);
         [self showOkCancelAlertViewWithMessage:message okHandler:^(UIAlertAction * _Nonnull action) {
-            UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[addressText] applicationActivities:nil];
+            UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[addressUrl] applicationActivities:nil];
             [weakSelf presentViewController:controller animated:YES completion:nil];
         } cancelHandler:nil];
     }
@@ -115,7 +115,7 @@
     __weak typeof(self) weakSelf = self;
     NSString *message = NSLocalizedString(@"拷贝到系统剪贴板使得该地址有可能会被其它应用程序读取从而导致泄漏隐私，您确定要拷贝吗？", nil);
     [self showOkCancelAlertViewWithMessage:message okHandler:^(UIAlertAction * _Nonnull action) {
-        [UIPasteboard generalPasteboard].string = [weakSelf.viewModel addressText];
+        [UIPasteboard generalPasteboard].string = [weakSelf.viewModel addressUrl];
         [weakSelf.view makeToast:NSLocalizedString(@"地址已拷贝", nil)];
     } cancelHandler:nil];
 }

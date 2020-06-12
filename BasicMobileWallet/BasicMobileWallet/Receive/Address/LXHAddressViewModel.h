@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)leftButtonHidden;
 - (void)refreshData;
 - (NSString *)addressText;
+- (NSString *)addressUrl;
 - (NSString *)path;
 @end
 

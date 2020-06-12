@@ -34,8 +34,15 @@
 - (NSString *)addressText {
     LXHLocalAddressType type = [_data[@"addressType"] integerValue];
     uint32_t index = [_data[@"addressIndex"] unsignedIntValue];
-    NSString *address = [[LXHWallet mainAccount] addressWithType:type index:index];
-    return address;
+    NSString *addressText = [[LXHWallet mainAccount] addressWithType:type index:index];
+    return addressText;
+}
+
+//目前还不支持带amount的url
+- (NSString *)addressUrl {
+    NSString *addressText = [self addressText];
+    NSString *addressUrl = [NSString stringWithFormat:@"bitcoin:%@", addressText];
+    return addressUrl;
 }
 
 - (NSString *)path {
