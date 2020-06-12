@@ -26,19 +26,23 @@
 //检查通过扫描获得的交易数据，如果有问题返回错误字符串，没问题返回nil
 //数据格式
 //@"dataType" : @"signedTransaction" or @"unsignedTransaction"
-//dataForCheckingOutputAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
-//@{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
+//dataForCheckingAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
+//@{@"transactionData":transactionData, @"dataForCheckingAddresses":dataForCheckingAddresses};
 - (NSString *)checkScannedData:(NSDictionary *)data {
     NSString *dataType = data[@"dataType"];
     if (dataType) {
         if ([dataType isEqualToString:@"unsignedTransaction"] || [dataType isEqualToString:@"signedTransaction"]) {
             //1.检查数据网络类型是否与当前钱包的网络类型一致 2.检查交易输出与校验字段是否一致
-            NSString *network = [data valueForKeyPath:@"dataForCheckingOutputAddresses.network"];
+            NSString *network = [data valueForKeyPath:@"dataForCheckingAddresses.network"];
             NSString *errorMessage = nil;
             errorMessage = [self checkNetwork:network];
             if (errorMessage)
                 return errorMessage;
             errorMessage = [self checkTransactionOutputsWithData:data];
+            if (errorMessage)
+                return errorMessage;
+            BOOL isSignedTransaction = [dataType isEqualToString:@"signedTransaction"];
+            errorMessage = [self checkTransactionInputsWithData:data isSignedTransaction:isSignedTransaction];
             return errorMessage;
         } else {
             return nil;
@@ -77,9 +81,9 @@
 }
 
 - (NSString *)checkTransactionOutputsWithData:(NSDictionary *)data {
-    NSDictionary *dataForCheckingOutputAddresses = data[@"dataForCheckingOutputAddresses"];
-    NSArray *outputAddresses = dataForCheckingOutputAddresses[@"outputAddresses"];
-    NSString *network = dataForCheckingOutputAddresses[@"network"];
+    NSDictionary *dataForCheckingAddresses = data[@"dataForCheckingAddresses"];
+    NSArray *outputAddresses = dataForCheckingAddresses[@"outputAddresses"];
+    NSString *network = dataForCheckingAddresses[@"network"];
     LXHBitcoinNetworkType networkType = [LXHBitcoinNetwork networkTypeWithString:network];
     if (networkType == LXHBitcoinNetworkTypeUndefined)
         return NSLocalizedString(@"network数据字段有问题", nil);
@@ -92,6 +96,26 @@
         return NSLocalizedString(@"数据有问题，交易数据中未包含输出地址", nil);
     if (![outputAddressesFromTransaction isEqualToArray:outputAddresses])
         return NSLocalizedString(@"交易输出地址与校验数据中的输出地址不一致", nil);
+    return nil;
+}
+
+- (NSString *)checkTransactionInputsWithData:(NSDictionary *)data isSignedTransaction:(BOOL)isSignedTransaction {
+    NSDictionary *dataForCheckingAddresses = data[@"dataForCheckingAddresses"];
+    NSArray *inputAddresses = dataForCheckingAddresses[@"inputAddresses"];
+    NSString *network = dataForCheckingAddresses[@"network"];
+    LXHBitcoinNetworkType networkType = [LXHBitcoinNetwork networkTypeWithString:network];
+    if (networkType == LXHBitcoinNetworkTypeUndefined)
+        return NSLocalizedString(@"network数据字段有问题", nil);
+    NSDictionary *transactionDictionary = data[@"transactionData"];
+    BTCTransaction *transaction = [[BTCTransaction alloc] initWithDictionary:transactionDictionary];
+    NSArray *inputAddressesFromTransaction = isSignedTransaction ? [LXHSignatureUtils inputBase58AddressesWithSignedBTCInputs:transaction.inputs networkType:networkType]
+    : [LXHSignatureUtils inputBase58AddressesWithUnsignedBTCInputs:transaction.inputs networkType:networkType];
+    if (!inputAddresses)
+        return NSLocalizedString(@"数据有问题，校验数据中未包含输入地址", nil);
+    if (!inputAddressesFromTransaction)
+        return NSLocalizedString(@"数据有问题，交易数据中未包含输入地址", nil);
+    if (![inputAddressesFromTransaction isEqualToArray:inputAddresses])
+        return NSLocalizedString(@"交易输入地址与校验数据中的输入地址不一致", nil);
     return nil;
 }
 

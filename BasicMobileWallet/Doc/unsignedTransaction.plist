@@ -3,7 +3,7 @@
 		"currentChangeAddressIndex" = 4;
 		"currentReceivingAddressIndex" = 5;
 	};
-	"dataForCheckingOutputAddresses" = {
+	"dataForCheckingAddresses" = {
 		network = testnet;
 		outputAddresses = (
 			"mqo7674J9Q7hpfPB6qFoYufMdoNjEsRZHx",

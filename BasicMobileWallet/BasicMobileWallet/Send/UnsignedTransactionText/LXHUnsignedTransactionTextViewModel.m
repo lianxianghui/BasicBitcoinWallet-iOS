@@ -68,9 +68,10 @@
         return nil;
     NSDictionary *transactionData = [transaction dictionary];
     NSArray *outputBase58Addresses = [LXHSignatureUtils outputBase58AddressesWithBTCOutputs:transaction.outputs networkType:LXHWallet.mainAccount.currentNetworkType];
-    NSString *network = [_data valueForKeyPath:@"dataForCheckingOutputAddresses.network"];
-    NSDictionary *dataForCheckingOutputAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
-    NSDictionary *dictionary = @{@"dataType":@"signedTransaction", @"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
+    NSArray *inputBase58Addresses = [LXHSignatureUtils inputBase58AddressesWithSignedBTCInputs:transaction.inputs networkType:LXHWallet.mainAccount.currentNetworkType];
+    NSString *network = [_data valueForKeyPath:@"dataForCheckingAddresses.network"];
+    NSDictionary *dataForCheckingAddresses = @{@"inputAddresses":inputBase58Addresses, @"outputAddresses":outputBase58Addresses, @"network":network};
+    NSDictionary *dictionary = @{@"dataType":@"signedTransaction", @"transactionData":transactionData, @"dataForCheckingAddresses":dataForCheckingAddresses};
     LXHSignedTransactionTextViewModel *viewModel = [[LXHSignedTransactionTextViewModel alloc] initWithData:dictionary];
     return viewModel;
 }

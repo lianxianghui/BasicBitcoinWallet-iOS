@@ -15,8 +15,35 @@
 + (NSArray *)outputBase58AddressesWithBTCOutputs:(NSArray<BTCTransactionOutput *> *)btcOutputs networkType:(LXHBitcoinNetworkType)networkType {
     NSArray *outputBase58Addresses = [btcOutputs bk_map:^id(BTCTransactionOutput *btcOutput) {
         BTCScript *lockingScript = btcOutput.script;
+        BTCScriptChunk *chunk;
+        BTCAddress *address;
+        NSString *addressClassString;
         if (lockingScript.isPayToPublicKeyHashScript) {
-            BTCScriptChunk *chunk = btcOutput.script.scriptChunks[2];
+             chunk = lockingScript.scriptChunks[2];
+            if (networkType == LXHBitcoinNetworkTypeMainnet)
+                addressClassString = @"BTCPublicKeyAddress";
+            else if (networkType == LXHBitcoinNetworkTypeTestnet)
+                addressClassString = @"BTCPublicKeyAddressTestnet";
+        } else if (lockingScript.isPayToScriptHashScript) {
+            chunk = lockingScript.scriptChunks[1];
+            if (networkType == LXHBitcoinNetworkTypeMainnet)
+                addressClassString = @"BTCScriptHashAddress";
+            else if (networkType == LXHBitcoinNetworkTypeTestnet)
+                addressClassString = @"BTCScriptHashAddressTestnet";
+        } else {
+            return @"unsupported locking script type";
+        }
+        address = [NSClassFromString(addressClassString) addressWithData:chunk.pushdata];
+        return address.string;
+    }];
+    return outputBase58Addresses;
+}
+
++ (NSArray *)inputBase58AddressesWithUnsignedBTCInputs:(NSArray<BTCTransactionInput *> *)btcInputs networkType:(LXHBitcoinNetworkType)networkType {
+    NSArray *ret = [btcInputs bk_map:^id(BTCTransactionInput *input) {
+        BTCScript *lockingScript = input.signatureScript;
+        if (lockingScript.isPayToPublicKeyHashScript) {
+            BTCScriptChunk *chunk = lockingScript.scriptChunks[2];
             BTCAddress *address;
             if (networkType == LXHBitcoinNetworkTypeMainnet)
                 address = [BTCPublicKeyAddress addressWithData:chunk.pushdata];
@@ -27,8 +54,25 @@
             return @"unsupported locking script type";
         }
     }];
-    return outputBase58Addresses;
+    return ret;
 }
+
++ (NSArray *)inputBase58AddressesWithSignedBTCInputs:(NSArray<BTCTransactionInput *> *)btcInputs networkType:(LXHBitcoinNetworkType)networkType {
+    NSArray *ret = [btcInputs bk_map:^id(BTCTransactionInput *input) {
+        BTCScriptChunk *chunk = input.signatureScript.scriptChunks[1];
+        BTCAddress *address;
+        NSData *publicKey = chunk.pushdata;
+        if (networkType == LXHBitcoinNetworkTypeMainnet) {
+            address = [BTCPublicKeyAddress addressWithData:BTCHash160(publicKey)];
+        } else if (networkType == LXHBitcoinNetworkTypeTestnet) {
+            address = [BTCPublicKeyAddressTestnet addressWithData:BTCHash160(chunk.pushdata)];
+        }
+        return address.string;
+    }];
+    return ret;
+}
+
+//+ (BTCAddress *)btcAddress
 
 + (BTCTransaction *)signBTCTransaction:(BTCTransaction *)unsignedBTCTransaction {
     BTCTransaction *transaction = [unsignedBTCTransaction copy];

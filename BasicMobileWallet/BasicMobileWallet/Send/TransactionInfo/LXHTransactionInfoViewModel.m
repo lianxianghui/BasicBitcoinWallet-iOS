@@ -59,13 +59,36 @@
     return info;
 }
 
-- (NSDictionary *)dataWithBTCTransaction:(BTCTransaction *)transaction {
+- (NSDictionary *)dataWithBTCTransaction:(BTCTransaction *)transaction isSignedTransaction:(BOOL)isSignedTransaction {
     NSDictionary *transactionData = [transaction dictionary];
     NSArray *outputBase58Addresses = [LXHSignatureUtils outputBase58AddressesWithBTCOutputs:transaction.outputs networkType:LXHWallet.mainAccount.currentNetworkType];
+    NSArray *inputBase58Addresses;
+    if (isSignedTransaction)
+        inputBase58Addresses = [LXHSignatureUtils inputBase58AddressesWithSignedBTCInputs:transaction.inputs networkType:LXHWallet.mainAccount.currentNetworkType];
+    else
+        inputBase58Addresses = [LXHSignatureUtils inputBase58AddressesWithUnsignedBTCInputs:transaction.inputs networkType:LXHWallet.mainAccount.currentNetworkType];
     NSString *network = [LXHBitcoinNetwork networkStringWithType:LXHWallet.mainAccount.currentNetworkType];
-    NSDictionary *dataForCheckingOutputAddresses = @{@"outputAddresses":outputBase58Addresses, @"network":network};
-    return @{@"transactionData":transactionData, @"dataForCheckingOutputAddresses":dataForCheckingOutputAddresses};
+    NSDictionary *dataForCheckingAddresses = @{@"inputAddresses":inputBase58Addresses, @"outputAddresses":outputBase58Addresses, @"network":network};
+    return @{@"transactionData":transactionData, @"dataForCheckingAddresses":dataForCheckingAddresses};
 }
+
+//- (NSDictionary *)dataWithUnsignedBTCTransaction:(BTCTransaction *)transaction {
+//    NSDictionary *transactionData = [transaction dictionary];
+//    NSArray *outputBase58Addresses = [LXHSignatureUtils outputBase58AddressesWithBTCOutputs:transaction.outputs networkType:LXHWallet.mainAccount.currentNetworkType];
+//    NSArray *inputBase58Addresses = [LXHSignatureUtils inputBase58AddressesWithBTCInputs:transaction.inputs networkType:LXHWallet.mainAccount.currentNetworkType];
+//    NSString *network = [LXHBitcoinNetwork networkStringWithType:LXHWallet.mainAccount.currentNetworkType];
+//    NSDictionary *dataForCheckingAddresses = @{@"inputAddresses":inputBase58Addresses, @"outputAddresses":outputBase58Addresses, @"network":network};
+//    return @{@"transactionData":transactionData, @"dataForCheckingAddresses":dataForCheckingAddresses};
+//}
+
+//- (NSDictionary *)dataWithSignedBTCTransaction:(BTCTransaction *)transaction {
+//    NSDictionary *transactionData = [transaction dictionary];
+//    NSArray *outputBase58Addresses = [LXHSignatureUtils outputBase58AddressesWithBTCOutputs:transaction.outputs networkType:LXHWallet.mainAccount.currentNetworkType];
+//    NSArray *inputBase58Addresses = [LXHSignatureUtils inputBase58AddressesWithSignedBTCInputs:transaction.inputs networkType:LXHWallet.mainAccount.currentNetworkType];
+//    NSString *network = [LXHBitcoinNetwork networkStringWithType:LXHWallet.mainAccount.currentNetworkType];
+//    NSDictionary *dataForCheckingAddresses = @{@"inputAddresses":inputBase58Addresses, @"outputAddresses":outputBase58Addresses, @"network":network};
+//    return @{@"transactionData":transactionData, @"dataForCheckingAddresses":dataForCheckingAddresses};
+//}
 
 - (NSDictionary *)currentAddressIndexData {
     LXHAccount *mainAccount = [LXHWallet mainAccount];
@@ -76,14 +99,14 @@
 }
 
 - (NSDictionary *)unsignedTransactionData {
-    NSMutableDictionary *dictionary = [self dataWithBTCTransaction:self.unsignedBTCTransaction].mutableCopy;
+    NSMutableDictionary *dictionary = [self dataWithBTCTransaction:self.unsignedBTCTransaction isSignedTransaction:NO].mutableCopy;
     dictionary[@"dataType"] = @"unsignedTransaction";
     dictionary[@"currentAddressIndexData"] = [self currentAddressIndexData];
     return dictionary;
 }
 
 - (NSMutableDictionary *)signedTransactionData {
-    NSMutableDictionary *dictionary = [self dataWithBTCTransaction:self.signedBTCTransaction].mutableCopy;
+    NSMutableDictionary *dictionary = [self dataWithBTCTransaction:self.signedBTCTransaction isSignedTransaction:YES].mutableCopy;
     dictionary[@"dataType"] = @"signedTransaction";
     return dictionary;
 }
