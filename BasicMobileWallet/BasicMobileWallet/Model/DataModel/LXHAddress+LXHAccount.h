@@ -20,6 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
  返回有效的地址，如果无效返回nil
  */
 + (NSString *)validAddress:(NSString *)address;
+/**
+ bitcoin URI scheme from bip21
+ bitcoin:<address>[?amount=<amount>][?label=<label>][?message=<message>]
+ 目前返回的Dic只包含address和amount
+ */
 + (NSDictionary *)bitcoinURIDic:(NSString *)bitcoinURI;
 @end
 

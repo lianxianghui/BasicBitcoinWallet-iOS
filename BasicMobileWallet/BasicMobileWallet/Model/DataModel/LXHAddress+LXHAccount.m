@@ -50,8 +50,7 @@
     }
     return nil;
 }
-//bitcoin URI scheme from bip21
-//bitcoin:<address>[?amount=<amount>][?label=<label>][?message=<message>]
+
 + (NSDictionary *)bitcoinURIDic:(NSString *)bitcoinURI {
     bitcoinURI = [bitcoinURI stringByTrimmingWhiteSpace];
     BTCBitcoinURL* uri = [[BTCBitcoinURL alloc] initWithURL:[NSURL URLWithString:bitcoinURI]];
