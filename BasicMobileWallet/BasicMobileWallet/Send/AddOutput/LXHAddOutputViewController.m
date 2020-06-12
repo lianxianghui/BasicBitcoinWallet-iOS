@@ -314,20 +314,20 @@
     LXHWeakSelf
     UIAlertAction *pasteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"粘贴地址", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSString *text = [UIPasteboard generalPasteboard].string;
-        if ([weakSelf.viewModel setBase58Address:text]) {
+        if ([weakSelf.viewModel setBase58AddressOrUrl:text]) {
             [weakSelf refreshListView];
         } else {
-            [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址", nil)];
+            [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址或地址附带的比特币数量无效", nil)];
         }
     }];
     
     UIAlertAction *scanAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"扫描二维码", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *text) {
             [weakSelf.navigationController popViewControllerAnimated:NO];
-            if ([weakSelf.viewModel setBase58Address:text]) {
+            if ([weakSelf.viewModel setBase58AddressOrUrl:text]) {
                 [weakSelf refreshListView];
             } else {
-                [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址", nil)];
+                [weakSelf.view makeToast:NSLocalizedString(@"不支持该地址或地址附带的比特币数量无效", nil)];
             }
         }];
         [self.navigationController pushViewController:controller animated:YES];

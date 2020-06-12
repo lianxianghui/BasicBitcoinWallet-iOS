@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  返回有效的地址，如果无效返回nil
  */
 + (NSString *)validAddress:(NSString *)address;
++ (NSDictionary *)bitcoinURIDic:(NSString *)bitcoinURI;
 @end
 
 NS_ASSUME_NONNULL_END

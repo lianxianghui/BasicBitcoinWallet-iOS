@@ -88,13 +88,30 @@
     _cellDataArrayForListView = nil;
 }
 
-- (BOOL)setBase58Address:(NSString *)address {
-    NSString *validAddress = [LXHAddress validAddress:address];
-    if (validAddress) {
-        self.output.address = [LXHAddress addressWithBase58String:validAddress];
-        return YES;
-    } else {
-        return NO;
+- (BOOL)setBase58AddressOrUrl:(NSString *)addressOrUrl {
+    if (![addressOrUrl containsString:@"bitcoin:"]) {//只有地址
+        NSString *base58Address = [LXHAddress validAddress:addressOrUrl];
+        if (base58Address) {
+            self.output.address = [LXHAddress addressWithBase58String:base58Address];
+            return YES;
+        } else {
+            return NO;
+        }
+    } else {//bitcoin URI
+        NSDictionary *bitcoinURIDic = [LXHAddress bitcoinURIDic:addressOrUrl];
+        NSDecimalNumber *amountBTC = bitcoinURIDic[@"amountBTC"];
+        if (amountBTC) {
+            if (![self valueIsValidWithDecimalNumber:amountBTC])
+                return NO;//数量无效
+        }
+        NSString *base58Address = bitcoinURIDic[@"address"];
+        if (base58Address) {
+            self.output.address = [LXHAddress addressWithBase58String:base58Address];
+            self.output.valueBTC = amountBTC;
+            [self setTempTextToValueString];
+            return YES;
+        } else
+            return NO;
     }
 }
 
@@ -125,6 +142,10 @@
 
 - (BOOL)valueIsValid:(NSString *)valueString {
     NSDecimalNumber *decimalNumber = [valueString decimalValue];
+    return [self valueIsValidWithDecimalNumber:decimalNumber];
+}
+
+- (BOOL)valueIsValidWithDecimalNumber:(NSDecimalNumber *)decimalNumber {
     if (!decimalNumber)
         return NO;
     LXHBTCAmount valueInSat = [NSDecimalNumber amountSatValueWithBTCValue:decimalNumber];

@@ -9,7 +9,10 @@
 #import "LXHAddress+LXHAccount.h"
 #import "LXHWallet.h"
 #import "BTCAddress.h"
+#import "BTCBitcoinURL.h"
 #import "NSString+Base.h"
+#import "NSDecimalNumber+LXHBTCSatConverter.h"
+
 
 @implementation LXHAddress (LXHAccount)
 
@@ -39,7 +42,6 @@
  */
 + (NSString *)validAddress:(NSString *)address {
     address = [address stringByTrimmingWhiteSpace];
-    address = [address stringByReplacingOccurrencesOfString:@"bitcoin:" withString:@""];
     BTCAddress *btcAddress = [BTCAddress addressWithString:address];
     if (btcAddress) {
         LXHBitcoinNetworkType addressNetworkType = btcAddress.isTestnet ? LXHBitcoinNetworkTypeTestnet : LXHBitcoinNetworkTypeMainnet;
@@ -48,5 +50,25 @@
     }
     return nil;
 }
+//bitcoin URI scheme from bip21
+//bitcoin:<address>[?amount=<amount>][?label=<label>][?message=<message>]
++ (NSDictionary *)bitcoinURIDic:(NSString *)bitcoinURI {
+    bitcoinURI = [bitcoinURI stringByTrimmingWhiteSpace];
+    BTCBitcoinURL* uri = [[BTCBitcoinURL alloc] initWithURL:[NSURL URLWithString:bitcoinURI]];
+    if (uri.isValidBitcoinURL) {
+        LXHBitcoinNetworkType addressNetworkType = uri.address.isTestnet ? LXHBitcoinNetworkTypeTestnet : LXHBitcoinNetworkTypeMainnet;
+        if (addressNetworkType == [LXHWallet mainAccount].currentNetworkType) {
+            NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+            ret[@"address"] = uri.address.string;
+            if (uri.amount > 0) {
+                ret[@"amountSat"] = @(uri.amount);
+                ret[@"amountBTC"] = [NSDecimalNumber decimalBTCValueWithSatValue:uri.amount];
+            }
+            return ret;
+        }
+    }
+    return nil;
+}
+
 
 @end
