@@ -17,7 +17,9 @@
 }
 
 - (BOOL)isCurrentPIN:(NSString *)text {
-    return [[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN];
+    if (!text)
+        return NO;
+    return [LXHWallet verifyPIN:text];
 }
 
 - (BOOL)walletDataGenerated {

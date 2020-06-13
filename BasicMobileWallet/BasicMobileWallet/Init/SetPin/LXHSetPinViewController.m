@@ -91,7 +91,7 @@
         return;
     }
     NSString *pin = self.contentView.inputPinTextFieldWithPlaceHolder.text;
-    if (![LXHKeychainStore.sharedInstance encryptAndSetString:pin forKey:kLXHKeychainStorePIN]) {
+    if (![LXHWallet savePIN:pin]) {
         [self showOkAlertViewWithTitle:NSLocalizedString(@"提醒", @"Warning") message:NSLocalizedString(@"保存PIN码失败", nil) handler:nil];
     } else {
         [self popOrDismiss];

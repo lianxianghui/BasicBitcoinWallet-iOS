@@ -12,8 +12,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define kLXHKeychainStorePIN @"PIN" //Using AES encrypt
-
 /**
  * 按着BIP44标准管理地址钱包对象 
  * 目前只支持一个账号，也就是按着”m/44'/coin_type'/account'/change/address_index“路径 account为0的账户
@@ -64,6 +62,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)isFullFunctional;
 + (BOOL)hasPIN;
 + (void)clearPIN;
++ (BOOL)savePIN:(nonnull NSString *)pin;
++ (BOOL)verifyPIN:(nonnull NSString *)pin;
 @end
 
 NS_ASSUME_NONNULL_END

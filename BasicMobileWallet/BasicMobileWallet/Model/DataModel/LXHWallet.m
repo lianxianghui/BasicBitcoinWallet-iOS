@@ -15,6 +15,8 @@
 #import "LXHTransactionDataManager.h"
 
 //for wallet
+#define kLXHKeychainStorePIN @"PIN" //Using AES encrypt
+#define kLXHKeychainStorePINSalt @"PINSalt" //Using AES encrypt
 #define kLXHKeychainStoreMnemonicCodeWords @"MnemonicCodeWords" //AES encrypt
 #define kLXHKeychainStoreRootSeed @"RootSeed" //AES encrypt
 #define kLXHKeychainStoreExtendedPublicKey @"ExtendedPublicKey" //AES encrypt
@@ -305,6 +307,58 @@
 
 + (void)clearPIN {
     [[LXHKeychainStore sharedInstance].store setData:nil forKey:kLXHKeychainStorePIN];
+}
+
+//把哈希过的PIN和生成的随机盐加密后保存到keychain里
++ (BOOL)savePIN:(nonnull NSString *)pin {
+    NSDictionary *hashedPINAndSalt = [self hashedPINAndSaltWithPIN:pin];
+    if (!hashedPINAndSalt)
+        return NO;
+    NSData *hashedPIN = hashedPINAndSalt[@"hashedPIN"];
+    NSData *salt = hashedPINAndSalt[@"salt"];
+    BOOL saveResult = [LXHKeychainStore.sharedInstance encryptAndSetData:salt forKey:kLXHKeychainStorePINSalt];
+    saveResult = saveResult && [LXHKeychainStore.sharedInstance encryptAndSetData:hashedPIN forKey:kLXHKeychainStorePIN];
+    if (!saveResult) {
+        [LXHKeychainStore.sharedInstance encryptAndSetData:nil forKey:kLXHKeychainStorePINSalt];
+        [LXHKeychainStore.sharedInstance encryptAndSetData:nil forKey:kLXHKeychainStorePIN];
+        return NO;
+    }
+    return YES;
+}
+
++ (BOOL)verifyPIN:(nonnull NSString *)pin {
+    NSData *savedSalt = [LXHKeychainStore.sharedInstance decryptedDataForKey:kLXHKeychainStorePINSalt error:nil];
+    if (!savedSalt)
+        return NO;
+    NSData* pinData = [pin dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *hashedPIN = [self hashedPINWithPINData:pinData saltData:savedSalt];
+    return [LXHKeychainStore.sharedInstance data:hashedPIN isEqualToEncryptedDataForKey:kLXHKeychainStorePIN];
+}
+
++ (NSDictionary *)hashedPINAndSaltWithPIN:(NSString *)pin {
+    NSData* pinData = [pin dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *saltData = BTCRandomDataWithLength(64);
+    NSData *hashedPIN = [self hashedPINWithPINData:pinData saltData:saltData];
+    if (saltData && hashedPIN)
+        return @{@"hashedPIN":hashedPIN, @"salt":saltData};
+    else
+        return nil;
+}
+
++ (NSData*)hashedPINWithPINData:(NSData *)pinData saltData:(NSData *)saltData {
+    const NSUInteger resultLength = 64;
+    NSMutableData* result = [NSMutableData dataWithLength:resultLength];
+    CCKeyDerivationPBKDF(kCCPBKDF2,
+                         pinData.bytes,
+                         pinData.length,
+                         saltData.bytes,
+                         saltData.length,
+                         kCCPRFHmacAlgSHA512,
+                         2048,
+                         result.mutableBytes,
+                         resultLength);
+    
+    return result;
 }
 @end
 

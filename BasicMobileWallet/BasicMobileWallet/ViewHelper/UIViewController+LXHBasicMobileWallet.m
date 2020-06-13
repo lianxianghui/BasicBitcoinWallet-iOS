@@ -15,9 +15,9 @@
 @implementation UIViewController (LXHBasicMobileWallet)
 
 - (void)validatePINWithPassedHandler:(void (^)(void))handler {
-    if ([[LXHKeychainStore sharedInstance].store contains:kLXHKeychainStorePIN]) {
+    if ([LXHWallet hasPIN]) {
         UIAlertController *pinCodeInput = [UIUtils pinCodeInputOKCancelAlertWithMessage:nil textBlock:^(NSString *text) {
-            if ([[LXHKeychainStore sharedInstance] string:text isEqualToEncryptedStringForKey:kLXHKeychainStorePIN])
+            if (text && [LXHWallet verifyPIN:text])
                 handler();
             else
                 [self showOkAlertViewWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"PIN码不正确", nil) handler:nil];
