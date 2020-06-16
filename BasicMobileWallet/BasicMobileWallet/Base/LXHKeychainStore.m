@@ -89,7 +89,6 @@ static NSString *const aesPassword = LXHAESPassword;
 }
 
 - (BOOL)string:(NSString *)string isEqualToEncryptedStringForKey:(NSString *)key {
-    //TODO 能不能直接比较加密后的数据
     return [string isEqualToString:[self decryptedStringForKey:key error:nil]];
 }
 
