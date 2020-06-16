@@ -302,11 +302,12 @@
 }
 
 + (BOOL)hasPIN {
-    return ([[LXHKeychainStore sharedInstance].store contains:kLXHKeychainStorePIN]);
+    return ([[LXHKeychainStore sharedInstance].store contains:kLXHKeychainStorePIN] && [[LXHKeychainStore sharedInstance].store contains:kLXHKeychainStorePINSalt]);
 }
 
 + (void)clearPIN {
     [[LXHKeychainStore sharedInstance].store setData:nil forKey:kLXHKeychainStorePIN];
+    [[LXHKeychainStore sharedInstance].store setData:nil forKey:kLXHKeychainStorePINSalt];
 }
 
 //把哈希过的PIN和生成的随机盐加密后保存到keychain里
