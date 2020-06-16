@@ -43,12 +43,12 @@ static NSString *const aesPassword = LXHAESPassword;
     return self;
 }
 
-//备注：为了简化逻辑，没有加入对用AES加密后的数据进行数据完整性验证的逻辑
 - (BOOL)encryptAndSetData:(NSData *)data forKey:(NSString *)key {
     if (!data)
         return [self.store setData:nil forKey:key];
     
     NSError *error = nil;
+    //This generates an NSData including a header, encryption salt, HMAC salt, IV, ciphertext, and HMAC
     NSData *encryptedData = [RNEncryptor encryptData:data
                                         withSettings:kRNCryptorAES256Settings
                                             password:aesPassword
