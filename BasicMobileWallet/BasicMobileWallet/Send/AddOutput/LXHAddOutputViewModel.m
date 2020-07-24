@@ -47,7 +47,7 @@
             text = NSLocalizedString(@"地址: ", nil);
             addressText = self.output.address.base58String ?: @" ";
         } else {
-            text = NSLocalizedString(@"地址: 点击添加", nil);
+            text = NSLocalizedString(@"地址: 点击添加（支持P2PKH和P2SH类型的地址）", nil);
             addressText = @" ";
         }
         warningText = [self warningText];
