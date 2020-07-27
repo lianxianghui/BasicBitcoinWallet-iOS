@@ -51,19 +51,51 @@
     return _childKeychains;
 }
 
-- (void)setCurrentAddressIndex:(uint32_t)currentAddressIndex {
-    if (currentAddressIndex > _currentAddressIndex) {
-        uint32_t fromIndex =  _currentAddressIndex + 1;
-        uint32_t toIndex = currentAddressIndex;
-        for (uint32_t i = fromIndex; i <= toIndex; i++) {
-            [self deriveAndSaveNewChildKeychainAtIndex:i];
-        }
-        _currentAddressIndex = currentAddressIndex;
-        _usedAddresses = nil;
-        _currentAddress = nil;
-        NSString *string = @(_currentAddressIndex).description;
-        [[LXHKeychainStore sharedInstance].store setString:string forKey:[self currentAddressIndexKey]];
+//- (void)setCurrentAddressIndex:(uint32_t)currentAddressIndex {
+//    if (currentAddressIndex >= 0x80000000) {
+//        return;
+//    }
+//    if (currentAddressIndex > _currentAddressIndex) {
+//        uint32_t fromIndex =  _currentAddressIndex + 1;
+//        uint32_t toIndex = currentAddressIndex;
+//        for (uint32_t i = fromIndex; i <= toIndex; i++) {
+//            [self deriveAndSaveNewChildKeychainAtIndex:i];
+//        }
+//        _currentAddressIndex = currentAddressIndex;
+//        _usedAddresses = nil;
+//        _currentAddress = nil;
+//        NSString *string = @(_currentAddressIndex).description;
+//        [[LXHKeychainStore sharedInstance].store setString:string forKey:[self currentAddressIndexKey]];
+//    }
+//}
+
+- (BOOL)setCurrentAddressIndex:(uint32_t)currentAddressIndex error:(NSError **)error {
+    if (currentAddressIndex < _currentAddressIndex) {
+        NSMutableDictionary* info = [NSMutableDictionary dictionary];
+        [info setValue:NSLocalizedString(@"不能减少currentAddressIndex", nil) forKey:NSLocalizedDescriptionKey];
+        *error = [NSError errorWithDomain:@"LXHErrorDomain" code:-2 userInfo:info];
+        return NO;
     }
+    if (currentAddressIndex > BTCKeychainMaxIndex) {
+        NSMutableDictionary* info = [NSMutableDictionary dictionary];
+        [info setValue:NSLocalizedString(@"要设置的currrentAddressIndex已超出最大值", nil) forKey:NSLocalizedDescriptionKey];
+        *error = [NSError errorWithDomain:@"LXHErrorDomain" code:-1 userInfo:info];
+        return NO;
+    }
+    if (currentAddressIndex == _currentAddressIndex) {//don't need do anything
+        return YES;
+    }
+    uint32_t fromIndex =  _currentAddressIndex + 1;
+    uint32_t toIndex = currentAddressIndex;
+    for (uint32_t i = fromIndex; i <= toIndex; i++) {
+        [self deriveAndSaveNewChildKeychainAtIndex:i];
+    }
+    _currentAddressIndex = currentAddressIndex;
+    _usedAddresses = nil;
+    _currentAddress = nil;
+    NSString *string = @(_currentAddressIndex).description;
+    [[LXHKeychainStore sharedInstance].store setString:string forKey:[self currentAddressIndexKey]];
+    return YES;
 }
 
 - (NSString *)currentAddressIndexKey {
@@ -243,10 +275,15 @@
 
 - (BOOL)updateUsedBase58AddressesIfNeeded:(NSSet<NSString *> *)usedBase58AddressesSet {
     LXHAddress *currentAddress = [self currentLocalAddress];
+    //todo 这里假设了每个用过的地址都一定有过交易。也就是使用过的地址不能有跳过的。
+    //需要完善这个逻辑，比如找出接下来20个地址与usedBase58AddressesSet的交集，然后以交集中最有一个的index+1作为新的_currentAddressIndex
     if ([usedBase58AddressesSet containsObject:currentAddress.base58String]) {
-        [self setCurrentAddressIndex:_currentAddressIndex + 1];
-        [self updateUsedBase58AddressesIfNeeded:usedBase58AddressesSet];//检查下一个
-        return YES;
+        if ([self setCurrentAddressIndex:_currentAddressIndex + 1 error:nil]) {
+            [self updateUsedBase58AddressesIfNeeded:usedBase58AddressesSet];//检查下一个
+            return YES;
+        } else {
+            return NO;
+        }
     } else {
         return NO;
     }

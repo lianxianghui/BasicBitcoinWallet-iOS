@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
                            accountKeychain:(id)accountKeychain
                        currentAddressIndex:(uint32_t)currentAddressIndex;
 
-@property (nonatomic) uint32_t currentAddressIndex;//setCurrentAddressIndex有可能比较耗时
+@property (nonatomic, readonly) uint32_t currentAddressIndex;//当前第一个未使用的地址的index
 
 - (NSArray *)addressesFromIndex:(uint32_t)fromIndex count:(uint32_t)count;
 - (NSString *)addressStringWithIndex:(uint32_t)index;
@@ -48,6 +48,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray<NSData *> *)extendedPublicKeysFromIndex:(uint32_t)fromIndex toIndex:(uint32_t)toIndex;
 
 - (void)clearSavedPublicKeys;
+
+/**
+ 设置新的currentAddressIndex。
+ 要设置的的addressIndex：
+ 1.不能小于目前的currentAddressIndex。
+ 2.不能大于2^31-1，即0x7fffffff
+ 否则返回NO，同时传回error对象
+ setCurrentAddressIndex有可能比较耗时
+ */
+- (BOOL)setCurrentAddressIndex:(uint32_t)currentAddressIndex error:(NSError **)error;
 @end
 
 

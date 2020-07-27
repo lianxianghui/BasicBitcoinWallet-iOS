@@ -151,9 +151,13 @@
         (currentUnusedChangeAddressIndex > account.change.currentAddressIndex);
         NSMutableDictionary *resultDicCopy = [resultDic mutableCopy];
         if (indexNeedBeUpdated) {
-            [account.receiving setCurrentAddressIndex:currentUnusedReceivingAddressIndex];
-            [account.change setCurrentAddressIndex:currentUnusedChangeAddressIndex];
-            resultDicCopy[@"indexUpdated"] = @(YES);
+            //二者有一个被更新了就算有更新
+            BOOL updated = [account.receiving setCurrentAddressIndex:currentUnusedReceivingAddressIndex error:nil];
+            updated = updated || [account.change setCurrentAddressIndex:currentUnusedChangeAddressIndex error:nil];
+            if (updated)
+                resultDicCopy[@"indexUpdated"] = @(YES);
+            else
+                resultDicCopy[@"indexUpdated"] = @(NO);
         } else {
             resultDicCopy[@"indexUpdated"] = @(NO);
         }

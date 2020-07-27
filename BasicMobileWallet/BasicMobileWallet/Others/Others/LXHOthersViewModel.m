@@ -64,20 +64,33 @@
                           successBlock:(nullable void (^)(void))successBlock
                          failureBlock:(nullable void (^)(NSString *errorPrompt))failureBlock {
     [[[NSOperationQueue alloc] init] addOperationWithBlock:^{
-        [self updateCurrentAddressIndexData:data];
+        BOOL updated = [self updateCurrentAddressIndexData:data];
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            successBlock();
+            if (updated)
+                successBlock();
+            else
+                failureBlock(NSLocalizedString(@"传入的地址Index有误", nil));
         }];
+
     }];
 }
 
-- (void)updateCurrentAddressIndexData:(NSDictionary *)data {
+//如果data中的currentAddressIndex超出最大值时返回NO
+//如果比当前的小，会什么都不做，但目前不算为错误，返回YES。
+- (BOOL)updateCurrentAddressIndexData:(NSDictionary *)data {
     NSDictionary *currentAddressIndexData = data[@"currentAddressIndexData"];
     uint32_t currentReceivingAddressIndex = [currentAddressIndexData[@"currentReceivingAddressIndex"] unsignedIntValue];
     uint32_t currentChangeAddressIndex = [currentAddressIndexData[@"currentChangeAddressIndex"] unsignedIntValue];
     LXHAccount *mainAccount = LXHWallet.mainAccount;
-    [mainAccount.receiving setCurrentAddressIndex:currentReceivingAddressIndex];
-    [mainAccount.change setCurrentAddressIndex:currentChangeAddressIndex];
+    NSError *error = nil;
+    BOOL updated = [mainAccount.receiving setCurrentAddressIndex:currentReceivingAddressIndex error:&error];
+    if (!updated && error.code == -1)//超出最大值的情况
+        return NO;
+    updated = [mainAccount.change setCurrentAddressIndex:currentChangeAddressIndex error:&error];
+    if (!updated && error.code == -1)//超出最大值的情况
+        return NO;
+    
+    return YES;
 }
 
 - (NSString *)checkTransactionOutputsWithData:(NSDictionary *)data {
