@@ -94,6 +94,7 @@
         model.inputAmount = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", dic[@"input_amount"]]];
         model.outputAmount = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", dic[@"output_amount"]]];
         model.fees = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", dic[@"fee"]]];
+        model.coinbase = [dic[@"coinbase"] boolValue];
         NSArray *inputs = dic[@"inputs"];
         [inputs enumerateObjectsUsingBlock:^(NSDictionary *originalInputDic, NSUInteger idx, BOOL * _Nonnull stop) {
             NSMutableDictionary *inputDic = [originalInputDic mutableCopy];
