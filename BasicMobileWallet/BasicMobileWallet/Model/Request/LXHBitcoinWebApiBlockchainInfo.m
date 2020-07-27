@@ -76,11 +76,15 @@
 - (void)pushTransactionWithHex:(NSString *)hex
                   successBlock:(void (^)(NSDictionary *resultDic))successBlock
                   failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    //todo testnet不能用
     if (!hex)
         return;
-    NSString *url = [[self bashUrl] stringByAppendingString:@"pushtx"];
-    [LXHNetworkRequest POSTWithUrlString:url parameters:@{@"tx":hex} successCallback:successBlock failureCallback:failureBlock];
+//    NSString *url = [[self bashUrl] stringByAppendingString:@"pushtx"];
+//    [LXHNetworkRequest POSTWithUrlString:url parameters:@{@"tx":hex} successCallback:successBlock failureCallback:failureBlock];
+    //由于blockChainInfo的testnet不能用，这里用smartBit的
+    NSString *baseUrl = _type == LXHBitcoinNetworkTypeTestnet ?
+    @"https://testnet-api.smartbit.com.au/v1/blockchain/" :  @"https://api.smartbit.com.au/v1/blockchain/";
+    NSString *url = [baseUrl stringByAppendingString:@"pushtx"];
+    [LXHNetworkRequest POSTWithUrlString:url parameters:@{@"hex":hex} successCallback:successBlock failureCallback:failureBlock];
 }
 
 - (void)requestTransactionsWithUrl:(NSString *)url
