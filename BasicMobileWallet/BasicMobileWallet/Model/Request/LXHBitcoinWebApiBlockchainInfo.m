@@ -76,7 +76,7 @@
 - (void)pushTransactionWithHex:(NSString *)hex
                   successBlock:(void (^)(NSDictionary *resultDic))successBlock
                   failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    //todo 不能用
+    //todo testnet不能用
     if (!hex)
         return;
     NSString *url = [[self bashUrl] stringByAppendingString:@"pushtx"];
