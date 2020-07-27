@@ -146,7 +146,8 @@
 //}
 
 + (id<LXHBitcoinWebApi>)webApiWithType:(LXHBitcoinNetworkType)type {
-    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiBlockchainInfo alloc] initWithType:type]; //[[LXHBitcoinWebApiSmartbit alloc] initWithType:type];
+//    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiBlockchainInfo alloc] initWithType:type];
+    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiSmartbit alloc] initWithType:type];
     return ret;
 }
 
