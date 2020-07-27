@@ -12,6 +12,7 @@
 #import "LXHWallet.h"
 #import "BlocksKit.h"
 #import "CoreBitcoin.h"
+#import "LXHBitcoinWebApiBlockchainInfo.h"
 
 @implementation LXHTransactionDataRequest
 
@@ -145,7 +146,7 @@
 //}
 
 + (id<LXHBitcoinWebApi>)webApiWithType:(LXHBitcoinNetworkType)type {
-    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiSmartbit alloc] initWithType:type];
+    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiBlockchainInfo alloc] initWithType:type]; //[[LXHBitcoinWebApiSmartbit alloc] initWithType:type];
     return ret;
 }
 

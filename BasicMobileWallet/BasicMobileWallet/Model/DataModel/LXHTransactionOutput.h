@@ -24,8 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSString *lockingScript;
 @property (nonatomic) NSString *lockingScriptHex;
 @property (nonatomic) LXHLockingScriptType scriptType;
-@property (nonatomic) NSString *spendTxid;
-
+//@property (nonatomic) NSString *spendTxid;
+@property (nonatomic) BOOL spent;
 @property (nonatomic) NSMutableDictionary *tempData;
 
 - (BOOL)isUnspent;

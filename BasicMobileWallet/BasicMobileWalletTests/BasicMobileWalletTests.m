@@ -13,6 +13,7 @@
 #import "LXHTransactionDataManager.h"
 #import "CoreBitcoin.h"
 #import "BTCQRCode.h"
+#import "LXHBitcoinWebApiBlockchainInfo.h"
 
 @interface BasicMobileWalletTests : XCTestCase
 @property (nonatomic) NSArray *words;
@@ -138,18 +139,30 @@
     
 }
 
+- (void)testBlockInfoRequest {
+    LXHBitcoinWebApiBlockchainInfo *api = [[LXHBitcoinWebApiBlockchainInfo alloc] initWithType:LXHBitcoinNetworkTypeTestnet];
+    NSMutableArray *addresses = [NSMutableArray array];
+    [addresses addObject:@"2NAn85hBo6wH2HmZzKr39GudUNfnVcS5rwd"];
+    [addresses addObject:@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE"];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"测试成功"];
+    //expectation.expectedFulfillmentCount = 10;
+    [api requestAllTransactionsWithAddresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
+        [expectation fulfill];
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+    }];
+}
 
 - (void)testSmartBitRequest {
     //mrQoR4BMyZWyAZfHF4NuqRmkVtp87AqsUh,n1dAqxk6UCb6568d5f28W2sh6LvwkP5snW
     LXHBitcoinWebApiSmartbit *api = [[LXHBitcoinWebApiSmartbit alloc] initWithType:LXHBitcoinNetworkTypeTestnet];
-//    NSMutableArray *addresses = [NSMutableArray array];
-//    [addresses addObject:@"mrQoR4BMyZWyAZfHF4NuqRmkVtp87AqsUh"];
-//    [addresses addObject:@"n1dAqxk6UCb6568d5f28W2sh6LvwkP5snW"];
+    NSMutableArray *addresses = [NSMutableArray array];
+    [addresses addObject:@"mrQoR4BMyZWyAZfHF4NuqRmkVtp87AqsUh"];
+    [addresses addObject:@"n1dAqxk6UCb6568d5f28W2sh6LvwkP5snW"];
     XCTestExpectation *expectation = [self expectationWithDescription:@"测试成功"];
-//    [api requestAllTransactionsWithAddresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
-//        [expectation fulfill];
-//    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
-//    }];
+    [api requestAllTransactionsWithAddresses:addresses successBlock:^(NSDictionary * _Nonnull resultDic) {
+        [expectation fulfill];
+    } failureBlock:^(NSDictionary * _Nonnull resultDic) {
+    }];
     NSString *hex = @"01000000000101522dd6a1b041135d261390a9b27c8a7006f0f707e94096cc8b252ba5b2a018d70100000000f0ffffff0340420f00000000001976a914e72a554a5f69079401fed4fb0cb3561ed3260e2f88ac9b7b3b0000000000160014df3397824da9a5c90666b2ccf9c0643d0494cb650000000000000000196a1768747470733a2f2f746274632e6269746170732e636f6d024730440220046e51ec44ef234b6b3789e7ca8bbc58a9446ffdb23389b55ce7fc4f236f7409022043bfc39b653f65f6ae195523938a959dd7b1e4e33bebc99346ea641501ccea5c01210259948c4e7d62fcb8e634a42f1c161e9520177c25fd6865f325d1ecbea02acd9700000000";
     
     

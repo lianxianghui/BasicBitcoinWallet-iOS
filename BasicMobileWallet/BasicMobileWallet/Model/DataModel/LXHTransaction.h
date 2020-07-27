@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHTransaction : NSObject <NSSecureCoding>
 
-@property (nonatomic) NSString * blockhash;
+//@property (nonatomic) NSString * blockhash;
 @property (nonatomic) NSString *block;
 @property (nonatomic) NSString *firstSeen;//发起时间
 @property (nonatomic) NSString *time;//打包进区块的时间

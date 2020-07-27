@@ -229,6 +229,7 @@
 		8CBCA91C2412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA9182412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINView.m */; };
 		8CBCA91D2412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA9192412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewController.m */; };
 		8CBCA920241233B700655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA91F241233B700655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewModel.m */; };
+		8CC6C78724CC3D6A0070B871 /* LXHBitcoinWebApiBlockchainInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CC6C78624CC3D6A0070B871 /* LXHBitcoinWebApiBlockchainInfo.m */; };
 		8CCA7D2A23ACC98E00E4E9B2 /* LXHOutputDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CCA7D2923ACC98E00E4E9B2 /* LXHOutputDetailViewModel.m */; };
 		8CCA7D2D23ACCBF500E4E9B2 /* LXHTransactionDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CCA7D2C23ACCBF500E4E9B2 /* LXHTransactionDetailViewModel.m */; };
 		8CCA7D3023ADC91900E4E9B2 /* LXHUnLockingScriptCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CCA7D2E23ADC91900E4E9B2 /* LXHUnLockingScriptCell.m */; };
@@ -920,6 +921,8 @@
 		8CBCA91B2412333C00655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicPassphraseForResettingPINViewController.h; sourceTree = "<group>"; };
 		8CBCA91E241233B700655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHWalletMnemonicPassphraseForResettingPINViewModel.h; sourceTree = "<group>"; };
 		8CBCA91F241233B700655C9F /* LXHWalletMnemonicPassphraseForResettingPINViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHWalletMnemonicPassphraseForResettingPINViewModel.m; sourceTree = "<group>"; };
+		8CC6C78524CC3D6A0070B871 /* LXHBitcoinWebApiBlockchainInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHBitcoinWebApiBlockchainInfo.h; sourceTree = "<group>"; };
+		8CC6C78624CC3D6A0070B871 /* LXHBitcoinWebApiBlockchainInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHBitcoinWebApiBlockchainInfo.m; sourceTree = "<group>"; };
 		8CCA7D2823ACC98E00E4E9B2 /* LXHOutputDetailViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHOutputDetailViewModel.h; sourceTree = "<group>"; };
 		8CCA7D2923ACC98E00E4E9B2 /* LXHOutputDetailViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHOutputDetailViewModel.m; sourceTree = "<group>"; };
 		8CCA7D2B23ACCBF500E4E9B2 /* LXHTransactionDetailViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHTransactionDetailViewModel.h; sourceTree = "<group>"; };
@@ -1293,6 +1296,8 @@
 				8C6ACE8823574EA100511D5E /* LXHBitcoinWebApi.h */,
 				8C6ACE8B23574F8300511D5E /* LXHBitcoinWebApiSmartbit.h */,
 				8C6ACE8C23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m */,
+				8CC6C78524CC3D6A0070B871 /* LXHBitcoinWebApiBlockchainInfo.h */,
+				8CC6C78624CC3D6A0070B871 /* LXHBitcoinWebApiBlockchainInfo.m */,
 				8C2CC6CB232F679A005AA93C /* LXHAccountAddressSearcher.h */,
 				8C2CC6C9232F6799005AA93C /* LXHAccountAddressSearcher.m */,
 				8C493618246944790099A306 /* LXHTransactionDataRequest.h */,
@@ -2691,6 +2696,7 @@
 				8C9332D4235D8BD600FBF238 /* LXHBalanceViewController.m in Sources */,
 				8C2CC6E8233236A9005AA93C /* LXHShowWalletMnemonicWordsViewController.m in Sources */,
 				8CDCDE2623C998A6001F1287 /* LXHValidatePINView.m in Sources */,
+				8CC6C78724CC3D6A0070B871 /* LXHBitcoinWebApiBlockchainInfo.m in Sources */,
 				8CA3226822DEBE9900CEA828 /* BTCQRCode.m in Sources */,
 				8C2CC6BD232F20E5005AA93C /* LXHSettingViewController.m in Sources */,
 				8CEAECC32383D508005754B3 /* LXHTransactionInfoView.m in Sources */,

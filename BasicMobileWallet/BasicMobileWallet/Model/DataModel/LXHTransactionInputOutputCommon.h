@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, LXHLockingScriptType) {
 @property (nonatomic) NSString *txid;//作为输出，所在交易的Id
 @property (nonatomic) NSUInteger index;
 
-@property (nonatomic, readonly) LXHBTCAmount valueSat;
+@property (nonatomic) LXHBTCAmount valueSat;
 + (NSDecimalNumber *)valueSumOfInputsOrOutputs:(NSArray<LXHTransactionInputOutputCommon *> *)inputsOrOutputs;
 + (LXHBTCAmount)valueSatSumOfInputsOrOutputs:(NSArray<LXHTransactionInputOutputCommon *> *)inputsOrOutputs;
 @end

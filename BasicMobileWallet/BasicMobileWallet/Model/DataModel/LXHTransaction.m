@@ -27,7 +27,7 @@
     if (!self) {
         return nil;
     }
-    LXHDecodeObjectOfStringClassStament(blockhash);
+//    LXHDecodeObjectOfStringClassStament(blockhash);
     LXHDecodeObjectOfStringClassStament(block);
     LXHDecodeObjectOfStringClassStament(firstSeen);
     LXHDecodeObjectOfStringClassStament(time);
@@ -43,7 +43,7 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-    LXHEncodeObjectStament(blockhash);
+//    LXHEncodeObjectStament(blockhash);
     LXHEncodeObjectStament(block);
     LXHEncodeObjectStament(firstSeen);
     LXHEncodeObjectStament(time);

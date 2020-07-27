@@ -14,11 +14,11 @@
 #import "LXHAmount.h"
 
 @interface LXHTransactionInputOutputCommon ()
-@property (nonatomic, readwrite) LXHBTCAmount valueSat;
+//@property (nonatomic, readwrite) LXHBTCAmount valueSat;
 @end
 
 @implementation LXHTransactionInputOutputCommon
-@synthesize address = _address;
+@synthesize address = _address, valueSat = _valueSat;
 
 + (BOOL)supportsSecureCoding {
     return YES;
@@ -57,6 +57,11 @@
         _valueSat = LXHBTCAmountError;
         _valueBTC = nil;
     }
+}
+
+- (void)setValueSat:(LXHBTCAmount)valueSat {
+    NSDecimalNumber *valueBTC = [NSDecimalNumber decimalBTCValueWithSatValue:valueSat];
+    [self setValueBTC:valueBTC];
 }
 
 - (LXHBTCAmount)valueSat {

@@ -25,7 +25,8 @@
     LXHDecodeObjectOfStringClassStament(lockingScript);
     LXHDecodeObjectOfStringClassStament(lockingScriptHex);
     LXHDecodeIntegerTypeStament(scriptType);
-    LXHDecodeObjectOfStringClassStament(spendTxid);
+//    LXHDecodeObjectOfStringClassStament(spendTxid);
+    LXHDecodeBOOLTypeStament(spent);
     return self;
 }
 
@@ -34,11 +35,12 @@
     LXHEncodeObjectStament(lockingScript);
     LXHEncodeObjectStament(lockingScriptHex);
     LXHEncodeIntegerStament(scriptType);
-    LXHEncodeObjectStament(spendTxid);
+    LXHEncodeBOOLStament(spent);
+//    LXHEncodeObjectStament(spendTxid);
 }
 
 - (BOOL)isUnspent {
-    return _spendTxid == nil;
+    return !_spent;
 }
 
 - (BOOL)isEqual:(id)object {

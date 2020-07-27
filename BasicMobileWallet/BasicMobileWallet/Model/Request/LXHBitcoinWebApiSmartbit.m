@@ -86,7 +86,7 @@
         [dic eliminateAllNullObjectValues];
         LXHTransaction *model = [[LXHTransaction alloc] init];
         model.txid = dic[@"txid"];
-        model.blockhash = dic[@"hash"];
+//        model.blockhash = dic[@"hash"];
         model.block = dic[@"block"];
         model.time = dic[@"time"];
         model.firstSeen = dic[@"first_seen"];
@@ -119,7 +119,7 @@
             LXHTransactionOutput *output = [LXHTransactionOutput new];
             output.index = [outputDic[@"n"] unsignedIntegerValue];
             output.valueBTC = [[NSDecimalNumber alloc] initWithString:[NSString stringWithFormat:@"%@", outputDic[@"value"]]];
-            output.spendTxid = outputDic[@"spend_txid"];
+            output.spent = (outputDic[@"spend_txid"] != nil);
             NSArray *outputAddresses = [outputDic valueForKey:@"addresses"];
             if (outputAddresses.count == 1) //目前只处理每个输出只有一个输出地址的情况
                 output.address = [LXHAddress addressWithBase58String:outputAddresses[0]];
