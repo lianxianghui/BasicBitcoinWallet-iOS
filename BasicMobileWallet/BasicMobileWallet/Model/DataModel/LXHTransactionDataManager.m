@@ -70,7 +70,7 @@ static NSString *const aesPassword = LXHAESPassword;
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     dic[@"date"] = [NSDate date];
     dic[@"transactions"] = sortedArray;
-    if ([self saveTransactionListToCacheFile]) {
+    if ([self saveTransactionDataToCacheFile:dic]) {
         self.transactionData = dic;
         return YES;
     } else {
@@ -126,8 +126,8 @@ static NSString *const aesPassword = LXHAESPassword;
     return ret;
 }
 
-- (BOOL)saveTransactionListToCacheFile {
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_transactionData];
+- (BOOL)saveTransactionDataToCacheFile:(NSDictionary *)transactionData {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:transactionData];
     NSData *encryptedData = [RNEncryptor encryptData:data
                                         withSettings:kRNCryptorAES256Settings
                                             password:aesPassword

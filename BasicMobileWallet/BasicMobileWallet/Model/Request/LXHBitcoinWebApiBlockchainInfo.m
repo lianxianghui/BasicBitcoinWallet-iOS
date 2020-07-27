@@ -120,7 +120,7 @@
             input.vout = [[inputDic valueForKeyPath:@"prev_out.n"] unsignedIntegerValue];
             NSString *inputAddress = [inputDic valueForKeyPath:@"prev_out.addr"];
             input.address = [LXHAddress addressWithBase58String:inputAddress];
-            NSString *unlockingScriptHex = [inputDic valueForKeyPath:@"prev_out.script"];
+            NSString *unlockingScriptHex = [inputDic valueForKeyPath:@"script"];
             BTCScript *script = [[BTCScript alloc] initWithHex:unlockingScriptHex];
             input.unlockingScript = script.string;
 //            input.witness = inputDic[@"witness"]; todo
