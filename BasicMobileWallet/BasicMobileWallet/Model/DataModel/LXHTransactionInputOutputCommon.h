@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 typedef NS_ENUM(NSInteger, LXHLockingScriptType) {
+    LXHLockingScriptTypeUnknown = -1,
     LXHLockingScriptTypeUnSupported = 0,
     LXHLockingScriptTypeP2PKH,//Pay-to-Public-Key-Hash (P2PKH)
     LXHLockingScriptTypeP2SH,//Pay-to-Script-Hash (P2SH)

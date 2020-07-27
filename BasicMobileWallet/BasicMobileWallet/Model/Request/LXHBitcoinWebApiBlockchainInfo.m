@@ -98,12 +98,11 @@
         NSMutableDictionary *dic = [originalDic mutableCopy];
         [dic eliminateAllNullObjectValues];
         LXHTransaction *model = [[LXHTransaction alloc] init];
-        model.txid = dic[@"hash"];
-//        model.blockhash = dic[@"hash"];
+        model.txid = dic[@"hash"];//对应smartbit的txid
         model.block = dic[@"block_height"];
         model.time = dic[@"time"];
         model.firstSeen = model.time;//没有发起时间，只能用打包时间
-//        model.confirmations = dic[@"confirmations"];
+//        model.confirmations = dic[@"confirmations"];//blockChainInfo返回的数据 没有确认数
 
         model.fees = [NSDecimalNumber decimalBTCValueWithSatValue:[dic[@"fee"] longLongValue]];
         NSArray *inputs = dic[@"inputs"];
@@ -123,8 +122,10 @@
             NSString *unlockingScriptHex = [inputDic valueForKeyPath:@"script"];
             BTCScript *script = [[BTCScript alloc] initWithHex:unlockingScriptHex];
             input.unlockingScript = script.string;
-//            input.witness = inputDic[@"witness"]; todo
-//            input.scriptType = [self scriptTypeByTypeString:inputDic[@"type"]]; todo
+            NSString *witness = inputDic[@"witness"];
+            if (witness)
+                input.witness =  @[witness];//blockChainInfo返回的数据的witness字段不全，最多只有一个
+            input.scriptType = LXHLockingScriptTypeUnknown;//blockChainInfo返回的数据的type字段有问题
             input.sequence = [inputDic[@"sequence"] unsignedIntegerValue];
             [model.inputs addObject:input];
         }];
@@ -141,12 +142,12 @@
             outputAmount += value;
             output.valueSat = value;
             
-            output.spent = [outputDic[@"spent"] boolValue];//todo
+            output.spent = [outputDic[@"spent"] boolValue];
             output.address = [LXHAddress addressWithBase58String:outputDic[@"addr"]];
             output.lockingScriptHex = [outputDic valueForKeyPath:@"script"];
             BTCScript *lockingScript = [[BTCScript alloc] initWithHex:output.lockingScriptHex];
             output.lockingScript = lockingScript.string;
-//            output.scriptType = [self scriptTypeByTypeString:outputDic[@"type"]]; //0
+            output.scriptType = LXHLockingScriptTypeUnknown;//blockChainInfo返回的数据的type字段有问题
             output.txid = model.txid;
             [model.outputs addObject:output];
         }];
@@ -155,33 +156,6 @@
     }
     return ret;
 }
-
-- (LXHLockingScriptType)scriptTypeByType:(NSUInteger)type {
-    switch (type) {
-        case 0:
-            return LXHLockingScriptTypeP2PKH;
-            break;
-            
-        default:
-            return LXHLockingScriptTypeUnSupported;
-            break;
-    }
-    
-//    if ([typeString isEqualToString:@"pubkeyhash"])
-//        return LXHLockingScriptTypeP2PKH;
-//    if ([typeString isEqualToString:@"scripthash"])
-//        return LXHLockingScriptTypeP2SH;
-//    if ([typeString isEqualToString:@"witness_v0_keyhash"])
-//        return LXHLockingScriptTypeP2WPKH;
-//    if ([typeString isEqualToString:@"witness_v0_scripthash"])
-//        return LXHLockingScriptTypeP2WSH;
-//    if ([typeString isEqualToString:@"nulldata"])
-//        return LXHLockingScriptTypeNullData;
-    //其他暂时不支持
-    //nulldata  无实际输出，用OP_RETURN 存放数据的输出会返回 nulldata
-    
-}
-
 
 - (NSString *)transactionByAddressesUrlFormat {
     return [[self bashUrl] stringByAppendingString:@"multiaddr"];
