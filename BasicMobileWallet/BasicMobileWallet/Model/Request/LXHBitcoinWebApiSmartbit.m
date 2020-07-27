@@ -45,11 +45,9 @@
     }];
 }
 
-- (void)requestTransactionsByIds:(NSArray<NSString *> *)txids
-                    successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
-                    failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    NSString *txidsString = [txids componentsJoinedByString:@","];
-    NSString *url = [NSString stringWithFormat:[self transactionByIdsUrlFormat], txidsString];
+- (void)requestTransactionsByUrl:(NSString *)url
+                   successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
+                   failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     [LXHNetworkRequest GETWithUrlString:url parameters:nil successCallback:^(NSDictionary * _Nonnull resultDic) {
         BOOL success =  [resultDic[@"success"] boolValue];
         if (!success) {
@@ -66,7 +64,7 @@
             failureBlock(nil);
             return;
         }
-            
+        
         NSArray *models = [self allTransactionModelsWithTransactionDics:transactions];
         NSMutableDictionary *ret = [NSMutableDictionary dictionary];
         ret[@"transactions"] = models;
@@ -76,6 +74,21 @@
     } failureCallback:^(NSDictionary * _Nonnull resultDic) {
         failureBlock(resultDic);
     }];
+}
+
+- (void)requestTransactionsById:(NSString *)txid
+                   successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
+                   failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+    NSString *url = [NSString stringWithFormat:[self transactionByIdsUrlFormat], txid];
+    [self requestTransactionsByUrl:url successBlock:successBlock failureBlock:failureBlock];
+}
+
+- (void)requestTransactionsByIds:(NSArray<NSString *> *)txids
+                    successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
+                    failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+    NSString *txidsString = [txids componentsJoinedByString:@","];
+    NSString *url = [NSString stringWithFormat:[self transactionByIdsUrlFormat], txidsString];
+    [self requestTransactionsByUrl:url successBlock:successBlock failureBlock:failureBlock];
 }
 
 //参考 https://testnet-api.smartbit.com.au/v1/blockchain/address/mrQoR4BMyZWyAZfHF4NuqRmkVtp87AqsUh,n1dAqxk6UCb6568d5f28W2sh6LvwkP5snW/wallet 的返回值

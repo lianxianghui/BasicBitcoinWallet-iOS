@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
                               successBlock:(void (^)(NSDictionary *resultDic))successBlock
                               failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 
-+ (void)requestTransactionsWithTxids:(NSArray *)txids
++ (void)requestTransactionsWithTxid:(NSString *)txid
                         successBlock:(void (^)(NSDictionary *resultDic))successBlock
                         failureBlock:(void (^)(NSDictionary *resultDic))failureBlock;
 

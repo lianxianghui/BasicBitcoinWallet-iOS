@@ -46,11 +46,11 @@
     [webApi requestAllTransactionsWithAddresses:addresses successBlock:successBlock failureBlock:failureBlock];
 }
 
-+ (void)requestTransactionsWithTxids:(NSArray *)txids
++ (void)requestTransactionsWithTxid:(NSString *)txid
                         successBlock:(void (^)(NSDictionary *resultDic))successBlock
                         failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
     id<LXHBitcoinWebApi> webApi = [self webApiWithType:LXHWallet.mainAccount.currentNetworkType];
-    [webApi requestTransactionsByIds:txids successBlock:successBlock failureBlock:failureBlock];
+    [webApi requestTransactionsById:txid successBlock:successBlock failureBlock:failureBlock];
 }
 
 //successBlock
@@ -146,8 +146,8 @@
 //}
 
 + (id<LXHBitcoinWebApi>)webApiWithType:(LXHBitcoinNetworkType)type {
-//    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiBlockchainInfo alloc] initWithType:type];
-    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiSmartbit alloc] initWithType:type];
+    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiBlockchainInfo alloc] initWithType:type];
+//    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiSmartbit alloc] initWithType:type];
     return ret;
 }
 

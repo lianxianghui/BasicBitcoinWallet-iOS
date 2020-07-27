@@ -47,17 +47,40 @@
     
 }
 
-- (void)requestTransactionsByIds:(NSArray<NSString *> *)txids
+- (void)requestTransactionsByUrl:(NSString *)url
                     successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
                     failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    
+    [LXHNetworkRequest GETWithUrlString:url parameters:nil successCallback:^(NSDictionary * _Nonnull resultDic) {
+        if (!resultDic)
+            failureBlock(nil);
+        NSArray *transactions = @[resultDic];
+        NSArray *models = [self allTransactionModelsWithTransactionDics:transactions];
+        NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+        ret[@"transactions"] = models;
+        if (transactions.count == 1) //for convenience
+            ret[@"transaction"] = models[0];
+        successBlock(ret);
+    } failureCallback:^(NSDictionary * _Nonnull resultDic) {
+        failureBlock(resultDic);
+    }];
+}
+
+- (void)requestTransactionsById:(NSString *)txid
+                   successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
+                   failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
+    NSString *url = [NSString stringWithFormat:[self transactionByIdsUrlFormat], txid];
+    [self requestTransactionsByUrl:url successBlock:successBlock failureBlock:failureBlock];
 }
 
 
 - (void)pushTransactionWithHex:(NSString *)hex
                   successBlock:(void (^)(NSDictionary *resultDic))successBlock
                   failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    
+    //todo 不能用
+    if (!hex)
+        return;
+    NSString *url = [[self bashUrl] stringByAppendingString:@"pushtx"];
+    [LXHNetworkRequest POSTWithUrlString:url parameters:@{@"tx":hex} successCallback:successBlock failureCallback:failureBlock];
 }
 
 - (void)requestTransactionsWithUrl:(NSString *)url
