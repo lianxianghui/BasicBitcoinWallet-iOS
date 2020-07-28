@@ -7,7 +7,7 @@
 //
 
 #import "LXHWalletMnemonicPassphraseForResettingPINViewModel.h"
-#import "LXHSetPassphraseViewModelForResettingPIN.h"
+#import "LXHInputExistingPassphraseViewModel.h"
 #import "LXHWallet.h"
 
 @implementation LXHWalletMnemonicPassphraseForResettingPINViewModel
@@ -21,7 +21,7 @@
 }
 
 - (id)viewModelOfSetPassphrasePage {
-    id viewModel = [[LXHSetPassphraseViewModelForResettingPIN alloc] initWithWords:_words];
+    id viewModel = [[LXHInputExistingPassphraseViewModel alloc] initWithWords:_words];
     return viewModel;
 }
 

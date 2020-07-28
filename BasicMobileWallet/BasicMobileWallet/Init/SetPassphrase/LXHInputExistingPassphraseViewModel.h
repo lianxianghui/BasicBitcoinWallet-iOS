@@ -1,8 +1,8 @@
 //
-//  LXHSetPassphraseViewModelForResettingPIN.h
+//  LXHInputExistingPassphraseViewModel.h
 //  BasicMobileWallet
 //
-//  Created by lian on 2020/3/6.
+//  Created by lian on 2020/7/28.
 //  Copyright © 2020年 lianxianghui. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LXHSetPassphraseViewModelForResettingPIN : LXHSetPassphraseViewModel
+@interface LXHInputExistingPassphraseViewModel : LXHSetPassphraseViewModel
 
 @end
 
