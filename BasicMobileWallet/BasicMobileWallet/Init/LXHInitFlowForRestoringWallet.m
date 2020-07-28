@@ -23,7 +23,7 @@
     return sharedInstance;
 }
 
-- (id)checkWalletMnemonicWordsClickNextButtonNavigationInfo {
+- (NSDictionary *)checkWalletMnemonicWordsClickNextButtonNavigationInfo {
     id viewModel = [[LXHWalletMnemonicPassphraseForRestoringViewModel alloc] initWithWords:self.mnemonicWords];
     return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseForRestoringViewController", @"viewModel":viewModel};
 }

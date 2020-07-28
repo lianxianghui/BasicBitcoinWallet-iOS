@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 //SelectMnemonicWordLengthView
 - (NSDictionary *)selectMnemonicWordLengthViewClickRowNavigationInfo;
 //CheckWalletMnemonicWordsView
-- (id)checkWalletMnemonicWordsClickNextButtonNavigationInfo;
+- (NSDictionary *)checkWalletMnemonicWordsClickNextButtonNavigationInfo;
 //SetPassphraseView
 - (NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase;
 //GenerateWalletView

@@ -45,7 +45,7 @@ static LXHInitFlow *currentFlow = nil;
     _mnemonicPassphrase = nil;
 }
 
-- (id)checkWalletMnemonicWordsClickNextButtonNavigationInfo {
+- (NSDictionary *)checkWalletMnemonicWordsClickNextButtonNavigationInfo {
     return nil;
 }
 
