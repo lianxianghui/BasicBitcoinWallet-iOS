@@ -23,6 +23,12 @@
     return sharedInstance;
 }
 
+- (NSDictionary *)selectMnemonicWordLengthViewClickRowNavigationInfo {
+    id viewModel = [[LXHInputMnemonicWordsViewModel alloc] initWithWordLength:self.mnemonicWordsLength];
+    NSString *controllerClassName = @"LXHInputMnemonicWordsViewController";
+    return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
+}
+
 - (NSDictionary *)checkWalletMnemonicWordsClickNextButtonNavigationInfo {
     id viewModel = [[LXHWalletMnemonicPassphraseForRestoringViewModel alloc] initWithWords:self.mnemonicWords];
     return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseForRestoringViewController", @"viewModel":viewModel};
@@ -32,12 +38,6 @@
     [LXHInitFlow currentFlow].mnemonicPassphrase = passphrase;
     NSString *controllerClassName = @"LXHGenerateWalletViewController";
     id viewModel = [[LXHGenerateWalletViewModel alloc] initWithMnemonicCodeWords:self.mnemonicWords mnemonicPassphrase:passphrase];
-    return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
-}
-
-- (NSDictionary *)selectMnemonicWordLengthViewClickRowNavigationInfo {
-    id viewModel = [[LXHInputMnemonicWordsViewModel alloc] initWithWordLength:self.mnemonicWordsLength];
-    NSString *controllerClassName = @"LXHInputMnemonicWordsViewController";
     return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
 }
 

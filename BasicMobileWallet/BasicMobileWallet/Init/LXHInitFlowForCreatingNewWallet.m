@@ -22,6 +22,12 @@
     return sharedInstance;
 }
 
+- (NSDictionary *)selectMnemonicWordLengthViewClickRowNavigationInfo {
+    id viewModel = [[LXHWalletMnemonicWordsOneByOneViewModel alloc] initWithWordLength:self.mnemonicWordsLength];
+    NSString *controllerClassName = @"LXHWalletMnemonicWordsOneByOneViewController";
+    return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
+}
+
 - (NSDictionary *)checkWalletMnemonicWordsClickNextButtonNavigationInfo {
     id viewModel = [[LXHWalletMnemonicPassphraseViewModel alloc] initWithWords:self.mnemonicWords];
     return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseViewController", @"viewModel":viewModel};
@@ -33,13 +39,6 @@
     id viewModel = [[LXHGenerateWalletViewModel alloc] initWithMnemonicCodeWords:self.mnemonicWords mnemonicPassphrase:passphrase];
     return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
 }
-
-- (NSDictionary *)selectMnemonicWordLengthViewClickRowNavigationInfo {
-    id viewModel = [[LXHWalletMnemonicWordsOneByOneViewModel alloc] initWithWordLength:self.mnemonicWordsLength];
-    NSString *controllerClassName = @"LXHWalletMnemonicWordsOneByOneViewController";
-    return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
-}
-
 
 //GenerateWalletView
 - (NSDictionary *)generateWalletViewClickButtonNavigationInfoWithNetworkType:(LXHBitcoinNetworkType)networkType {
