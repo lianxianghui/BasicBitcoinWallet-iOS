@@ -1,8 +1,8 @@
-// LXHWalletMnemonicWordsView.m
+// LXHCheckWalletMnemonicWordsView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-12-20
-//  Copyright © 2019年 lianxianghui. All rights reserved.
+//  Created by lianxianghui on 20-07-28
+//  Copyright © 2020年 lianxianghui. All rights reserved.
 
 
 #import "LXHCheckWalletMnemonicWordsView.h"
@@ -34,22 +34,28 @@
     [self addSubview:self.button1];
     [self addSubview:self.text];
     [self addSubview:self.promot];
+    [self addSubview:self.promotTitle];
     [self addSubview:self.customNavigationBar];
 }
 
 - (void)makeConstraints {
     [self.button1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.promot.mas_left);
+        make.left.equalTo(self.promotTitle.mas_left);
         make.width.mas_equalTo(93);
         make.height.mas_equalTo(36);
         make.top.equalTo(self.text.mas_bottom).offset(13);
     }];
     [self.text mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.promot.mas_left);
-        make.right.equalTo(self.promot.mas_right);
-        make.top.equalTo(self.promot.mas_bottom).offset(5);
+        make.left.equalTo(self.promotTitle.mas_left);
+        make.right.equalTo(self.promotTitle.mas_right);
+        make.top.equalTo(self.promot.mas_bottom);
     }];
     [self.promot mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.promotTitle.mas_left);
+        make.right.equalTo(self.promotTitle.mas_right);
+        make.top.equalTo(self.promotTitle.mas_bottom).offset(2);
+    }];
+    [self.promotTitle mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.mas_right).offset(-19);
         make.left.equalTo(self.mas_left).offset(19);
         make.top.equalTo(self.customNavigationBar.mas_bottom).offset(19);
@@ -84,7 +90,7 @@
         make.left.equalTo(self.customNavigationBar.mas_left);
         make.right.equalTo(self.customNavigationBar.mas_right);
         make.bottom.equalTo(self.customNavigationBar.mas_bottom);
-        make.height.mas_equalTo(0.5);
+        make.height.mas_equalTo(0.5099999904632568);
     }];
 }
 
@@ -170,36 +176,6 @@
         NSMutableDictionary *textAttributes = nil;
         NSAttributedString *text = nil;
 
-        font = [UIFont fontWithName:@"PingFangSC-Regular" size:18];
-        if (!font) font = [UIFont systemFontOfSize:18];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentLeft;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请核对助记词", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"" size:18];
-        if (!font) font = [UIFont systemFontOfSize:18];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentLeft;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
         font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -212,12 +188,33 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请按顺序核对助记词，务必保证您刚刚记录下的助记词序列与下面显示的英文单词序列完全一致。如果没问题点击下一步。\n", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请按顺序核对助记词，务必保证您刚刚记录下的助记词序列与下面显示的英文单词序列完全一致。如果没问题点击下一步。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
-
         _promot.attributedText = attributedText;
     }
     return _promot;
+}
+
+- (UILabel *)promotTitle {
+    if (!_promotTitle) {
+        _promotTitle = [[UILabel alloc] init];
+        UIFont *font = [UIFont fontWithName:@"PingFangSC-Regular" size:18];
+        if (!font) font = [UIFont systemFontOfSize:18];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentLeft;
+        paragraphStyle.maximumLineHeight = 0;
+        paragraphStyle.minimumLineHeight = 0;
+        paragraphStyle.paragraphSpacing = 0;
+
+        NSMutableDictionary *textAttributes = [NSMutableDictionary dictionary];
+        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
+        [textAttributes setObject:font forKey:NSFontAttributeName];
+        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
+        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"请核对助记词", nil) attributes:textAttributes];
+        _promotTitle.attributedText = text;
+    }
+    return _promotTitle;
 }
 
 - (UIView *)customNavigationBar {

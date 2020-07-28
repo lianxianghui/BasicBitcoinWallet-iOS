@@ -8,7 +8,7 @@
 
 #import "LXHInputMnemonicWordsViewModel.h"
 #import "BTCMnemonic.h"
-#import "LXHCheckWalletMnemonicWordsViewModel.h"
+#import "LXHCheckWalletMnemonicWordsViewModelForCheckingInput.h"
 #import "LXHInitFlow.h"
 
 @interface LXHInputMnemonicWordsViewModel ()
@@ -79,8 +79,8 @@
 }
 
 - (id)checkWalletMnemonicWordsViewModel {
-    [LXHInitFlow currentFlow].mnemonicWords = self.inputWords;
-    return [[LXHCheckWalletMnemonicWordsViewModel alloc] initWithWords:self.inputWords];
+//    [LXHInitFlow currentFlow].mnemonicWords = self.inputWords;
+    return [[LXHCheckWalletMnemonicWordsViewModelForCheckingInput alloc] initWithWords:self.inputWords];
 }
 
 @end

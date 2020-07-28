@@ -20,6 +20,10 @@
     return self;
 }
 
+- (NSString *)prompt {
+    return nil;
+}
+
 - (NSString *)mnemonicWordsText {
     NSString *text = [self.words componentsJoinedByString:@" "];
     return text;

@@ -1,8 +1,8 @@
-// LXHWalletMnemonicWordsViewController.m
+// LXHCheckWalletMnemonicWordsViewController.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-07-13
-//  Copyright © 2019年 lianxianghui. All rights reserved.
+//  Created by lianxianghui on 20-07-28
+//  Copyright © 2020年 lianxianghui. All rights reserved.
 
 #import "LXHCheckWalletMnemonicWordsViewController.h"
 #import "Masonry.h"
@@ -18,9 +18,8 @@
         alpha:(rgbaValue & 0x000000FF)/255.0]
     
 @interface LXHCheckWalletMnemonicWordsViewController()
-
 @property (nonatomic) LXHCheckWalletMnemonicWordsView *contentView;
-@property (nonatomic) LXHCheckWalletMnemonicWordsViewModel *viewModel;//有可能是LXHWalletMnemonicWordsViewModel的子类
+@property (nonatomic) LXHCheckWalletMnemonicWordsViewModel *viewModel;
 @end
 
 @implementation LXHCheckWalletMnemonicWordsViewController
@@ -64,6 +63,8 @@
 
 - (void)setContentViewProperties {
     [self.contentView.text updateAttributedTextString:[_viewModel mnemonicWordsText]];
+    if ([_viewModel prompt])
+        [self.contentView.promot updateAttributedTextString:[_viewModel prompt]];
 }
 
 //Actions
@@ -73,14 +74,6 @@
     id viewModel = navigationInfo[@"viewModel"];
     UIViewController *controller = [[NSClassFromString(controllerClassName) alloc] initWithViewModel:viewModel];
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-- (void)button1TouchDown:(UIButton *)sender {
-    sender.alpha = 0.5;
-}
-
-- (void)button1TouchUpOutside:(UIButton *)sender {
-    sender.alpha = 1;
 }
 
 - (void)leftImageButtonClicked:(UIButton *)sender {

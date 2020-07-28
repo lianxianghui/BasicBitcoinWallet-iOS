@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithWords:(NSArray *)words;
 
+- (NSString *)prompt;
+
 - (NSString *)mnemonicWordsText;
 
 - (NSDictionary *)clickNextButtonNavigationInfo;
