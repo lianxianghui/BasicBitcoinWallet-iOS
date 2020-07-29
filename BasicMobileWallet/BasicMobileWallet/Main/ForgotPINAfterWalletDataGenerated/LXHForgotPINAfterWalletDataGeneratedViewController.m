@@ -82,7 +82,7 @@
     UIViewController *controller = [[LXHScanQRViewController alloc] initWithDetectionBlock:^(NSString *message) {
         [weakSelf.navigationController popViewControllerAnimated:NO];
         if ([weakSelf.viewModel checkExtendedPublicKeyWithQRString:message]) {
-            UIViewController *controller = [[LXHSetPinViewController alloc] initWithViewModel:nil];
+            UIViewController *controller = [[LXHSetPinViewController alloc] init];
             [self.navigationController pushViewController:controller animated:YES];
         } else {
             [self.view makeToast:NSLocalizedString(@"您扫描的扩展公钥与当前钱包的不符或者您选择的重置PIN码方式不对。", nil)];

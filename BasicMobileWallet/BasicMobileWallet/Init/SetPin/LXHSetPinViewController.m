@@ -29,8 +29,8 @@
 
 @implementation LXHSetPinViewController
 
-//目前没有用，只是为了便于统一处理
-- (instancetype)initWithViewModel:(nullable id)viewModel {
+//目前没有实际用途，只是为了便于统一处理
+- (instancetype)initWithViewModel:(id)viewModel {
     self = [super init];
     return self;
 }
