@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHWalletMnemonicWordsOneByOneViewModel : NSObject
 
-- (instancetype)initWithWordLength:(NSUInteger)wordLength;
+- (instancetype)initWithWordLength:(NSUInteger)wordLength;//wordLength must be one of 12,15,18,21,24
 
 - (nullable NSString *)currentWord;
 - (NSString *)currentNumberPrompt;

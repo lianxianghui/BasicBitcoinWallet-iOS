@@ -234,9 +234,9 @@
 }
 
 + (BOOL)clearAccount {
-    [[self sharedInstance].mainAccount clearSavedPublicKeys];
+    [[self sharedInstance].mainAccount clearSavedPublicKeys];//clear generated public keys
     [self sharedInstance].mainAccount = nil;
-    BOOL saveResult = [self encryptAndSetMnemonicCodeWords:nil];
+    BOOL saveResult = [self encryptAndSetMnemonicCodeWords:nil];//clear kLXHKeychainStoreMnemonicCodeWords
     saveResult = saveResult && [LXHKeychainStore.sharedInstance encryptAndSetData:nil forKey:kLXHKeychainStoreRootSeed];
     saveResult = saveResult && [LXHKeychainStore.sharedInstance encryptAndSetData:nil forKey:kLXHKeychainStoreExtendedPublicKey];
     saveResult = saveResult && [[LXHKeychainStore sharedInstance].store setString:nil forKey:kLXHKeychainStoreCurrentReceivingAddressIndex];

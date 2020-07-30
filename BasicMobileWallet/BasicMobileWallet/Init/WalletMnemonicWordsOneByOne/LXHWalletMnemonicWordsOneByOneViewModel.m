@@ -29,11 +29,14 @@
     return self;
 }
 
-//计算方法参考 https://github.com/bitcoinbook/bitcoinbook/blob/develop/ch05.asciidoc 中的"Table 2. Mnemonic codes: entropy and word length"
+//参考 https://github.com/bitcoinbook/bitcoinbook/blob/develop/ch05.asciidoc#mnemonic-code-words-bip-39
+//或者 https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki
 - (void)generateRandomMnemonicWords {
-    NSUInteger entropyBitCount = self.wordLength * 32/3;
-    NSUInteger entropyByteCount = entropyBitCount / 8;
-    BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithEntropy:BTCRandomDataWithLength(entropyByteCount) password:nil wordListType:BTCMnemonicWordListTypeEnglish];
+    //根据 wordlength = (1 + 1/32)*entropyBitLength/11 得出 entropyBitLength = self.wordLength * 32/3
+    NSUInteger entropyBitLength = self.wordLength * 32/3;
+    NSUInteger entropyByteLength = entropyBitLength / 8;
+    NSData *entropy = BTCRandomDataWithLength(entropyByteLength);//securely random bytes
+    BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithEntropy:entropy password:nil wordListType:BTCMnemonicWordListTypeEnglish];
     self.words = mnemonic.words;
 }
 
