@@ -163,11 +163,8 @@
         }
         //充分利用已经请求到的数据，不用重新请求交易数据
         NSArray *allTransactions = resultDicCopy[@"allTransactions"];
-        if ([[LXHTransactionDataManager sharedInstance] setAndSaveTransactionList:allTransactions])
-            successBlock(resultDicCopy);//has @"allTransactions":allTransaction
-        else
-            failureBlock(nil);
-        
+        [[LXHTransactionDataManager sharedInstance] setAndSaveTransactionList:allTransactions];
+        successBlock(resultDicCopy);
     } failureBlock:^(NSDictionary * _Nonnull resultDic) {
         failureBlock(resultDic);
     }];
