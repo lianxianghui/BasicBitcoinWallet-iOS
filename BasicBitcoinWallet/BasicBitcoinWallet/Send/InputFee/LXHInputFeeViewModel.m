@@ -25,7 +25,7 @@
         *errorDesc = nil;
         return YES;
     } else {
-        *errorDesc = NSLocalizedString(@"请输入有效形式的费率(非负整数)", nil);
+        *errorDesc = NSLocalizedString(@"请输入有效形式的费率(正整数)", nil);
         return NO;
     }
 }

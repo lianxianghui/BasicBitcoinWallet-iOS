@@ -63,6 +63,7 @@
     NSString *feeRateString = [_viewModel inputFeeRateString];
     if (feeRateString)
         [self.contentView.textFieldWithPlaceHolder updateAttributedTextString:feeRateString];
+    [self.contentView.textFieldWithPlaceHolder becomeFirstResponder];
 }
 
 - (void)addActions {
