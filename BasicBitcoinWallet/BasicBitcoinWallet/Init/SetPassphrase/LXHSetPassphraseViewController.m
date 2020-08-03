@@ -66,6 +66,7 @@
     [self.contentView.title updateAttributedTextString:[_viewModel navigationBarTitle]];
     [self.contentView.promot updateAttributedTextString:[_viewModel prompt]];
     self.contentView.inputTextFieldWithPlaceHolder.secureTextEntry = YES;
+    [self.contentView.inputTextFieldWithPlaceHolder becomeFirstResponder];
     self.contentView.inputAgainTextFieldWithPlaceHolder.secureTextEntry = YES;
 }
 

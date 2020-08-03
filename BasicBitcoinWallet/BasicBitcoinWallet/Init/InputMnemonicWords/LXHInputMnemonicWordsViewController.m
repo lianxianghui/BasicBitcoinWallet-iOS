@@ -48,7 +48,7 @@
     }];
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeView:)];
     [self.view addGestureRecognizer:swipeRecognizer];
-    [self setSubviewProperties];
+    [self setContentViewProperties];
     [self addActions];
     [self setDelegates];
 }
@@ -57,9 +57,10 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)setSubviewProperties {
+- (void)setContentViewProperties {
     self.contentView.inputTextFieldWithPlaceHolder.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    self.contentView.inputTextFieldWithPlaceHolder.autocorrectionType = UITextAutocorrectionTypeNo;//For Security Consideration
+    self.contentView.inputTextFieldWithPlaceHolder.autocorrectionType = UITextAutocorrectionTypeNo;//For Security
+    [self.contentView.inputTextFieldWithPlaceHolder becomeFirstResponder];
 }
 
 - (void)addActions {
