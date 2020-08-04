@@ -115,7 +115,7 @@
         return;
     LXHAddOutputViewModel *viewModel = [self getNewOutputViewModel];
     [viewModel setOutput:output];
-    NSUInteger randomPosition = [self randomPosition];
+    NSUInteger randomPosition = [self randomPosition];//零钱输出随机化 for privacy
     [_outputViewModels insertObject:viewModel atIndex:randomPosition];
     [self resetCellDataArrayForListview];
 }
