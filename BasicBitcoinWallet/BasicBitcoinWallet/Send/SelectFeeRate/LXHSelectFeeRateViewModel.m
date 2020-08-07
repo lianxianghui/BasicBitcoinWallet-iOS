@@ -101,7 +101,7 @@
         static NSDateFormatter *formatter = nil;
         if (!formatter) {
             formatter = [[NSDateFormatter alloc] init];
-            formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+            formatter.dateFormat = NSLocalizedString(LXHTransactionTimeDateFormat, nil);
         }
         NSString *dateString = [formatter stringFromDate:updatedTime];
         return [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"更新ß时间", nil), dateString];

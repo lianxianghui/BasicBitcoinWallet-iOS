@@ -28,7 +28,7 @@
     static NSDateFormatter *formatter = nil;
     if (!formatter) {
         formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+        formatter.dateFormat = NSLocalizedString(LXHTransactionTimeDateFormat, nil);
     }
     NSDate *updatedTime = [LXHTransactionDataManager sharedInstance].dataUpdatedTime;
     if (updatedTime) {
@@ -56,7 +56,7 @@
             static NSDateFormatter *formatter = nil;
             if (!formatter) {
                 formatter = [[NSDateFormatter alloc] init];
-                formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+                formatter.dateFormat = NSLocalizedString(LXHTransactionTimeDateFormat, nil);
             }
             NSInteger firstSeen = [transaction.firstSeen integerValue];
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:firstSeen];

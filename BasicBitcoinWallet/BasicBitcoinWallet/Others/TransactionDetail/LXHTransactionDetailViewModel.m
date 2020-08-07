@@ -57,7 +57,7 @@
         static NSDateFormatter *formatter = nil;
         if (!formatter) {
             formatter = [[NSDateFormatter alloc] init];
-            formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+            formatter.dateFormat = NSLocalizedString(LXHTransactionTimeDateFormat, nil);
         }
         
         NSInteger firstSeen = [transaction.firstSeen integerValue];

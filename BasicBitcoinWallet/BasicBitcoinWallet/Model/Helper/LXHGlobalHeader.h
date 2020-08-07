@@ -17,10 +17,10 @@ static const LXHBTCAmount LXHBTCCoin = 100000000;
 static const LXHBTCAmount LXHBTC_MAX_MONEY = 21000000 * LXHBTCCoin;
 static const LXHBTCAmount LXHBTCAmountError = -1;
 
-#define LXHAESPassword @"serefddetggg" //随便写的，可以用你自己的代替 
+#define LXHAESPassword @"serefddetggg" //随便写的，可以用你自己的代替
 #define LXHCacheFileDir [NSSearchPathForDirectoriesInDomains(NSCachesDirectory ,NSUserDomainMask, YES) firstObject]
 #define LXHDocumentDir [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
-#define LXHTranactionTimeDateFormat @"yyyy-MM-dd HH:mm:ss"
+#define LXHTransactionTimeDateFormat @"yyyy-MM-dd HH:mm:ss"
 
 //encode decode statement macro
 #define LXHEncodeObjectStament(propertyName) [encoder encodeObject:self.propertyName forKey:@#propertyName];

@@ -47,7 +47,7 @@
             static NSDateFormatter *formatter = nil;
             if (!formatter) {
                 formatter = [[NSDateFormatter alloc] init];
-                formatter.dateFormat = NSLocalizedString(LXHTranactionTimeDateFormat, nil);
+                formatter.dateFormat = NSLocalizedString(LXHTransactionTimeDateFormat, nil);
             }
             LXHTransaction *transaction = [[LXHTransactionDataManager sharedInstance] transactionByTxid:utxo.txid];
             
