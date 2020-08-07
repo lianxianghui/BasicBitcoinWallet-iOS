@@ -1,0 +1,65 @@
+BasicBitcoinWallet是一个移动端比特币钱包。具有发送、接收比特币、查看余额、查看交易信息等基本的比特币钱包功能。
+
+=== BasicBitcoinWallet的特点
+
+在设计的时候，与许多比特币钱包重点考虑易用性而隐藏了很多钱包的内部细节不同，BasicBitcoinWallet会更多展示比特币钱包的内部细节。所以BasicBitcoinWallet更适合想更多了解比特币钱包内部细节的人来使用（比如想了解比特币相关知识的移动端开发人员）。
+
+举个例子，比如说有的钱包只显示钱包的余额，而不会显示UTXO（未花费交易输出）列表，BasicBitcoinWallet会显示每个UTXO。
+
+还有很多钱包在发送比特币时，只允许用户输入接收地址和要发送的数量，钱包内部会按着一个选币算法选择使用哪些UTXO，如果需要找零，会自动生成一个找零输出。然后构造交易、签名并发送。这些都被隐藏到内部，用户可以不了解这些细节、也不能自己选择如何构造交易。BasicBitcoinWallet会允许用户自由选择一个或多个UTXO作为输入，也可以自己构建一个或多个输出，也允许用户自己决定这些输入、输出在将要构造的交易中的顺序。这样使用者可以更了解所构造交易的细节
+，也具有很大的自由度来决定如何构造交易。
+
+=== BasicBitcoinWallet的设计考虑
+
+1.功能设计的时候尽量只关注比特币钱包的基本(Basic)核心功能。这也是为何称之为Basic
+Bitcoin Wallet的原因。
+
+2.功能设计以更多展现钱包的内部细节作为首要考虑，易用性作为次要考虑。这样用户使用功能的时候会接触到一些比特币钱包的基本概念（比如UTXO）
+
+3.重点考虑功能的实现
+，不过多考虑界面效果，只要满足基本的审美标准即可（比如主界面的Tab图标就只使用了几个几何图形来表示）。
+
+4.尽量按着已有的比特币钱包标准来实现
+
+比特币有很多技术标准，这些标准以BIP-xxx来命名。与钱包有关的标准有BIP-39、BIP-44等。这些标准使的不同的比特币钱包有更加一致的体验，用户也可以方便的在钱包之间导出导入比特币。
+
+5.在安全性上要多考虑一些
+
+比特币是一种电子现金，安全性至关重要。BasicBitcoinWallet的私钥只保存在移动设备上，这就要求有保护安全和隐私的措施。
+
+=== 功能特性
+
+* 符合BIP-44标准所定义的层次确定性钱包（但为了简化目前只使用账户0）
+
+* 具备BIP-39标准所定义的通过助记词来生成、恢复钱包根种子的功能
+
+* 支持只读模式(watch only，也称为监控模式）
+
+* 支持冷热钱包模式(离线签名)，可以通过初始化一对冷热钱包来增强安全性
+
+* 比特币密钥只被保存到用户的移动设备上，不会被上传到云端
+
+=== 功能使用
+
+具体功能使用请参考 https://github.com/lianxianghui/BasicBitcoinWalletDocs/blob/master/UserGuide/UserGuideIndex.adoc[使用文档]
+
+=== 安全与隐私
+
+BasicBitcoinWallet对安全与隐私的考虑请参考 https://github.com/lianxianghui/BasicBitcoinWalletDocs/blob/master/WalletSecurity.adoc[安全与隐私]
+
+=== 代码说明
+
+如果想了解项目代码，建议在读代码前先看一下 https://github.com/lianxianghui/BasicBitcoinWalletDocs/blob/master/CodeDescription.adoc[代码说明]
+
+=== 产品设计稿
+
+产品设计与UI设计是使用Sketch来完成的，可以通过点击   https://github.com/lianxianghui/BasicBitcoinWalletDocs/blob/master/basic_bitcoin_wallet.sketch[链接]下载该设计稿。
+
+查看设计稿前可参考 https://github.com/lianxianghui/BasicBitcoinWalletDocs/blob/master/ProductDesignDraftDescription.adoc[产品设计稿说明]
+
+=== 参考项目
+
+在设计和实现的过程参考了以下比特币钱包项目，受到了这些项目的启发：
+
+https://github.com/mycelium-com/wallet-android[Mycelium Bitcoin Wallet]，
+https://github.com/breadwallet/breadwallet-ios[Breadwallet-ios]， https://github.com/zhiquan911/chance_btc_wallet[Chance Bitcoin Wallet]
