@@ -18,6 +18,7 @@
 #import "BlocksKit.h"
 
 static NSString *const cacheFileName = @"LXHTransactionDataManagerCacheFile.aes";
+//注：如果有人通过某种方式获得了被加密的数据文件，这种加密可以起到一定的保护作用。但如果同时也获得了app的二进制文件，是可以通过静态分析查看到这个密码的，就无法保护数据文件了。
 static NSString *const aesPassword = LXHAESPassword;
 
 #define LXHTransactionDataManagerCacheFilePath [NSString stringWithFormat:@"%@/%@",  LXHDocumentDir, cacheFileName]//由于交易数据涉及隐私，所以加密后存到Document目录下

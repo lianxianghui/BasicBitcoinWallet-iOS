@@ -19,6 +19,7 @@
 @end
 
 static NSString *const kKeychainStoreServiceKey = @"org.lianxianghui.keychain.store.basic.wallet";
+//注：如果有人通过某种方式获得了被加密的keychain数据项，这种加密可以对数据项起到一定的保护作用。但如果同时也获得了app的二进制文件，是可以通过静态分析查看到这个密码的，就无法保护keychain数据项了。
 static NSString *const aesPassword = LXHAESPassword;
 
 

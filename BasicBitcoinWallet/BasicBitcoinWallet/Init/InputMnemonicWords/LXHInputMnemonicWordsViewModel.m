@@ -71,7 +71,7 @@
     [self.inputWords addObject:selectedWord];
     
     //测试用
-        self.inputWords = [@"indicate theory winter excite obtain join maximum they error problem index fat" componentsSeparatedByString:@" "].mutableCopy;
+//        self.inputWords = [@"indicate theory winter excite obtain join maximum they error problem index fat" componentsSeparatedByString:@" "].mutableCopy;
 }
 
 - (BOOL)selectWordsUnfinshed {
@@ -79,7 +79,6 @@
 }
 
 - (id)checkWalletMnemonicWordsViewModel {
-//    [LXHInitFlow currentFlow].mnemonicWords = self.inputWords;
     return [[LXHCheckWalletMnemonicWordsViewModelForCheckingInput alloc] initWithWords:self.inputWords];
 }
 
