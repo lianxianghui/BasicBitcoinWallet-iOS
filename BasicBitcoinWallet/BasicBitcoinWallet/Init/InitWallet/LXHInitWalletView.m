@@ -1,8 +1,8 @@
 // LXHInitWalletView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-12-19
-//  Copyright © 2019年 lianxianghui. All rights reserved.
+//  Created by lianxianghui on 20-08-10
+//  Copyright © 2020年 lianxianghui. All rights reserved.
 
 
 #import "LXHInitWalletView.h"
@@ -244,7 +244,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"只读钱包是通过导入已有钱包账户的扩展公钥(xpub)来创建的，只读钱包不含有私钥。只读钱包可以查看有关的所有已发生的交易，也可以构建未签名交易。但由于不含有私钥，无法对交易进行签名(无法花费比特币)。点击导入只读钱按钮包会扫描xpub的二维码。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"只读钱包是通过导入已有钱包账户的扩展公钥(xpub)来创建的，只读钱包不含有私钥。只读钱包可以查看所有相关交易，也可以构建未签名交易。但由于不含有私钥，无法对交易进行签名(无法花费比特币)。点击“导入只读钱包”按钮扫描xpub的二维码来进行导入。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         _desc3.attributedText = attributedText;
@@ -289,7 +289,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"如果您之前拥有一个符合BIP44标准的HD钱包，可以用您之前记录的助记词序列和助记词密码来恢复该钱包。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"如果您之前拥有一个符合BIP-39与BIP-44标准的HD钱包，可以用您之前记录的助记词序列和可选的助记词密码来恢复该钱包。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         _desc2.attributedText = attributedText;
@@ -334,7 +334,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"会按着BIP44的标准为您生成一个新的HD钱包（分层确定性钱包），在生成的过程中会显示若干个英文单词的助记词序列，您也可以选择性地设置一个助记词密码。有了助记词序列和助记词密码，你可以在未来重新生成私钥。由于拥有私钥就等于拥有了您的比特币，所以请务必记住助记码和密码并保存好。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"会按着BIP-39和BIP-44的标准为您生成一个新的HD钱包（分层确定性钱包），在生成的过程中会显示包含若干个英文单词的助记词序列，您也可以选择性地设置一个助记词密码。有了助记词序列和助记词密码，你可以随时恢复钱包。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         _desc1.attributedText = attributedText;

@@ -1,8 +1,8 @@
 // LXHInitSetupView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 19-07-13
-//  Copyright © 2019年 lianxianghui. All rights reserved.
+//  Created by lianxianghui on 20-08-10
+//  Copyright © 2020年 lianxianghui. All rights reserved.
 
 
 #import "LXHInitSetupView.h"
@@ -46,8 +46,8 @@
     [self.aInitWalletButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.bottomButtons.mas_left).offset(19);
         make.bottom.equalTo(self.bottomButtons.mas_bottom).offset(-16);
-        make.height.mas_equalTo(46);
         make.right.equalTo(self.bottomButtons.mas_right).offset(-19);
+        make.height.mas_equalTo(46);
     }];
     [self.setPINButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.aInitWalletButton.mas_top).offset(-11);
@@ -193,7 +193,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"PIN码是您要设置的六位数字，用来保护您的钱包，在每次进入钱包时和发送比特币时，都会要求您输入该PIN。请务必记住该PIN码，否则您将无法使用您的比特币。\n\n", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"PIN码是您要设置的六位数字，用来保护您的钱包，在每次进入钱包和发送比特币时，都会要求您输入该PIN码。请务必记住该PIN码，否则您将无法使用您的比特币。\n\n", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         font = [UIFont fontWithName:@"PingFangSC-Regular" size:18];
@@ -223,10 +223,10 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"会按着BIP44的标准为您生成一个HD钱包（分层确定性钱包）。您可以从创建新钱包、恢复已有钱包和导入只读钱包这三个选项中选择一种来初始化您的钱包。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"会按着BIP-39和BIP-44标准为您生成一个HD钱包（分层确定性钱包）。您可以从创建新钱包、恢复已有钱包和导入只读钱包这三个选项中选择一种来初始化您的钱包。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
-        font = [UIFont fontWithName:@"SFProText-Regular" size:14];
+        font = [UIFont fontWithName:@"PingFangSC-Light" size:14];
         if (!font) font = [UIFont systemFontOfSize:14];
         paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.alignment = NSTextAlignmentLeft;

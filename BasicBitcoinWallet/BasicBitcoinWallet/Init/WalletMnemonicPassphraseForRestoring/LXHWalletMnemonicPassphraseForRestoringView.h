@@ -1,7 +1,7 @@
 // LXHWalletMnemonicPassphraseForRestoringView.h
 // BasicWallet
 //
-//  Created by lianxianghui on 20-04-24
+//  Created by lianxianghui on 20-08-10
 //  Copyright © 2020年 lianxianghui. All rights reserved.
 
 #import <UIKit/UIKit.h>

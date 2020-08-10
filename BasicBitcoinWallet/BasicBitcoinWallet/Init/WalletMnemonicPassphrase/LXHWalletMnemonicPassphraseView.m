@@ -1,7 +1,7 @@
 // LXHWalletMnemonicPassphraseView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 20-03-6
+//  Created by lianxianghui on 20-08-10
 //  Copyright © 2020年 lianxianghui. All rights reserved.
 
 
@@ -135,7 +135,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"您可以选择设置密码或者略过这一步骤。如果您设置该密码，会用此密码和助记词一起生成整个钱包账户的根种子，用来增强账户的安全性。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"您可以选择设置密码或者略过这一步骤。如果您设置该密码，会用此密码和助记词一起来生成钱包的根种子，以增强安全性。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
@@ -150,7 +150,37 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"此密码务必不可忘记，一旦忘记将无法找回", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"此", nil) attributes:textAttributes];
+        [attributedText appendAttributedString:text];
+
+        font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+        if (!font) font = [UIFont systemFontOfSize:14];
+        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentNatural;
+        paragraphStyle.maximumLineHeight = 0;
+        paragraphStyle.minimumLineHeight = 0;
+        paragraphStyle.paragraphSpacing = 0;
+        textAttributes = [NSMutableDictionary dictionary];
+        [textAttributes setObject:UIColorFromRGBA(0xFE3824FF) forKey:NSForegroundColorAttributeName];
+        [textAttributes setObject:font forKey:NSFontAttributeName];
+        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
+        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"密码", nil) attributes:textAttributes];
+        [attributedText appendAttributedString:text];
+
+        font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+        if (!font) font = [UIFont systemFontOfSize:14];
+        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentNatural;
+        paragraphStyle.maximumLineHeight = 0;
+        paragraphStyle.minimumLineHeight = 0;
+        paragraphStyle.paragraphSpacing = 0;
+        textAttributes = [NSMutableDictionary dictionary];
+        [textAttributes setObject:UIColorFromRGBA(0xFE3824FF) forKey:NSForegroundColorAttributeName];
+        [textAttributes setObject:font forKey:NSFontAttributeName];
+        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
+        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"务必不可忘记，一旦忘记将无法找回", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];

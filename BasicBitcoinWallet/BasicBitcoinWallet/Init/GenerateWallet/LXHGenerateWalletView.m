@@ -159,7 +159,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"通过点击相应的按钮，您可以选择生成使用主网络(Mainnet)或测试网络(Testnet3)的比特币钱包。\n\n", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"通过点击相应的按钮，您可以选择生成使用主网络或测试网络的比特币钱包。\n\n", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         _desc1.attributedText = attributedText;
