@@ -63,3 +63,8 @@ BasicBitcoinWallet对安全与隐私的考虑请参考 https://github.com/lianxi
 
 https://github.com/mycelium-com/wallet-android[Mycelium Bitcoin Wallet]，
 https://github.com/breadwallet/breadwallet-ios[Breadwallet-ios]， https://github.com/zhiquan911/chance_btc_wallet[Chance Bitcoin Wallet]
+
+=== 注意
+目前对BasicBitcoinWallet的测试还不够充分，请谨慎用于主网络(Mainnet)比特币。如果使用中发现问题，欢迎提交issue。
+
+
