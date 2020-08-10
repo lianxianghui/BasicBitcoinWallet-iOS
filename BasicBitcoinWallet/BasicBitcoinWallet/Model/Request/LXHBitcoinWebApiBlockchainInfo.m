@@ -142,7 +142,7 @@
             LXHBTCAmount value = [[inputDic valueForKeyPath:@"prev_out.value"] longLongValue];
             inputAmount += value;
             input.valueSat = value;
-            input.txid = model.txid;
+//            input.txid = //无法获取
             input.vout = [[inputDic valueForKeyPath:@"prev_out.n"] unsignedIntegerValue];
             NSString *inputAddress = [inputDic valueForKeyPath:@"prev_out.addr"];
             input.address = [LXHAddress addressWithBase58String:inputAddress];
