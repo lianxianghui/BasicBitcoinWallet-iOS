@@ -59,12 +59,8 @@ static NSString *const aesPassword = LXHAESPassword;
 }
 
 - (BOOL)setAndSaveTransactionList:(NSArray *)transactionList {
-    if (!transactionList || transactionList.count == 0)
-        return NO;
-//    NSLog(@"[self transactionList].count %ld", [[self transactionList] count]);
-//    NSLog(@"transactionList.count %ld", [transactionList count]);
-//    if ([[self transactionList] isEqualToArray:transactionList])
-//        return;
+    if (!transactionList)
+        transactionList = @[];
     NSArray *sortedArray = [transactionList sortedArrayUsingComparator:^NSComparisonResult(LXHTransaction * _Nonnull obj1, LXHTransaction * _Nonnull obj2) {
         return [@(obj2.firstSeen.longLongValue) compare:@(obj1.firstSeen.longLongValue)];
     }];
