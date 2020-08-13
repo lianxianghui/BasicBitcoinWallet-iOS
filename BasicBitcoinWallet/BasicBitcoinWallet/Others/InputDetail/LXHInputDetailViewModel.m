@@ -41,32 +41,36 @@
         
         //显示解锁脚本或隔离见证
         //todo 目前cell高度固定，有可能显示不下，改成自适应高度的
-        BOOL isSegwit = (_input.scriptType == LXHLockingScriptTypeP2WPKH || _input.scriptType == LXHLockingScriptTypeP2WSH);
-        if (isSegwit) {
-            NSString *segwit = [_input.witness componentsJoinedByString:@","];
-            dic = @{@"content":segwit ?: @" ", @"isSelectable":@"1", @"title":@"隔离见证", @"cellType":@"LXHUnLockingScriptCell"};
-        } else {
-            dic = @{@"content":_input.unlockingScript ?: @" ", @"isSelectable":@"1", @"title":@"解锁脚本", @"cellType":@"LXHUnLockingScriptCell"};
-        }
-        [_dataForCells addObject:dic];
+            BOOL isSegwit = (_input.scriptType == LXHLockingScriptTypeP2WPKH || _input.scriptType == LXHLockingScriptTypeP2WSH);
+            if (isSegwit) {
+                NSString *segwit = [_input.witness componentsJoinedByString:@","];
+                dic = @{@"content":segwit ?: @" ", @"isSelectable":@"1", @"title":@"隔离见证", @"cellType":@"LXHUnLockingScriptCell"};
+            } else {
+                dic = @{@"content":_input.unlockingScript ?: @" ", @"isSelectable":@"1", @"title":@"解锁脚本", @"cellType":@"LXHUnLockingScriptCell"};
+            }
+            [_dataForCells addObject:dic];
         
-        dic = @{@"title":@"脚本类型 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": [LXHOutputDetailViewModel scriptTypeTextWithLockingScriptType:_input.scriptType]};
-        [_dataForCells addObject:dic];
+        if (_input.scriptType != LXHLockingScriptTypeUnknown) {
+            dic = @{@"title":@"脚本类型 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": [LXHOutputDetailViewModel scriptTypeTextWithLockingScriptType:_input.scriptType]};
+            [_dataForCells addObject:dic];
+        }
         
         dic = @{@"title":@"序列号 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":[@(_input.sequence) description]};
         [_dataForCells addObject:dic];
         
-        dic = @{@"text":_input.txid ?: @" ", @"isSelectable":@"1", @"title":@"引用交易ID ", @"cellType":@"LXHTwoColumnTextCell"};
-        [_dataForCells addObject:dic];
+        if (_input.txid) {
+            dic = @{@"text":_input.txid ?: @" ", @"isSelectable":@"1", @"title":@"引用交易ID ", @"cellType":@"LXHTwoColumnTextCell"};
+            [_dataForCells addObject:dic];
         
-        dic = @{@"title":@"输出索引 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":[@(_input.vout) description]};
-        [_dataForCells addObject:dic];
-        
-        dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
-        [_dataForCells addObject:dic];
-        
-        dic = @{@"text":@"引用交易", @"isSelectable":@"1", @"cellType":@"LXHOutputDetailTextRightIconCell", @"cellId":@(0)};
-        [_dataForCells addObject:dic];
+            dic = @{@"title":@"输出索引 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text":[@(_input.vout) description]};
+            [_dataForCells addObject:dic];
+            
+            dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
+            [_dataForCells addObject:dic];
+            
+            dic = @{@"text":@"引用交易", @"isSelectable":@"1", @"cellType":@"LXHOutputDetailTextRightIconCell", @"cellId":@(0)};
+            [_dataForCells addObject:dic];
+        }
     }
     return _dataForCells;
 }
