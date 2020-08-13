@@ -74,11 +74,13 @@
         dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"打包时间", nil), dateString1];
         [dataForCells addObject:dataForCell];
         
-        //confirmations
-        dataForCell = lxhTextCellDataDic.mutableCopy;
-        id confirmation = transaction.confirmations;
-        dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@", NSLocalizedString(@"确认数", nil), confirmation];
-        [dataForCells addObject:dataForCell];
+        if (transaction.confirmations) {
+            //confirmations
+            dataForCell = lxhTextCellDataDic.mutableCopy;
+            id confirmation = transaction.confirmations;
+            dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@", NSLocalizedString(@"确认数", nil), confirmation];
+            [dataForCells addObject:dataForCell];
+        }
         
         //block
         dataForCell = lxhTextCellDataDic.mutableCopy;
@@ -99,11 +101,11 @@
         dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@ BTC", NSLocalizedString(@"手续费", nil), _transaction.fees];
         [dataForCells addObject:dataForCell];
         
-        dataForCell = lxhTextCellDataDic.mutableCopy;
-        NSString *isCoinbase = _transaction.coinbase ? @"是" : @"否";
-        isCoinbase = NSLocalizedString(isCoinbase, nil);
-        dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@", NSLocalizedString(@"币基交易", nil), isCoinbase];
-        [dataForCells addObject:dataForCell];
+//        dataForCell = lxhTextCellDataDic.mutableCopy;
+//        NSString *isCoinbase = _transaction.coinbase ? @"是" : @"否";
+//        isCoinbase = NSLocalizedString(isCoinbase, nil);
+//        dataForCell[@"text"] = [NSString stringWithFormat: @"%@: %@", NSLocalizedString(@"币基交易", nil), isCoinbase];
+//        [dataForCells addObject:dataForCell];
         
         //in title
         dataForCell = @{@"isSelectable":@"0", @"cellType":@"LXHTitleCell"}.mutableCopy;
