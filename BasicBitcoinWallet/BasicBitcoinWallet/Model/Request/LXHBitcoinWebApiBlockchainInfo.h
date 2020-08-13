@@ -12,6 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+//返回的交易数据不全，所以放弃使用
 //testnet不能用pushTransactionWithHex，blockChainInfo的push接口不支持testnet
 @interface LXHBitcoinWebApiBlockchainInfo : NSObject <LXHBitcoinWebApi>
 - (instancetype)initWithType:(LXHBitcoinNetworkType)type;
