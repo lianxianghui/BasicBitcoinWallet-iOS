@@ -39,15 +39,17 @@
         [_dataForCells addObject:dic];
         dic = @{@"content":_model.lockingScript ?: @"", @"isSelectable":@"1", @"title":@"锁定脚本", @"cellType":@"LXHLockingScriptCell"};
         [_dataForCells addObject:dic];
-        dic = @{@"title":@"脚本类型 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": [self scriptTypeText]};
-        [_dataForCells addObject:dic];
+        if (_model.scriptType != LXHLockingScriptTypeUnknown) {
+            dic = @{@"title":@"脚本类型 ", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell", @"text": [self scriptTypeText]};
+            [_dataForCells addObject:dic];
+        }
         dic = @{@"title":@"使用情况", @"isSelectable":@"1", @"cellType":@"LXHAddressDetailCell",
                 @"text": [_model isUnspent] ? @"未花费" : @"已花费"};
         [_dataForCells addObject:dic];
         if (_showGotoTransactionCell) {
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
             [_dataForCells addObject:dic];
-            dic = @{@"text":@"所在交易", @"isSelectable":@"1", @"cellType":@"LXHOutputDetailTextRightIconCell"};
+            dic = @{@"text":@"所在交易", @"isSelectable":@"1", @"cellType":@"LXHOutputDetailTextRightIconCell", @"cellId":@"tx"};
             [_dataForCells addObject:dic];
         }
     }

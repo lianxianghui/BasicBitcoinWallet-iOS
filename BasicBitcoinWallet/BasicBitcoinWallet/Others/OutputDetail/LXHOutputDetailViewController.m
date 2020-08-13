@@ -219,19 +219,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch(indexPath.row) {
-        case 6:
-        {
-            id viewModel = [_viewModel transactionDetailViewModel];
-            if (viewModel) {
-                UIViewController *controller = [[LXHTransactionDetailViewController alloc] initWithViewModel:viewModel];
-                controller.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:controller animated:YES];
-            }
+    NSDictionary *cellData = [self cellDataForTableView:tableView atIndexPath:indexPath];
+    NSString *cellId = cellData[@"cellId"];
+    if ([cellId isEqualToString:@"tx"]) {
+        id viewModel = [_viewModel transactionDetailViewModel];
+        if (viewModel) {
+            UIViewController *controller = [[LXHTransactionDetailViewController alloc] initWithViewModel:viewModel];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
         }
-            break;
-        default:
-            break;
     }
 }
 
