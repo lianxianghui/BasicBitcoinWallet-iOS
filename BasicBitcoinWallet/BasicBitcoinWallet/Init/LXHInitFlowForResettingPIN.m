@@ -10,6 +10,7 @@
 #import "LXHWalletMnemonicPassphraseForResettingPINViewModel.h"
 #import "LXHWallet.h"
 #import "LXHInputMnemonicWordsViewModel.h"
+#import "BTCMnemonic.h"
 
 @implementation LXHInitFlowForResettingPIN
 
@@ -28,8 +29,15 @@
     return @{@"controllerClassName":controllerClassName, @"viewModel":viewModel};
 }
 - (NSDictionary *)checkWalletMnemonicWordsClickNextButtonNavigationInfo {
-    id viewModel = [[LXHWalletMnemonicPassphraseForResettingPINViewModel alloc] initWithWords:self.mnemonicWords];
-    return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseForResettingPINViewController", @"viewModel":viewModel};
+    BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:self.mnemonicWords password:nil wordListType:BTCMnemonicWordListTypeEnglish];
+    if (!mnemonic) {
+        self.mnemonicWords = nil;
+        NSError *error = [NSError errorWithDomain:@"LXHErrorDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"您所输入的助记词序列有误，请检查后重新输入。", nil)}];
+        return @{@"error":error};
+    } else {
+        id viewModel = [[LXHWalletMnemonicPassphraseForResettingPINViewModel alloc] initWithWords:self.mnemonicWords];
+        return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseForResettingPINViewController", @"viewModel":viewModel};
+    }
 }
 
 - (NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
