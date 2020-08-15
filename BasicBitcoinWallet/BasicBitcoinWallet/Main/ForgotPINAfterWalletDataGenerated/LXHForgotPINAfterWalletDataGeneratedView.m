@@ -54,7 +54,6 @@
         make.left.equalTo(self.mas_left).offset(19);
         make.right.equalTo(self.mas_right).offset(-19);
         make.top.equalTo(self.customNavigationBar.mas_bottom).offset(10);
-        make.bottom.equalTo(self.button1.mas_top).offset(-4);
     }];
     [self.customNavigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top);
