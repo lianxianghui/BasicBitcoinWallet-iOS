@@ -179,7 +179,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"您可以选择输入密码或者略过这一步骤。如果您为当前钱包设置过助记词密码，请点击输入按钮进行输入；如果您未设置过，请点击略过按钮。此密码与PIN码不同，如果您不完全理解此密码的用途，请在了解相关知识后再选择输入或者略过。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"如果您为当前钱包设置过助记词密码，请点击输入按钮进行输入；如果您未设置过，请点击略过按钮。此密码与PIN码不同，如果您不完全理解此密码的用途，请在了解相关知识后再选择输入或者略过。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         _prompt.attributedText = attributedText;
