@@ -114,7 +114,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"由于您正在恢复已有的钱包，这需要联网搜索有哪些地址已经被使用过，这样才能保证获取已有交易信息。这是恢复钱包的最后一步，点击\"搜索并生成\"按钮开始恢复。\n(如果您打算把当前正在恢复的钱包作为冷钱包使用，请点击\"仅生成\"按钮）", nil) attributes:textAttributes];
+        NSAttributedString *text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"由于您正在恢复已有的钱包，这需要联网搜索该钱包有哪些地址已经被使用过。这是恢复钱包的最后一步，点击\"搜索并生成\"按钮开始恢复。\n(如果您打算把当前正在恢复的钱包作为冷钱包使用，请点击\"仅生成\"按钮）", nil) attributes:textAttributes];
         _promot.attributedText = text;
     }
     return _promot;
