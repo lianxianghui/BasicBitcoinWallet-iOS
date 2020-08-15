@@ -244,7 +244,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"只读钱包是通过导入已有钱包账户的扩展公钥(xpub)来创建的，只读钱包不含有私钥。只读钱包可以查看所有相关交易，也可以构建未签名交易。但由于不含有私钥，无法对交易进行签名(无法花费比特币)。点击“导入只读钱包”按钮扫描xpub的二维码来进行导入。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"只读钱包（也称为监控钱包）是通过导入已有钱包账户的扩展公钥(xpub)来创建的。只读钱包可以接收比特币、查看余额、查看所有交易数据、查看本地地址。同时也可以构造比特币的交易，但由于不包含私钥，不能对交易签名，也就无法独自发送比特币。点击“导入只读钱包”按钮扫描xpub的二维码来进行导入。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         _desc3.attributedText = attributedText;
@@ -334,7 +334,7 @@
         [textAttributes setObject:font forKey:NSFontAttributeName];
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"会按着BIP-39和BIP-44的标准为您生成一个新的HD钱包（分层确定性钱包），在生成的过程中会显示包含若干个英文单词的助记词序列，您也可以选择性地设置一个助记词密码。有了助记词序列和助记词密码，你可以随时恢复钱包。", nil) attributes:textAttributes];
+        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"会按着BIP-39和BIP-44的标准为您生成一个新的HD钱包（分层确定性钱包），在生成的过程中会显示包含若干个英文单词的助记词序列，您也可以选择性地设置一个助记词密码。有了助记词序列和助记词密码，您可以随时恢复钱包。", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         _desc1.attributedText = attributedText;
