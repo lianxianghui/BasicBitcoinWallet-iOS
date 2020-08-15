@@ -21,8 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LXHInitFlow : NSObject
 
 @property (nonatomic) NSUInteger mnemonicWordsLength;
-@property (nonatomic) NSArray *mnemonicWords;
-@property (nonatomic) NSString *mnemonicPassphrase;
+@property (nonatomic, nullable) NSArray *mnemonicWords;
+@property (nonatomic, nullable) NSString *mnemonicPassphrase;
 
 + (LXHInitFlow *)currentFlow;
 + (void)startCreatingNewWalletFlow;

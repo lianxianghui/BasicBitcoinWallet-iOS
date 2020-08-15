@@ -10,6 +10,7 @@
 #import "LXHWalletMnemonicPassphraseViewController.h"
 #import "UILabel+LXHText.h"
 #import "LXHCheckWalletMnemonicWordsViewModel.h"
+#import "UIViewController+LXHAlert.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -70,6 +71,11 @@
 //Actions
 - (void)button1Clicked:(UIButton *)sender {
     NSDictionary *navigationInfo = [_viewModel clickNextButtonNavigationInfo];
+    NSError *error = navigationInfo[@"error"];
+    if (error) {
+        [self showOkAlertViewWithMessage:error.localizedDescription handler:nil];
+        return;
+    }
     NSString *controllerClassName = navigationInfo[@"controllerClassName"];
     id viewModel = navigationInfo[@"viewModel"];
     UIViewController *controller = [[NSClassFromString(controllerClassName) alloc] initWithViewModel:viewModel];

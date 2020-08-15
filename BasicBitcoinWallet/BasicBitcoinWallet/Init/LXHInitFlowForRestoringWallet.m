@@ -11,6 +11,7 @@
 #import "LXHGenerateWalletViewModel.h"
 #import "LXHInputMnemonicWordsViewModel.h"
 #import "LXHSearchAddressesAndGenerateWalletViewModel.h"
+#import "BTCMnemonic.h"
 
 @implementation LXHInitFlowForRestoringWallet
 
@@ -30,8 +31,15 @@
 }
 
 - (NSDictionary *)checkWalletMnemonicWordsClickNextButtonNavigationInfo {
-    id viewModel = [[LXHWalletMnemonicPassphraseForRestoringViewModel alloc] initWithWords:self.mnemonicWords];
-    return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseForRestoringViewController", @"viewModel":viewModel};
+    BTCMnemonic *mnemonic = [[BTCMnemonic alloc] initWithWords:self.mnemonicWords password:nil wordListType:BTCMnemonicWordListTypeEnglish];
+    if (!mnemonic) {
+        self.mnemonicWords = nil;
+        NSError *error = [NSError errorWithDomain:@"LXHErrorDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"您所输入的助记词序列有误，请检查后重新输入。", nil)}];
+        return @{@"error":error};
+    } else {
+        id viewModel = [[LXHWalletMnemonicPassphraseForRestoringViewModel alloc] initWithWords:self.mnemonicWords];
+        return @{@"controllerClassName":@"LXHWalletMnemonicPassphraseForRestoringViewController", @"viewModel":viewModel};
+    }
 }
 
 - (NSDictionary *)setPassphraseViewClickOKButtonNavigationInfoWithWithPassphrase:(NSString *)passphrase {
