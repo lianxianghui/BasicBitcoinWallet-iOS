@@ -1,7 +1,7 @@
 // LXHForgotPINAfterWalletDataGeneratedView.m
 // BasicWallet
 //
-//  Created by lianxianghui on 20-05-8
+//  Created by lianxianghui on 20-09-4
 //  Copyright © 2020年 lianxianghui. All rights reserved.
 
 
@@ -208,66 +208,6 @@
         [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
         [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
         text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n与只读钱包相对应的是全功能钱包，是通过助记词生成的。请找到您保存过的钱包助记词，然后点击“输入钱包助记词”按钮，进入输入钱包助记词流程。输入完之后，会将之与目前的钱包数据进行对比，如果相同，则接下来可以重置PIN码。\n\n", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"PingFangSC-Regular" size:18];
-        if (!font) font = [UIFont systemFontOfSize:18];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"如果您忘记了PIN码，同时又无法找到助记词或者扩展公钥，可以浏览项目主页:", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
-        if (!font) font = [UIFont systemFontOfSize:14];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" https://github.com/lianxianghui/BasicBitcoinWallet-iOS", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"PingFangSC-Regular" size:18];
-        if (!font) font = [UIFont systemFontOfSize:18];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"  ，那里有更详细关于这方面的信息。", nil) attributes:textAttributes];
-        [attributedText appendAttributedString:text];
-
-        font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
-        if (!font) font = [UIFont systemFontOfSize:14];
-        paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = NSTextAlignmentNatural;
-        paragraphStyle.maximumLineHeight = 0;
-        paragraphStyle.minimumLineHeight = 0;
-        paragraphStyle.paragraphSpacing = 0;
-        textAttributes = [NSMutableDictionary dictionary];
-        [textAttributes setObject:UIColorFromRGBA(0x5281DFFF) forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:font forKey:NSFontAttributeName];
-        [textAttributes setObject:@(-0.8014479) forKey:NSKernAttributeName];
-        [textAttributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n\n", nil) attributes:textAttributes];
         [attributedText appendAttributedString:text];
 
         _desc1.attributedText = attributedText;

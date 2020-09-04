@@ -15,7 +15,7 @@
         blue:((rgbaValue & 0x0000FF00) >>  8)/255.0 \
         alpha:(rgbaValue & 0x000000FF)/255.0]
 
-@interface LXHInputMnemonicWordsView() <UITableViewDataSource, UITableViewDelegate>
+@interface LXHInputMnemonicWordsView()
 @end
 
 @implementation LXHInputMnemonicWordsView
