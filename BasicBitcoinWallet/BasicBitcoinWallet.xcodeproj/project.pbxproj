@@ -224,6 +224,7 @@
 		8CAA669B230E468200B17222 /* LXHAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA6693230E468200B17222 /* LXHAddressViewController.m */; };
 		8CAA669C230E468200B17222 /* LXHTabBarPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CAA6698230E468200B17222 /* LXHTabBarPageViewController.m */; };
 		8CB0C26A2390B4BC00CE7898 /* LXHSelectInputViewModelForFixedInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CB0C2692390B4BC00CE7898 /* LXHSelectInputViewModelForFixedInput.m */; };
+		8CBBCE0D2510B93500C5BAEC /* LXHBitcoinWebApiMyElectrs.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBBCE0C2510B93500C5BAEC /* LXHBitcoinWebApiMyElectrs.m */; };
 		8CBCA90724121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA8FE24121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedView.m */; };
 		8CBCA90824121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA8FF24121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedViewController.m */; };
 		8CBCA90924121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBCA90324121D7800655C9F /* LXHForgotPINAfterWalletDataGeneratedView.m */; };
@@ -836,6 +837,8 @@
 		8CAA6699230E468200B17222 /* LXHTabBarPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHTabBarPageViewController.h; sourceTree = "<group>"; };
 		8CB0C2682390B4BC00CE7898 /* LXHSelectInputViewModelForFixedInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHSelectInputViewModelForFixedInput.h; sourceTree = "<group>"; };
 		8CB0C2692390B4BC00CE7898 /* LXHSelectInputViewModelForFixedInput.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHSelectInputViewModelForFixedInput.m; sourceTree = "<group>"; };
+		8CBBCE0B2510B93500C5BAEC /* LXHBitcoinWebApiMyElectrs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXHBitcoinWebApiMyElectrs.h; sourceTree = "<group>"; };
+		8CBBCE0C2510B93500C5BAEC /* LXHBitcoinWebApiMyElectrs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXHBitcoinWebApiMyElectrs.m; sourceTree = "<group>"; };
 		8CBCA8FE24121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHForgotPINBeforeWalletDataGeneratedView.m; sourceTree = "<group>"; };
 		8CBCA8FF24121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXHForgotPINBeforeWalletDataGeneratedViewController.m; sourceTree = "<group>"; };
 		8CBCA90024121D7800655C9F /* LXHForgotPINBeforeWalletDataGeneratedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXHForgotPINBeforeWalletDataGeneratedView.h; sourceTree = "<group>"; };
@@ -1224,6 +1227,8 @@
 				8C6ACE8823574EA100511D5E /* LXHBitcoinWebApi.h */,
 				8C6ACE8B23574F8300511D5E /* LXHBitcoinWebApiSmartbit.h */,
 				8C6ACE8C23574F8300511D5E /* LXHBitcoinWebApiSmartbit.m */,
+				8CBBCE0B2510B93500C5BAEC /* LXHBitcoinWebApiMyElectrs.h */,
+				8CBBCE0C2510B93500C5BAEC /* LXHBitcoinWebApiMyElectrs.m */,
 				8CC6C78524CC3D6A0070B871 /* LXHBitcoinWebApiBlockchainInfo.h */,
 				8CC6C78624CC3D6A0070B871 /* LXHBitcoinWebApiBlockchainInfo.m */,
 				8C2CC6CB232F679A005AA93C /* LXHAccountAddressSearcher.h */,
@@ -2666,6 +2671,7 @@
 				8C45ACCA2375912B0038EAEA /* LXHAddress.m in Sources */,
 				8C23C1D723C9C14D00B801CF /* LXHMaskViewController.m in Sources */,
 				8C2CC6BA232F20E5005AA93C /* LXHAddressDetailViewController.m in Sources */,
+				8CBBCE0D2510B93500C5BAEC /* LXHBitcoinWebApiMyElectrs.m in Sources */,
 				8CA3227722DEBE9900CEA828 /* BTCBlindSignature+Tests.m in Sources */,
 				8CA3227222DEBE9900CEA828 /* BTCScriptMachine.m in Sources */,
 				8CCA7D3F23AE3FF600E4E9B2 /* NSDecimalNumber+Convenience.m in Sources */,

@@ -52,19 +52,19 @@
         dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"交易类型", nil), typeString];
         [dataForCells addObject:dataForCell];
         
-        //交易发起时间
-        dataForCell = lxhTextCellDataDic.mutableCopy;
+//交易发起时间
+//        dataForCell = lxhTextCellDataDic.mutableCopy;
         static NSDateFormatter *formatter = nil;
         if (!formatter) {
             formatter = [[NSDateFormatter alloc] init];
             formatter.dateFormat = NSLocalizedString(LXHTransactionTimeDateFormat, nil);
         }
         
-        NSInteger firstSeen = [transaction.firstSeen integerValue];
-        NSDate *date = [NSDate dateWithTimeIntervalSince1970:firstSeen];
-        NSString *dateString = [formatter stringFromDate:date];
-        dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"发起时间", nil), dateString];
-        [dataForCells addObject:dataForCell];
+//        NSInteger firstSeen = [transaction.firstSeen integerValue];
+//        NSDate *date = [NSDate dateWithTimeIntervalSince1970:firstSeen];
+//        NSString *dateString = [formatter stringFromDate:date];
+//        dataForCell[@"text"] = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"发起时间", nil), dateString];
+//        [dataForCells addObject:dataForCell];
         
         //打包时间
         dataForCell = lxhTextCellDataDic.mutableCopy;

@@ -61,7 +61,7 @@
             }
             NSMutableDictionary *dic = @{@"circleImage":@"check_circle",
                                          @"cellType":@"LXHSelectInputCell",
-                                         @"time": NSLocalizedString(@"交易发起时间:", nil),
+                                         @"time": NSLocalizedString(@"交易打包时间:", nil),
                                          @"btcValue":@"0.00000004 BTC",
                                          @"addressText":@"mnJeCgC96UT76vCDhqxtzxFQLkSmm9RFwE ",
                                          @"checkedImage":@"checked_circle", @"isSelectable":@"1",

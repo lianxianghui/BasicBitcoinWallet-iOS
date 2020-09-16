@@ -13,7 +13,7 @@
 
 + (id)POSTWithUrlString:(NSString *)url 
              parameters:(nullable NSDictionary *)parameters 
-        successCallback:(void (^)(NSDictionary *resultDic))successCallback 
+        successCallback:(void (^)(id _Nullable result))successCallback
         failureCallback:(void (^)(NSDictionary *resultDic))failureCallback {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone]; todo 是否锁定？
@@ -28,7 +28,7 @@
 
 + (id)GETWithUrlString:(NSString *)url
              parameters:(nullable NSDictionary *)parameters
-        successCallback:(void (^)(NSDictionary *resultDic))successCallback
+        successCallback:(void (^)(id _Nullable result))successCallback
         failureCallback:(void (^)(NSDictionary *resultDic))failureCallback {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];

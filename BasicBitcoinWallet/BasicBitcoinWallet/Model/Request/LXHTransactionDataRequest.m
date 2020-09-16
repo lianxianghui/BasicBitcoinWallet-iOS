@@ -13,6 +13,7 @@
 #import "BlocksKit.h"
 #import "CoreBitcoin.h"
 #import "LXHBitcoinWebApiBlockchainInfo.h"
+#import "LXHBitcoinWebApiMyElectrs.h"
 
 @implementation LXHTransactionDataRequest
 
@@ -146,8 +147,9 @@
 //}
 
 + (id<LXHBitcoinWebApi>)webApiWithType:(LXHBitcoinNetworkType)type {
+    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiMyElectrs alloc] initWithType:type];
 //    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiBlockchainInfo alloc] initWithType:type];
-    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiSmartbit alloc] initWithType:type];
+//    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiSmartbit alloc] initWithType:type];
     return ret;
 }
 

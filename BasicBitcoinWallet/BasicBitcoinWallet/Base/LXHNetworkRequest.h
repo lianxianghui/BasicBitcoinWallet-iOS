@@ -14,12 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (id)POSTWithUrlString:(NSString *)url 
              parameters:(nullable NSDictionary *)parameters
-        successCallback:(void (^)(NSDictionary *resultDic))successCallback 
+        successCallback:(void (^)(id _Nullable result))successCallback
         failureCallback:(void (^)(NSDictionary *resultDic))failureCallback;
 
 + (id)GETWithUrlString:(NSString *)url
             parameters:(nullable NSDictionary *)parameters
-       successCallback:(void (^)(NSDictionary *resultDic))successCallback
+       successCallback:(void (^)(id _Nullable result))successCallback
        failureCallback:(void (^)(NSDictionary *resultDic))failureCallback;
 @end
 

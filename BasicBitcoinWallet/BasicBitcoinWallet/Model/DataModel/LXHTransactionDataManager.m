@@ -62,7 +62,9 @@ static NSString *const aesPassword = LXHAESPassword;
     if (!transactionList)
         transactionList = @[];
     NSArray *sortedArray = [transactionList sortedArrayUsingComparator:^NSComparisonResult(LXHTransaction * _Nonnull obj1, LXHTransaction * _Nonnull obj2) {
-        return [@(obj2.firstSeen.longLongValue) compare:@(obj1.firstSeen.longLongValue)];
+        NSInteger obj1BlockTime = obj1.time ? obj1.time.integerValue : NSIntegerMax;
+        NSInteger obj2BlockTime = obj2.time ? obj2.time.integerValue : NSIntegerMax;
+        return [@(obj2BlockTime) compare:@(obj1BlockTime)];
     }];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     dic[@"date"] = [NSDate date];

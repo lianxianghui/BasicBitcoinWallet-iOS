@@ -49,19 +49,23 @@
             NSMutableDictionary *dic = @{@"isSelectable":@"1", @"cellType":@"LXHTransactionInfoCell"}.mutableCopy;
             
             id confirmation = transaction.confirmations;
-            if (confirmation)
-                dic[@"confirmation"] = [NSString stringWithFormat: @"%@:%@", NSLocalizedString(@"确认数", nil), confirmation];
-            else
-                dic[@"confirmation"] = @"";
+            if (!confirmation)
+                confirmation = @"0";
+            dic[@"confirmation"] = [NSString stringWithFormat: @"%@:%@", NSLocalizedString(@"确认数", nil), confirmation];
             static NSDateFormatter *formatter = nil;
             if (!formatter) {
                 formatter = [[NSDateFormatter alloc] init];
                 formatter.dateFormat = NSLocalizedString(LXHTransactionTimeDateFormat, nil);
             }
-            NSInteger firstSeen = [transaction.firstSeen integerValue];
-            NSDate *date = [NSDate dateWithTimeIntervalSince1970:firstSeen];
-            NSString *dateString = [formatter stringFromDate:date];
-            dic[@"InitializedTime"] = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"发起时间", nil), dateString];
+            NSString *dateString = nil;
+            if (transaction.time) {
+                NSInteger blockTime = [transaction.time integerValue];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:blockTime];
+                dateString = [formatter stringFromDate:date];
+            } else {
+                dateString = @"尚未打包进区块";
+            }
+            dic[@"InitializedTime"] = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"打包时间", nil), dateString];
             
             LXHTransactionSendOrReceiveType sendType = [transaction sendOrReceiveType];
             NSString *typeString = nil;
