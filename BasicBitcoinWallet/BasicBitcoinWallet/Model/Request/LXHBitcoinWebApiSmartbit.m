@@ -13,15 +13,15 @@
 #import "LXHAddress+LXHAccount.h"
 
 @interface LXHBitcoinWebApiSmartbit ()
-@property (nonatomic) LXHBitcoinNetworkType type;
+@property (nonatomic) NSString * endPoint;
 @end
 
 @implementation LXHBitcoinWebApiSmartbit
 
-- (instancetype)initWithType:(LXHBitcoinNetworkType)type {
+- (instancetype)initWithEndPoint:(NSString *)endPoint {
     self = [super init];
     if (self) {
-        _type = type;
+        _endPoint = endPoint;
     }
     return self;
 }
@@ -212,8 +212,7 @@
 }
 
 - (NSString *)bashUrl {
-    return _type == LXHBitcoinNetworkTypeTestnet ?
-    @"https://testnet-api.smartbit.com.au/v1/blockchain/" :  @"https://api.smartbit.com.au/v1/blockchain/";
+    return [NSString stringWithFormat:@"https://%@/v1/blockchain/", _endPoint];
 }
 
 - (void)pushTransactionWithHex:(NSString *)hex

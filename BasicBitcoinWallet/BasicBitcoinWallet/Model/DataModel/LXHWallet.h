@@ -64,6 +64,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)clearPIN;
 + (BOOL)savePIN:(nonnull NSString *)pin;
 + (BOOL)verifyPIN:(nonnull NSString *)pin;
+
++ (NSDictionary *)selectedServerInfo;
++ (BOOL)saveSelectedServerInfo:(nonnull NSDictionary *)selectedServerInfo;
++ (NSMutableDictionary *)serverDataDic;
 @end
 
 NS_ASSUME_NONNULL_END

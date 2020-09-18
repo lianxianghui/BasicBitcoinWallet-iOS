@@ -8,12 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "LXHBitcoinWebApi.h"
-#import "LXHGlobalHeader.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHBitcoinWebApiMyElectrs : NSObject <LXHBitcoinWebApi>
-- (instancetype)initWithType:(LXHBitcoinNetworkType)type;
+- (instancetype)initWithEndPoint:(NSString *)endPoint;
 @end
 
 NS_ASSUME_NONNULL_END

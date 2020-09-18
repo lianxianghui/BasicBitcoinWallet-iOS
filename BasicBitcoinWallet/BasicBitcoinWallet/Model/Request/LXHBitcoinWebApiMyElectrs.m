@@ -16,17 +16,18 @@
 
 
 @interface LXHBitcoinWebApiMyElectrs ()
-@property (nonatomic) LXHBitcoinNetworkType type;
+@property (nonatomic) NSString * endPoint;
 @end
 @implementation LXHBitcoinWebApiMyElectrs
 
-- (instancetype)initWithType:(LXHBitcoinNetworkType)type {
+- (instancetype)initWithEndPoint:(NSString *)endPoint {
     self = [super init];
     if (self) {
-        _type = type;
+        _endPoint = endPoint;
     }
     return self;
 }
+
 
 - (void)requestAllTransactionsWithAddresses:(NSArray<NSString *> *)addresses
                                successBlock:(void (^)(NSDictionary *resultDic))successBlock
@@ -211,8 +212,7 @@
 }
 
 - (NSString *)bashUrl {
-    return _type == LXHBitcoinNetworkTypeTestnet ?
-    @"http://152.136.236.118:8003/" :  @"";//mainnet 暂不支持
+    return [NSString stringWithFormat:@"http://%@/", _endPoint];
 }
 
 - (void)pushTransactionWithHex:(NSString *)hex

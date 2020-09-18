@@ -23,6 +23,9 @@
 #define kLXHKeychainStoreWalletDataGenerated @"kLXHKeychainStoreWalletDataGenerated"
 #define MainAccountIndex 0
 
+//Server Setting
+#define kLXHKeychainStoreServerSettingData @"kLXHKeychainStoreServerSettingData"
+
 @interface LXHWallet ()
 @property (nonatomic) LXHAccount *mainAccount;
 @end
@@ -361,6 +364,44 @@
                          resultLength);
     
     return result;
+}
+
+
+
++ (NSDictionary *)selectedServerInfo {
+    NSDictionary *ret = nil;
+    NSData *decryptedData = [LXHKeychainStore.sharedInstance decryptedDataForKey:kLXHKeychainStoreServerSettingData error:nil];
+    if (decryptedData)
+        ret = [NSKeyedUnarchiver unarchiveObjectWithData:decryptedData];
+    NSString *currentNetworkString = [LXHBitcoinNetwork networkStringWithType:LXHWallet.mainAccount.currentNetworkType];
+    NSArray *currentNetworkItems = [self serverDataDic][currentNetworkString];
+    if (!ret || ![currentNetworkItems containsObject:ret]) { //没有设置过，或者与目前设置不符，选第一个为默认的
+        NSDictionary* defaultItem = currentNetworkItems[0];
+        [self saveSelectedServerInfo:defaultItem];
+        ret = defaultItem;
+    }
+    return ret;
+}
+	
++ (BOOL)saveSelectedServerInfo:(nonnull NSDictionary *)selectedServerInfo {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:selectedServerInfo];
+    BOOL saveResult = [LXHKeychainStore.sharedInstance encryptAndSetData:data forKey:kLXHKeychainStoreServerSettingData];
+    return saveResult;
+}
+
++ (NSMutableDictionary *)serverDataDic {
+    static NSMutableDictionary *serverDataDic = nil;
+    if (!serverDataDic) {
+        serverDataDic = [NSMutableDictionary dictionary];
+        //testnet
+        NSDictionary *testnetMyElectrsItem = @{@"apiName":@"myElectrs", @"endPoint":@"152.136.236.118:8003", @"title":@"152.136.236.118:8003",};
+        NSDictionary *testnetSmartbitItem = @{@"apiName":@"smartBit", @"endPoint":@"testnet-api.smartbit.com.au", @"title":@"testnet-api.smartbit.com.au",};
+        serverDataDic[@"testnet"] = @[testnetMyElectrsItem, testnetSmartbitItem];
+        //mainnet
+        NSDictionary *mainnetSmartbitItem = @{@"apiName":@"smartBit", @"endPoint":@"api.smartbit.com.au", @"title":@"api.smartbit.com.au",};
+        serverDataDic[@"mainnet"] = @[mainnetSmartbitItem];
+    }
+    return serverDataDic;
 }
 @end
 

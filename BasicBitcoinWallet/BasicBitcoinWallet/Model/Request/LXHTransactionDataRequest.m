@@ -147,9 +147,14 @@
 //}
 
 + (id<LXHBitcoinWebApi>)webApiWithType:(LXHBitcoinNetworkType)type {
-    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiMyElectrs alloc] initWithType:type];
-//    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiBlockchainInfo alloc] initWithType:type];
-//    id<LXHBitcoinWebApi> ret = [[LXHBitcoinWebApiSmartbit alloc] initWithType:type];
+    id<LXHBitcoinWebApi> ret = nil;
+    NSDictionary *serverData = [LXHWallet selectedServerInfo];
+    NSString *apiName = serverData[@"apiName"];
+    NSString *endPoint = serverData[@"endPoint"];
+    if ([apiName isEqualToString:@"myElectrs"])
+        ret = [[LXHBitcoinWebApiMyElectrs alloc] initWithEndPoint:endPoint];
+    else if ([apiName isEqualToString:@"smartBit"])
+        ret = [[LXHBitcoinWebApiSmartbit alloc] initWithEndPoint:endPoint];
     return ret;
 }
 
