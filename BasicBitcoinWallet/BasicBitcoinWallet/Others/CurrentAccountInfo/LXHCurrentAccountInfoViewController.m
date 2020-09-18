@@ -95,9 +95,9 @@ alpha:(rgbaValue & 0x000000FF)/255.0]
             [dataForCells addObject:dic];
             dic = @{@"isSelectable":@"0", @"cellType":@"LXHEmptyWithSeparatorCell"};
             [dataForCells addObject:dic];
-            dic = @{@"text":@"账户扩展公钥(xpub)", @"isSelectable":@"1", @"cellType":@"LXHSmallSizeTextRightIconCell"};
+            dic = @{@"text":@"重新搜索当前地址", @"isSelectable":@"1", @"cellType":@"LXHSmallSizeTextRightIconCell", @"imageHidden": @(YES)};
             [dataForCells addObject:dic];
-            dic = @{@"text":@"重新搜索当前地址", @"isSelectable":@"1", @"cellType":@"LXHSmallSizeTextRightIconCell"};
+            dic = @{@"text":@"账户扩展公钥(xpub)", @"isSelectable":@"1", @"cellType":@"LXHSmallSizeTextRightIconCell"};
             [dataForCells addObject:dic];
         }
         _dataForCells = dataForCells;
@@ -190,6 +190,8 @@ alpha:(rgbaValue & 0x000000FF)/255.0]
         NSMutableAttributedString *textAttributedString = [cellView.text.attributedText mutableCopy];
         [textAttributedString.mutableString setString:text];
         cellView.text.attributedText = textAttributedString;
+        BOOL imageHidden = [[dataForRow valueForKey:@"imageHidden"] boolValue];
+        cellView.disclosureIndicator.hidden = imageHidden;
     }
     return cell;
 }
@@ -220,7 +222,7 @@ alpha:(rgbaValue & 0x000000FF)/255.0]
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch(indexPath.row) {
-        case 3:
+        case 4:
         {
             [self validatePINWithPassedHandler:^{
                 id viewModel = [self.viewModel qrCodeAndTextViewModel];
@@ -230,7 +232,7 @@ alpha:(rgbaValue & 0x000000FF)/255.0]
             }];
         }
             break;
-        case 4:
+        case 3:
         {
             __weak typeof(self) weakSelf = self;
             [self validatePINWithPassedHandler:^{
