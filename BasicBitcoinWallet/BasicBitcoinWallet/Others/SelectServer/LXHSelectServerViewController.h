@@ -7,5 +7,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LXHSelectServerViewController : UIViewController
-
+- (instancetype)initWithViewModel:(id)viewModel;
 @end

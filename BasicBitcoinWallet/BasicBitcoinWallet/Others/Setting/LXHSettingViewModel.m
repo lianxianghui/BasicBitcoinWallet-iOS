@@ -21,21 +21,25 @@
     if (!_cellDataArrayForListview) {
         NSMutableArray *cellDataArrayForListview = [NSMutableArray array];
         NSDictionary *dic = nil;
-        dic = @{@"text":@"重置钱包", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(0)};
+        dic = @{@"text":@"重置钱包", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"imageName":@"hideImage", @"id":@(0)};
         [cellDataArrayForListview addObject:dic];
-        
-        NSString *text = [LXHWallet hasPIN] ? NSLocalizedString(@"修改PIN码", nil) : NSLocalizedString(@"设置PIN码", nil);
-        dic = @{@"text":text, @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(1)};
-        [cellDataArrayForListview addObject:dic];
+
         if ([LXHWallet hasPIN]) {
-            dic = @{@"text":@"清除PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(2)};
+            dic = @{@"text":@"清除PIN码", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell",  @"imageName":@"hideImage", @"id":@(2)};
             [cellDataArrayForListview addObject:dic];
         }
+        NSString *text = [LXHWallet hasPIN] ? NSLocalizedString(@"修改PIN码", nil) : NSLocalizedString(@"设置PIN码", nil);
+        dic = @{@"text":text, @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"imageName":@"disclosure_indicator", @"id":@(1)};
+        [cellDataArrayForListview addObject:dic];
+
         if (![LXHWallet isWatchOnly]) {//只读钱包没有助记词
-            dic = @{@"text":@"钱包助记词", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(3)};
+            dic = @{@"text":@"钱包助记词", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"imageName":@"disclosure_indicator", @"id":@(3)};
             [cellDataArrayForListview addObject:dic];
         }
-        dic = @{@"text":@"账户信息", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"id":@(4)};
+        dic = @{@"text":@"账户信息", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"imageName":@"disclosure_indicator", @"id":@(4)};
+        [cellDataArrayForListview addObject:dic];
+
+        dic = @{@"text":@"选择服务节点", @"isSelectable":@"1", @"cellType":@"LXHTextRightIconCell", @"imageName":@"disclosure_indicator", @"id":@(5)};
         [cellDataArrayForListview addObject:dic];
         
         _cellDataArrayForListview = cellDataArrayForListview;

@@ -7,6 +7,7 @@
 #import "LXHSelectServerViewController.h"
 #import "Masonry.h"
 #import "LXHSelectServerView.h"
+#import "LXHSelectServerViewModel.h"
 #import "LXHCheckTextCell.h"
 
 #define UIColorFromRGBA(rgbaValue) \
@@ -17,10 +18,18 @@
     
 @interface LXHSelectServerViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) LXHSelectServerView *contentView;
-
+@property (nonatomic) LXHSelectServerViewModel *viewModel;
 @end
 
 @implementation LXHSelectServerViewController
+
+- (instancetype)initWithViewModel:(id)viewModel {
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

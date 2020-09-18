@@ -2033,10 +2033,10 @@
 				8CBBCE192514452300C5BAEC /* LXHCheckTextCell.m */,
 				8CBBCE1A2514452300C5BAEC /* LXHSelectServerView.h */,
 				8CBBCE1E2514452300C5BAEC /* LXHSelectServerView.m */,
-				8CBBCE1B2514452300C5BAEC /* LXHSelectServerViewController.h */,
-				8CBBCE1D2514452300C5BAEC /* LXHSelectServerViewController.m */,
 				8CBBCE222514455500C5BAEC /* LXHSelectServerViewModel.h */,
 				8CBBCE232514455500C5BAEC /* LXHSelectServerViewModel.m */,
+				8CBBCE1B2514452300C5BAEC /* LXHSelectServerViewController.h */,
+				8CBBCE1D2514452300C5BAEC /* LXHSelectServerViewController.m */,
 			);
 			path = SelectServer;
 			sourceTree = "<group>";

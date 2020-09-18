@@ -18,6 +18,8 @@
 #import "LXHSettingViewModel.h"
 #import "LXHShowWalletMnemonicWordsViewModel.h"
 #import "LXHCurrentAccountInfoViewModel.h"
+#import "LXHSelectServerViewModel.h"
+#import "LXHSelectServerViewController.h"
 
 #define UIColorFromRGBA(rgbaValue) \
 [UIColor colorWithRed:((rgbaValue & 0xFF000000) >> 24)/255.0 \
@@ -163,6 +165,10 @@
         NSMutableAttributedString *textAttributedString = [cellView.text.attributedText mutableCopy];
         [textAttributedString.mutableString setString:text];
         cellView.text.attributedText = textAttributedString;
+        
+        NSString *imageName = [dataForRow valueForKey:@"imageName"];
+        if (imageName)
+            cellView.disclosureIndicator.image = [UIImage imageNamed:imageName];
     }
     return cell;
 }
@@ -225,6 +231,15 @@
         {
             id viewModel = [[LXHCurrentAccountInfoViewModel alloc] init];
             UIViewController *controller = [[LXHCurrentAccountInfoViewController alloc] initWithViewModel:viewModel];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+            break;
+            
+        case 5:
+        {
+            id viewModel = [[LXHSelectServerViewModel alloc] init];
+            UIViewController *controller = [[LXHSelectServerViewController alloc] initWithViewModel:viewModel];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }
