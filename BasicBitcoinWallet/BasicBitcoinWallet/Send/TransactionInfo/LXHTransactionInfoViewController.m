@@ -75,7 +75,9 @@
 
 - (void)setContentViewProperties {
     self.contentView.textButton2.enabled = [_viewModel signatureButtonsEnabled];
+    self.contentView.textButton2.alpha = [_viewModel signatureButtonsEnabled] ? 1 : 0.5;
     self.contentView.textButton3.enabled = [_viewModel signatureButtonsEnabled];
+    self.contentView.textButton3.alpha = [_viewModel signatureButtonsEnabled] ? 1 : 0.5;
     [self.contentView.desc updateAttributedTextString:[_viewModel infoDescription]];
 }
 

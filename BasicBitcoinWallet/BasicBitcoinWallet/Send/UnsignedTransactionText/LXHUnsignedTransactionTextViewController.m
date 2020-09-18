@@ -73,6 +73,7 @@
     self.contentView.text.editable = NO;
     [self.contentView.text updateAttributedTextString:[_viewModel text]];
     self.contentView.textButton2.enabled = [_viewModel signTransactionButtonEnabled];
+    self.contentView.textButton2.alpha = [_viewModel signTransactionButtonEnabled] ? 1 : 0.5;
 }
 
 //Actions
