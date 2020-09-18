@@ -65,9 +65,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)savePIN:(nonnull NSString *)pin;
 + (BOOL)verifyPIN:(nonnull NSString *)pin;
 
-+ (NSDictionary *)selectedServerInfo;
++ (NSDictionary *)selectedServerInfoWithNetworkType:(LXHBitcoinNetworkType)networkType;
 + (BOOL)saveSelectedServerInfo:(nonnull NSDictionary *)selectedServerInfo;
 + (NSMutableDictionary *)serverDataDic;
++ (void)clearSelectedServerInfo;
 @end
 
 NS_ASSUME_NONNULL_END

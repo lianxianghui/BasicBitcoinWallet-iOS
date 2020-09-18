@@ -366,19 +366,19 @@
     return result;
 }
 
-
-
-+ (NSDictionary *)selectedServerInfo {
++ (NSDictionary *)selectedServerInfoWithNetworkType:(LXHBitcoinNetworkType)networkType {
     NSDictionary *ret = nil;
     NSData *decryptedData = [LXHKeychainStore.sharedInstance decryptedDataForKey:kLXHKeychainStoreServerSettingData error:nil];
     if (decryptedData)
         ret = [NSKeyedUnarchiver unarchiveObjectWithData:decryptedData];
-    NSString *currentNetworkString = [LXHBitcoinNetwork networkStringWithType:LXHWallet.mainAccount.currentNetworkType];
+    NSString *currentNetworkString = [LXHBitcoinNetwork networkStringWithType:networkType];
     NSArray *currentNetworkItems = [self serverDataDic][currentNetworkString];
-    if (!ret || ![currentNetworkItems containsObject:ret]) { //没有设置过，或者与目前设置不符，选第一个为默认的
-        NSDictionary* defaultItem = currentNetworkItems[0];
-        [self saveSelectedServerInfo:defaultItem];
-        ret = defaultItem;
+    if (ret) {
+        if (![currentNetworkItems containsObject:ret]) //如果之前选的与目前的所有选项都不符，选第一个为默认的
+            ret = currentNetworkItems[0];
+        return ret;
+    } else {
+        ret = currentNetworkItems[0];//没有设置过，选第一个为默认的
     }
     return ret;
 }
@@ -387,6 +387,10 @@
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:selectedServerInfo];
     BOOL saveResult = [LXHKeychainStore.sharedInstance encryptAndSetData:data forKey:kLXHKeychainStoreServerSettingData];
     return saveResult;
+}
+
++ (void)clearSelectedServerInfo {
+    [LXHKeychainStore.sharedInstance encryptAndSetData:nil forKey:kLXHKeychainStoreServerSettingData];
 }
 
 + (NSMutableDictionary *)serverDataDic {

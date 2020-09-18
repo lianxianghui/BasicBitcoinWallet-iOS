@@ -60,6 +60,7 @@
 - (void)clearWalletData {
     [LXHWallet clearAccount];
     [LXHWallet clearPIN];
+    [LXHWallet clearSelectedServerInfo];
     [[LXHTransactionDataManager sharedInstance] clearCachedData];
 }
 

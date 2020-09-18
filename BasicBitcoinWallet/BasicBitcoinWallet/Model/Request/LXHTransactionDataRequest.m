@@ -148,7 +148,7 @@
 
 + (id<LXHBitcoinWebApi>)webApiWithType:(LXHBitcoinNetworkType)type {
     id<LXHBitcoinWebApi> ret = nil;
-    NSDictionary *serverData = [LXHWallet selectedServerInfo];
+    NSDictionary *serverData = [LXHWallet selectedServerInfoWithNetworkType:type];
     NSString *apiName = serverData[@"apiName"];
     NSString *endPoint = serverData[@"endPoint"];
     if ([apiName isEqualToString:@"myElectrs"])

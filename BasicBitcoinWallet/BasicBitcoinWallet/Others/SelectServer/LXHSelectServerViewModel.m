@@ -22,11 +22,11 @@
         _cellDataListForListView = [NSMutableArray array];
         NSString *currentNetworkString = [LXHBitcoinNetwork networkStringWithType:LXHWallet.mainAccount.currentNetworkType];
         NSArray *currentNetworkItems = [LXHWallet serverDataDic][currentNetworkString];
-        NSDictionary *checkedServerItem = [LXHWallet selectedServerInfo];
+        NSDictionary *selectedServerItem = [LXHWallet selectedServerInfoWithNetworkType:LXHWallet.mainAccount.currentNetworkType];
         for (NSDictionary *item in currentNetworkItems) {
             NSMutableDictionary *dic = @{@"isSelectable":@"1", @"circleImage":@"check_circle", @"cellType":@"LXHCheckTextCell", @"checkedImage":@"checked_circle"}.mutableCopy;
             dic[@"title"]  = item[@"title"];
-            if ([item isEqualToDictionary:checkedServerItem])
+            if ([item isEqualToDictionary:selectedServerItem])
                 dic[@"isChecked"] = @(YES);
             dic[@"data"] = item;
             [_cellDataListForListView addObject:dic];
