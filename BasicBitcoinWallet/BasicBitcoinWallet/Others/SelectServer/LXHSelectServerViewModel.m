@@ -26,19 +26,24 @@
         for (NSDictionary *item in currentNetworkItems) {
             NSMutableDictionary *dic = @{@"isSelectable":@"1", @"circleImage":@"check_circle", @"cellType":@"LXHCheckTextCell", @"checkedImage":@"checked_circle"}.mutableCopy;
             dic[@"title"]  = item[@"title"];
-            dic[@"data"] = item;
             if ([item isEqualToDictionary:checkedServerItem])
-                dic[@"checked"] = @(YES);
+                dic[@"isChecked"] = @(YES);
+            dic[@"data"] = item;
             [_cellDataListForListView addObject:dic];
         }
     }
     return _cellDataListForListView;
 }
 
-- (void)saveSelectedServerInfoWithIndex:(NSUInteger)index {
+- (void)checkRowAtIndex:(NSUInteger)index {
     NSDictionary *item = self.cellDataListForListView[index][@"data"];
-    if (item)
+    if (item) {
         [LXHWallet saveSelectedServerInfo:item];
+        [_cellDataListForListView enumerateObjectsUsingBlock:^(NSMutableDictionary  * _Nonnull cellData, NSUInteger idx, BOOL * _Nonnull stop) {
+            cellData[@"isChecked"] = @(index == idx);
+        }];
+    }
 }
+    
 
 @end

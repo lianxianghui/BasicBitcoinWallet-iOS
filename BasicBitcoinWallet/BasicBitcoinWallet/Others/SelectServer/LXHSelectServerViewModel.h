@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LXHSelectServerViewModel : NSObject
-
+- (NSMutableArray *)cellDataListForListView;
+- (void)checkRowAtIndex:(NSUInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END

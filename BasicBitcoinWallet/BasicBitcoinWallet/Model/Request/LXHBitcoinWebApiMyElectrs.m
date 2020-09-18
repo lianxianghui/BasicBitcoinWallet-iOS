@@ -112,7 +112,7 @@
         model.txid = dic[@"txid"];
         model.block = [dic valueForKeyPath:@"status.block_height"];
         model.time = [dic valueForKeyPath:@"status.block_time"];
-        model.firstSeen = model.time;//todo
+        model.firstSeen = model.time;
         model.confirmations = dic[@"confirmations"];
         
         model.fees = [NSDecimalNumber decimalBTCValueWithSatValue:[dic[@"fee"] longLongValue]];

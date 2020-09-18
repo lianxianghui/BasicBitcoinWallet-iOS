@@ -80,18 +80,7 @@
 
 //Delegate Methods
 - (NSArray *)dataForTableView:(UITableView *)tableView {
-    static NSMutableArray *dataForCells = nil;
-    if (!dataForCells) {
-        dataForCells = [NSMutableArray array];
-        if (tableView == self.contentView.listView) {
-            NSDictionary *dic = nil;
-            dic = @{@"title":@"testnet-api.smartbit.com.au", @"isSelectable":@"1", @"circleImage":@"check_circle", @"cellType":@"LXHCheckTextCell", @"checkedImage":@"checked_circle"};
-            [dataForCells addObject:dic];
-            dic = @{@"title":@"testnet.lianxiangui.org", @"isSelectable":@"1", @"circleImage":@"check_circle", @"cellType":@"LXHCheckTextCell", @"checkedImage":@"checked_circle"};
-            [dataForCells addObject:dic];
-        }
-    }
-    return dataForCells;
+    return [_viewModel cellDataListForListView];
 }
 
 - (id)cellDataForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -169,6 +158,8 @@
         NSString *checkedImageImageName = [dataForRow valueForKey:@"checkedImage"];
         if (checkedImageImageName)
             cellView.checkedImage.image = [UIImage imageNamed:checkedImageImageName];
+        BOOL isChecked = [[dataForRow valueForKey:@"isChecked"] boolValue];
+        cellView.checkedImage.hidden = !isChecked;
     }
     return cell;
 }
@@ -194,20 +185,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch(indexPath.row) {
-        case 0:
-            {
-            [self.navigationController popViewControllerAnimated:YES];
-            }
-            break;
-        case 1:
-            {
-            [self.navigationController popViewControllerAnimated:YES];
-            }
-            break;
-        default:
-            break;
-    }
+    [_viewModel checkRowAtIndex:indexPath.row];
+    [tableView reloadData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.navigationController popViewControllerAnimated:YES];
+    });
 }
 
 @end
