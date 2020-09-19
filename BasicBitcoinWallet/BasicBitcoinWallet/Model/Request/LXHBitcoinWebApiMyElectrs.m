@@ -48,37 +48,6 @@
                               }];
 }
 
-- (void)requestTransactionsByUrl:(NSString *)url
-                    successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
-                    failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    [LXHNetworkRequest GETWithUrlString:url parameters:nil successCallback:^(NSDictionary * _Nonnull resultDic) {
-        BOOL success =  [resultDic[@"success"] boolValue];
-        if (!success) {
-            failureBlock(nil);
-            return;
-        }
-        NSArray *transactions = resultDic[@"transactions"];
-        if (!transactions) {
-            NSDictionary *transaction = resultDic[@"transaction"];
-            if (transaction)
-                transactions = @[transaction];
-        }
-        if (!transactions) { //应该不会发生
-            failureBlock(nil);
-            return;
-        }
-        
-        NSArray *models = [self allTransactionModelsWithTransactionDics:transactions];
-        NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-        ret[@"transactions"] = models;
-        if (transactions.count == 1) //for convenience
-            ret[@"transaction"] = models[0];
-        successBlock(ret);
-    } failureCallback:^(NSDictionary * _Nonnull resultDic) {
-        failureBlock(resultDic);
-    }];
-}
-
 - (void)requestTransactionsById:(NSString *)txid
                    successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
                    failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
@@ -93,14 +62,7 @@
         successBlock(ret);
     } failureCallback:^(NSDictionary * _Nonnull resultDic) {
         failureBlock(resultDic);
-    }];}
-
-- (void)requestTransactionsByIds:(NSArray<NSString *> *)txids
-                    successBlock:(void (^)(NSDictionary *resultDic))successBlock //keys 1.transactions
-                    failureBlock:(void (^)(NSDictionary *resultDic))failureBlock {
-    NSString *txidsString = [txids componentsJoinedByString:@","];
-    NSString *url = [NSString stringWithFormat:[self transactionByIdsUrlFormat], txidsString];
-    [self requestTransactionsByUrl:url successBlock:successBlock failureBlock:failureBlock];
+    }];
 }
 
 - (NSArray<LXHTransaction *> *)allTransactionModelsWithTransactionDics:(NSArray *)transactionDics {
