@@ -53,9 +53,9 @@ BasicBitcoinWallet对安全与隐私的考虑请参考 https://github.com/lianxi
 
 === 产品设计稿
 
-产品设计与UI设计是使用Sketch来完成的，可以通过点击   https://github.com/lianxianghui/BasicBitcoinWalletDocs/blob/master/basic_bitcoin_wallet.sketch[链接]下载该设计稿。
+原型设计与UI设计都是使用Sketch来完成的，可以通过点击   https://github.com/lianxianghui/BasicBitcoinWalletDocs/blob/master/basic_bitcoin_wallet.sketch[链接]下载该设计稿。
 
-查看设计稿前可参考 https://github.com/lianxianghui/BasicBitcoinWalletDocs/blob/master/ProductDesignDraftDescription.adoc[产品设计稿说明]
+查看设计稿前可参考 https://github.com/lianxianghui/BasicBitcoinWalletDocs/blob/master/ProductDesignDraftDescription.adoc[设计稿说明]
 
 === 参考项目
 
