@@ -2919,7 +2919,7 @@
 				CODE_SIGN_ENTITLEMENTS = BasicBitcoinWallet/BasicBitcoinWallet.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W269QP82T8;
+				DEVELOPMENT_TEAM = 3C64W39BAP;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BasicBitcoinWallet/PrefixHeader.pch";
@@ -2953,7 +2953,7 @@
 				CODE_SIGN_ENTITLEMENTS = BasicBitcoinWallet/BasicBitcoinWallet.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W269QP82T8;
+				DEVELOPMENT_TEAM = 3C64W39BAP;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BasicBitcoinWallet/PrefixHeader.pch";
