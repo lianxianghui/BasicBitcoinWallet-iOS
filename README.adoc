@@ -71,10 +71,10 @@ IMPORTANT: 目前对BasicBitcoinWallet的测试还不够充分，请谨慎用于
 IMPORTANT: https://github.com/lianxianghui/BasicBitcoinWalletDocs/blob/master/AboutInvestingInBitcoin.adoc[对投资比特币等加密资产的提醒]
 
 === 我写这个项目的目的
-最后，说一下我写这个项目的目的，主要有以下两点：
+最后，说一下我写这个项目的目的。主要有以下两个目的：
 
-1.想通过一个实际的项目来了解区块链技术。
+一是我想通过一个实际的项目来了解区块链技术。
 
-2.我写了一个可以通过读取Sketch UI设计稿生成移动App UI代码的工具(该工具名为Sketch2Code）。我想通过一个真实的项目来看验证一下这个工具的使用效果，同时寻找不足以改进。目前来看该工具的使用效果良好，BasicBitcoinWallet-iOS所有页面的静态UI代码都是通过Sketch2Code生成的。 可以通过以下链接来了解Sketch2Code： https://github.com/lianxianghui/Sketch2CodeDocs ）
+另外一个是我写了一款Sketch插件，可以通过读取符合要求的Sketch UI设计稿生成移动App UI代码(该工具名为Sketch2Code）。我想通过一个真实的项目来看验证一下这个工具的使用效果，同时寻找不足以改进。目前来看该工具的使用效果良好，BasicBitcoinWallet-iOS所有页面的静态UI代码都是通过Sketch2Code生成的。 可以通过以下链接来了解Sketch2Code： https://github.com/lianxianghui/Sketch2CodeDocs ）
 
 
