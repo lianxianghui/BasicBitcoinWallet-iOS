@@ -399,11 +399,11 @@
         serverDataDic = [NSMutableDictionary dictionary];
         //testnet
         NSDictionary *testnetMyElectrsItem = @{@"apiName":@"myElectrs", @"endPoint":@"123.57.225.73", @"title":@"123.57.225.73",};
-        NSDictionary *testnetSmartbitItem = @{@"apiName":@"smartBit", @"endPoint":@"testnet-api.smartbit.com.au", @"title":@"testnet-api.smartbit.com.au",};
-        serverDataDic[@"testnet"] = @[testnetMyElectrsItem, testnetSmartbitItem];
+//        NSDictionary *testnetSmartbitItem = @{@"apiName":@"smartBit", @"endPoint":@"testnet-api.smartbit.com.au", @"title":@"testnet-api.smartbit.com.au",};
+        serverDataDic[@"testnet"] = @[testnetMyElectrsItem];
         //mainnet
-        NSDictionary *mainnetSmartbitItem = @{@"apiName":@"smartBit", @"endPoint":@"api.smartbit.com.au", @"title":@"api.smartbit.com.au",};
-        serverDataDic[@"mainnet"] = @[mainnetSmartbitItem];
+//        NSDictionary *mainnetSmartbitItem = @{@"apiName":@"smartBit", @"endPoint":@"api.smartbit.com.au", @"title":@"api.smartbit.com.au",};
+//        serverDataDic[@"mainnet"] = @[mainnetSmartbitItem];
     }
     return serverDataDic;
 }
