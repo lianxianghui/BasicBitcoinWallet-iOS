@@ -398,7 +398,7 @@
     if (!serverDataDic) {
         serverDataDic = [NSMutableDictionary dictionary];
         //testnet
-        NSDictionary *testnetMyElectrsItem = @{@"apiName":@"myElectrs", @"endPoint":@"123.57.225.73", @"title":@"123.57.225.73",};
+        NSDictionary *testnetMyElectrsItem = @{@"apiName":@"myElectrs", @"endPoint":@"123.57.225.73", @"title":@"123.57.225.73 (自搭Testnet服务)",};
 //        NSDictionary *testnetSmartbitItem = @{@"apiName":@"smartBit", @"endPoint":@"testnet-api.smartbit.com.au", @"title":@"testnet-api.smartbit.com.au",};
         serverDataDic[@"testnet"] = @[testnetMyElectrsItem];
         //mainnet
