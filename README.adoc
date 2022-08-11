@@ -1,3 +1,5 @@
+（目前服务端已经关闭，如果想使用，可以自行从 https://github.com/lianxianghui/electrs 下载代码部署）
+
 BasicBitcoinWallet是一个移动端比特币钱包。具有发送、接收比特币，查看余额，查看交易信息等基本的比特币钱包功能。
 
 === BasicBitcoinWallet的特点
